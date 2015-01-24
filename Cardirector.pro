@@ -20,33 +20,33 @@ else {
 }
 
 SOURCES += \
-    src/ai/AbstractAi.cpp \
-    src/client/AbstractClient.cpp \
-    src/client/UserData.cpp \
-    src/controller/AbstractAiController.cpp \
-    src/controller/AbstractController.cpp \
-    src/controller/AbstractUiController.cpp \
-    src/gamelogic/AbstractGameLogic.cpp \
-    src/network/Network.cpp \
-    src/osc/OSC.cpp \
-    src/resource/Resource.cpp \
-    src/server/AbstractServer.cpp \
-    src/sound/Sound.cpp \
-    src/ui/VirtualUi.cpp
+    src/ai/abstractai.cpp \
+    src/client/abstractclient.cpp \
+    src/client/userdata.cpp \
+    src/controller/abstractaicontroller.cpp \
+    src/controller/abstractcontroller.cpp \
+    src/controller/abstractuicontroller.cpp \
+    src/gamelogic/abstractgamelogic.cpp \
+    src/network/network.cpp \
+    src/osc/osc.cpp \
+    src/resource/resource.cpp \
+    src/server/abstractserver.cpp \
+    src/sound/sound.cpp \
+    src/ui/virtualui.cpp
 
 HEADERS += \
     src/common/cardirector_global.h \
-    src/ai/AbstractAi.h \
-    src/client/AbstractClient.h \
-    src/client/UserData.h \
-    src/controller/AbstractAiController.h \
-    src/controller/AbstractController.h \
-    src/controller/AbstractUiController.h \
-    src/gamelogic/AbstractGameLogic.h \
-    src/network/Network.h \
-    src/osc/OSC.h \
-    src/resource/Resource.h \
-    src/server/AbstractServer.h \
-    src/sound/Sound.h \
-    src/ui/VirtualUi.h
+    src/ai/abstractai.h \
+    src/client/abstractclient.h \
+    src/client/userdata.h \
+    src/controller/abstractaicontroller.h \
+    src/controller/abstractcontroller.h \
+    src/controller/abstractuicontroller.h \
+    src/gamelogic/abstractgamelogic.h \
+    src/network/network.h \
+    src/osc/osc.h \
+    src/resource/resource.h \
+    src/server/abstractserver.h \
+    src/sound/sound.h \
+    src/ui/virtualui.h
 
