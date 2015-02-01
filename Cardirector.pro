@@ -3,12 +3,8 @@
 # Project created by QtCreator 2015-01-24T00:55:59
 #
 #-------------------------------------------------
-
-QT       -= gui
-
 TARGET = Cardirector
 TEMPLATE = lib
-
 CONFIG += precompile_header
 #CONFIG += staticlib
 
