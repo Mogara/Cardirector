@@ -9,8 +9,11 @@ QT       -= gui
 TARGET = Cardirector
 TEMPLATE = lib
 
+CONFIG += precompile_header
 #CONFIG += staticlib
 
+# Use Precompiled headers (PCH)
+PRECOMPILED_HEADER = src/cpch.h
 
 CONFIG(staticlib) {
     DEFINES += MCD_STATIC
