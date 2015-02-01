@@ -8,6 +8,8 @@ TEMPLATE = lib
 CONFIG += precompile_header
 #CONFIG += staticlib
 
+QT += quick
+
 # Use Precompiled headers (PCH)
 PRECOMPILED_HEADER = src/cpch.h
 
@@ -20,6 +22,8 @@ else {
 
 INCLUDEPATH += src \
                src/common \
+               src/client
+
 SOURCES += \
     src/ai/cabstractai.cpp \
     src/client/cabstractclient.cpp \
@@ -35,9 +39,9 @@ SOURCES += \
     src/sound/csound.cpp \
     src/ui/cabstractui.cpp \
     src/client/cclientsettings.cpp \
+    src/ui/cmainwindow.cpp
 
 HEADERS += \
-    src/common/cardirector_global.h \
     src/ai/cabstractai.h \
     src/client/cabstractclient.h \
     src/client/cuserdata.h \
@@ -54,4 +58,5 @@ HEADERS += \
     src/common/cglobal.h \
     src/cpch.h \
     src/client/cclientsettings.h \
+    src/ui/cmainwindow.h
 
