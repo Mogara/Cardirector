@@ -18,6 +18,8 @@ else {
     DEFINES += MCD_BUILD
 }
 
+INCLUDEPATH += src \
+               src/common \
 SOURCES += \
     src/ai/cabstractai.cpp \
     src/client/cabstractclient.cpp \
@@ -31,7 +33,8 @@ SOURCES += \
     src/resource/cresource.cpp \
     src/server/cabstractserver.cpp \
     src/sound/csound.cpp \
-    src/ui/cabstractui.cpp
+    src/ui/cabstractui.cpp \
+    src/client/cclientsettings.cpp \
 
 HEADERS += \
     src/common/cardirector_global.h \
@@ -47,5 +50,8 @@ HEADERS += \
     src/resource/cresource.h \
     src/server/cabstractserver.h \
     src/sound/csound.h \
-    src/ui/cabstractui.h
+    src/ui/cabstractui.h \
+    src/common/cglobal.h \
+    src/cpch.h \
+    src/client/cclientsettings.h \
 
