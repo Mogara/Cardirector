@@ -67,3 +67,15 @@ HEADERS += \
     src/client/cclientsettings.h \
     src/ui/cmainwindow.h
 
+
+for(file, HEADERS) {
+    !equals(file, "src/cpch.h") {
+        win32 {
+            system("copy $$replace(file, /, \\) include\\")
+        }
+        else {
+            system("cp $$file include/")
+        }
+    }
+}
+
