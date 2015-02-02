@@ -1,13 +1,13 @@
 
 *.slo
 *.lo
-*.o
-*.a
+#*.o
+#*.a
 *.la
 *.lai
-*.so
-*.dll
-*.dylib
+#*.so
+#*.dll
+#*.dylib
 /.qmake.cache
 /.qmake.stash
 *.pro.user
