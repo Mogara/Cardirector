@@ -13,6 +13,13 @@ QT += quick
 # Use Precompiled headers (PCH)
 PRECOMPILED_HEADER = src/cpch.h
 
+DESTDIR = bin
+
+CONFIG(debug, debug|release) {
+    mac: TARGET = $$join(TARGET,,,_debug)
+    win32: TARGET = $$join(TARGET,,,d)
+}
+
 CONFIG(staticlib) {
     DEFINES += MCD_STATIC
 }
