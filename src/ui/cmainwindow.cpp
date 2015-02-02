@@ -60,7 +60,7 @@ bool CMainWindow::event(QEvent *e)
 
 void CMainWindow::restoreAsClosed()
 {
-    if (p_ptr != nullptr) {
+    if (p_ptr->settings != NULL) {
         setPosition(p_ptr->settings->windowPos());
         setWindowState(p_ptr->settings->windowState());
         rootContext()->setContextProperty("windowSize", p_ptr->settings->windowSize());
