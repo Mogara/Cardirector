@@ -17,6 +17,7 @@
     Mogara
     *********************************************************************/
 
+#include "cpch.h"
 #include "cclientsettings.h"
 
 class CClientSettingsPrivate

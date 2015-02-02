@@ -1,4 +1,3 @@
-# C++ objects and libs
 
 *.slo
 *.lo
@@ -9,9 +8,6 @@
 *.so
 *.dll
 *.dylib
-
-# Qt-es
-
 /.qmake.cache
 /.qmake.stash
 *.pro.user
@@ -22,12 +18,18 @@ qrc_*.cpp
 ui_*.h
 Makefile*
 *-build-*
-
-# QtCreator
-
 *.autosave
-
-#QtCtreator Qml
 *.qmlproject.user
 *.qmlproject.user.*
 OGLdpf.log
+ipch/
+[Dd]ebug SLL/
+[Dd]ebug/
+[Rr]elease/
+[Rr]elease SLL/
+
+
+*.opensdf
+*sdf
+*.suo
+*.vcxproj.user

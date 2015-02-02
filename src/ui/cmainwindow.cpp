@@ -17,6 +17,7 @@
     Mogara
     *********************************************************************/
 
+#include "cpch.h"
 #include "cmainwindow.h"
 
 #include <QQmlContext>
