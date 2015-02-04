@@ -276,7 +276,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug SLL|Win32'" />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\mkspecs\win32-msvc2013;..\..\src\ui;..\..\src\sound;..\..\src\server;..\..\src\resource;..\..\src\osc;..\..\src\network;..\..\src\gamelogic;..\..\src\controller;..\..\src\common;..\..\src\client;..\..\src\ai;..\..\src;debug;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtQml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\mkspecs\win32-msvc2013;..\..\src\ui;..\..\src\sound;..\..\src\server;..\..\src\resource;..\..\src\osc;..\..\src\network;..\..\src\gamelogic;..\..\src\controller;..\..\src\common;..\..\src\client;..\..\src\ai;..\..\src;debug;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtNetwork;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-Zm200 -w34100 -w34189 %(AdditionalOptions)</AdditionalOptions>
       <AssemblerListingLocation>debug\</AssemblerListingLocation>
       <BrowseInformation>false</BrowseInformation>
@@ -284,7 +284,7 @@
       <ExceptionHandling>Sync</ExceptionHandling>
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;MCD_BUILD;QT_CORE_LIB;QT_DLL;QT_GUI_LIB;QT_QUICK_LIB;QT_WIDGETS_LIB;QT_QML_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;MCD_BUILD;QT_CORE_LIB;QT_DLL;QT_GUI_LIB;QT_QUICK_LIB;QT_WIDGETS_LIB;QT_QML_LIB;QT_NETWORK_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessToFile>false</PreprocessToFile>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
@@ -296,7 +296,7 @@
       <PrecompiledHeaderFile>cpch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>$(QTDIR)\lib\Qt5Cored.lib;Qt5Guid.lib;Qt5Quickd.lib;Qt5Widgetsd.lib;Qt5Qmld.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(QTDIR)\lib\Qt5Cored.lib;Qt5Guid.lib;Qt5Quickd.lib;Qt5Widgetsd.lib;Qt5Qmld.lib;Qt5Networkd.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(QTDIR)\lib;D:\Qt\qt-5.4.0-x64-msvc2013-compact\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -318,7 +318,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug SLL|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\mkspecs\win32-msvc2013;..\..\src\ui;..\..\src\sound;..\..\src\server;..\..\src\resource;..\..\src\osc;..\..\src\network;..\..\src\gamelogic;..\..\src\controller;..\..\src\common;..\..\src\client;..\..\src\ai;..\..\src;debug;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtQml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\mkspecs\win32-msvc2013;..\..\src\ui;..\..\src\sound;..\..\src\server;..\..\src\resource;..\..\src\osc;..\..\src\network;..\..\src\gamelogic;..\..\src\controller;..\..\src\common;..\..\src\client;..\..\src\ai;..\..\src;debug;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtNetwork;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-Zm200 -w34100 -w34189 %(AdditionalOptions)</AdditionalOptions>
       <AssemblerListingLocation>debug\</AssemblerListingLocation>
       <BrowseInformation>false</BrowseInformation>
@@ -326,7 +326,7 @@
       <ExceptionHandling>Sync</ExceptionHandling>
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_WINDOWS;MCD_STATIC;UNICODE;WIN32;MCD_BUILD;QT_CORE_LIB;QT_DLL;QT_GUI_LIB;QT_QUICK_LIB;QT_WIDGETS_LIB;QT_QML_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;MCD_STATIC;UNICODE;WIN32;MCD_BUILD;QT_CORE_LIB;QT_DLL;QT_GUI_LIB;QT_QUICK_LIB;QT_WIDGETS_LIB;QT_QML_LIB;QT_NETWORK_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessToFile>false</PreprocessToFile>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
@@ -338,7 +338,7 @@
       <PrecompiledHeaderFile>cpch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>$(QTDIR)\lib\Qt5Cored.lib;Qt5Guid.lib;Qt5Quickd.lib;Qt5Widgetsd.lib;Qt5Qmld.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(QTDIR)\lib\Qt5Cored.lib;Qt5Guid.lib;Qt5Quickd.lib;Qt5Widgetsd.lib;Qt5Qmld.lib;Qt5Networkd.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(QTDIR)\lib;D:\Qt\qt-5.4.0-x64-msvc2013-compact\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -360,7 +360,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\mkspecs\win32-msvc2013;..\..\src\ui;..\..\src\sound;..\..\src\server;..\..\src\resource;..\..\src\osc;..\..\src\network;..\..\src\gamelogic;..\..\src\controller;..\..\src\common;..\..\src\client;..\..\src\ai;..\..\src;debug;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtQml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\mkspecs\win32-msvc2013;..\..\src\ui;..\..\src\sound;..\..\src\server;..\..\src\resource;..\..\src\osc;..\..\src\network;..\..\src\gamelogic;..\..\src\controller;..\..\src\common;..\..\src\client;..\..\src\ai;..\..\src;debug;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtNetwork;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-Zm200 -w34100 -w34189 %(AdditionalOptions)</AdditionalOptions>
       <AssemblerListingLocation>debug\</AssemblerListingLocation>
       <BrowseInformation>false</BrowseInformation>
@@ -368,7 +368,7 @@
       <ExceptionHandling>Sync</ExceptionHandling>
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_WINDOWS;MCD_BUILD;QT_CORE_LIB;UNICODE;UNICODE;WIN32;WIN32;WIN64;QT_DLL;QT_GUI_LIB;QT_QUICK_LIB;QT_WIDGETS_LIB;QT_QML_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;MCD_BUILD;QT_CORE_LIB;UNICODE;UNICODE;WIN32;WIN32;WIN64;QT_DLL;QT_GUI_LIB;QT_QUICK_LIB;QT_WIDGETS_LIB;QT_QML_LIB;QT_NETWORK_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessToFile>false</PreprocessToFile>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
@@ -380,7 +380,7 @@
       <PrecompiledHeaderFile>cpch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>$(QTDIR)\lib\Qt5Cored.lib;Qt5Guid.lib;Qt5Quickd.lib;Qt5Widgetsd.lib;Qt5Qmld.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(QTDIR)\lib\Qt5Cored.lib;Qt5Guid.lib;Qt5Quickd.lib;Qt5Widgetsd.lib;Qt5Qmld.lib;Qt5Networkd.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(QTDIR)\lib;D:\Qt\qt-5.4.0-x64-msvc2013-compact\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -404,7 +404,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug SLL|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\mkspecs\win32-msvc2013;..\..\src\ui;..\..\src\sound;..\..\src\server;..\..\src\resource;..\..\src\osc;..\..\src\network;..\..\src\gamelogic;..\..\src\controller;..\..\src\common;..\..\src\client;..\..\src\ai;..\..\src;debug;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtQml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\mkspecs\win32-msvc2013;..\..\src\ui;..\..\src\sound;..\..\src\server;..\..\src\resource;..\..\src\osc;..\..\src\network;..\..\src\gamelogic;..\..\src\controller;..\..\src\common;..\..\src\client;..\..\src\ai;..\..\src;debug;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtNetwork;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-Zm200 -w34100 -w34189 %(AdditionalOptions)</AdditionalOptions>
       <AssemblerListingLocation>debug\</AssemblerListingLocation>
       <BrowseInformation>false</BrowseInformation>
@@ -412,7 +412,7 @@
       <ExceptionHandling>Sync</ExceptionHandling>
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_WINDOWS;MCD_STATIC;MCD_BUILD;QT_CORE_LIB;UNICODE;UNICODE;WIN32;WIN32;WIN64;QT_DLL;QT_GUI_LIB;QT_QUICK_LIB;QT_WIDGETS_LIB;QT_QML_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;MCD_STATIC;MCD_BUILD;QT_CORE_LIB;UNICODE;UNICODE;WIN32;WIN32;WIN64;QT_DLL;QT_GUI_LIB;QT_QUICK_LIB;QT_WIDGETS_LIB;QT_QML_LIB;QT_NETWORK_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessToFile>false</PreprocessToFile>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
@@ -424,7 +424,7 @@
       <PrecompiledHeaderFile>cpch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>$(QTDIR)\lib\Qt5Cored.lib;Qt5Guid.lib;Qt5Quickd.lib;Qt5Widgetsd.lib;Qt5Qmld.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(QTDIR)\lib\Qt5Cored.lib;Qt5Guid.lib;Qt5Quickd.lib;Qt5Widgetsd.lib;Qt5Qmld.lib;Qt5Networkd.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(QTDIR)\lib;D:\Qt\qt-5.4.0-x64-msvc2013-compact\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -448,7 +448,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\mkspecs\win32-msvc2013;..\..\src\ui;..\..\src\sound;..\..\src\server;..\..\src\resource;..\..\src\osc;..\..\src\network;..\..\src\gamelogic;..\..\src\controller;..\..\src\common;..\..\src\client;..\..\src\ai;..\..\src;release;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtQml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\mkspecs\win32-msvc2013;..\..\src\ui;..\..\src\sound;..\..\src\server;..\..\src\resource;..\..\src\osc;..\..\src\network;..\..\src\gamelogic;..\..\src\controller;..\..\src\common;..\..\src\client;..\..\src\ai;..\..\src;release;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtNetwork;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-Zm200 -Zc:strictStrings -w34100 -w34189 %(AdditionalOptions)</AdditionalOptions>
       <AssemblerListingLocation>release\</AssemblerListingLocation>
       <BrowseInformation>false</BrowseInformation>
@@ -456,7 +456,7 @@
       <ExceptionHandling>Sync</ExceptionHandling>
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <Optimization>MaxSpeed</Optimization>
-      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;MCD_BUILD;QT_NO_DEBUG;QT_CORE_LIB;NDEBUG;QT_DLL;QT_GUI_LIB;QT_QUICK_LIB;QT_WIDGETS_LIB;QT_QML_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;MCD_BUILD;QT_NO_DEBUG;QT_CORE_LIB;NDEBUG;QT_DLL;QT_GUI_LIB;QT_QUICK_LIB;QT_WIDGETS_LIB;QT_QML_LIB;QT_NETWORK_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessToFile>false</PreprocessToFile>
       <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -468,7 +468,7 @@
       <PrecompiledHeaderFile>cpch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>$(QTDIR)\lib\Qt5Core.lib;Qt5Gui.lib;Qt5Quick.lib;Qt5Widgets.lib;Qt5Qml.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(QTDIR)\lib\Qt5Core.lib;Qt5Gui.lib;Qt5Quick.lib;Qt5Widgets.lib;Qt5Qml.lib;Qt5Network.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(QTDIR)\lib;D:\Qt\qt-5.4.0-x64-msvc2013-compact\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -491,7 +491,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release SLL|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\mkspecs\win32-msvc2013;..\..\src\ui;..\..\src\sound;..\..\src\server;..\..\src\resource;..\..\src\osc;..\..\src\network;..\..\src\gamelogic;..\..\src\controller;..\..\src\common;..\..\src\client;..\..\src\ai;..\..\src;release;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtQml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\mkspecs\win32-msvc2013;..\..\src\ui;..\..\src\sound;..\..\src\server;..\..\src\resource;..\..\src\osc;..\..\src\network;..\..\src\gamelogic;..\..\src\controller;..\..\src\common;..\..\src\client;..\..\src\ai;..\..\src;release;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtNetwork;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-Zm200 -Zc:strictStrings -w34100 -w34189 %(AdditionalOptions)</AdditionalOptions>
       <AssemblerListingLocation>release\</AssemblerListingLocation>
       <BrowseInformation>false</BrowseInformation>
@@ -499,7 +499,7 @@
       <ExceptionHandling>Sync</ExceptionHandling>
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <Optimization>MaxSpeed</Optimization>
-      <PreprocessorDefinitions>_WINDOWS;MCD_STATIC;UNICODE;WIN32;MCD_BUILD;QT_NO_DEBUG;QT_CORE_LIB;NDEBUG;QT_DLL;QT_GUI_LIB;QT_QUICK_LIB;QT_WIDGETS_LIB;QT_QML_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;MCD_STATIC;UNICODE;WIN32;MCD_BUILD;QT_NO_DEBUG;QT_CORE_LIB;NDEBUG;QT_DLL;QT_GUI_LIB;QT_QUICK_LIB;QT_WIDGETS_LIB;QT_QML_LIB;QT_NETWORK_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessToFile>false</PreprocessToFile>
       <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -511,7 +511,7 @@
       <PrecompiledHeaderFile>cpch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>$(QTDIR)\lib\Qt5Core.lib;Qt5Gui.lib;Qt5Quick.lib;Qt5Widgets.lib;Qt5Qml.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(QTDIR)\lib\Qt5Core.lib;Qt5Gui.lib;Qt5Quick.lib;Qt5Widgets.lib;Qt5Qml.lib;Qt5Network.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(QTDIR)\lib;D:\Qt\qt-5.4.0-x64-msvc2013-compact\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -534,7 +534,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\mkspecs\win32-msvc2013;..\..\src\ui;..\..\src\sound;..\..\src\server;..\..\src\resource;..\..\src\osc;..\..\src\network;..\..\src\gamelogic;..\..\src\controller;..\..\src\common;..\..\src\client;..\..\src\ai;..\..\src;release;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtQml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\mkspecs\win32-msvc2013;..\..\src\ui;..\..\src\sound;..\..\src\server;..\..\src\resource;..\..\src\osc;..\..\src\network;..\..\src\gamelogic;..\..\src\controller;..\..\src\common;..\..\src\client;..\..\src\ai;..\..\src;release;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtNetwork;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-Zm200 -Zc:strictStrings -w34100 -w34189 %(AdditionalOptions)</AdditionalOptions>
       <AssemblerListingLocation>release\</AssemblerListingLocation>
       <BrowseInformation>false</BrowseInformation>
@@ -542,7 +542,7 @@
       <ExceptionHandling>Sync</ExceptionHandling>
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <Optimization>MaxSpeed</Optimization>
-      <PreprocessorDefinitions>_WINDOWS;MCD_BUILD;NDEBUG;QT_CORE_LIB;QT_NO_DEBUG;UNICODE;UNICODE;WIN32;WIN32;WIN64;QT_DLL;QT_GUI_LIB;QT_QUICK_LIB;QT_WIDGETS_LIB;QT_QML_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;MCD_BUILD;NDEBUG;QT_CORE_LIB;QT_NO_DEBUG;UNICODE;UNICODE;WIN32;WIN32;WIN64;QT_DLL;QT_GUI_LIB;QT_QUICK_LIB;QT_WIDGETS_LIB;QT_QML_LIB;QT_NETWORK_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessToFile>false</PreprocessToFile>
       <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -554,7 +554,7 @@
       <PrecompiledHeaderFile>cpch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>$(QTDIR)\lib\Qt5Core.lib;Qt5Gui.lib;Qt5Quick.lib;Qt5Widgets.lib;Qt5Qml.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(QTDIR)\lib\Qt5Core.lib;Qt5Gui.lib;Qt5Quick.lib;Qt5Widgets.lib;Qt5Qml.lib;Qt5Network.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(QTDIR)\lib;D:\Qt\qt-5.4.0-x64-msvc2013-compact\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -579,7 +579,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release SLL|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\mkspecs\win32-msvc2013;..\..\src\ui;..\..\src\sound;..\..\src\server;..\..\src\resource;..\..\src\osc;..\..\src\network;..\..\src\gamelogic;..\..\src\controller;..\..\src\common;..\..\src\client;..\..\src\ai;..\..\src;release;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtQml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\mkspecs\win32-msvc2013;..\..\src\ui;..\..\src\sound;..\..\src\server;..\..\src\resource;..\..\src\osc;..\..\src\network;..\..\src\gamelogic;..\..\src\controller;..\..\src\common;..\..\src\client;..\..\src\ai;..\..\src;release;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtNetwork;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-Zm200 -Zc:strictStrings -w34100 -w34189 %(AdditionalOptions)</AdditionalOptions>
       <AssemblerListingLocation>release\</AssemblerListingLocation>
       <BrowseInformation>false</BrowseInformation>
@@ -587,7 +587,7 @@
       <ExceptionHandling>Sync</ExceptionHandling>
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <Optimization>MaxSpeed</Optimization>
-      <PreprocessorDefinitions>_WINDOWS;MCD_STATIC;MCD_BUILD;NDEBUG;QT_CORE_LIB;QT_NO_DEBUG;UNICODE;UNICODE;WIN32;WIN32;WIN64;QT_DLL;QT_GUI_LIB;QT_QUICK_LIB;QT_WIDGETS_LIB;QT_QML_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;MCD_STATIC;MCD_BUILD;NDEBUG;QT_CORE_LIB;QT_NO_DEBUG;UNICODE;UNICODE;WIN32;WIN32;WIN64;QT_DLL;QT_GUI_LIB;QT_QUICK_LIB;QT_WIDGETS_LIB;QT_QML_LIB;QT_NETWORK_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessToFile>false</PreprocessToFile>
       <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -599,7 +599,7 @@
       <PrecompiledHeaderFile>cpch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>$(QTDIR)\lib\Qt5Core.lib;Qt5Gui.lib;Qt5Quick.lib;Qt5Widgets.lib;Qt5Qml.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(QTDIR)\lib\Qt5Core.lib;Qt5Gui.lib;Qt5Quick.lib;Qt5Widgets.lib;Qt5Qml.lib;Qt5Network.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(QTDIR)\lib;D:\Qt\qt-5.4.0-x64-msvc2013-compact\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <GenerateDebugInformation>false</GenerateDebugInformation>
