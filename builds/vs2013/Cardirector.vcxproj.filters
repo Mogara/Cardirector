@@ -96,6 +96,18 @@
     <ClCompile Include="..\..\src\cpch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release SLL\moc_cresource.cpp">
+      <Filter>Generated Files\Release SLL</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug SLL\moc_cresource.cpp">
+      <Filter>Generated Files\Debug SLL</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_cresource.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_cresource.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\gamelogic\cabstractgamelogic.h">
@@ -105,9 +117,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\osc\cosc.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\resource\cresource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\server\cabstractserver.h">
@@ -149,6 +158,9 @@
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\..\src\client\cclientsettings.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\resource\cresource.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>
