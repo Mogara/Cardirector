@@ -1,3 +1,4 @@
 module Cardirector.Gui
 MainWindow 1.0 MainWindow.qml
 plugin gui
+

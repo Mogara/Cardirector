@@ -43,7 +43,8 @@ SOURCES += \
     src/sound/csound.cpp \
     src/ui/cabstractui.cpp \
     src/client/cclientsettings.cpp \
-    src/ui/cmainwindow.cpp
+    src/ui/cmainwindow.cpp \
+    src/resource/cresource.cpp
 
 HEADERS += \
     src/ai/cabstractai.h \
@@ -62,7 +63,8 @@ HEADERS += \
     src/common/cglobal.h \
     src/cpch.h \
     src/client/cclientsettings.h \
-    src/ui/cmainwindow.h
+    src/ui/cmainwindow.h \
+    src/resource/cresource.h
 
 defineTest(copy) {
     file = $$1
@@ -88,5 +90,10 @@ build_pass {
         copy($$OUT_PWD/$$DESTDIR/$$TARGET".dll", bin/win32-msvc2013/)
         copy($$OUT_PWD/$$DESTDIR/$$TARGET".pdb", bin/win32-msvc2013/)
         copy($$OUT_PWD/$$DESTDIR/$$TARGET".lib", lib/win32-msvc2013/)
+    }
+    win32-msvc2010 {
+        copy($$OUT_PWD/$$DESTDIR/$$TARGET".dll", bin/win32-msvc2010/)
+        copy($$OUT_PWD/$$DESTDIR/$$TARGET".pdb", bin/win32-msvc2010/)
+        copy($$OUT_PWD/$$DESTDIR/$$TARGET".lib", lib/win32-msvc2010/)
     }
 }

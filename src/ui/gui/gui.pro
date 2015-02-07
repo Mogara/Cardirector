@@ -70,7 +70,7 @@ defineTest(copy) {
 }
 
 build_pass {
-    win32-msvc2013 {
+    win32-msvc* {
         dest = ../../../Gui/
         copy($$OUT_PWD/$$DESTDIR/$$TARGET".dll", $$dest)
         copy($$OUT_PWD/$$DESTDIR/$$TARGET".pdb", $$dest)
