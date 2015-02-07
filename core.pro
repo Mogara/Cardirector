@@ -38,13 +38,12 @@ SOURCES += \
     src/gamelogic/cabstractgamelogic.cpp \
     src/network/cnetwork.cpp \
     src/osc/cosc.cpp \
-    src/resource/cresource.cpp \
     src/server/cabstractserver.cpp \
     src/sound/csound.cpp \
     src/ui/cabstractui.cpp \
     src/client/cclientsettings.cpp \
     src/ui/cmainwindow.cpp \
-    src/resource/cresource.cpp
+    src/resource/cresourcemanager.cpp
 
 HEADERS += \
     src/ai/cabstractai.h \
@@ -56,7 +55,6 @@ HEADERS += \
     src/gamelogic/cabstractgamelogic.h \
     src/network/cnetwork.h \
     src/osc/cosc.h \
-    src/resource/cresource.h \
     src/server/cabstractserver.h \
     src/sound/csound.h \
     src/ui/cabstractui.h \
@@ -64,7 +62,7 @@ HEADERS += \
     src/cpch.h \
     src/client/cclientsettings.h \
     src/ui/cmainwindow.h \
-    src/resource/cresource.h
+    src/resource/cresourcemanager.h
 
 defineTest(copy) {
     file = $$1

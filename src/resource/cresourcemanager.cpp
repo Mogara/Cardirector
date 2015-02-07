@@ -17,41 +17,40 @@
     Mogara
     *********************************************************************/
 
-#ifndef CRESOURCE_H
-#define CRESOURCE_H
 
-#include "cglobal.h"
+#include "cpch.h"
+#include "cresourcemanager.h"
 
-#include <QPixmap>
-#include <QPointer>
+#include <QCoreApplication>
 
-MCD_BEGIN_NAMESPACE
+QPointer<CResourceManager> CResourceManager::self;
 
-class CResourceManagerPrivate;
-
-class MCD_EXPORT CResourceManager : public QObject
+// For atexit
+namespace
 {
-    Q_OBJECT
+    void cResourceManagerDestroyInstance()
+    {
+        if (CResourceManager::getInstance() != NULL)
+            delete CResourceManager::getInstance();
+    }
+}
 
-public:
-    static CResourceManager *getInstance();
+CResourceManager *CResourceManager::getInstance()
+{
+    if (self.isNull()) {
+        self = new CResourceManager;
 
-    QPixmap getPixmap(const QString &fileName); // @@TODO: No implemention now
-    // CAudio getAudio(const QString &fileName); // @@TODO: implement CAudio
+        if (qApp != NULL)
+            connect(qApp, &QCoreApplication::aboutToQuit, self, &CResourceManager::deleteLater);
+        else
+            atexit(&cResourceManagerDestroyInstance);
+    }
 
+    return self;
+}
 
-private:
-    static QPointer<CResourceManager> self;
+CResourceManager::CResourceManager()
+{
 
-    CResourceManager();
+}
 
-
-    CResourceManagerPrivate *p_ptr;
-
-    C_DISABLE_COPY(CResourceManager)
-    C_DECLARE_PRIVATE(CResourceManager)
-};
-
-MCD_END_NAMESPACE
-
-#endif
