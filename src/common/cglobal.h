@@ -60,4 +60,16 @@
 #define C_P(Class) Class##Private * const p = p_func()
 #define C_B(Class) Class * const b = b_func()
 
+/*
+   Avoid "unused parameter" warnings
+*/
+
+#if defined(Q_CC_RVCT)
+template <typename T>
+inline void cUnused(T &x) { (void)x; }
+#  define C_UNUSED(x) cUnused(x);
+#else
+#  define C_UNUSED(x) (void)x;
+#endif
+
 #endif // CGLOBAL_H
