@@ -22,8 +22,26 @@
 #include "cresourcemanager.h"
 
 #include <QCoreApplication>
+#include <QCache>
 
 QPointer<CResourceManager> CResourceManager::self;
+
+class CResourceManagerPrivate
+{
+protected:
+    explicit CResourceManagerPrivate(CResourceManager *const b)
+        : b_ptr(b)
+    {
+        
+    }
+
+    QCache<QString, QPixmap> m_pixmapCache;
+
+private:
+    CResourceManager *const b_ptr;
+    C_DECLARE_PUBLIC(CResourceManager);
+    C_DISABLE_COPY(CResourceManagerPrivate);
+};
 
 // For atexit
 namespace
@@ -50,7 +68,26 @@ CResourceManager *CResourceManager::getInstance()
 }
 
 CResourceManager::CResourceManager()
+    : p_ptr(new CResourceManagerPrivate(this))
 {
 
 }
 
+QPixmap CResourceManager::getPixmap(const QString &path) {
+    if (QFile::exists(path)) {
+        C_P(CResourceManager);
+
+        if (p->m_pixmapCache.contains(path))
+            return *(p->m_pixmapCache.object(path));
+        else {
+            QPixmap *px = new QPixmap(path);
+            if (!px->isNull()) {
+                p->m_pixmapCache.insert(path, px);
+                return *px;
+            }
+        }
+    }
+
+    Q_ASSERT(false);
+    return QPixmap();
+}
