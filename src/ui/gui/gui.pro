@@ -59,6 +59,7 @@ RESOURCES += $$GENERATED_RESOURCE_FILE
 defineTest(copy) {
     file = $$1
     path = $$2
+    !exists(file): return(false)
     win32 {
         system("copy $$replace(file, /, \\) $$replace(path, /, \\)")
     }
