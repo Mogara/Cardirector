@@ -73,7 +73,7 @@ CResourceManager::CResourceManager()
 
 }
 
-const QPixmap &CResourceManager::getPixmap(const QString &path) {
+QPixmap CResourceManager::getPixmap(const QString &path) {
     if (QFile::exists(path)) {
         C_P(CResourceManager);
 

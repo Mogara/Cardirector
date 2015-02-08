@@ -36,7 +36,8 @@ class MCD_EXPORT CResourceManager : public QObject
 public:
     static CResourceManager *getInstance();
 
-    QPixmap getPixmap(const QString &fileName); // @@TODO: No implemention now
+    // get pixmap via path
+    QPixmap getPixmap(const QString &fileName);
     // CAudio getAudio(const QString &fileName); // @@TODO: implement CAudio
 
 
