@@ -17,30 +17,24 @@
     Mogara
     *********************************************************************/
 
-#ifndef CGUIPLUGIN_H
-#define CGUIPLUGIN_H
+#ifndef CQMLAPPLICATIONENGINE_H
+#define CQMLAPPLICATIONENGINE_H
 
 #include "cglobal.h"
 
-#include <QQmlExtensionPlugin>
+#include <QQmlApplicationEngine>
 
-MCD_BEGIN_NAMESPACE
-
-class CGuiPlugin : public QQmlExtensionPlugin
+class MCD_EXPORT CQmlApplicationEngine : public QQmlApplicationEngine
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "org.mogara.Cardirector.CGuiInterface/0.1")
 
 public:
-    void registerTypes(const char *uri);
-    void initializeEngine(QQmlEngine *engine, const char *uri);
+    CQmlApplicationEngine();
+    ~CQmlApplicationEngine();
 
 private:
     QString fileLocation() const;
     bool isLoadedFromResource() const;
 };
 
-MCD_END_NAMESPACE
-
-#endif // CGUIPLUGIN_H
-
+#endif // CQMLAPPLICATIONENGINE_H

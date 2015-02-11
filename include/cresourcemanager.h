@@ -37,7 +37,7 @@ public:
     static CResourceManager *getInstance();
 
     // get pixmap via path
-    QPixmap getPixmap(const QString &fileName); // @@TODO: No implemention now
+    QPixmap getPixmap(const QString &fileName);
     // CAudio getAudio(const QString &fileName); // @@TODO: implement CAudio
 
 

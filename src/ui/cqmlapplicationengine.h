@@ -17,21 +17,24 @@
     Mogara
     *********************************************************************/
 
-#ifndef CPCH_H
-#define CPCH_H
+#ifndef CQMLAPPLICATIONENGINE_H
+#define CQMLAPPLICATIONENGINE_H
 
-// Add C includes here
+#include "cglobal.h"
 
-#ifdef __cplusplus
- // Add C++ includes here
-#include <QtCore/qglobal.h>
+#include <QQmlApplicationEngine>
 
-#include <QPoint>
-#include <QQmlContext>
-#include <QQuickView>
-#include <QSettings>
-#include <QSize>
-#endif
+class MCD_EXPORT CQmlApplicationEngine : public QQmlApplicationEngine
+{
+    Q_OBJECT
 
-#endif // CPCH_H
+public:
+    CQmlApplicationEngine();
+    ~CQmlApplicationEngine();
 
+private:
+    QString fileLocation() const;
+    bool isLoadedFromResource() const;
+};
+
+#endif // CQMLAPPLICATIONENGINE_H

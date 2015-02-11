@@ -1,0 +1,5 @@
+<RCC>
+<qresource prefix="/Cardirector/Gui">
+<file alias="MainWindow.qml">Gui/MainWindow.qml</file>
+</qresource>
+</RCC>

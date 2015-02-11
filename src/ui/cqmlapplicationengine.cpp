@@ -17,52 +17,38 @@
     Mogara
     *********************************************************************/
 
-#include "cguiplugin.h"
-
-#include <QFile>
-#include <QtQml>
-
-static void initResources()
-{
-    Q_INIT_RESOURCE(gui);
-}
-
-MCD_BEGIN_NAMESPACE
+#include "cqmlapplicationengine.h"
 
 static const struct {
     const char *type;
-    int major, minor;
-} qmldir [] = {
-    { "MainWindow", 1, 0 }
+        int major, minor;
+    } qmldir [] = {
+        { "MainWindow", 1, 0 }
 };
 
-void CGuiPlugin::registerTypes(const char *uri)
+CQmlApplicationEngine::CQmlApplicationEngine()
 {
-    // @uri Cardirector.Gui
-    Q_ASSERT(uri == QLatin1String("Cardirector.Gui"));
-
-    //qmlRegisterType<CGuiPlugin>(uri, 1, 0, "CGuiPlugin");
     const QString filesLocation = fileLocation();
     for (int i = 0; i < int(sizeof(qmldir)/sizeof(qmldir[0])); i++)
-        qmlRegisterType(QUrl(filesLocation + "/" + qmldir[i].type + ".qml"), uri, qmldir[i].major, qmldir[i].minor, qmldir[i].type);
-}
-
-void CGuiPlugin::initializeEngine(QQmlEngine *engine, const char *uri)
-{
-    C_UNUSED(uri)
+        qmlRegisterType(QUrl(filesLocation + "/" + qmldir[i].type + ".qml"), "Cardirector.Gui", qmldir[i].major, qmldir[i].minor, qmldir[i].type);
 
     if (isLoadedFromResource())
-        engine->addImportPath(QStringLiteral("qrc:/"));
+        addImportPath(QStringLiteral("qrc:/"));
 }
 
-QString CGuiPlugin::fileLocation() const
+CQmlApplicationEngine::~CQmlApplicationEngine()
+{
+
+}
+
+QString CQmlApplicationEngine::fileLocation() const
 {
     if (isLoadedFromResource())
         return "qrc:/Cardirector/Gui";
     return baseUrl().toString();
 }
 
-bool CGuiPlugin::isLoadedFromResource() const
+bool CQmlApplicationEngine::isLoadedFromResource() const
 {
     // If one file is missing, it will load all the files from the resource
     QFile file(baseUrl().toLocalFile() + "/MainWindow.qml");
@@ -70,7 +56,4 @@ bool CGuiPlugin::isLoadedFromResource() const
         return true;
     return false;
 }
-
-MCD_END_NAMESPACE
-
 
