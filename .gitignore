@@ -33,3 +33,6 @@ ipch/
 *sdf
 *.suo
 *.vcxproj.user
+bin/
+include/
+lib/
