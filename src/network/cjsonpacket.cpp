@@ -24,8 +24,12 @@
 bool CJsonPacket::parse(const QByteArray &data)
 {
     QJsonDocument doc = QJsonDocument::fromJson(data);
-    m_data = doc.toVariant();
-    return m_data.isValid();
+    QVariantList packet = doc.toVariant().toList();
+    if (packet.size() != 2)
+        return false;
+    m_command = packet.at(0).toInt();
+    m_data = packet.at(1);
+    return true;
 }
 
 QByteArray CJsonPacket::toByteArray() const
