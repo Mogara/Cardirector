@@ -38,6 +38,7 @@ SOURCES += \
     src/gamelogic/cabstractgamelogic.cpp \
     src/network/cnetwork.cpp \
     src/network/cabstractpacket.cpp \
+    src/network/cjsonpacket.cpp \
     src/network/ctcpserver.cpp \
     src/network/ctcpsocket.cpp \
     src/osc/cosc.cpp \
@@ -58,6 +59,7 @@ HEADERS += \
     src/gamelogic/cabstractgamelogic.h \
     src/network/cnetwork.h \
     src/network/cabstractpacket.h \
+    src/network/cjsonpacket.h \
     src/network/ctcpserver.h \
     src/network/ctcpsocket.h \
     src/osc/cosc.h \
