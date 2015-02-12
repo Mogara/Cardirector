@@ -22,7 +22,7 @@
 
 #include "cabstractpacket.h"
 
-class CJsonPacket : public CAbstractPacket
+class MCD_EXPORT CJsonPacket : public CAbstractPacket
 {
 public:
     CJsonPacket(int command) : CAbstractPacket(command) {}
