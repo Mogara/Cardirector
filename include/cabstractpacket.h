@@ -17,11 +17,31 @@
     Mogara
     *********************************************************************/
 
-#ifndef CNETWORK_H
-#define CNETWORK_H
+#ifndef CABSTRACTPACKET_H
+#define CABSTRACTPACKET_H
 
-#include "cabstractpacket.h"
-#include "ctcpsocket.h"
-#include "ctcpserver.h"
+#include "cglobal.h"
 
-#endif
+#include <QVariant>
+
+class CAbstractPacketPrivate;
+
+class MCD_EXPORT CAbstractPacket
+{
+public:
+    CAbstractPacket(int command);
+    ~CAbstractPacket();
+
+    int command() const;
+
+    void setData(const QVariant &data);
+    const QVariant &data() const;
+
+    virtual const QByteArray &toByteArray() const = 0;
+
+private:
+    C_DECLARE_PRIVATE(CAbstractPacket)
+    CAbstractPacketPrivate *p_ptr;
+};
+
+#endif // CABSTRACTPACKET_H

@@ -17,11 +17,31 @@
     Mogara
     *********************************************************************/
 
-#ifndef CNETWORK_H
-#define CNETWORK_H
+#ifndef CTCPSERVER_H
+#define CTCPSERVER_H
 
-#include "cabstractpacket.h"
-#include "ctcpsocket.h"
-#include "ctcpserver.h"
+#include "cglobal.h"
 
-#endif
+#include <QTcpServer>
+
+class CTcpSocket;
+
+class MCD_EXPORT CTcpServer : public QTcpServer
+{
+    Q_OBJECT
+
+public:
+    CTcpServer(QObject *parent = 0);
+
+signals:
+    void newSocket(CTcpSocket *socket);
+
+protected:
+    void incomingConnection(qintptr handle);
+
+private:
+    void newConnection() {}
+    QTcpSocket *nextPendingConnection() {return NULL;}
+};
+
+#endif // CTCPSERVER_H

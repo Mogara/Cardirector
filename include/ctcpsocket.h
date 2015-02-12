@@ -17,11 +17,38 @@
     Mogara
     *********************************************************************/
 
-#ifndef CNETWORK_H
-#define CNETWORK_H
+#ifndef CTCPSOCKET_H
+#define CTCPSOCKET_H
 
-#include "cabstractpacket.h"
-#include "ctcpsocket.h"
-#include "ctcpserver.h"
+#include "cglobal.h"
 
-#endif
+
+#include <QTcpSocket>
+#include <QByteArray>
+#include <QHostAddress>
+
+class CInlineTextSocketPrivate;
+
+class MCD_EXPORT CTcpSocket : public QTcpSocket
+{
+    Q_OBJECT
+
+public:
+    explicit CTcpSocket(QObject *parent = 0);
+    ~CTcpSocket();
+
+    void writePacket(const QByteArray &data);
+
+signals:
+    void newPacket(const QByteArray &data);
+
+protected:
+    void readPacket();
+    void keepAlive();
+
+private:
+    C_DECLARE_PRIVATE(CInlineTextSocket)
+    CInlineTextSocketPrivate *p_ptr;
+};
+
+#endif // CTCPSOCKET_H
