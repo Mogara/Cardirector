@@ -37,5 +37,5 @@ QByteArray CJsonPacket::toByteArray() const
     QJsonDocument doc = QJsonDocument::fromVariant(message);
     if (doc.isEmpty())
         return QByteArray();
-    return doc.toJson();
+    return doc.toJson(QJsonDocument::Compact);
 }
