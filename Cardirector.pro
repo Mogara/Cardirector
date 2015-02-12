@@ -125,15 +125,9 @@ for(file, HEADERS) {
     }
 }
 
-build_pass {
-    win32-msvc2013 {
-        copy($$OUT_PWD/$$DESTDIR/$$TARGET".dll", bin/win32-msvc2013/)
-        copy($$OUT_PWD/$$DESTDIR/$$TARGET".pdb", bin/win32-msvc2013/)
-        copy($$OUT_PWD/$$DESTDIR/$$TARGET".lib", lib/win32-msvc2013/)
-    }
-    win32-msvc2010 {
-        copy($$OUT_PWD/$$DESTDIR/$$TARGET".dll", bin/win32-msvc2010/)
-        copy($$OUT_PWD/$$DESTDIR/$$TARGET".pdb", bin/win32-msvc2010/)
-        copy($$OUT_PWD/$$DESTDIR/$$TARGET".lib", lib/win32-msvc2010/)
-    }
+win32 {
+    QMAKE_POST_LINK = \
+        $$QMAKE_COPY \"$$OUT_PWD\\$$DESTDIR\\$${TARGET}.dll\" \"$$PWD\\bin\" \
+     && $$QMAKE_COPY \"$$OUT_PWD\\$$DESTDIR\\$${TARGET}.exp\" \"$$PWD\\bin\" \
+     && $$QMAKE_COPY \"$$OUT_PWD\\$$DESTDIR\\$${TARGET}.lib\" \"$$PWD\\lib\"
 }
