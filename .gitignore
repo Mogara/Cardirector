@@ -36,3 +36,4 @@ ipch/
 bin/
 include/
 lib/
+gui.qrc

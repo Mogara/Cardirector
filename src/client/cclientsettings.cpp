@@ -27,10 +27,6 @@ public:
     {
 
     }
-
-    QSize windowSize;
-    QPoint windowPos;
-    Qt::WindowState windowState;
 };
 
 CClientSettings::CClientSettings(const QString &organization, const QString &application, QObject *parent)
@@ -63,61 +59,12 @@ CClientSettings::CClientSettings(QObject *parent)
     init();
 }
 
-CClientSettings::~CClientSettings()
-{
-
-}
-
-QSize CClientSettings::windowSize() const
-{
-    return p_ptr->windowSize;
-}
-
-void CClientSettings::setWindowSize(const QSize &size)
-{
-    if (p_ptr->windowSize != size) {
-        p_ptr->windowSize = size;
-        setValue("window/size", size);
-        emit windowSizeChanged();
-    }
-}
-
-QPoint CClientSettings::windowPos() const
-{
-    return p_ptr->windowPos;
-}
-
-void CClientSettings::setWindowPos(const QPoint &pos)
-{
-    if (p_ptr->windowPos != pos) {
-        p_ptr->windowPos = pos;
-        setValue("window/pos", pos);
-        emit windowPosChanged();
-    }
-}
-
-Qt::WindowState CClientSettings::windowState() const
-{
-    return p_ptr->windowState;
-}
-
-void CClientSettings::setWindowState(const Qt::WindowState state)
-{
-    if (p_ptr->windowState != state) {
-        p_ptr->windowState = state;
-        setValue("window/state", (int)state);
-        emit windowStateChanged();
-    }
-}
-
 void CClientSettings::init()
 {
     p_ptr = new CClientSettingsPrivate;
-
-    beginGroup("window");
-    p_ptr->windowSize = value("size").toSize();
-    p_ptr->windowPos = value("pos").toPoint();
-    p_ptr->windowState = (Qt::WindowState)value("state").toInt();
-    endGroup();
 }
 
+CClientSettings::~CClientSettings()
+{
+    delete p_ptr;
+}
