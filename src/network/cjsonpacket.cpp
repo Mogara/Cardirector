@@ -21,6 +21,13 @@
 
 #include <QJsonDocument>
 
+bool CJsonPacket::parse(const QByteArray &data)
+{
+    QJsonDocument doc = QJsonDocument::fromJson(data);
+    m_data = doc.toVariant();
+    return m_data.isValid();
+}
+
 QByteArray CJsonPacket::toByteArray() const
 {
     QVariantList message;

@@ -26,6 +26,8 @@ class CJsonPacket : public CAbstractPacket
 {
 public:
     CJsonPacket(int command) : CAbstractPacket(command) {}
+
+    bool parse(const QByteArray &data);
     QByteArray toByteArray() const;
 };
 

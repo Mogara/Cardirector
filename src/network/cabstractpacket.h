@@ -29,19 +29,19 @@ class CAbstractPacketPrivate;
 class MCD_EXPORT CAbstractPacket
 {
 public:
-    CAbstractPacket(int command);
-    ~CAbstractPacket();
+    CAbstractPacket(int command) : m_command(command) {}
 
-    int command() const;
+    int command() const { return m_command; }
 
-    void setData(const QVariant &data);
-    const QVariant &data() const;
+    void setData(const QVariant &data) { m_data = data; }
+    const QVariant &data() const { return m_data; }
 
+    virtual bool parse(const QByteArray &data) = 0;
     virtual QByteArray toByteArray() const = 0;
 
-private:
-    C_DECLARE_PRIVATE(CAbstractPacket)
-    CAbstractPacketPrivate *p_ptr;
+protected:
+    int m_command;
+    QVariant m_data;
 };
 
 #endif // CABSTRACTPACKET_H
