@@ -37,7 +37,7 @@ public:
     void setData(const QVariant &data);
     const QVariant &data() const;
 
-    virtual const QByteArray &toByteArray() const = 0;
+    virtual QByteArray toByteArray() const = 0;
 
 private:
     C_DECLARE_PRIVATE(CAbstractPacket)
