@@ -37,6 +37,9 @@ SOURCES += \
     src/controller/cabstractuicontroller.cpp \
     src/gamelogic/cabstractgamelogic.cpp \
     src/network/cnetwork.cpp \
+    src/network/cabstractpacket.cpp \
+    src/network/ctcpserver.cpp \
+    src/network/ctcpsocket.cpp \
     src/osc/cosc.cpp \
     src/server/cabstractserver.cpp \
     src/sound/csound.cpp \
@@ -55,6 +58,9 @@ HEADERS += \
     src/controller/cabstractuicontroller.h \
     src/gamelogic/cabstractgamelogic.h \
     src/network/cnetwork.h \
+    src/network/cabstractpacket.h \
+    src/network/ctcpserver.h \
+    src/network/ctcpsocket.h \
     src/osc/cosc.h \
     src/server/cabstractserver.h \
     src/sound/csound.h \
