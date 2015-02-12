@@ -21,7 +21,6 @@
 #define CWINDOW_H
 
 #include "cglobal.h"
-#include "cclientsettings.h"
 
 #include <QQuickView>
 
@@ -32,7 +31,10 @@ class CMainWindowPrivate;
 class MCD_EXPORT CMainWindow : public QQuickView
 {
 public:
-    explicit CMainWindow(CClientSettings *stateRecorder = nullptr, QWindow *parent = 0);
+    explicit CMainWindow(QWindow *parent = 0);
+    CMainWindow(QQmlEngine *engine, QWindow *parent);
+    CMainWindow(const QUrl &source, QWindow *parent = 0);
+
     virtual ~CMainWindow();
 
 protected:
@@ -43,6 +45,8 @@ private:
     CMainWindowPrivate *p_ptr;
     C_DISABLE_COPY(CMainWindow)
     C_DECLARE_PRIVATE(CMainWindow)
+
+    void init();
 };
 
 MCD_END_NAMESPACE

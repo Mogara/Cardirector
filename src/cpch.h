@@ -25,9 +25,9 @@
 #ifdef __cplusplus
  // Add C++ includes here
 #include <QtCore/qglobal.h>
+#include <QtQml>
 
 #include <QPoint>
-#include <QQmlContext>
 #include <QQuickView>
 #include <QSettings>
 #include <QSize>

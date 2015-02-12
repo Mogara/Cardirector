@@ -46,8 +46,7 @@ SOURCES += \
     src/ui/cabstractui.cpp \
     src/client/cclientsettings.cpp \
     src/ui/cmainwindow.cpp \
-    src/resource/cresourcemanager.cpp \
-    src/ui/cqmlapplicationengine.cpp
+    src/resource/cresourcemanager.cpp
 
 HEADERS += \
     src/ai/cabstractai.h \
@@ -69,42 +68,40 @@ HEADERS += \
     src/cpch.h \
     src/client/cclientsettings.h \
     src/ui/cmainwindow.h \
-    src/resource/cresourcemanager.h \
-    src/ui/cqmlapplicationengine.h
+    src/resource/cresourcemanager.h
 
-QML_FILES += \
-    Gui/MainWindow.qml
+#QML_FILES +=
 
-DISTFILES = Gui/qmldir
+#DISTFILES = Gui/qmldir
 
-qmldir.files = Gui/qmldir
-unix {
-    installPath = $$[QT_INSTALL_QML]/$$replace(uri, \\., /)
-    qmldir.path = $$installPath
-    target.path = $$installPath
-    INSTALLS += target qmldir
-}
+#qmldir.files = Gui/qmldir
+#unix {
+#    installPath = $$[QT_INSTALL_QML]/$$replace(uri, \\., /)
+#    qmldir.path = $$installPath
+#    target.path = $$installPath
+#    INSTALLS += target qmldir
+#}
 
-# Create the resource file
-GENERATED_RESOURCE_FILE = gui.qrc
+## Create the resource file
+#GENERATED_RESOURCE_FILE = gui.qrc
 
-INCLUDED_RESOURCE_FILES = $$QML_FILES
+#INCLUDED_RESOURCE_FILES = $$QML_FILES
 
-RESOURCE_CONTENT = \
-    "<RCC>" \
-    "<qresource prefix=\"/Cardirector/Gui\">"
+#RESOURCE_CONTENT = \
+#    "<RCC>" \
+#    "<qresource prefix=\"/Cardirector/Gui\">"
 
-for(resourcefile, INCLUDED_RESOURCE_FILES) {
-    RESOURCE_CONTENT += "<file alias=\"$$basename(resourcefile)\">$$resourcefile</file>"
-}
+#for(resourcefile, INCLUDED_RESOURCE_FILES) {
+#    RESOURCE_CONTENT += "<file alias=\"$$basename(resourcefile)\">$$resourcefile</file>"
+#}
 
-RESOURCE_CONTENT += \
-    "</qresource>" \
-    "</RCC>"
+#RESOURCE_CONTENT += \
+#    "</qresource>" \
+#    "</RCC>"
 
-write_file($$GENERATED_RESOURCE_FILE, RESOURCE_CONTENT)|error("Aborting.")
+#write_file($$GENERATED_RESOURCE_FILE, RESOURCE_CONTENT)|error("Aborting.")
 
-RESOURCES += $$GENERATED_RESOURCE_FILE
+#RESOURCES += $$GENERATED_RESOURCE_FILE
 
 defineTest(copy) {
     file = $$1
