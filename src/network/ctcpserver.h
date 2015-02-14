@@ -24,6 +24,8 @@
 
 #include <QTcpServer>
 
+MCD_BEGIN_NAMESPACE
+
 class CTcpSocket;
 
 class MCD_EXPORT CTcpServer : public QTcpServer
@@ -43,5 +45,7 @@ private:
     void newConnection() {}
     QTcpSocket *nextPendingConnection() {return NULL;}
 };
+
+MCD_END_NAMESPACE
 
 #endif // CTCPSERVER_H

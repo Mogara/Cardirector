@@ -22,6 +22,8 @@
 
 #include "cabstractpacket.h"
 
+MCD_BEGIN_NAMESPACE
+
 class MCD_EXPORT CJsonPacket : public CAbstractPacket
 {
 public:
@@ -30,5 +32,7 @@ public:
     bool parse(const QByteArray &data);
     QByteArray toByteArray() const;
 };
+
+MCD_END_NAMESPACE
 
 #endif // CJSONPACKET_H
