@@ -9,6 +9,7 @@ CONFIG += precompile_header
 #CONFIG += staticlib
 
 QT += quick
+android:QT += androidextras
 
 # Use Precompiled headers (PCH)
 PRECOMPILED_HEADER = src/cpch.h
@@ -41,6 +42,7 @@ SOURCES += \
     src/network/cjsonpacket.cpp \
     src/network/ctcpserver.cpp \
     src/network/ctcpsocket.cpp \
+    src/network/cwifimanager.cpp \
     src/osc/cosc.cpp \
     src/server/cabstractserver.cpp \
     src/sound/csound.cpp \
@@ -62,6 +64,7 @@ HEADERS += \
     src/network/cjsonpacket.h \
     src/network/ctcpserver.h \
     src/network/ctcpsocket.h \
+    src/network/cwifimanager.h \
     src/osc/cosc.h \
     src/server/cabstractserver.h \
     src/sound/csound.h \
@@ -110,7 +113,7 @@ defineTest(copy) {
     path = $$2
     !exists($$file): return(false)
     equals(QMAKE_HOST.os, Windows) {
-        system("copy $$system_path($$file) $$system_path($$path)")
+        system("copy /y $$system_path($$file) $$system_path($$path)")
     }
     else {
         system("cp $$file $$path")
