@@ -109,7 +109,7 @@ defineTest(copy) {
     file = $$1
     path = $$2
     !exists($$file): return(false)
-    win32 {
+    equals(QMAKE_HOST.os, Windows) {
         system("copy $$system_path($$file) $$system_path($$path)")
     }
     else {
@@ -127,7 +127,12 @@ for(file, HEADERS) {
 
 win32 {
     QMAKE_POST_LINK = \
-        $$QMAKE_COPY \"$$OUT_PWD\\$$DESTDIR\\$${TARGET}.dll\" \"$$PWD\\bin\" \
-     && $$QMAKE_COPY \"$$OUT_PWD\\$$DESTDIR\\$${TARGET}.exp\" \"$$PWD\\bin\" \
-     && $$QMAKE_COPY \"$$OUT_PWD\\$$DESTDIR\\$${TARGET}.lib\" \"$$PWD\\lib\"
+        $$QMAKE_COPY $$system_path($$OUT_PWD/$$DESTDIR/$${TARGET}.dll) $$system_path($$PWD/bin) \
+     && $$QMAKE_COPY $$system_path($$OUT_PWD/$$DESTDIR/$${TARGET}.exp) $$system_path($$PWD/bin) \
+     && $$QMAKE_COPY $$system_path($$OUT_PWD/$$DESTDIR/$${TARGET}.lib) $$system_path($$PWD/lib)
+
+    message($$QMAKE_POST_LINK)
+}
+android {
+    QMAKE_POST_LINK = $$QMAKE_COPY \"$$OUT_PWD\\$$DESTDIR\\lib$${TARGET}.so\" \"$$PWD\\bin\" \
 }
