@@ -59,7 +59,7 @@ CResourceManager *CResourceManager::getInstance()
         self = new CResourceManager;
 
         if (qApp != NULL)
-            connect(qApp, &QCoreApplication::aboutToQuit, self, &CResourceManager::deleteLater);
+            connect(qApp, &QCoreApplication::aboutToQuit, self.data(), &CResourceManager::deleteLater);
         else
             atexit(&cResourceManagerDestroyInstance);
     }

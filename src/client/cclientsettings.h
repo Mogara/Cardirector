@@ -22,6 +22,8 @@
 
 #include "cglobal.h"
 
+#include <QSettings>
+
 MCD_BEGIN_NAMESPACE
 
 class CClientSettingsPrivate;
