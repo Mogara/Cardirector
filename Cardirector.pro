@@ -26,7 +26,9 @@ else {
 
 INCLUDEPATH += src \
                src/common \
-               src/client
+               src/client \
+               src/ui \
+               src/resource
 
 SOURCES += \
     src/ai/cabstractai.cpp \
@@ -47,7 +49,8 @@ SOURCES += \
     src/ui/cabstractui.cpp \
     src/client/cclientsettings.cpp \
     src/ui/cmainwindow.cpp \
-    src/resource/cresourcemanager.cpp
+    src/resource/cresourcemanager.cpp \
+    src/resource/cimageprovider.cpp
 
 HEADERS += \
     src/ai/cabstractai.h \
@@ -70,40 +73,47 @@ HEADERS += \
     src/cpch.h \
     src/client/cclientsettings.h \
     src/ui/cmainwindow.h \
-    src/resource/cresourcemanager.h
+    src/resource/cresourcemanager.h \
+    src/resource/cimageprovider.h
 
-#QML_FILES +=
+QML_FILES += Gui/MetroButton.qml \
+             Gui/TileButton.qml \
+             Gui/ToolTipArea.qml
 
-#DISTFILES = Gui/qmldir
+include(Gui/Private/private.pri)
 
-#qmldir.files = Gui/qmldir
-#unix {
-#    installPath = $$[QT_INSTALL_QML]/$$replace(uri, \\., /)
-#    qmldir.path = $$installPath
-#    target.path = $$installPath
-#    INSTALLS += target qmldir
-#}
+DISTFILES = Gui/qmldir
 
-## Create the resource file
-#GENERATED_RESOURCE_FILE = gui.qrc
+qmldir.files = Gui/qmldir
+unix {
+    installPath = $$[QT_INSTALL_QML]/$$replace(uri, \\., /)
+    qmldir.path = $$installPath
+    target.path = $$installPath
+    INSTALLS += target qmldir
+}
 
-#INCLUDED_RESOURCE_FILES = $$QML_FILES
+# Create the resource file
+GENERATED_RESOURCE_FILE = gui.qrc
 
-#RESOURCE_CONTENT = \
-#    "<RCC>" \
-#    "<qresource prefix=\"/Cardirector/Gui\">"
+INCLUDED_RESOURCE_FILES = $$QML_FILES
 
-#for(resourcefile, INCLUDED_RESOURCE_FILES) {
-#    RESOURCE_CONTENT += "<file alias=\"$$basename(resourcefile)\">$$resourcefile</file>"
-#}
+RESOURCE_CONTENT = \
+    "<RCC>" \
+    "<qresource prefix=\"/Cardirector/Gui\">"
 
-#RESOURCE_CONTENT += \
-#    "</qresource>" \
-#    "</RCC>"
+for(resourcefile, INCLUDED_RESOURCE_FILES) {
+    resourcefileabsolutepath = $$absolute_path($$resourcefile)
+    relativepath = $$relative_path($$resourcefileabsolutepath, $$_PRO_FILE_PWD_)
+    RESOURCE_CONTENT += "<file alias=\"$$basename(resourcefile)\">$$relativepath</file>"
+}
 
-#write_file($$GENERATED_RESOURCE_FILE, RESOURCE_CONTENT)|error("Aborting.")
+RESOURCE_CONTENT += \
+    "</qresource>" \
+    "</RCC>"
 
-#RESOURCES += $$GENERATED_RESOURCE_FILE
+write_file($$GENERATED_RESOURCE_FILE, RESOURCE_CONTENT)|error("Aborting.")
+
+RESOURCES += $$GENERATED_RESOURCE_FILE
 
 defineTest(copy) {
     file = $$1

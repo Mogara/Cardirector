@@ -19,17 +19,21 @@
 
 #include "cpch.h"
 #include "cmainwindow.h"
+#include "cclientsettings.h"
+#include "cimageprovider.h"
 
 #include <QtQml>
 
-#include <QSettings>
-
-//static const struct {
-//    const char *type;
-//        int major, minor;
-//    } qmldir [] = {
-//        { "MainWindow", 1, 0 }
-//};
+static const struct {
+    const char *type;
+        int major, minor;
+        bool isPublic;
+    } qmldir [] = {
+        { "MetroButton", 1, 0, true },
+        { "TileButton", 1, 0, true },
+        { "ToolTipArea", 1, 0, true },
+        { "ToolTip", 1, 0, false },
+};
 
 class CMainWindowPrivate
 {
@@ -56,9 +60,9 @@ public:
     bool isLoadedFromResource() const
     {
         // If one file is missing, it will load all the files from the resource
-//        QFile file(b_ptr->engine()->baseUrl().toLocalFile() + "/MainWindow.qml");
-//        if (!file.exists())
-//            return true;
+        QFile file(b_ptr->engine()->baseUrl().toLocalFile() + "/MetroButton.qml");
+        if (!file.exists())
+            return true;
         return false;
     }
 
@@ -66,7 +70,11 @@ public:
     {
         delete settings;
     }
+
+    static CMainWindow *mainInstance;
 };
+
+CMainWindow *CMainWindowPrivate::mainInstance = NULL;
 
 CMainWindow::CMainWindow(QWindow *parent)
     : QQuickView(parent)
@@ -85,6 +93,18 @@ CMainWindow::CMainWindow(const QUrl &source, QWindow *parent)
 {
     init();
     setSource(source);
+}
+
+CMainWindow *CMainWindow::mainInstance()
+{
+    return CMainWindowPrivate::mainInstance;
+}
+
+void CMainWindow::registerMainInstance(CMainWindow *instance)
+{
+    Q_ASSERT(instance != NULL);
+
+    CMainWindowPrivate::mainInstance = instance;
 }
 
 CMainWindow::~CMainWindow()
@@ -122,6 +142,11 @@ void CMainWindow::restoreAsClosed()
     config->endGroup();
 }
 
+void CMainWindow::show()
+{
+    setVisible(true);
+}
+
 void CMainWindow::init()
 {
     p_ptr = new CMainWindowPrivate;
@@ -129,12 +154,21 @@ void CMainWindow::init()
 
     setResizeMode(SizeRootObjectToView);
 
-//    const QString filesLocation = p_ptr->fileLocation();
-//    for (int i = 0; i < int(sizeof(qmldir)/sizeof(qmldir[0])); i++)
-//        qmlRegisterType(QUrl(filesLocation + "/" + qmldir[i].type + ".qml"), "Cardirector.Gui", qmldir[i].major, qmldir[i].minor, qmldir[i].type);
+    const QString filesLocation = p_ptr->fileLocation();
+    for (int i = 0; i < int(sizeof(qmldir)/sizeof(qmldir[0])); i++) {
+        const char *uri = qmldir[i].isPublic ? "Cardirector.Gui" : "Cardirector.Gui.Private";
+        qmlRegisterType(QUrl(filesLocation + "/" + qmldir[i].type + ".qml"),
+                        uri, qmldir[i].major, qmldir[i].minor, qmldir[i].type);
+    }
+
+    qmlRegisterType<CClientSettings>("Cardirector.Client", 1, 0, "ClientSettings");
+    qmlRegisterType<CImageProvider>("Cardirector.Resource", 1, 0, "ImageProvider");
 
     if (p_ptr->isLoadedFromResource())
         engine()->addImportPath(QStringLiteral("qrc:/"));
+
+    if (CMainWindowPrivate::mainInstance == NULL)
+        CMainWindowPrivate::mainInstance = this;
 
     restoreAsClosed();
 }

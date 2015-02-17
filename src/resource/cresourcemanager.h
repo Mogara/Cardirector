@@ -22,7 +22,6 @@
 
 #include "cglobal.h"
 
-#include <QPixmap>
 #include <QPointer>
 
 MCD_BEGIN_NAMESPACE
@@ -37,7 +36,7 @@ public:
     static CResourceManager *getInstance();
 
     // get pixmap via path
-    QPixmap getPixmap(const QString &fileName);
+//    QPixmap getPixmap(const QString &fileName);
     // CAudio getAudio(const QString &fileName); // @@TODO: implement CAudio
 
 
@@ -45,7 +44,6 @@ private:
     static QPointer<CResourceManager> self;
 
     CResourceManager();
-
 
     CResourceManagerPrivate *p_ptr;
 

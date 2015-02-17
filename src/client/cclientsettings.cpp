@@ -20,6 +20,9 @@
 #include "cpch.h"
 #include "cclientsettings.h"
 
+#include <QtQml>
+#include <QLocale>
+
 class CClientSettingsPrivate
 {
 public:
@@ -27,6 +30,8 @@ public:
     {
 
     }
+
+    QString locale;
 };
 
 CClientSettings::CClientSettings(const QString &organization, const QString &application, QObject *parent)
@@ -62,9 +67,24 @@ CClientSettings::CClientSettings(QObject *parent)
 void CClientSettings::init()
 {
     p_ptr = new CClientSettingsPrivate;
+
+    p_ptr->locale = value(QStringLiteral("locale"), QLocale::system().name()).toString();
 }
 
 CClientSettings::~CClientSettings()
 {
     delete p_ptr;
+}
+
+QString CClientSettings::locale() const
+{
+    return p_ptr->locale;
+}
+
+void CClientSettings::setLocale(const QString &locale)
+{
+    if (p_ptr->locale != locale) {
+        p_ptr->locale = locale;
+        emit localeChanged();
+    }
 }

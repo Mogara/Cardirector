@@ -22,6 +22,8 @@
 
 #include "cglobal.h"
 
+#include <QSettings>
+
 MCD_BEGIN_NAMESPACE
 
 class CClientSettingsPrivate;
@@ -31,12 +33,20 @@ class MCD_EXPORT CClientSettings : public QSettings
     Q_OBJECT
 
 public:
+    Q_PROPERTY(QString locale READ locale WRITE setLocale NOTIFY localeChanged)
+
     CClientSettings(const QString &organization, const QString &application = QString(), QObject *parent = 0);
     CClientSettings(Scope scope, const QString &organization, const QString & application = QString(), QObject *parent = 0);
     CClientSettings(Format format, Scope scope, const QString &organization, const QString &application = QString(), QObject *parent = 0);
     CClientSettings(const QString &fileName, Format format, QObject *parent = 0);
     CClientSettings(QObject *parent = 0);
     virtual ~CClientSettings();
+
+    QString locale() const;
+    void setLocale(const QString &locale);
+
+signals:
+    void localeChanged();
 
 private:
     C_DISABLE_COPY(CClientSettings)

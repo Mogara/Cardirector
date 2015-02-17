@@ -35,7 +35,12 @@ public:
     CMainWindow(QQmlEngine *engine, QWindow *parent);
     CMainWindow(const QUrl &source, QWindow *parent = 0);
 
+    static CMainWindow *mainInstance();
+    static void registerMainInstance(CMainWindow *instance);
+
     virtual ~CMainWindow();
+
+    void show();
 
 protected:
     bool event(QEvent *e);

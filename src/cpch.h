@@ -27,7 +27,12 @@
 #include <QtCore/qglobal.h>
 #include <QtQml>
 
+#include <QLocale>
+#include <QObject>
+#include <QPixmap>
 #include <QPoint>
+#include <QPointer>
+#include <QQuickImageProvider>
 #include <QQuickView>
 #include <QSettings>
 #include <QSize>
