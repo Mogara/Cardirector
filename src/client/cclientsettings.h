@@ -45,6 +45,16 @@ public:
     QString locale() const;
     void setLocale(const QString &locale);
 
+    // These two methods are designed for qml accessing
+    Q_INVOKABLE QVariant value(const QString &key, const QVariant &defaultValue) const
+    {
+        return QSettings::value(key, defaultValue);
+    }
+    Q_INVOKABLE void setValue(const QString &key, const QVariant &value)
+    {
+        QSettings::setValue(key, value);
+    }
+
 signals:
     void localeChanged();
 

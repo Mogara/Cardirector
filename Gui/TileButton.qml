@@ -26,8 +26,8 @@ Item {
     signal clicked
 
     property alias text: labelText.text
+    property alias iconSource: icon.source
 
-    property string iconSource: ""
     property bool autoHideText: true
 
     antialiasing: true
@@ -69,15 +69,6 @@ Item {
         }
 
     ]
-
-    onIconSourceChanged: {
-        var src = iconSource;
-        var fileName = /[\w\d_]+/;
-        if (fileName.test(src)) {
-            src = "../image/system/button/icon/" + src + ".png"
-        }
-        icon.source = src;
-    }
 
     Image {
         id: icon

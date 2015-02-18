@@ -82,16 +82,3 @@ void CImageProvider::setProviderId(const QString &providerId)
     }
 }
 
-QQmlObject *CImageProvider::qmlObject() const
-{
-    return p_ptr->qmlObject;
-}
-
-void CImageProvider::setQmlObject(QQmlObject *object)
-{
-    if (p_ptr->qmlObject != object) {
-        p_ptr->qmlObject = object;
-        emit qmlObjectChanged();
-    }
-}
-

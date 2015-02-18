@@ -50,7 +50,8 @@ SOURCES += \
     src/client/cclientsettings.cpp \
     src/ui/cmainwindow.cpp \
     src/resource/cresourcemanager.cpp \
-    src/resource/cimageprovider.cpp
+    src/resource/cimageprovider.cpp \
+    src/ui/cqmlengine.cpp
 
 HEADERS += \
     src/ai/cabstractai.h \
@@ -74,7 +75,8 @@ HEADERS += \
     src/client/cclientsettings.h \
     src/ui/cmainwindow.h \
     src/resource/cresourcemanager.h \
-    src/resource/cimageprovider.h
+    src/resource/cimageprovider.h \
+    src/ui/cqmlengine.h
 
 QML_FILES += Gui/MetroButton.qml \
              Gui/TileButton.qml \

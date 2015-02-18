@@ -19,21 +19,9 @@
 
 #include "cpch.h"
 #include "cmainwindow.h"
-#include "cclientsettings.h"
-#include "cimageprovider.h"
+#include "cqmlengine.h"
 
-#include <QtQml>
-
-static const struct {
-    const char *type;
-        int major, minor;
-        bool isPublic;
-    } qmldir [] = {
-        { "MetroButton", 1, 0, true },
-        { "TileButton", 1, 0, true },
-        { "ToolTipArea", 1, 0, true },
-        { "ToolTip", 1, 0, false },
-};
+#include <QQuickItem>
 
 class CMainWindowPrivate
 {
@@ -46,70 +34,44 @@ public:
 
     QSettings *settings;
 
-    CMainWindow *b_ptr;
-
-    C_DECLARE_PUBLIC(CMainWindow)
-
-    QString fileLocation() const
-    {
-        if (isLoadedFromResource())
-            return "qrc:/Cardirector/Gui";
-        return b_ptr->engine()->baseUrl().toString();
-    }
-
-    bool isLoadedFromResource() const
-    {
-        // If one file is missing, it will load all the files from the resource
-        QFile file(b_ptr->engine()->baseUrl().toLocalFile() + "/MetroButton.qml");
-        if (!file.exists())
-            return true;
-        return false;
-    }
-
     ~CMainWindowPrivate()
     {
         delete settings;
     }
 
-    static CMainWindow *mainInstance;
+    static CMainWindow *instance;
 };
 
-CMainWindow *CMainWindowPrivate::mainInstance = NULL;
+CMainWindow *CMainWindowPrivate::instance = NULL;
 
 CMainWindow::CMainWindow(QWindow *parent)
-    : QQuickView(parent)
+    : QQuickView(new CQmlEngine, parent),
+      p_ptr(new CMainWindowPrivate)
 {
-    init();
-}
+    setResizeMode(SizeRootObjectToView);
 
-CMainWindow::CMainWindow(QQmlEngine *engine, QWindow *parent)
-    : QQuickView(engine, parent)
-{
-    init();
-}
+    if (p_ptr->instance == NULL)
+        p_ptr->instance = this;
 
-CMainWindow::CMainWindow(const QUrl &source, QWindow *parent)
-    : QQuickView(parent)
-{
-    init();
-    setSource(source);
+    restoreAsClosed();
 }
 
 CMainWindow *CMainWindow::mainInstance()
 {
-    return CMainWindowPrivate::mainInstance;
+    return CMainWindowPrivate::instance;
 }
 
 void CMainWindow::registerMainInstance(CMainWindow *instance)
 {
     Q_ASSERT(instance != NULL);
 
-    CMainWindowPrivate::mainInstance = instance;
+    CMainWindowPrivate::instance = instance;
 }
 
 CMainWindow::~CMainWindow()
 {
     delete p_ptr;
+    delete engine();
 }
 
 bool CMainWindow::event(QEvent *e)
@@ -124,9 +86,8 @@ bool CMainWindow::event(QEvent *e)
         }
         config->setValue("state", (int)state);
         config->endGroup();
-        return QQuickView::event(e);
     }
-    return false;
+    return QQuickView::event(e);
 }
 
 void CMainWindow::restoreAsClosed()
@@ -138,37 +99,15 @@ void CMainWindow::restoreAsClosed()
     if (config->contains("state"))
         setWindowState(Qt::WindowState(config->value("state").toInt()));
     const QVariant size = config->value("size", QSize(1024, 768));
-    rootContext()->setContextProperty("preferredSize", size);
+
+    QQmlContext *context = rootContext();
+    context->setContextProperty("preferredSize", size);
+    context->setContextProperty("Root", QVariant::fromValue(rootObject()));
+
     config->endGroup();
 }
 
 void CMainWindow::show()
 {
     setVisible(true);
-}
-
-void CMainWindow::init()
-{
-    p_ptr = new CMainWindowPrivate;
-    p_ptr->b_ptr = this;
-
-    setResizeMode(SizeRootObjectToView);
-
-    const QString filesLocation = p_ptr->fileLocation();
-    for (int i = 0; i < int(sizeof(qmldir)/sizeof(qmldir[0])); i++) {
-        const char *uri = qmldir[i].isPublic ? "Cardirector.Gui" : "Cardirector.Gui.Private";
-        qmlRegisterType(QUrl(filesLocation + "/" + qmldir[i].type + ".qml"),
-                        uri, qmldir[i].major, qmldir[i].minor, qmldir[i].type);
-    }
-
-    qmlRegisterType<CClientSettings>("Cardirector.Client", 1, 0, "ClientSettings");
-    qmlRegisterType<CImageProvider>("Cardirector.Resource", 1, 0, "ImageProvider");
-
-    if (p_ptr->isLoadedFromResource())
-        engine()->addImportPath(QStringLiteral("qrc:/"));
-
-    if (CMainWindowPrivate::mainInstance == NULL)
-        CMainWindowPrivate::mainInstance = this;
-
-    restoreAsClosed();
 }

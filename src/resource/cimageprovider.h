@@ -36,7 +36,6 @@ class MCD_EXPORT CImageProvider : public QObject, public QQuickImageProvider
 
 public:
     Q_PROPERTY(QString providerId READ providerId WRITE setProviderId NOTIFY providerIdChanged)
-//    Q_PROPERTY(QQmlObject *qmlObject READ qmlObject WRITE setQmlObject NOTIFY qmlObjectChanged)
 
     CImageProvider();
     ~CImageProvider();
@@ -46,12 +45,8 @@ public:
     QString providerId() const;
     void setProviderId(const QString &providerId);
 
-    QQmlObject *qmlObject() const;
-    void setQmlObject(QQmlObject *object);
-
 signals:
     void providerIdChanged();
-    void qmlObjectChanged();
 
 private:
     CImageProviderPrivate *p_ptr;

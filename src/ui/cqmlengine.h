@@ -17,28 +17,30 @@
     Mogara
     *********************************************************************/
 
-#ifndef CPCH_H
-#define CPCH_H
+#ifndef CQMLENGINE_H
+#define CQMLENGINE_H
 
-// Add C includes here
+#include "cglobal.h"
 
-#ifdef __cplusplus
- // Add C++ includes here
-#include <QtCore/qglobal.h>
-#include <QtQml>
-
-#include <QLocale>
-#include <QObject>
-#include <QPixmap>
-#include <QPoint>
-#include <QPointer>
 #include <QQmlEngine>
-#include <QQuickImageProvider>
-#include <QQuickItem>
-#include <QQuickView>
-#include <QSettings>
-#include <QSize>
-#endif
 
-#endif // CPCH_H
+MCD_BEGIN_NAMESPACE
 
+class CQmlEnginePrivate;
+
+class MCD_EXPORT CQmlEngine : public QQmlEngine
+{
+public:
+    CQmlEngine(QObject *p = 0);
+    ~CQmlEngine();
+
+private:
+    CQmlEnginePrivate *p_ptr;
+
+    C_DISABLE_COPY(CQmlEngine)
+    C_DECLARE_PRIVATE(CQmlEngine)
+};
+
+MCD_END_NAMESPACE
+
+#endif // CQMLENGINE_H

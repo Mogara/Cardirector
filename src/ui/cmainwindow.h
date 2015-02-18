@@ -32,8 +32,6 @@ class MCD_EXPORT CMainWindow : public QQuickView
 {
 public:
     explicit CMainWindow(QWindow *parent = 0);
-    CMainWindow(QQmlEngine *engine, QWindow *parent);
-    CMainWindow(const QUrl &source, QWindow *parent = 0);
 
     static CMainWindow *mainInstance();
     static void registerMainInstance(CMainWindow *instance);
@@ -50,8 +48,6 @@ private:
     CMainWindowPrivate *p_ptr;
     C_DISABLE_COPY(CMainWindow)
     C_DECLARE_PRIVATE(CMainWindow)
-
-    void init();
 };
 
 MCD_END_NAMESPACE
