@@ -24,6 +24,8 @@
 
 #include <QVariant>
 
+MCD_BEGIN_NAMESPACE
+
 class CAbstractPacketPrivate;
 
 class MCD_EXPORT CAbstractPacket
@@ -43,5 +45,7 @@ protected:
     int m_command;
     QVariant m_data;
 };
+
+MCD_END_NAMESPACE
 
 #endif // CABSTRACTPACKET_H

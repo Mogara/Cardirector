@@ -22,7 +22,7 @@
 #include <QTcpSocket>
 #include <QTimer>
 
-class CInlineTextSocketPrivate
+class CTcpSocketPrivate
 {
 public:
     QTimer *keepAliveTimer;
@@ -31,7 +31,7 @@ public:
 
 CTcpSocket::CTcpSocket(QObject *parent)
     : QTcpSocket(parent)
-    , p_ptr(new CInlineTextSocketPrivate)
+    , p_ptr(new CTcpSocketPrivate)
 {
     connect(this, &QTcpSocket::readyRead, this, &CTcpSocket::readPacket);
 

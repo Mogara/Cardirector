@@ -22,12 +22,13 @@
 
 #include "cglobal.h"
 
-
 #include <QTcpSocket>
 #include <QByteArray>
 #include <QHostAddress>
 
-class CInlineTextSocketPrivate;
+MCD_BEGIN_NAMESPACE
+
+class CTcpSocketPrivate;
 
 class MCD_EXPORT CTcpSocket : public QTcpSocket
 {
@@ -47,8 +48,10 @@ protected:
     void keepAlive();
 
 private:
-    C_DECLARE_PRIVATE(CInlineTextSocket)
-    CInlineTextSocketPrivate *p_ptr;
+    C_DECLARE_PRIVATE(CTcpSocket)
+    CTcpSocketPrivate *p_ptr;
 };
+
+MCD_END_NAMESPACE
 
 #endif // CTCPSOCKET_H
