@@ -28,7 +28,6 @@
 MCD_BEGIN_NAMESPACE
 
 class CImageProviderPrivate;
-class QQmlObject;
 
 class MCD_EXPORT CImageProvider : public QObject, public QQuickImageProvider
 {

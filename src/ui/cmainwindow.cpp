@@ -20,6 +20,7 @@
 #include "cpch.h"
 #include "cmainwindow.h"
 #include "cqmlengine.h"
+#include "cimageprovider.h"
 
 #include <QQuickItem>
 
@@ -33,6 +34,7 @@ public:
     }
 
     QSettings *settings;
+    QStringList imageProviders;
 
     ~CMainWindowPrivate()
     {
@@ -71,7 +73,7 @@ void CMainWindow::registerMainInstance(CMainWindow *instance)
 CMainWindow::~CMainWindow()
 {
     delete p_ptr;
-    delete engine();
+    engine()->deleteLater();
 }
 
 bool CMainWindow::event(QEvent *e)
@@ -86,6 +88,9 @@ bool CMainWindow::event(QEvent *e)
         }
         config->setValue("state", (int)state);
         config->endGroup();
+
+        foreach(const QString &id, p_ptr->imageProviders)
+            removeImageProvider(id);
     }
     return QQuickView::event(e);
 }
@@ -110,4 +115,16 @@ void CMainWindow::restoreAsClosed()
 void CMainWindow::show()
 {
     setVisible(true);
+}
+
+void CMainWindow::addImageProvider(const QString &id, CImageProvider *provider)
+{
+    p_ptr->imageProviders << id;
+    engine()->addImageProvider(id, provider);
+}
+
+void CMainWindow::removeImageProvider(const QString &id)
+{
+    p_ptr->imageProviders.removeOne(id);
+    engine()->removeImageProvider(id);
 }

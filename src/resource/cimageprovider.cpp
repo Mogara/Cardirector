@@ -33,7 +33,6 @@ public:
     }
 
     QString providerId;
-    QQmlObject *qmlObject;
 };
 
 CImageProvider::CImageProvider()
@@ -50,7 +49,7 @@ CImageProvider::~CImageProvider()
 QPixmap CImageProvider::requestPixmap(const QString &id, QSize *size, const QSize &requestedSize)
 {
     QVariant path;
-    QMetaObject::invokeMethod(this, "imagePath", Qt::DirectConnection,
+    QMetaObject::invokeMethod(this, "imagePath", Qt::BlockingQueuedConnection,
                               Q_RETURN_ARG(QVariant, path), Q_ARG(QVariant, id),
                               Q_ARG(QVariant, requestedSize));
 
@@ -76,7 +75,7 @@ void CImageProvider::setProviderId(const QString &providerId)
 
         CMainWindow *window = CMainWindow::mainInstance();
         if (window != NULL)
-            window->engine()->addImageProvider(providerId, this);
+            window->addImageProvider(providerId, this);
 
         emit providerIdChanged();
     }

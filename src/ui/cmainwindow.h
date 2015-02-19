@@ -27,6 +27,7 @@
 MCD_BEGIN_NAMESPACE
 
 class CMainWindowPrivate;
+class CImageProvider;
 
 class MCD_EXPORT CMainWindow : public QQuickView
 {
@@ -39,6 +40,9 @@ public:
     virtual ~CMainWindow();
 
     void show();
+
+    void addImageProvider(const QString &id, CImageProvider *provider);
+    void removeImageProvider(const QString &id);
 
 protected:
     bool event(QEvent *e);
