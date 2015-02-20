@@ -72,4 +72,10 @@ inline void cUnused(T &x) { (void)x; }
 #  define C_UNUSED(x) (void)x;
 #endif
 
+#if defined(MCD_COORD_TYPE)
+typedef MCD_COORD_TYPE creal;
+#else
+typedef double creal;
+#endif
+
 #endif // CGLOBAL_H

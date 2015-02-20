@@ -21,7 +21,9 @@
 
 #include "cmainwindow.h"
 
+#include <QGuiApplication>
 #include <QHash>
+#include <QScreen>
 
 class CImageProviderPrivate
 {
@@ -46,6 +48,8 @@ CImageProvider::~CImageProvider()
     delete p_ptr;
 }
 
+static const int StandardDPI = 96;
+
 QPixmap CImageProvider::requestPixmap(const QString &id, QSize *size, const QSize &requestedSize)
 {
     QVariant path;
@@ -56,8 +60,19 @@ QPixmap CImageProvider::requestPixmap(const QString &id, QSize *size, const QSiz
     QPixmap pixmap;
     if (!path.toString().isEmpty()) {
         pixmap.load(path.toString());
+
+        const creal scaleFactor = StandardDPI / qApp->primaryScreen()->logicalDotsPerInch();
+
         if (!pixmap.isNull() && size != NULL)
-            *size = pixmap.size();
+            *size = pixmap.size() / scaleFactor;
+
+        if (requestedSize.isValid()) {
+            pixmap = pixmap.scaled(requestedSize, Qt::IgnoreAspectRatio,
+                          Qt::SmoothTransformation);
+        } else {
+            pixmap = pixmap.scaled(*size, Qt::IgnoreAspectRatio,
+                          Qt::SmoothTransformation);
+        }
     }
 
     return pixmap;

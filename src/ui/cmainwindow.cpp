@@ -22,7 +22,9 @@
 #include "cqmlengine.h"
 #include "cimageprovider.h"
 
+#include <QGuiApplication>
 #include <QQuickItem>
+#include <QScreen>
 
 class CMainWindowPrivate
 {
@@ -56,6 +58,10 @@ CMainWindow::CMainWindow(QWindow *parent)
         p_ptr->instance = this;
 
     restoreAsClosed();
+
+    QQmlContext *context = rootContext();
+    context->setContextProperty("Root", QVariant::fromValue(rootObject()));
+    context->setContextProperty("DPI", qApp->primaryScreen()->logicalDotsPerInch());
 }
 
 CMainWindow *CMainWindow::mainInstance()
@@ -105,9 +111,7 @@ void CMainWindow::restoreAsClosed()
         setWindowState(Qt::WindowState(config->value("state").toInt()));
     const QVariant size = config->value("size", QSize(1024, 768));
 
-    QQmlContext *context = rootContext();
-    context->setContextProperty("preferredSize", size);
-    context->setContextProperty("Root", QVariant::fromValue(rootObject()));
+    rootContext()->setContextProperty("preferredSize", size);
 
     config->endGroup();
 }

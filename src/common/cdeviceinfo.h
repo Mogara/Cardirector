@@ -17,31 +17,34 @@
     Mogara
     *********************************************************************/
 
-#ifndef CPCH_H
-#define CPCH_H
+#ifndef CDEVICEINFO_H
+#define CDEVICEINFO_H
 
-// Add C includes here
+#include "cglobal.h"
 
-#ifdef __cplusplus
- // Add C++ includes here
-#include <QtCore/qglobal.h>
-#include <QtQml>
-
-#include <QCoreApplication>
-#include <QGuiApplication>
-#include <QLocale>
 #include <QObject>
-#include <QPixmap>
-#include <QPoint>
-#include <QPointer>
-#include <QQmlEngine>
-#include <QQuickImageProvider>
-#include <QQuickItem>
-#include <QQuickView>
+#include <QGuiApplication>
 #include <QScreen>
-#include <QSettings>
-#include <QSize>
-#endif
 
-#endif // CPCH_H
+MCD_BEGIN_NAMESPACE
 
+class MCD_EXPORT CDeviceInfo : public QObject
+{
+    Q_OBJECT
+public:
+    explicit CDeviceInfo(QObject *parent = 0);
+    ~CDeviceInfo();
+
+    Q_INVOKABLE int gu(const QVariant &point)
+    {
+        double dots = point.toDouble();
+        const int standardDpi = 96;
+        static int dpi = qApp->primaryScreen()->logicalDotsPerInch();
+
+        return dots * dpi / standardDpi;
+    }
+};
+
+MCD_END_NAMESPACE
+
+#endif // CDEVICEINFO_H

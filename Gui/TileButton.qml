@@ -1,10 +1,11 @@
-import QtQuick 2.2
+import QtQuick 2.4
+import Cardirector.Device 1.0
 //import QtGraphicalEffects 1.0
 
 Item {
     id: button
-    width: 154
-    height: 154
+    width: Device.gu(154)
+    height: Device.gu(154)
 
 //    RectangularGlow {
 //        anchors.fill: rect
@@ -19,7 +20,7 @@ Item {
         anchors.fill: parent
         color: "#78D478"
         antialiasing: true
-        border.width: 1
+        border.width: Device.gu(1)
         border.color: "#8CDA8C"
     }
 
@@ -79,9 +80,9 @@ Item {
         id: labelText
 
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 3
+        anchors.bottomMargin: Device.gu(3)
         anchors.left: parent.left
-        anchors.leftMargin: 3
+        anchors.leftMargin: Device.gu(3)
 
         visible: !autoHideText || mouse.containsMouse
 

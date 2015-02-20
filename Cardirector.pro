@@ -53,7 +53,8 @@ SOURCES += \
     src/ui/cmainwindow.cpp \
     src/resource/cresourcemanager.cpp \
     src/resource/cimageprovider.cpp \
-    src/ui/cqmlengine.cpp
+    src/ui/cqmlengine.cpp \
+    src/common/cdeviceinfo.cpp
 
 HEADERS += \
     src/ai/cabstractai.h \
@@ -79,7 +80,8 @@ HEADERS += \
     src/ui/cmainwindow.h \
     src/resource/cresourcemanager.h \
     src/resource/cimageprovider.h \
-    src/ui/cqmlengine.h
+    src/ui/cqmlengine.h \
+    src/common/cdeviceinfo.h
 
 QML_FILES += Gui/MetroButton.qml \
              Gui/TileButton.qml \
@@ -104,16 +106,16 @@ INCLUDED_RESOURCE_FILES = $$QML_FILES
 
 RESOURCE_CONTENT = \
     "<RCC>" \
-    "<qresource prefix=\"/Cardirector/Gui\">"
+    "    <qresource prefix=\"/Cardirector/Gui\">"
 
 for(resourcefile, INCLUDED_RESOURCE_FILES) {
     resourcefileabsolutepath = $$absolute_path($$resourcefile)
     relativepath = $$relative_path($$resourcefileabsolutepath, $$_PRO_FILE_PWD_)
-    RESOURCE_CONTENT += "<file alias=\"$$basename(resourcefile)\">$$relativepath</file>"
+    RESOURCE_CONTENT += "        <file alias=\"$$basename(resourcefile)\">$$relativepath</file>"
 }
 
 RESOURCE_CONTENT += \
-    "</qresource>" \
+    "    </qresource>" \
     "</RCC>"
 
 write_file($$GENERATED_RESOURCE_FILE, RESOURCE_CONTENT)|error("Aborting.")

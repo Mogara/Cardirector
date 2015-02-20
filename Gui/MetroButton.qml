@@ -1,15 +1,16 @@
-import QtQuick 2.2
+import QtQuick 2.4
+import Cardirector.Device 1.0
 
 Item {
     id: button
-    width: 189
-    height: 46
+    width: Device.gu(189)
+    height: Device.gu(46)
 
     Rectangle {
         id: bg
         anchors.fill: parent
         color: "black"
-        border.width: 2
+        border.width: Device.gu(2)
         border.color: "white"
         opacity: 0.8
     }
@@ -42,7 +43,7 @@ Item {
 
     Row {
         anchors.centerIn: parent
-        spacing: 5
+        spacing: Device.gu(5)
         Image {
             id: icon
             anchors.verticalCenter: parent.verticalCenter

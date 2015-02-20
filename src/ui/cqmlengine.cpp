@@ -19,6 +19,7 @@
 
 #include "cqmlengine.h"
 #include "cclientsettings.h"
+#include "cdeviceinfo.h"
 #include "cimageprovider.h"
 
 #include <QtQml>
@@ -64,6 +65,12 @@ public:
     }
 };
 
+static QObject *cDeviceInfoProvider(QQmlEngine *, QJSEngine *)
+{
+    CDeviceInfo *info = new CDeviceInfo;
+    return info;
+}
+
 CQmlEngine::CQmlEngine(QObject *p)
     : QQmlEngine(p), p_ptr(new CQmlEnginePrivate)
 {
@@ -78,6 +85,8 @@ CQmlEngine::CQmlEngine(QObject *p)
 
     qmlRegisterType<CClientSettings>("Cardirector.Client", 1, 0, "ClientSettings");
     qmlRegisterType<CImageProvider>("Cardirector.Resource", 1, 0, "ImageProvider");
+
+    qmlRegisterSingletonType<CDeviceInfo>("Cardirector.Device", 1, 0, "Device", cDeviceInfoProvider);
 
     if (p_ptr->isLoadedFromResource())
         addImportPath(QStringLiteral("qrc:/"));

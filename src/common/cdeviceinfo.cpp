@@ -17,31 +17,16 @@
     Mogara
     *********************************************************************/
 
-#ifndef CPCH_H
-#define CPCH_H
+#include "cdeviceinfo.h"
 
-// Add C includes here
+CDeviceInfo::CDeviceInfo(QObject *parent)
+    : QObject(parent)
+{
 
-#ifdef __cplusplus
- // Add C++ includes here
-#include <QtCore/qglobal.h>
-#include <QtQml>
+}
 
-#include <QCoreApplication>
-#include <QGuiApplication>
-#include <QLocale>
-#include <QObject>
-#include <QPixmap>
-#include <QPoint>
-#include <QPointer>
-#include <QQmlEngine>
-#include <QQuickImageProvider>
-#include <QQuickItem>
-#include <QQuickView>
-#include <QScreen>
-#include <QSettings>
-#include <QSize>
-#endif
+CDeviceInfo::~CDeviceInfo()
+{
 
-#endif // CPCH_H
+}
 
