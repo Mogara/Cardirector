@@ -83,7 +83,9 @@ HEADERS += \
     src/ui/cqmlengine.h \
     src/common/cdeviceinfo.h
 
-QML_FILES += Gui/MetroButton.qml \
+QML_FILES += Gui/Dialog.qml \
+             Gui/MetroButton.qml \
+             Gui/Splash.qml \
              Gui/TileButton.qml \
              Gui/ToolTipArea.qml
 
@@ -120,7 +122,9 @@ RESOURCE_CONTENT += \
 
 write_file($$GENERATED_RESOURCE_FILE, RESOURCE_CONTENT)|error("Aborting.")
 
-RESOURCES += $$GENERATED_RESOURCE_FILE
+RESOURCES += $$GENERATED_RESOURCE_FILE \
+             image.qrc \
+    font.qrc
 
 defineTest(copy) {
     file = $$1

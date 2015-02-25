@@ -60,7 +60,6 @@ CMainWindow::CMainWindow(QWindow *parent)
     restoreAsClosed();
 
     QQmlContext *context = rootContext();
-    context->setContextProperty("Root", QVariant::fromValue(rootObject()));
     context->setContextProperty("DPI", qApp->primaryScreen()->logicalDotsPerInch());
 }
 
@@ -131,4 +130,11 @@ void CMainWindow::removeImageProvider(const QString &id)
 {
     p_ptr->imageProviders.removeOne(id);
     engine()->removeImageProvider(id);
+}
+
+void CMainWindow::setSource(const QUrl &source)
+{
+    QQuickView::setSource(source);
+    QQmlContext *context = rootContext();
+    context->setContextProperty("Root", QVariant::fromValue(rootObject()));
 }

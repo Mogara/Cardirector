@@ -44,6 +44,9 @@ public:
     void addImageProvider(const QString &id, CImageProvider *provider);
     void removeImageProvider(const QString &id);
 
+public slots:
+    void setSource(const QUrl &source);
+
 protected:
     bool event(QEvent *e);
     void restoreAsClosed();

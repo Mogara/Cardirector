@@ -30,7 +30,9 @@ static const struct {
         int major, minor;
         bool isPublic;
     } qmldir [] = {
+        { "Dialog", 1, 0, true },
         { "MetroButton", 1, 0, true },
+        { "Splash", 1, 0, true },
         { "TileButton", 1, 0, true },
         { "ToolTipArea", 1, 0, true },
         { "ToolTip", 1, 0, false },

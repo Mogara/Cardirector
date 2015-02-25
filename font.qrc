@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>font/Braxton Free.otf</file>
+    </qresource>
+</RCC>

@@ -1,7 +1,7 @@
 module Cardirector.Gui
+Dialog 1.0 Dialog.qml
 MetroButton 1.0 MetroButton.qml
 Splash 1.0 Splash.qml
-StartScene 1.0 StartScene.qml
 TileButton 1.0 TileButton.qml
 ToolTipArea 1.0 ToolTipArea.qml
 
