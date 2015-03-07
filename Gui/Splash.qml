@@ -25,13 +25,92 @@ Image {
         width: parent.width
         fillMode: Image.PreserveAspectFit
         NumberAnimation on scale {
-            id: ani1
             running: true
             duration: 1000
             from: 0
             to: 1
             easing.type: Easing.OutQuad
         }
+        NumberAnimation on opacity {
+            id: opacityAni
+            running: false
+            duration: 2000
+            to: 0
+        }
+    }
+
+    Item {
+        anchors.centerIn: parent
+        width: cardirector.width
+        height: cardirector.height
+
+        ParticleSystem { id: dots }
+        CustomParticle {
+            system: dots
+            property real maxWidth: cardirector.width
+            property real maxHeight: cardirector.height
+
+            ShaderEffectSource {
+                id: pictureSource
+                sourceItem: cardirector
+            }
+            ShaderEffectSource {
+                id: particleSource
+                sourceItem: particle
+                hideSource: true
+            }
+            Rectangle {
+                id: particle
+                width: 16
+                height: 16
+                radius: 8
+            }
+
+            vertexShader:"
+            uniform highp float maxWidth;
+            uniform highp float maxHeight;
+            varying highp vec2 fTex2;
+            varying lowp float fFade;
+            uniform lowp float qt_Opacity;
+
+            void main() {
+
+                fTex2 = vec2(qt_ParticlePos.x, qt_ParticlePos.y);
+                //Comment this next line for each particle to use solid color at the center of the particle, instead of the full texture.
+                fTex2 = fTex2 + ((- qt_ParticleData.z / 2. + qt_ParticleData.z) * qt_ParticleTex); //Adjusts size so it's like a chunk of image.
+                fTex2 = fTex2 / vec2(maxWidth, maxHeight);
+                highp float t = (qt_Timestamp - qt_ParticleData.x) / qt_ParticleData.y;
+                fFade = min(t*4., (1.-t*t)*.75) * qt_Opacity;
+                defaultMain();
+            }
+        "
+
+            property variant particleTexture: particleSource
+            property variant pictureTexture: pictureSource
+
+            fragmentShader: "
+            uniform sampler2D particleTexture;
+            uniform sampler2D pictureTexture;
+            varying highp vec2 qt_TexCoord0;
+            varying highp vec2 fTex2;
+            varying lowp float fFade;
+            void main() {
+                gl_FragColor = texture2D(pictureTexture, fTex2) * texture2D(particleTexture, qt_TexCoord0).w * fFade;
+        }"
+
+        }
+
+        Emitter {
+            id: emitter
+            system: dots
+            enabled: false
+            lifeSpan: 8000
+            maximumEmitted: 4000
+            anchors.fill: parent
+            size: 16
+            acceleration: PointDirection { xVariation: 8; yVariation: 8 }
+        }
+
     }
 
     Text {
@@ -58,9 +137,9 @@ Image {
     }
 
     ParallelAnimation {
-        id: ani2
+        id: textAni
 
-        running: !ani1.running
+        running: true
         NumberAnimation { target: blur; property: "radius"; to: 0; duration: 800; easing.type: Easing.InOutQuad }
         NumberAnimation { target: scale; property: "xScale"; to: 1; duration: 1000; easing.type: Easing.OutQuad }
         NumberAnimation { target: scale; property: "yScale"; to: 1; duration: 1000; easing.type: Easing.OutQuad }
@@ -68,10 +147,16 @@ Image {
     }
 
     NumberAnimation on opacity {
-        id: ani3
+        id: fadeAni
         running: false
         duration: 3000; easing.type: Easing.OutQuad; to: 0;
         onStopped: bg.disappearing()
+    }
+
+    Timer {
+        id: fadeTimer
+        interval: 8000
+        onTriggered: fadeAni.start();
     }
 
     ParticleSystem { id: particles }
@@ -113,16 +198,22 @@ Image {
         acceptedButtons: Qt.AllButtons
         anchors.fill: parent
         onClicked: {
-            if (!ani1.running && !ani2.running) {
-                ani3.start();
+            if (!textAni.running) {
+                hide();
             }
         }
     }
 
     Keys.onPressed: {
-        if (!ani1.running && !ani2.running) {
-            ani3.start();
-            event.accepted = true
+        if (!textAni.running) {
+            hide();
+            event.accepted = true;
         }
+    }
+
+    function hide() {
+        emitter.burst(4000);
+        opacityAni.start();
+        fadeTimer.start();
     }
 }
