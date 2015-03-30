@@ -48,6 +48,7 @@ protected:
     void keepAlive();
 
 private:
+    C_DISABLE_COPY(CTcpSocket)
     C_DECLARE_PRIVATE(CTcpSocket)
     CTcpSocketPrivate *p_ptr;
 };
