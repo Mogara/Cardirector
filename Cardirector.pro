@@ -54,7 +54,8 @@ SOURCES += \
     src/resource/cresourcemanager.cpp \
     src/resource/cimageprovider.cpp \
     src/ui/cqmlengine.cpp \
-    src/common/cdeviceinfo.cpp
+    src/common/cdeviceinfo.cpp \
+    src/network/cprotocol.cpp
 
 HEADERS += \
     src/ai/cabstractai.h \
@@ -82,7 +83,8 @@ HEADERS += \
     src/resource/cresourcemanager.h \
     src/resource/cimageprovider.h \
     src/ui/cqmlengine.h \
-    src/common/cdeviceinfo.h
+    src/common/cdeviceinfo.h \
+    src/network/cprotocol.h
 
 QML_FILES += Gui/Dialog.qml \
              Gui/MetroButton.qml \
