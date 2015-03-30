@@ -31,7 +31,7 @@ class CTcpSocket;
 class CAbstractPacketParser;
 class CAbstractServerPlayerPrivate;
 
-class CAbstractServerPlayer : public CAbstractPlayer
+class MCD_EXPORT CAbstractServerPlayer : public CAbstractPlayer
 {
     Q_OBJECT
 
@@ -44,20 +44,18 @@ public:
     void setPacketParser(CAbstractPacketParser *parser);
 
     void kick();
-
     QHostAddress ip() const;
+
+    void notify(int command, const QVariant &data = QVariant());
 
 signals:
     void disconnected();
 
 protected:
-    void handleNewPacket(const QByteArray &rawPacket);
-
-    typedef void(CAbstractServerPlayer::*Callback)(const QVariant &data);
-    void checkVersionCommand(const QVariant &data);
-    void loginCommand(const QVariant &data);
-    void logoutCommand(const QVariant &);
-    void speakCommand(const QVariant &data);
+    static void CheckVersionCommand(CAbstractServerPlayer *player, const QVariant &data);
+    static void LoginCommand(CAbstractServerPlayer *player, const QVariant &data);
+    static void LogoutCommand(CAbstractServerPlayer *player, const QVariant &);
+    static void SpeakCommand(CAbstractServerPlayer *player, const QVariant &data);
 
 private:
     void init();

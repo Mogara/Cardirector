@@ -76,6 +76,7 @@ HEADERS += \
     src/network/cjsonpacketparser.h \
     src/network/cnetwork.h \
     src/network/cpacket.h \
+    src/network/cpacketrouter.h \
     src/network/cprotocol.h \
     src/network/ctcpserver.h \
     src/network/ctcpsocket.h \

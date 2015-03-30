@@ -21,49 +21,44 @@
 #include "ctcpsocket.h"
 #include "cjsonpacketparser.h"
 #include "cprotocol.h"
+#include "cpacketrouter.h"
 
 class CAbstractServerPlayerPrivate
 {
 public:
     CTcpSocket *socket;
     CAbstractPacketParser *packetParser;
-
-    static QMap<int, CAbstractServerPlayer::Callback> interactions; //For requests
-    static QMap<int, CAbstractServerPlayer::Callback> callbacks;    //For notifications
+    CPacketRouter<CAbstractServerPlayer> *router;
 };
-
-QMap<int, CAbstractServerPlayer::Callback> CAbstractServerPlayerPrivate::interactions;
-QMap<int, CAbstractServerPlayer::Callback> CAbstractServerPlayerPrivate::callbacks;
 
 CAbstractServerPlayer::CAbstractServerPlayer(QObject *parent)
     : CAbstractPlayer(parent)
 {
     init();
-    p_ptr->socket = NULL;
 }
 
 CAbstractServerPlayer::CAbstractServerPlayer(CTcpSocket *socket, QObject *parent)
     : CAbstractPlayer(parent)
 {
     init();
-    p_ptr->socket = socket;
+    setSocket(socket);
 }
 
 void CAbstractServerPlayer::init()
 {
     p_ptr = new CAbstractServerPlayerPrivate;
+    p_ptr->socket = NULL;
     p_ptr->packetParser = new CJsonPacketParser;
-
-    if (p_ptr->interactions.isEmpty() && p_ptr->callbacks.isEmpty()) {
-        initCallbacks();
-    }
+    initCallbacks();
 }
 
 void CAbstractServerPlayer::initCallbacks()
 {
-    p_ptr->callbacks[S_COMMAND_CHECK_VERSION] = &CAbstractServerPlayer::checkVersionCommand;
-    p_ptr->callbacks[S_COMMAND_LOGIN] = &CAbstractServerPlayer::loginCommand;
-    p_ptr->callbacks[S_COMMAND_LOGOUT] = &CAbstractServerPlayer::logoutCommand;
+    p_ptr->router = new CPacketRouter<CAbstractServerPlayer>(this, p_ptr->packetParser);
+    p_ptr->router->addCallback(S_COMMAND_CHECK_VERSION, &CheckVersionCommand);
+    p_ptr->router->addCallback(S_COMMAND_LOGIN, &LoginCommand);
+    p_ptr->router->addCallback(S_COMMAND_LOGOUT, &LogoutCommand);
+    p_ptr->router->addCallback(S_COMMAND_SPEAK, &SpeakCommand);
 }
 
 CAbstractServerPlayer::~CAbstractServerPlayer()
@@ -83,7 +78,7 @@ void CAbstractServerPlayer::setSocket(CTcpSocket *socket)
     p_ptr->socket = socket;
     if (socket != NULL) {
         connect(socket, &CTcpSocket::disconnected, this, &CAbstractServerPlayer::disconnected);
-        connect(socket, &CTcpSocket::newPacket, this, &CAbstractServerPlayer::handleNewPacket);
+        connect(socket, &CTcpSocket::newPacket, p_ptr->router, &CPacketRouter<CAbstractServerPlayer>::handlePacket);
     }
 }
 
@@ -105,30 +100,24 @@ QHostAddress CAbstractServerPlayer::ip() const
     return p_ptr->socket->peerAddress();
 }
 
-void CAbstractServerPlayer::handleNewPacket(const QByteArray &rawPacket)
+void CAbstractServerPlayer::notify(int command, const QVariant &data)
 {
-    CPacket packet = p_ptr->packetParser->parse(rawPacket);
-    if (packet.isValid())
-        return;
-
-    if (packet.type() == CPacket::TYPE_NOTIFICATION) {
-        Callback func = p_ptr->callbacks.value(packet.type());
-        if (func)
-            (this->*func)(packet.data());
-    } else if (packet.type() == CPacket::TYPE_REQUEST) {
-        Callback func = p_ptr->interactions.value(packet.type());
-        if (func)
-            (this->*func)(packet.data());
-    }
+    CPacket packet(command, CPacket::TYPE_NOTIFICATION);
+    packet.setData(data);
+    p_ptr->socket->writePacket(p_ptr->packetParser->parse(packet));
 }
 
-void CAbstractServerPlayer::checkVersionCommand(const QVariant &data)
+/* Callbacks */
+
+void CAbstractServerPlayer::CheckVersionCommand(CAbstractServerPlayer *player, const QVariant &data)
 {
+    C_UNUSED(player);
     C_UNUSED(data);
 }
 
-void CAbstractServerPlayer::loginCommand(const QVariant &data)
+void CAbstractServerPlayer::LoginCommand(CAbstractServerPlayer *player, const QVariant &data)
 {
+    C_UNUSED(player);
     QVariantList dataList(data.toList());
     if (dataList.size() >= 2) {
         QString account = dataList.at(0).toString();
@@ -141,16 +130,17 @@ void CAbstractServerPlayer::loginCommand(const QVariant &data)
     }
 }
 
-void CAbstractServerPlayer::logoutCommand(const QVariant &)
+void CAbstractServerPlayer::LogoutCommand(CAbstractServerPlayer *player, const QVariant &)
 {
+    C_UNUSED(player);
     //@to-do: handle logout command, without which the disconnection is unexpected
 }
 
-void CAbstractServerPlayer::speakCommand(const QVariant &data)
+void CAbstractServerPlayer::SpeakCommand(CAbstractServerPlayer *player, const QVariant &data)
 {
     QString message = data.toString();
     if (!message.isEmpty()) {
         //@to-do: broadcast the message to all the clients
-        qDebug() << screenName() << message;
+        qDebug() << player->screenName() << message;
     }
 }
