@@ -17,22 +17,20 @@
     Mogara
     *********************************************************************/
 
-#ifndef CJSONPACKET_H
-#define CJSONPACKET_H
+#ifndef CABSTRACTPACKETPARSER_H
+#define CABSTRACTPACKETPARSER_H
 
-#include "cabstractpacket.h"
+#include "cpacket.h"
 
 MCD_BEGIN_NAMESPACE
 
-class MCD_EXPORT CJsonPacket : public CAbstractPacket
+class MCD_EXPORT CAbstractPacketParser
 {
 public:
-    CJsonPacket(int command) : CAbstractPacket(command) {}
-
-    bool parse(const QByteArray &data);
-    QByteArray toByteArray() const;
+    virtual CPacket parse(const QByteArray &data) = 0;
+    virtual QByteArray parse(const CPacket &packet) = 0;
 };
 
 MCD_END_NAMESPACE
 
-#endif // CJSONPACKET_H
+#endif // CABSTRACTPACKETPARSER_H

@@ -17,4 +17,43 @@
     Mogara
     *********************************************************************/
 
-#include "cabstractpacket.h"
+#ifndef CPACKET_H
+#define CPACKET_H
+
+#include "cglobal.h"
+
+#include <QVariant>
+
+class CPacketPrivate;
+
+class MCD_EXPORT CPacket
+{
+public:
+    enum Type{
+        TYPE_NOTIFICATION,
+        TYPE_REQUEST,
+        TYPE_REPLY
+    };
+
+    CPacket();
+    CPacket(int command, Type type);
+    CPacket(const CPacket &source);
+    ~CPacket();
+
+    bool isValid() const { return d != NULL; }
+
+    int command() const;
+    void setCommand(int command);
+
+    Type type() const;
+    void setType(Type type);
+
+    void setData(const QVariant &data);
+    const QVariant &data() const;
+
+protected:
+    void detach();
+    CPacketPrivate *d;
+};
+
+#endif // CPACKET_H

@@ -17,29 +17,22 @@
     Mogara
     *********************************************************************/
 
-#include "cjsonpacket.h"
+#ifndef CJSONPACKETPARSER_H
+#define CJSONPACKETPARSER_H
 
-#include <QJsonDocument>
+#include "cglobal.h"
+#include "cabstractpacketparser.h"
 
-bool CJsonPacket::parse(const QByteArray &data)
+MCD_BEGIN_NAMESPACE
+
+class MCD_EXPORT CJsonPacketParser : public CAbstractPacketParser
 {
-    QJsonDocument doc = QJsonDocument::fromJson(data);
-    QVariantList packet = doc.toVariant().toList();
-    if (packet.size() != 2)
-        return false;
-    m_command = packet.at(0).toInt();
-    m_data = packet.at(1);
-    return true;
-}
+public:
+    CPacket parse(const QByteArray &data);
+    QByteArray parse(const CPacket &packet);
+};
 
-QByteArray CJsonPacket::toByteArray() const
-{
-    QVariantList message;
-    message << command();
-    message << data();
+MCD_END_NAMESPACE
 
-    QJsonDocument doc = QJsonDocument::fromVariant(message);
-    if (doc.isEmpty())
-        return QByteArray();
-    return doc.toJson(QJsonDocument::Compact);
-}
+#endif // CJSONPACKETPARSER_H
+

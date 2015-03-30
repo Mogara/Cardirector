@@ -20,7 +20,7 @@
 #ifndef CNETWORK_H
 #define CNETWORK_H
 
-#include "cabstractpacket.h"
+#include "cpacket.h"
 #include "ctcpsocket.h"
 #include "ctcpserver.h"
 

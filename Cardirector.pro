@@ -40,8 +40,8 @@ SOURCES += \
     src/controller/cabstractuicontroller.cpp \
     src/gamelogic/cabstractgamelogic.cpp \
     src/network/cnetwork.cpp \
-    src/network/cabstractpacket.cpp \
-    src/network/cjsonpacket.cpp \
+    src/network/cpacket.cpp \
+    src/network/cjsonpacketparser.cpp \
     src/network/ctcpserver.cpp \
     src/network/ctcpsocket.cpp \
     src/network/cwifimanager.cpp \
@@ -65,8 +65,9 @@ HEADERS += \
     src/controller/cabstractuicontroller.h \
     src/gamelogic/cabstractgamelogic.h \
     src/network/cnetwork.h \
-    src/network/cabstractpacket.h \
-    src/network/cjsonpacket.h \
+    src/network/cpacket.h \
+    src/network/cabstractpacketparser.h \
+    src/network/cjsonpacketparser.h \
     src/network/ctcpserver.h \
     src/network/ctcpsocket.h \
     src/network/cwifimanager.h \
