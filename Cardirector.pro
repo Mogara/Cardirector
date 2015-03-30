@@ -29,7 +29,8 @@ INCLUDEPATH += src \
                src/common \
                src/client \
                src/ui \
-               src/resource
+               src/resource \
+               src/network
 
 SOURCES += \
     src/ai/cabstractai.cpp \
@@ -37,6 +38,7 @@ SOURCES += \
     src/client/cclientsettings.cpp \
     src/client/cuserdata.cpp \
     src/common/cdeviceinfo.cpp \
+    src/common/cabstractplayer.cpp \
     src/controller/cabstractaicontroller.cpp \
     src/controller/cabstractcontroller.cpp \
     src/controller/cabstractuicontroller.cpp \
@@ -52,6 +54,7 @@ SOURCES += \
     src/resource/cresourcemanager.cpp \
     src/resource/cimageprovider.cpp \
     src/server/cabstractserver.cpp \
+    src/server/cabstractserverplayer.cpp \
     src/sound/csound.cpp \
     src/ui/cabstractui.cpp \
     src/ui/cmainwindow.cpp \
@@ -64,6 +67,7 @@ HEADERS += \
     src/client/cuserdata.h \
     src/common/cdeviceinfo.h \
     src/common/cglobal.h \
+    src/common/cabstractplayer.h \
     src/controller/cabstractaicontroller.h \
     src/controller/cabstractcontroller.h \
     src/controller/cabstractuicontroller.h \
@@ -80,6 +84,7 @@ HEADERS += \
     src/resource/cimageprovider.h \
     src/resource/cresourcemanager.h \
     src/server/cabstractserver.h \
+    src/server/cabstractserverplayer.h \
     src/sound/csound.h \
     src/ui/cabstractui.h \
     src/ui/cmainwindow.h \

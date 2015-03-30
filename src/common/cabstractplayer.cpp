@@ -17,36 +17,42 @@
     Mogara
     *********************************************************************/
 
-#ifndef CABSTRACTSERVER_H
-#define CABSTRACTSERVER_H
+#include "cabstractplayer.h"
 
-#include "cglobal.h"
-
-#include <QObject>
-#include <QHostAddress>
-
-class CTcpServer;
-class CTcpSocket;
-class CAbstractServerPrivate;
-
-class MCD_EXPORT CAbstractServer : public QObject
+class CAbstractPlayerPrivate
 {
 public:
-    CAbstractServer(QObject *parent = 0);
-    ~CAbstractServer();
-
-    bool listen(const QHostAddress &address = QHostAddress::Any, ushort port = 0);
-
-    void setAcceptMultipleClientsBehindOneIp(bool enabled);
-    bool acceptMultipleClientsBehindOneIp() const;
-
-protected:
-    void handleNewConnection(CTcpSocket *client);
-
-private:
-    C_DISABLE_COPY(CAbstractServer)
-    C_DECLARE_PRIVATE(CAbstractServer)
-    CAbstractServerPrivate *p_ptr;
+    QString screenName;
+    QString avatar;
 };
 
-#endif
+CAbstractPlayer::CAbstractPlayer(QObject *parent)
+    : QObject(parent)
+    , p_ptr(new CAbstractPlayerPrivate)
+{
+}
+
+CAbstractPlayer::~CAbstractPlayer()
+{
+
+}
+
+QString CAbstractPlayer::screenName() const
+{
+    return p_ptr->screenName;
+}
+
+void CAbstractPlayer::setScreenName(const QString &name)
+{
+    p_ptr->screenName = name;
+}
+
+QString CAbstractPlayer::avatar() const
+{
+    return p_ptr->avatar;
+}
+
+void CAbstractPlayer::setAvatar(const QString &avatar)
+{
+    p_ptr->avatar = avatar;
+}

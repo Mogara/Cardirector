@@ -17,36 +17,42 @@
     Mogara
     *********************************************************************/
 
-#ifndef CABSTRACTSERVER_H
-#define CABSTRACTSERVER_H
+#ifndef CABSTRACTSERVERPLAYER_H
+#define CABSTRACTSERVERPLAYER_H
 
-#include "cglobal.h"
+#include "cabstractplayer.h"
 
 #include <QObject>
-#include <QHostAddress>
 
-class CTcpServer;
+MCD_BEGIN_NAMESPACE
+
 class CTcpSocket;
-class CAbstractServerPrivate;
+class CAbstractServerPlayerPrivate;
 
-class MCD_EXPORT CAbstractServer : public QObject
+class CAbstractServerPlayer : public CAbstractPlayer
 {
+    Q_OBJECT
+
 public:
-    CAbstractServer(QObject *parent = 0);
-    ~CAbstractServer();
+    explicit CAbstractServerPlayer(QObject *parent = 0);
+    CAbstractServerPlayer(CTcpSocket *socket, QObject *parent = 0);
+    ~CAbstractServerPlayer();
 
-    bool listen(const QHostAddress &address = QHostAddress::Any, ushort port = 0);
+    void setSocket(CTcpSocket *socket);
 
-    void setAcceptMultipleClientsBehindOneIp(bool enabled);
-    bool acceptMultipleClientsBehindOneIp() const;
+signals:
+    void disconnected();
 
 protected:
-    void handleNewConnection(CTcpSocket *client);
+    void handleNewPacket(const QByteArray &rawPacket);
 
 private:
-    C_DISABLE_COPY(CAbstractServer)
-    C_DECLARE_PRIVATE(CAbstractServer)
-    CAbstractServerPrivate *p_ptr;
+    C_DISABLE_COPY(CAbstractServerPlayer)
+    C_DECLARE_PRIVATE(CAbstractServerPlayer)
+
+    CAbstractServerPlayerPrivate *p_ptr;
 };
 
-#endif
+MCD_END_NAMESPACE
+
+#endif // CABSTRACTSERVERPLAYER_H

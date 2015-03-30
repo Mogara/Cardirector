@@ -19,27 +19,56 @@
 
 #include "cpch.h"
 #include "cabstractserver.h"
-#include "network/ctcpserver.h"
-#include "network/ctcpsocket.h"
+#include "ctcpserver.h"
+#include "ctcpsocket.h"
+
+class CAbstractServerPrivate
+{
+public:
+    bool acceptMultipleClientsBehindOneIp;
+    QSet<QHostAddress> clientIp;
+    CTcpServer *server;
+};
 
 CAbstractServer::CAbstractServer(QObject *parent)
     : QObject(parent)
-    , m_acceptMultipleClientsBehindOneIp(true)
-    , m_server(new CTcpServer(this))
+    , p_ptr(new CAbstractServerPrivate)
 {
-    connect(m_server, &CTcpServer::newSocket, this, &CAbstractServer::handleNewConnection);
+    p_ptr->acceptMultipleClientsBehindOneIp = true;
+    p_ptr->server = new CTcpServer(this);
+    connect(p_ptr->server, &CTcpServer::newSocket, this, &CAbstractServer::handleNewConnection);
+}
+
+CAbstractServer::~CAbstractServer()
+{
+    delete p_ptr;
+}
+
+bool CAbstractServer::listen(const QHostAddress &address, ushort port)
+{
+    return p_ptr->server->listen(address, port);
+}
+
+void CAbstractServer::setAcceptMultipleClientsBehindOneIp(bool enabled)
+{
+    p_ptr->acceptMultipleClientsBehindOneIp = enabled;
+}
+
+bool CAbstractServer::acceptMultipleClientsBehindOneIp() const
+{
+    return p_ptr->acceptMultipleClientsBehindOneIp;
 }
 
 void CAbstractServer::handleNewConnection(CTcpSocket *client)
 {
     if (!acceptMultipleClientsBehindOneIp()) {
-        if (m_clientIp.contains(client->peerAddress())) {
+        if (p_ptr->clientIp.contains(client->peerAddress())) {
             //@todo: send a warning
             client->disconnectFromHost();
             client->deleteLater();
             return;
         } else {
-            m_clientIp.insert(client->peerAddress());
+            p_ptr->clientIp.insert(client->peerAddress());
         }
     }
 
