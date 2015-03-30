@@ -34,57 +34,57 @@ INCLUDEPATH += src \
 SOURCES += \
     src/ai/cabstractai.cpp \
     src/client/cabstractclient.cpp \
+    src/client/cclientsettings.cpp \
     src/client/cuserdata.cpp \
+    src/common/cdeviceinfo.cpp \
     src/controller/cabstractaicontroller.cpp \
     src/controller/cabstractcontroller.cpp \
     src/controller/cabstractuicontroller.cpp \
     src/gamelogic/cabstractgamelogic.cpp \
+    src/network/cjsonpacketparser.cpp \
     src/network/cnetwork.cpp \
     src/network/cpacket.cpp \
-    src/network/cjsonpacketparser.cpp \
+    src/network/cprotocol.cpp \
     src/network/ctcpserver.cpp \
     src/network/ctcpsocket.cpp \
     src/network/cwifimanager.cpp \
     src/osc/cosc.cpp \
+    src/resource/cresourcemanager.cpp \
+    src/resource/cimageprovider.cpp \
     src/server/cabstractserver.cpp \
     src/sound/csound.cpp \
     src/ui/cabstractui.cpp \
-    src/client/cclientsettings.cpp \
     src/ui/cmainwindow.cpp \
-    src/resource/cresourcemanager.cpp \
-    src/resource/cimageprovider.cpp \
-    src/ui/cqmlengine.cpp \
-    src/common/cdeviceinfo.cpp \
-    src/network/cprotocol.cpp
+    src/ui/cqmlengine.cpp
 
 HEADERS += \
     src/ai/cabstractai.h \
     src/client/cabstractclient.h \
+    src/client/cclientsettings.h \
     src/client/cuserdata.h \
+    src/common/cdeviceinfo.h \
+    src/common/cglobal.h \
     src/controller/cabstractaicontroller.h \
     src/controller/cabstractcontroller.h \
     src/controller/cabstractuicontroller.h \
     src/gamelogic/cabstractgamelogic.h \
-    src/network/cnetwork.h \
-    src/network/cpacket.h \
     src/network/cabstractpacketparser.h \
     src/network/cjsonpacketparser.h \
+    src/network/cnetwork.h \
+    src/network/cpacket.h \
+    src/network/cprotocol.h \
     src/network/ctcpserver.h \
     src/network/ctcpsocket.h \
     src/network/cwifimanager.h \
     src/osc/cosc.h \
+    src/resource/cimageprovider.h \
+    src/resource/cresourcemanager.h \
     src/server/cabstractserver.h \
     src/sound/csound.h \
     src/ui/cabstractui.h \
-    src/common/cglobal.h \
-    src/cpch.h \
-    src/client/cclientsettings.h \
     src/ui/cmainwindow.h \
-    src/resource/cresourcemanager.h \
-    src/resource/cimageprovider.h \
     src/ui/cqmlengine.h \
-    src/common/cdeviceinfo.h \
-    src/network/cprotocol.h
+    src/cpch.h
 
 QML_FILES += Gui/Dialog.qml \
              Gui/MetroButton.qml \
