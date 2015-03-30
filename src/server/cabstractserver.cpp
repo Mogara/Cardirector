@@ -19,6 +19,7 @@
 
 #include "cpch.h"
 #include "cabstractserver.h"
+#include "cabstractserverplayer.h"
 #include "ctcpserver.h"
 #include "ctcpsocket.h"
 
@@ -26,8 +27,10 @@ class CAbstractServerPrivate
 {
 public:
     bool acceptMultipleClientsBehindOneIp;
-    QSet<QHostAddress> clientIp;
+    QHash<QHostAddress, CAbstractServerPlayer *> clientIp;
     CTcpServer *server;
+
+    QList<CAbstractServerPlayer *> players;
 };
 
 CAbstractServer::CAbstractServer(QObject *parent)
@@ -59,18 +62,33 @@ bool CAbstractServer::acceptMultipleClientsBehindOneIp() const
     return p_ptr->acceptMultipleClientsBehindOneIp;
 }
 
+const QList<CAbstractServerPlayer *> &CAbstractServer::players() const
+{
+    return p_ptr->players;
+}
+
+CAbstractServerPlayer *CAbstractServer::createPlayer(CTcpSocket *client)
+{
+    return new CAbstractServerPlayer(client, this);
+}
+
 void CAbstractServer::handleNewConnection(CTcpSocket *client)
 {
+    CAbstractServerPlayer *player = createPlayer(client);
+    if (player == NULL)
+        return;
+
     if (!acceptMultipleClientsBehindOneIp()) {
-        if (p_ptr->clientIp.contains(client->peerAddress())) {
-            //@todo: send a warning
-            client->disconnectFromHost();
-            client->deleteLater();
-            return;
-        } else {
-            p_ptr->clientIp.insert(client->peerAddress());
+        if (p_ptr->clientIp.contains(player->ip())) {
+            CAbstractServerPlayer *prevPlayer = p_ptr->clientIp.value(player->ip());
+            prevPlayer->kick();
+            prevPlayer->deleteLater();
         }
+
+        p_ptr->clientIp.insert(player->ip(), player);
     }
 
     //@sign-up
+    p_ptr->players << player;
+    emit newPlayer(player);
 }

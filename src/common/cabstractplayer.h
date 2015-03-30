@@ -31,6 +31,7 @@ class CAbstractPlayerPrivate;
 class CAbstractPlayer : public QObject
 {
     Q_OBJECT
+
 public:
     explicit CAbstractPlayer(QObject *parent = 0);
     ~CAbstractPlayer();

@@ -27,10 +27,13 @@
 
 class CTcpServer;
 class CTcpSocket;
+class CAbstractServerPlayer;
 class CAbstractServerPrivate;
 
 class MCD_EXPORT CAbstractServer : public QObject
 {
+    Q_OBJECT
+
 public:
     CAbstractServer(QObject *parent = 0);
     ~CAbstractServer();
@@ -40,7 +43,13 @@ public:
     void setAcceptMultipleClientsBehindOneIp(bool enabled);
     bool acceptMultipleClientsBehindOneIp() const;
 
+    const QList<CAbstractServerPlayer *> &players() const;
+
+signals:
+    void newPlayer(CAbstractServerPlayer *player);
+
 protected:
+    virtual CAbstractServerPlayer *createPlayer(CTcpSocket *client);
     void handleNewConnection(CTcpSocket *client);
 
 private:

@@ -23,10 +23,12 @@
 #include "cabstractplayer.h"
 
 #include <QObject>
+#include <QHostAddress>
 
 MCD_BEGIN_NAMESPACE
 
 class CTcpSocket;
+class CAbstractPacketParser;
 class CAbstractServerPlayerPrivate;
 
 class CAbstractServerPlayer : public CAbstractPlayer
@@ -39,6 +41,11 @@ public:
     ~CAbstractServerPlayer();
 
     void setSocket(CTcpSocket *socket);
+    void setPacketParser(CAbstractPacketParser *parser);
+
+    void kick();
+
+    QHostAddress ip() const;
 
 signals:
     void disconnected();
@@ -46,7 +53,16 @@ signals:
 protected:
     void handleNewPacket(const QByteArray &rawPacket);
 
+    typedef void(CAbstractServerPlayer::*Callback)(const QVariant &data);
+    void checkVersionCommand(const QVariant &data);
+    void loginCommand(const QVariant &data);
+    void logoutCommand(const QVariant &);
+    void speakCommand(const QVariant &data);
+
 private:
+    void init();
+    void initCallbacks();
+
     C_DISABLE_COPY(CAbstractServerPlayer)
     C_DECLARE_PRIVATE(CAbstractServerPlayer)
 
