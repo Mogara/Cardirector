@@ -46,6 +46,7 @@ SOURCES += \
     src/network/cjsonpacketparser.cpp \
     src/network/cnetwork.cpp \
     src/network/cpacket.cpp \
+    src/network/cpacketrouter.cpp \
     src/network/cprotocol.cpp \
     src/network/ctcpserver.cpp \
     src/network/ctcpsocket.cpp \

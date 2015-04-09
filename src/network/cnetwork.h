@@ -22,6 +22,8 @@
 
 #include "cpacket.h"
 #include "ctcpsocket.h"
-#include "ctcpserver.h"
+#include "cpacketrouter.h"
+#include "cjsonpacketparser.h"
+#include "cprotocol.h"
 
 #endif

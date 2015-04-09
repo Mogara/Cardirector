@@ -41,21 +41,24 @@ public:
     ~CAbstractServerPlayer();
 
     void setSocket(CTcpSocket *socket);
-    void setPacketParser(CAbstractPacketParser *parser);
 
     void kick();
     QHostAddress ip() const;
 
+    void request(int command, const QVariant &data = QVariant());
+    void reply(int command, const QVariant &data = QVariant());
     void notify(int command, const QVariant &data = QVariant());
+
+    QVariant waitForReply();
 
 signals:
     void disconnected();
 
 protected:
-    static void CheckVersionCommand(CAbstractServerPlayer *player, const QVariant &data);
-    static void LoginCommand(CAbstractServerPlayer *player, const QVariant &data);
-    static void LogoutCommand(CAbstractServerPlayer *player, const QVariant &);
-    static void SpeakCommand(CAbstractServerPlayer *player, const QVariant &data);
+    static void CheckVersionCommand(QObject *player, const QVariant &data);
+    static void LoginCommand(QObject *player, const QVariant &data);
+    static void LogoutCommand(QObject *player, const QVariant &);
+    static void SpeakCommand(QObject *receiver, const QVariant &data);
 
 private:
     void init();

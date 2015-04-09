@@ -21,7 +21,6 @@
 #define CPACKETROUTER_H
 
 #include "cglobal.h"
-#include "cpacket.h"
 #include "cabstractpacketparser.h"
 
 #include <QObject>
@@ -29,55 +28,41 @@
 
 MCD_BEGIN_NAMESPACE
 
-template<typename T>
+class CTcpSocket;
+class CPacketRouterPrivate;
+
 class MCD_EXPORT CPacketRouter : public QObject
 {
+    Q_OBJECT
+
 public:
-    typedef void (*Callback)(T *receiver, const QVariant &data);
+    typedef void (*Callback)(QObject *receiver, const QVariant &data);
 
-    CPacketRouter(T *receiver, CAbstractPacketParser *parser)
-        : QObject(receiver)
-        , m_receiver(receiver)
-        , m_parser(parser)
-    {
-    }
+    //The router takes ownership of both the socket and the parser
+    CPacketRouter(QObject *receiver, CTcpSocket *socket, CAbstractPacketParser *parser);
+    ~CPacketRouter();
 
-    void handlePacket(const QByteArray &rawPacket)
-    {
-        if (m_receiver == NULL)
-            return;
+    CTcpSocket *socket();
+    CAbstractPacketParser *parser();
 
-        CPacket packet = m_parser->parse(rawPacket);
-        if (!packet.isValid())
-            return;
+    void setSocket(CTcpSocket *socket);
 
-        if (packet.type() == CPacket::TYPE_NOTIFICATION) {
-            Callback func = m_callbacks.value(packet.command());
-            if (func)
-                (*func)(m_receiver, packet.data());
-        } else if (packet.type() == CPacket::TYPE_REQUEST) {
-            Callback func = m_interactions.value(packet.command());
-            if (func)
-                (*func)(m_receiver, packet.data());
-         }
-    }
+    void addInteraction(int command, Callback func);
+    void addCallback(int command, Callback func);
 
-    void addInteraction(int command, Callback func)
-    {
-        m_interactions[command] = func;
-    }
+    void request(int command, const QVariant &data = QVariant());
+    void reply(int command, const QVariant &data = QVariant());
+    void notify(int command, const QVariant &data = QVariant());
 
-    void addCallback(int command, Callback func)
-    {
-        m_callbacks[command] = func;
-    }
+    QVariant waitForReply();
 
 protected:
-    QMap<int, Callback> m_interactions; //For requests
-    QMap<int, Callback> m_callbacks;    //For notifications
+    void handlePacket(const QByteArray &rawPacket);
 
-    T *m_receiver;
-    CAbstractPacketParser *m_parser;
+private:
+    C_DISABLE_COPY(CPacketRouter)
+    C_DECLARE_PRIVATE(CPacketRouter)
+    CPacketRouterPrivate *p_ptr;
 };
 
 MCD_END_NAMESPACE

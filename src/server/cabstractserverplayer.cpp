@@ -26,9 +26,7 @@
 class CAbstractServerPlayerPrivate
 {
 public:
-    CTcpSocket *socket;
-    CAbstractPacketParser *packetParser;
-    CPacketRouter<CAbstractServerPlayer> *router;
+    CPacketRouter *router;
 };
 
 CAbstractServerPlayer::CAbstractServerPlayer(QObject *parent)
@@ -41,20 +39,18 @@ CAbstractServerPlayer::CAbstractServerPlayer(CTcpSocket *socket, QObject *parent
     : CAbstractPlayer(parent)
 {
     init();
-    setSocket(socket);
+    p_ptr->router->setSocket(socket);
 }
 
 void CAbstractServerPlayer::init()
 {
     p_ptr = new CAbstractServerPlayerPrivate;
-    p_ptr->socket = NULL;
-    p_ptr->packetParser = new CJsonPacketParser;
+    p_ptr->router = new CPacketRouter(this, new CTcpSocket, new CJsonPacketParser);
     initCallbacks();
 }
 
 void CAbstractServerPlayer::initCallbacks()
 {
-    p_ptr->router = new CPacketRouter<CAbstractServerPlayer>(this, p_ptr->packetParser);
     p_ptr->router->addCallback(S_COMMAND_CHECK_VERSION, &CheckVersionCommand);
     p_ptr->router->addCallback(S_COMMAND_LOGIN, &LoginCommand);
     p_ptr->router->addCallback(S_COMMAND_LOGOUT, &LogoutCommand);
@@ -63,59 +59,54 @@ void CAbstractServerPlayer::initCallbacks()
 
 CAbstractServerPlayer::~CAbstractServerPlayer()
 {
-    delete p_ptr->packetParser;
     delete p_ptr;
 }
 
 void CAbstractServerPlayer::setSocket(CTcpSocket *socket)
 {
-    if (p_ptr->socket != NULL) {
-        p_ptr->socket->disconnect(this);
-        this->disconnect(p_ptr->socket);
-        p_ptr->socket->deleteLater();
-    }
-
-    p_ptr->socket = socket;
-    if (socket != NULL) {
-        connect(socket, &CTcpSocket::disconnected, this, &CAbstractServerPlayer::disconnected);
-        connect(socket, &CTcpSocket::newPacket, p_ptr->router, &CPacketRouter<CAbstractServerPlayer>::handlePacket);
-    }
-}
-
-void CAbstractServerPlayer::setPacketParser(CAbstractPacketParser *parser)
-{
-    if (p_ptr->packetParser)
-        delete p_ptr->packetParser;
-    p_ptr->packetParser = parser;
+    p_ptr->router->setSocket(socket);
 }
 
 void CAbstractServerPlayer::kick()
 {
     //@to-do: send a warning
-    p_ptr->socket->disconnectFromHost();
+    p_ptr->router->socket()->disconnectFromHost();
 }
 
 QHostAddress CAbstractServerPlayer::ip() const
 {
-    return p_ptr->socket->peerAddress();
+    return p_ptr->router->socket()->peerAddress();
+}
+
+void CAbstractServerPlayer::request(int command, const QVariant &data)
+{
+    p_ptr->router->request(command, data);
+}
+
+void CAbstractServerPlayer::reply(int command, const QVariant &data)
+{
+    p_ptr->router->reply(command, data);
 }
 
 void CAbstractServerPlayer::notify(int command, const QVariant &data)
 {
-    CPacket packet(command, CPacket::TYPE_NOTIFICATION);
-    packet.setData(data);
-    p_ptr->socket->writePacket(p_ptr->packetParser->parse(packet));
+    p_ptr->router->notify(command, data);
+}
+
+QVariant CAbstractServerPlayer::waitForReply()
+{
+    return p_ptr->router->waitForReply();
 }
 
 /* Callbacks */
 
-void CAbstractServerPlayer::CheckVersionCommand(CAbstractServerPlayer *player, const QVariant &data)
+void CAbstractServerPlayer::CheckVersionCommand(QObject *player, const QVariant &data)
 {
     C_UNUSED(player);
     C_UNUSED(data);
 }
 
-void CAbstractServerPlayer::LoginCommand(CAbstractServerPlayer *player, const QVariant &data)
+void CAbstractServerPlayer::LoginCommand(QObject *player, const QVariant &data)
 {
     C_UNUSED(player);
     QVariantList dataList(data.toList());
@@ -130,14 +121,15 @@ void CAbstractServerPlayer::LoginCommand(CAbstractServerPlayer *player, const QV
     }
 }
 
-void CAbstractServerPlayer::LogoutCommand(CAbstractServerPlayer *player, const QVariant &)
+void CAbstractServerPlayer::LogoutCommand(QObject *player, const QVariant &)
 {
     C_UNUSED(player);
     //@to-do: handle logout command, without which the disconnection is unexpected
 }
 
-void CAbstractServerPlayer::SpeakCommand(CAbstractServerPlayer *player, const QVariant &data)
+void CAbstractServerPlayer::SpeakCommand(QObject *receiver, const QVariant &data)
 {
+    CAbstractServerPlayer *player = qobject_cast<CAbstractServerPlayer *>(receiver);
     QString message = data.toString();
     if (!message.isEmpty()) {
         //@to-do: broadcast the message to all the clients
