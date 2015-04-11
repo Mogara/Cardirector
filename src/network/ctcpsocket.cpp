@@ -75,4 +75,5 @@ void CTcpSocket::writePacket(const QByteArray &data)
 void CTcpSocket::keepAlive()
 {
     putChar('\n');
+    flush();
 }
