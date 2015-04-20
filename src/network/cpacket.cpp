@@ -58,16 +58,19 @@ CPacket::CPacket(int command, Type type)
 
 CPacket::~CPacket()
 {
-    if (d->ref.load() == 1)
-        delete d;
-    else
-        d->ref.deref();
+    if (d != NULL) {
+        if (d->ref.load() == 1)
+            delete d;
+        else
+            d->ref.deref();
+    }
 }
 
 CPacket::CPacket(const CPacket &source)
     : d(source.d)
 {
-    d->ref.ref();
+    if (d != NULL)
+        d->ref.ref();
 }
 
 int CPacket::command() const

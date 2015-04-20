@@ -23,8 +23,11 @@
 
 CPacket CJsonPacketParser::parse(const QByteArray &data)
 {
-    QJsonDocument doc = QJsonDocument::fromJson(data);
     CPacket packet;
+    QJsonDocument doc = QJsonDocument::fromJson(data);
+    if (doc.isNull())
+        return packet;
+
     QVariant json = doc.toVariant();
     if (!json.canConvert<QVariantList>())
         return packet;
