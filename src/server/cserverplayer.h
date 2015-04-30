@@ -17,8 +17,8 @@
     Mogara
     *********************************************************************/
 
-#ifndef CABSTRACTSERVERPLAYER_H
-#define CABSTRACTSERVERPLAYER_H
+#ifndef CSERVERPLAYER_H
+#define CSERVERPLAYER_H
 
 #include "cabstractplayer.h"
 
@@ -29,16 +29,16 @@ MCD_BEGIN_NAMESPACE
 
 class CTcpSocket;
 class CAbstractPacketParser;
-class CAbstractServerPlayerPrivate;
+class CServerPlayerPrivate;
 
-class MCD_EXPORT CAbstractServerPlayer : public CAbstractPlayer
+class MCD_EXPORT CServerPlayer : public CAbstractPlayer
 {
     Q_OBJECT
 
 public:
-    explicit CAbstractServerPlayer(QObject *parent = 0);
-    CAbstractServerPlayer(CTcpSocket *socket, QObject *parent = 0);
-    ~CAbstractServerPlayer();
+    explicit CServerPlayer(QObject *parent = 0);
+    CServerPlayer(CTcpSocket *socket, QObject *parent = 0);
+    ~CServerPlayer();
 
     void setSocket(CTcpSocket *socket);
 
@@ -64,12 +64,12 @@ private:
     void init();
     void initCallbacks();
 
-    C_DISABLE_COPY(CAbstractServerPlayer)
-    C_DECLARE_PRIVATE(CAbstractServerPlayer)
+    C_DISABLE_COPY(CServerPlayer)
+    C_DECLARE_PRIVATE(CServerPlayer)
 
-    CAbstractServerPlayerPrivate *p_ptr;
+    CServerPlayerPrivate *p_ptr;
 };
 
 MCD_END_NAMESPACE
 
-#endif // CABSTRACTSERVERPLAYER_H
+#endif // CSERVERPLAYER_H

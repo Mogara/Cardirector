@@ -17,39 +17,39 @@
     Mogara
     *********************************************************************/
 
-#include "cabstractserverplayer.h"
+#include "cserverplayer.h"
 #include "ctcpsocket.h"
 #include "cjsonpacketparser.h"
 #include "cprotocol.h"
 #include "cpacketrouter.h"
 
-class CAbstractServerPlayerPrivate
+class CServerPlayerPrivate
 {
 public:
     CPacketRouter *router;
 };
 
-CAbstractServerPlayer::CAbstractServerPlayer(QObject *parent)
+CServerPlayer::CServerPlayer(QObject *parent)
     : CAbstractPlayer(parent)
 {
     init();
 }
 
-CAbstractServerPlayer::CAbstractServerPlayer(CTcpSocket *socket, QObject *parent)
+CServerPlayer::CServerPlayer(CTcpSocket *socket, QObject *parent)
     : CAbstractPlayer(parent)
 {
     init();
     p_ptr->router->setSocket(socket);
 }
 
-void CAbstractServerPlayer::init()
+void CServerPlayer::init()
 {
-    p_ptr = new CAbstractServerPlayerPrivate;
+    p_ptr = new CServerPlayerPrivate;
     p_ptr->router = new CPacketRouter(this, new CTcpSocket, new CJsonPacketParser);
     initCallbacks();
 }
 
-void CAbstractServerPlayer::initCallbacks()
+void CServerPlayer::initCallbacks()
 {
     p_ptr->router->addCallback(S_COMMAND_CHECK_VERSION, &CheckVersionCommand);
     p_ptr->router->addCallback(S_COMMAND_LOGIN, &LoginCommand);
@@ -57,56 +57,56 @@ void CAbstractServerPlayer::initCallbacks()
     p_ptr->router->addCallback(S_COMMAND_SPEAK, &SpeakCommand);
 }
 
-CAbstractServerPlayer::~CAbstractServerPlayer()
+CServerPlayer::~CServerPlayer()
 {
     delete p_ptr;
 }
 
-void CAbstractServerPlayer::setSocket(CTcpSocket *socket)
+void CServerPlayer::setSocket(CTcpSocket *socket)
 {
     p_ptr->router->setSocket(socket);
 }
 
-void CAbstractServerPlayer::kick()
+void CServerPlayer::kick()
 {
     //@to-do: send a warning
     p_ptr->router->socket()->disconnectFromHost();
 }
 
-QHostAddress CAbstractServerPlayer::ip() const
+QHostAddress CServerPlayer::ip() const
 {
     return p_ptr->router->socket()->peerAddress();
 }
 
-void CAbstractServerPlayer::request(int command, const QVariant &data)
+void CServerPlayer::request(int command, const QVariant &data)
 {
     p_ptr->router->request(command, data);
 }
 
-void CAbstractServerPlayer::reply(int command, const QVariant &data)
+void CServerPlayer::reply(int command, const QVariant &data)
 {
     p_ptr->router->reply(command, data);
 }
 
-void CAbstractServerPlayer::notify(int command, const QVariant &data)
+void CServerPlayer::notify(int command, const QVariant &data)
 {
     p_ptr->router->notify(command, data);
 }
 
-QVariant CAbstractServerPlayer::waitForReply()
+QVariant CServerPlayer::waitForReply()
 {
     return p_ptr->router->waitForReply();
 }
 
 /* Callbacks */
 
-void CAbstractServerPlayer::CheckVersionCommand(QObject *player, const QVariant &data)
+void CServerPlayer::CheckVersionCommand(QObject *player, const QVariant &data)
 {
     C_UNUSED(player);
     C_UNUSED(data);
 }
 
-void CAbstractServerPlayer::LoginCommand(QObject *player, const QVariant &data)
+void CServerPlayer::LoginCommand(QObject *player, const QVariant &data)
 {
     C_UNUSED(player);
     QVariantList dataList(data.toList());
@@ -121,15 +121,15 @@ void CAbstractServerPlayer::LoginCommand(QObject *player, const QVariant &data)
     }
 }
 
-void CAbstractServerPlayer::LogoutCommand(QObject *player, const QVariant &)
+void CServerPlayer::LogoutCommand(QObject *player, const QVariant &)
 {
     C_UNUSED(player);
     //@to-do: handle logout command, without which the disconnection is unexpected
 }
 
-void CAbstractServerPlayer::SpeakCommand(QObject *receiver, const QVariant &data)
+void CServerPlayer::SpeakCommand(QObject *receiver, const QVariant &data)
 {
-    CAbstractServerPlayer *player = qobject_cast<CAbstractServerPlayer *>(receiver);
+    CServerPlayer *player = qobject_cast<CServerPlayer *>(receiver);
     QString message = data.toString();
     if (!message.isEmpty()) {
         //@to-do: broadcast the message to all the clients

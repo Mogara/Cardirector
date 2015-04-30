@@ -54,8 +54,8 @@ SOURCES += \
     src/osc/cosc.cpp \
     src/resource/cresourcemanager.cpp \
     src/resource/cimageprovider.cpp \
-    src/server/cabstractserver.cpp \
-    src/server/cabstractserverplayer.cpp \
+    src/server/cserver.cpp \
+    src/server/cserverplayer.cpp \
     src/sound/csound.cpp \
     src/ui/cabstractui.cpp \
     src/ui/cmainwindow.cpp \
@@ -85,8 +85,8 @@ HEADERS += \
     src/osc/cosc.h \
     src/resource/cimageprovider.h \
     src/resource/cresourcemanager.h \
-    src/server/cabstractserver.h \
-    src/server/cabstractserverplayer.h \
+    src/server/cserver.h \
+    src/server/cserverplayer.h \
     src/sound/csound.h \
     src/ui/cabstractui.h \
     src/ui/cmainwindow.h \

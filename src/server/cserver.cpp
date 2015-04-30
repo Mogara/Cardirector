@@ -18,69 +18,64 @@
     *********************************************************************/
 
 #include "cpch.h"
-#include "cabstractserver.h"
-#include "cabstractserverplayer.h"
+#include "cserver.h"
+#include "cserverplayer.h"
 #include "ctcpserver.h"
 #include "ctcpsocket.h"
 
-class CAbstractServerPrivate
+class CServerPrivate
 {
 public:
     bool acceptMultipleClientsBehindOneIp;
-    QHash<QHostAddress, CAbstractServerPlayer *> clientIp;
+    QHash<QHostAddress, CServerPlayer *> clientIp;
     CTcpServer *server;
 
-    QList<CAbstractServerPlayer *> players;
+    QList<CServerPlayer *> players;
 };
 
-CAbstractServer::CAbstractServer(QObject *parent)
+CServer::CServer(QObject *parent)
     : QObject(parent)
-    , p_ptr(new CAbstractServerPrivate)
+    , p_ptr(new CServerPrivate)
 {
     p_ptr->acceptMultipleClientsBehindOneIp = true;
     p_ptr->server = new CTcpServer(this);
-    connect(p_ptr->server, &CTcpServer::newSocket, this, &CAbstractServer::handleNewConnection);
+    connect(p_ptr->server, &CTcpServer::newSocket, this, &CServer::handleNewConnection);
 }
 
-CAbstractServer::~CAbstractServer()
+CServer::~CServer()
 {
     delete p_ptr;
 }
 
-bool CAbstractServer::listen(const QHostAddress &address, ushort port)
+bool CServer::listen(const QHostAddress &address, ushort port)
 {
     return p_ptr->server->listen(address, port);
 }
 
-void CAbstractServer::setAcceptMultipleClientsBehindOneIp(bool enabled)
+void CServer::setAcceptMultipleClientsBehindOneIp(bool enabled)
 {
     p_ptr->acceptMultipleClientsBehindOneIp = enabled;
 }
 
-bool CAbstractServer::acceptMultipleClientsBehindOneIp() const
+bool CServer::acceptMultipleClientsBehindOneIp() const
 {
     return p_ptr->acceptMultipleClientsBehindOneIp;
 }
 
-const QList<CAbstractServerPlayer *> &CAbstractServer::players() const
+const QList<CServerPlayer *> &CServer::players() const
 {
     return p_ptr->players;
 }
 
-CAbstractServerPlayer *CAbstractServer::createPlayer(CTcpSocket *client)
+void CServer::handleNewConnection(CTcpSocket *client)
 {
-    return new CAbstractServerPlayer(client, this);
-}
-
-void CAbstractServer::handleNewConnection(CTcpSocket *client)
-{
-    CAbstractServerPlayer *player = createPlayer(client);
+    CServerPlayer *player = new CServerPlayer(client, this);
     if (player == NULL)
         return;
 
     if (!acceptMultipleClientsBehindOneIp()) {
         if (p_ptr->clientIp.contains(player->ip())) {
-            CAbstractServerPlayer *prevPlayer = p_ptr->clientIp.value(player->ip());
+            CServerPlayer *prevPlayer = p_ptr->clientIp.value(player->ip());
             prevPlayer->kick();
             prevPlayer->deleteLater();
         }

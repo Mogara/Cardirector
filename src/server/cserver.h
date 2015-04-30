@@ -17,8 +17,8 @@
     Mogara
     *********************************************************************/
 
-#ifndef CABSTRACTSERVER_H
-#define CABSTRACTSERVER_H
+#ifndef CSERVER_H
+#define CSERVER_H
 
 #include "cglobal.h"
 
@@ -27,35 +27,34 @@
 
 class CTcpServer;
 class CTcpSocket;
-class CAbstractServerPlayer;
-class CAbstractServerPrivate;
+class CServerPlayer;
+class CServerPrivate;
 
-class MCD_EXPORT CAbstractServer : public QObject
+class MCD_EXPORT CServer : public QObject
 {
     Q_OBJECT
 
 public:
-    CAbstractServer(QObject *parent = 0);
-    ~CAbstractServer();
+    CServer(QObject *parent = 0);
+    ~CServer();
 
     bool listen(const QHostAddress &address = QHostAddress::Any, ushort port = 0);
 
     void setAcceptMultipleClientsBehindOneIp(bool enabled);
     bool acceptMultipleClientsBehindOneIp() const;
 
-    const QList<CAbstractServerPlayer *> &players() const;
+    const QList<CServerPlayer *> &players() const;
 
 signals:
-    void newPlayer(CAbstractServerPlayer *player);
+    void newPlayer(CServerPlayer *player);
 
 protected:
-    virtual CAbstractServerPlayer *createPlayer(CTcpSocket *client);
     void handleNewConnection(CTcpSocket *client);
 
 private:
-    C_DISABLE_COPY(CAbstractServer)
-    C_DECLARE_PRIVATE(CAbstractServer)
-    CAbstractServerPrivate *p_ptr;
+    C_DISABLE_COPY(CServer)
+    C_DECLARE_PRIVATE(CServer)
+    CServerPrivate *p_ptr;
 };
 
 #endif
