@@ -33,6 +33,15 @@ class CAbstractPlayer : public QObject
     Q_OBJECT
 
 public:
+    Q_PROPERTY(QString state READ stateString WRITE setStateString NOTIFY stateChanged)
+
+    enum State{
+        Online,
+        Offline,
+        LoggedOut,
+        Trust
+    };
+
     explicit CAbstractPlayer(QObject *parent = 0);
     ~CAbstractPlayer();
 
@@ -41,6 +50,14 @@ public:
 
     QString avatar() const;
     void setAvatar(const QString &avatar);
+
+    State state() const;
+    QString stateString() const;
+    void setState(State state);
+    void setStateString(const QString &state);
+
+signals:
+    void stateChanged();
 
 private:
     C_DISABLE_COPY(CAbstractPlayer)

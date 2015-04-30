@@ -43,13 +43,14 @@ public:
     void setAcceptMultipleClientsBehindOneIp(bool enabled);
     bool acceptMultipleClientsBehindOneIp() const;
 
-    const QList<CServerPlayer *> &players() const;
+    const QSet<CServerPlayer *> &players() const;
 
 signals:
     void newPlayer(CServerPlayer *player);
 
 protected:
     void handleNewConnection(CTcpSocket *client);
+    void onPlayerDisconnected();
 
 private:
     C_DISABLE_COPY(CServer)

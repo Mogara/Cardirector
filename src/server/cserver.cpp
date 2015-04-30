@@ -30,7 +30,7 @@ public:
     QHash<QHostAddress, CServerPlayer *> clientIp;
     CTcpServer *server;
 
-    QList<CServerPlayer *> players;
+    QSet<CServerPlayer *> players;
 };
 
 CServer::CServer(QObject *parent)
@@ -62,7 +62,7 @@ bool CServer::acceptMultipleClientsBehindOneIp() const
     return p_ptr->acceptMultipleClientsBehindOneIp;
 }
 
-const QList<CServerPlayer *> &CServer::players() const
+const QSet<CServerPlayer *> &CServer::players() const
 {
     return p_ptr->players;
 }
@@ -70,8 +70,6 @@ const QList<CServerPlayer *> &CServer::players() const
 void CServer::handleNewConnection(CTcpSocket *client)
 {
     CServerPlayer *player = new CServerPlayer(client, this);
-    if (player == NULL)
-        return;
 
     if (!acceptMultipleClientsBehindOneIp()) {
         if (p_ptr->clientIp.contains(player->ip())) {
@@ -84,6 +82,15 @@ void CServer::handleNewConnection(CTcpSocket *client)
     }
 
     //@sign-up
-    p_ptr->players << player;
+    connect(player, &CServerPlayer::disconnected, this, &CServer::onPlayerDisconnected);
+    p_ptr->players.insert(player);
     emit newPlayer(player);
+}
+
+void CServer::onPlayerDisconnected()
+{
+    CServerPlayer *player = qobject_cast<CServerPlayer *>(sender());
+    //@todo: check the state and enable reconnection
+    //if (player && player->state() == CServerPlayer::LoggedOut)
+    p_ptr->players.remove(player);
 }

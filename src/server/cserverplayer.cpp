@@ -29,23 +29,13 @@ public:
     CPacketRouter *router;
 };
 
-CServerPlayer::CServerPlayer(QObject *parent)
-    : CAbstractPlayer(parent)
-{
-    init();
-}
-
 CServerPlayer::CServerPlayer(CTcpSocket *socket, QObject *parent)
     : CAbstractPlayer(parent)
 {
-    init();
-    p_ptr->router->setSocket(socket);
-}
-
-void CServerPlayer::init()
-{
     p_ptr = new CServerPlayerPrivate;
-    p_ptr->router = new CPacketRouter(this, new CTcpSocket, new CJsonPacketParser);
+
+    p_ptr->router = new CPacketRouter(this, socket, new CJsonPacketParser);
+    connect(socket, &CTcpSocket::disconnected, this, &CServerPlayer::disconnected);
     initCallbacks();
 }
 
@@ -67,10 +57,16 @@ void CServerPlayer::setSocket(CTcpSocket *socket)
     p_ptr->router->setSocket(socket);
 }
 
+void CServerPlayer::logout()
+{
+    setState(LoggedOut);
+    p_ptr->router->socket()->disconnectFromHost();
+}
+
 void CServerPlayer::kick()
 {
     //@to-do: send a warning
-    p_ptr->router->socket()->disconnectFromHost();
+    logout();
 }
 
 QHostAddress CServerPlayer::ip() const
@@ -106,9 +102,8 @@ void CServerPlayer::CheckVersionCommand(QObject *player, const QVariant &data)
     C_UNUSED(data);
 }
 
-void CServerPlayer::LoginCommand(QObject *player, const QVariant &data)
+void CServerPlayer::LoginCommand(QObject *receiver, const QVariant &data)
 {
-    C_UNUSED(player);
     QVariantList dataList(data.toList());
     if (dataList.size() >= 2) {
         QString account = dataList.at(0).toString();
@@ -118,13 +113,15 @@ void CServerPlayer::LoginCommand(QObject *player, const QVariant &data)
         C_UNUSED(password);
 
         //@to-do: implement this after database is ready
+        CServerPlayer *player = qobject_cast<CServerPlayer *>(receiver);
+        player->setState(Online);
     }
 }
 
-void CServerPlayer::LogoutCommand(QObject *player, const QVariant &)
+void CServerPlayer::LogoutCommand(QObject *receiver, const QVariant &)
 {
-    C_UNUSED(player);
-    //@to-do: handle logout command, without which the disconnection is unexpected
+    CServerPlayer *player = qobject_cast<CServerPlayer *>(receiver);
+    player->logout();
 }
 
 void CServerPlayer::SpeakCommand(QObject *receiver, const QVariant &data)

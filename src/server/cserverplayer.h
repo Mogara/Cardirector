@@ -36,12 +36,12 @@ class MCD_EXPORT CServerPlayer : public CAbstractPlayer
     Q_OBJECT
 
 public:
-    explicit CServerPlayer(QObject *parent = 0);
     CServerPlayer(CTcpSocket *socket, QObject *parent = 0);
     ~CServerPlayer();
 
     void setSocket(CTcpSocket *socket);
 
+    void logout();
     void kick();
     QHostAddress ip() const;
 
@@ -56,12 +56,11 @@ signals:
 
 protected:
     static void CheckVersionCommand(QObject *player, const QVariant &data);
-    static void LoginCommand(QObject *player, const QVariant &data);
-    static void LogoutCommand(QObject *player, const QVariant &);
+    static void LoginCommand(QObject *receiver, const QVariant &data);
+    static void LogoutCommand(QObject *receiver, const QVariant &);
     static void SpeakCommand(QObject *receiver, const QVariant &data);
 
 private:
-    void init();
     void initCallbacks();
 
     C_DISABLE_COPY(CServerPlayer)
