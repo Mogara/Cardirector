@@ -56,6 +56,9 @@ public:
 
     QVariant waitForReply();
 
+signals:
+    void unknownPacket(const QByteArray &packet);
+
 protected:
     void handlePacket(const QByteArray &rawPacket);
 

@@ -60,6 +60,8 @@ protected:
     static void LogoutCommand(QObject *receiver, const QVariant &);
     static void SpeakCommand(QObject *receiver, const QVariant &data);
 
+    void handleUnknownPacket(const QByteArray &packet);
+
 private:
     void initCallbacks();
 

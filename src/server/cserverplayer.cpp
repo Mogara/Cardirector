@@ -23,6 +23,8 @@
 #include "cprotocol.h"
 #include "cpacketrouter.h"
 
+#include <QCoreApplication>
+
 class CServerPlayerPrivate
 {
 public:
@@ -35,6 +37,7 @@ CServerPlayer::CServerPlayer(CTcpSocket *socket, QObject *parent)
     p_ptr = new CServerPlayerPrivate;
 
     p_ptr->router = new CPacketRouter(this, socket, new CJsonPacketParser);
+    connect(p_ptr->router, &CPacketRouter::unknownPacket, this, &CServerPlayer::handleUnknownPacket);
     connect(socket, &CTcpSocket::disconnected, this, &CServerPlayer::disconnected);
     initCallbacks();
 }
@@ -131,5 +134,31 @@ void CServerPlayer::SpeakCommand(QObject *receiver, const QVariant &data)
     if (!message.isEmpty()) {
         //@to-do: broadcast the message to all the clients
         qDebug() << player->screenName() << message;
+    }
+}
+
+void CServerPlayer::handleUnknownPacket(const QByteArray &packet)
+{
+    //Handle requests from a browser
+    if (packet.startsWith("GET") || packet.startsWith("POST")) {
+        CTcpSocket *socket = p_ptr->router->socket();
+
+        //Read the whole HTTP request
+        while (socket->canReadLine()) {
+            QByteArray line = socket->readLine();
+            if (line.isEmpty() || line.at(0) == '\n' || line.at(0) == '\r')
+                break;
+        }
+
+        QString location = QString("Location: %1://%2:%3/\r\n");
+        location = location.arg(qApp->applicationName()).arg(socket->localAddress().toString()).arg(socket->localPort());
+
+        socket->write("HTTP/1.1 302 Moved Temporarily\r\n");
+        socket->write("Server: Cardirector\r\n");
+        socket->write(location.toLatin1());
+        socket->write("Connection: close\r\n");
+        socket->write("\r\n");
+
+        socket->disconnectFromHost();
     }
 }

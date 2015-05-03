@@ -136,8 +136,10 @@ void CPacketRouter::handlePacket(const QByteArray &rawPacket)
         return;
 
     CPacket packet = p_ptr->parser->parse(rawPacket);
-    if (!packet.isValid())
+    if (!packet.isValid()) {
+        emit unknownPacket(rawPacket);
         return;
+    }
 
     if (packet.type() == CPacket::TYPE_NOTIFICATION) {
         Callback func = p_ptr->callbacks.value(packet.command());
