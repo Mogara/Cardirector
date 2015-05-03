@@ -20,10 +20,13 @@
 #ifndef CNETWORK_H
 #define CNETWORK_H
 
-#include "cpacket.h"
-#include "ctcpsocket.h"
-#include "cpacketrouter.h"
-#include "cjsonpacketparser.h"
-#include "cprotocol.h"
+#include "cglobal.h"
+
+MCD_BEGIN_NAMESPACE
+
+//The function currently works on Windows only. And it needs administrator privilege.
+void MCD_EXPORT cRegisterUrlScheme(const QString &introduction);
+
+MCD_END_NAMESPACE
 
 #endif

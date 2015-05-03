@@ -19,7 +19,10 @@
 
 #include "cpch.h"
 #include "cabstractclient.h"
-#include "cnetwork.h"
+#include "cpacketrouter.h"
+#include "ctcpsocket.h"
+#include "cjsonpacketparser.h"
+#include "cprotocol.h"
 
 class CAbstractClientPrivate
 {
