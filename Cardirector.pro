@@ -39,6 +39,7 @@ SOURCES += \
     src/client/cuserdata.cpp \
     src/common/cdeviceinfo.cpp \
     src/common/cabstractplayer.cpp \
+    src/common/cexceptionhandler.cpp \
     src/controller/cabstractaicontroller.cpp \
     src/controller/cabstractcontroller.cpp \
     src/controller/cabstractuicontroller.cpp \
@@ -69,6 +70,7 @@ HEADERS += \
     src/common/cdeviceinfo.h \
     src/common/cglobal.h \
     src/common/cabstractplayer.h \
+    src/common/cexceptionhandler.h \
     src/controller/cabstractaicontroller.h \
     src/controller/cabstractcontroller.h \
     src/controller/cabstractuicontroller.h \
@@ -140,12 +142,7 @@ defineTest(copy) {
     file = $$1
     path = $$2
     !exists($$file): return(false)
-    equals(QMAKE_HOST.os, Windows) {
-        system("copy /y $$system_path($$file) $$system_path($$path)")
-    }
-    else {
-        system("cp $$file $$path")
-    }
+    system("$$QMAKE_COPY $$system_path($$file) $$system_path($$path)")
 
     return(true)
 }
@@ -165,3 +162,5 @@ win32 {
 android {
     QMAKE_POST_LINK = $$QMAKE_COPY \"$$OUT_PWD\\$$DESTDIR\\lib$${TARGET}.so\" \"$$PWD\\lib\" \
 }
+
+include(src/3rdparty/breakpad.pri)
