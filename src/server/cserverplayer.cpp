@@ -150,8 +150,10 @@ void CServerPlayer::handleUnknownPacket(const QByteArray &packet)
                 break;
         }
 
+        QString scheme = qApp->applicationName();
+        scheme.remove(QRegExp("[^A-Za-z]"));
         QString location = QString("Location: %1://%2:%3/\r\n");
-        location = location.arg(qApp->applicationName()).arg(socket->localAddress().toString()).arg(socket->localPort());
+        location = location.arg(scheme).arg(socket->localAddress().toString()).arg(socket->localPort());
 
         socket->write("HTTP/1.1 302 Moved Temporarily\r\n");
         socket->write("Server: Cardirector\r\n");
