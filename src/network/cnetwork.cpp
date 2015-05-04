@@ -19,5 +19,7 @@ void cRegisterUrlScheme(const QString &introduction)
     reg.setValue("DefaultIcon/.", QString("%1, 0").arg(appPath));
     reg.setValue("Shell/Open/Command/.", QString("\"%1\"").arg(appPath) + " \"%1\"");
     reg.endGroup();
+#else
+    C_UNUSED(introduction)
 #endif
 }

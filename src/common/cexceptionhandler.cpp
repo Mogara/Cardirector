@@ -19,12 +19,15 @@
 
 #include "cexceptionhandler.h"
 
+#ifdef USE_BREAKPAD
 #include <handler/exception_handler.h>
+#endif
 
 #include <QFile>
 
 static CExceptionHandler::MinidumpCallback CDumpCallback = NULL;
 
+#ifdef USE_BREAKPAD
 #if defined(Q_OS_LINUX)
 static bool GoogleBreakpadCallback(const google_breakpad::MinidumpDescriptor &md,void *, bool succeeded)
 {
@@ -44,13 +47,19 @@ static bool GoogleBreakpadCallback(const wchar_t *, const wchar_t *id, void *, E
     return succeeded;
 }
 #endif
+#endif //USE_BREAKPAD
 
 CExceptionHandler::CExceptionHandler(const QString &directory, MinidumpCallback callback)
 {
     CDumpCallback = callback;
+
+#ifdef USE_BREAKPAD
 #if defined(Q_OS_LINUX)
     static google_breakpad::ExceptionHandler eh(google_breakpad::MinidumpDescriptor(directory.toStdString()), NULL, GoogleBreakpadCallback, NULL, true, -1);
 #elif defined(Q_OS_WIN)
     static google_breakpad::ExceptionHandler eh(directory.toStdWString(), NULL, GoogleBreakpadCallback, NULL, google_breakpad::ExceptionHandler::HANDLER_ALL);
 #endif
+#else
+    C_UNUSED(directory)
+#endif  //USE_BREAKPAD
 }
