@@ -159,8 +159,12 @@ win32 {
      && $$QMAKE_COPY $$system_path($$OUT_PWD/$$DESTDIR/$${TARGET}.exp) $$system_path($$PWD/bin) \
      && $$QMAKE_COPY $$system_path($$OUT_PWD/$$DESTDIR/$${TARGET}.lib) $$system_path($$PWD/lib)
 }
-android {
-    QMAKE_POST_LINK = $$QMAKE_COPY \"$$OUT_PWD\\$$DESTDIR\\lib$${TARGET}.so\" \"$$PWD\\lib\" \
+linux {
+    android {
+        QMAKE_POST_LINK = $$QMAKE_COPY $$system_path($$OUT_PWD/$$DESTDIR/lib$${TARGET}.so) $$system_path($$PWD/lib)
+    } else: {
+        QMAKE_POST_LINK = $$QMAKE_COPY $$system_path($$OUT_PWD/$$DESTDIR/lib$${TARGET}.*) $$system_path($$PWD/lib)
+    }
 }
 
 include(src/3rdparty/breakpad.pri)
