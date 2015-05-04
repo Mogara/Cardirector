@@ -27,6 +27,7 @@ MCD_BEGIN_NAMESPACE
 class MCD_EXPORT CAbstractPacketParser
 {
 public:
+    virtual ~CAbstractPacketParser() {}
     virtual CPacket parse(const QByteArray &data) = 0;
     virtual QByteArray parse(const CPacket &packet) = 0;
 };
