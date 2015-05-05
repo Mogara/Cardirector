@@ -24,16 +24,16 @@
 
 MCD_BEGIN_NAMESPACE
 
-class CAbstractClientPrivate;
+class CClientPrivate;
 class CClientPlayer;
 
-class MCD_EXPORT CAbstractClient : public QObject
+class MCD_EXPORT CClient : public QObject
 {
     Q_OBJECT
 
 public:
-    CAbstractClient(QObject *parent = 0);
-    ~CAbstractClient();
+    CClient(QObject *parent = 0);
+    ~CClient();
 
     void connectToHost(const QHostAddress &server, ushort port);
 
@@ -69,9 +69,9 @@ protected:
     static void SpeakCommand(QObject *receiver, const QVariant &data);
 
 private:
-    C_DISABLE_COPY(CAbstractClient)
-    C_DECLARE_PRIVATE(CAbstractClient)
-    CAbstractClientPrivate *p_ptr;
+    C_DISABLE_COPY(CClient)
+    C_DECLARE_PRIVATE(CClient)
+    CClientPrivate *p_ptr;
 };
 
 MCD_END_NAMESPACE
