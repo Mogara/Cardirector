@@ -17,35 +17,15 @@
     Mogara
     *********************************************************************/
 
-#ifndef CPROTOCOL_H
-#define CPROTOCOL_H
+#include "cclientplayer.h"
 
-#include "cglobal.h"
+CClientPlayer::CClientPlayer(uint id, QObject *parent)
+    : CAbstractPlayer(parent)
+{
+    setId(id);
+}
 
-#include <QString>
-#include <QMap>
+CClientPlayer::~CClientPlayer()
+{
 
-MCD_BEGIN_NAMESPACE
-
-enum CCommandType {
-    S_COMMAND_UNKNOWN,
-    S_COMMAND_CHECK_VERSION,
-    S_COMMAND_SIGNUP,
-    S_COMMAND_LOGIN,
-    S_COMMAND_LOGOUT,
-    S_COMMAND_ERROR,
-    S_COMMAND_SPEAK,
-    S_COMMAND_SET_PLAYER_LIST,
-    S_COMMAND_ADD_PLAYER,
-    S_COMMAND_REMOVE_PLAYER,
-
-    CARDIRECTOR_SYSTEM_COMMAND_COUNT
-};
-
-extern QMap<CCommandType, QString> CCommandString; //Permanently saved commands should be converted to string instead of integer
-
-MCD_END_NAMESPACE
-
-#define C_REGISTER_COMMAND(command) CCommandString.insert(S_COMMAND_##command, #command)
-
-#endif // CPROTOCOL_H
+}

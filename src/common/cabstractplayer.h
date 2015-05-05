@@ -28,22 +28,27 @@ MCD_BEGIN_NAMESPACE
 
 class CAbstractPlayerPrivate;
 
-class CAbstractPlayer : public QObject
+class MCD_EXPORT CAbstractPlayer : public QObject
 {
     Q_OBJECT
 
 public:
+    Q_PROPERTY(uint id READ id)
+    Q_PROPERTY(QString screenName READ screenName WRITE setScreenName NOTIFY screenNameChanged)
     Q_PROPERTY(QString state READ stateString WRITE setStateString NOTIFY stateChanged)
+    Q_PROPERTY(QString avatar READ avatar WRITE setAvatar NOTIFY avatarChanged)
 
     enum State{
+        Invalid,
         Online,
-        Offline,
-        LoggedOut,
-        Trust
+        Trust,
+        Offline
     };
 
     explicit CAbstractPlayer(QObject *parent = 0);
     ~CAbstractPlayer();
+
+    uint id() const;
 
     QString screenName() const;
     void setScreenName(const QString &name);
@@ -56,7 +61,14 @@ public:
     void setState(State state);
     void setStateString(const QString &state);
 
+protected:
+    void setId(uint id);
+
 signals:
+    void speak(const QString &message);
+
+    void screenNameChanged();
+    void avatarChanged();
     void stateChanged();
 
 private:

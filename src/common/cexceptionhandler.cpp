@@ -60,6 +60,6 @@ CExceptionHandler::CExceptionHandler(const QString &directory, MinidumpCallback 
     static google_breakpad::ExceptionHandler eh(directory.toStdWString(), NULL, GoogleBreakpadCallback, NULL, google_breakpad::ExceptionHandler::HANDLER_ALL);
 #endif
 #else
-    C_UNUSED(directory)
+    C_UNUSED(directory);
 #endif  //USE_BREAKPAD
 }

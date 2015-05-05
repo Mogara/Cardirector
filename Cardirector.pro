@@ -35,6 +35,7 @@ INCLUDEPATH += src \
 SOURCES += \
     src/ai/cabstractai.cpp \
     src/client/cabstractclient.cpp \
+    src/client/cclientplayer.cpp \
     src/client/cclientsettings.cpp \
     src/client/cuserdata.cpp \
     src/common/cdeviceinfo.cpp \
@@ -65,6 +66,7 @@ SOURCES += \
 HEADERS += \
     src/ai/cabstractai.h \
     src/client/cabstractclient.h \
+    src/client/cclientplayer.h \
     src/client/cclientsettings.h \
     src/client/cuserdata.h \
     src/common/cdeviceinfo.h \

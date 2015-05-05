@@ -20,6 +20,6 @@ void cRegisterUrlScheme(const QString &introduction)
     reg.setValue("Shell/Open/Command/.", QString("\"%1\"").arg(appPath) + " \"%1\"");
     reg.endGroup();
 #else
-    C_UNUSED(introduction)
+    C_UNUSED(introduction);
 #endif
 }

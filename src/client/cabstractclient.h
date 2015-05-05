@@ -25,6 +25,7 @@
 MCD_BEGIN_NAMESPACE
 
 class CAbstractClientPrivate;
+class CClientPlayer;
 
 class MCD_EXPORT CAbstractClient : public QObject
 {
@@ -36,16 +37,36 @@ public:
 
     void connectToHost(const QHostAddress &server, ushort port);
 
+    void signup(const QString &username, const QString &password, const QString &screenName, const QString &avatar);
+    void login(const QString &username, const QString &password);
+
     void requestServer(int command, const QVariant &data = QVariant());
     void replyToServer(int command, const QVariant &data = QVariant());
     void notifyServer(int command, const QVariant &data = QVariant());
 
+    const CClientPlayer *findPlayer(uint id) const;
+    QList<const CClientPlayer *> players() const;
+    CClientPlayer *self() const;
+
+
 signals:
     void connected();
+    void loggedIn();
+    void playerAdded(const CClientPlayer *player);
+    void playerRemoved(const CClientPlayer *player);
 
 protected:
+    CClientPlayer *findPlayer(uint id);
+    void addCallback(int command, void (*callback)(QObject *, const QVariant &));
+
+    CClientPlayer *addPlayer(const QVariant &data);
+
     void initCallbacks();
-    static void SpeakCommand(QObject *client, const QVariant &data);
+    static void SetPlayerListCommand(QObject *receiver, const QVariant &data);
+    static void AddPlayerCommand(QObject *receiver, const QVariant &data);
+    static void RemovePlayerCommand(QObject *receiver, const QVariant &data);
+    static void LoginCommand(QObject *receiver, const QVariant &data);
+    static void SpeakCommand(QObject *receiver, const QVariant &data);
 
 private:
     C_DISABLE_COPY(CAbstractClient)

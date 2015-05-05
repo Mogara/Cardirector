@@ -30,6 +30,7 @@ MCD_BEGIN_NAMESPACE
 class CTcpSocket;
 class CAbstractPacketParser;
 class CServerPlayerPrivate;
+class Room;
 
 class MCD_EXPORT CServerPlayer : public CAbstractPlayer
 {
@@ -40,7 +41,10 @@ public:
     ~CServerPlayer();
 
     void setSocket(CTcpSocket *socket);
+    Room *room() const;
 
+    void signup(const QString &username, const QString &password, const QString &screenName, const QString &avatar);
+    void login(const QString &username, const QString &password);
     void logout();
     void kick();
     QHostAddress ip() const;
@@ -51,11 +55,14 @@ public:
 
     QVariant waitForReply();
 
+    QVariant briefIntroduction() const;
+
 signals:
     void disconnected();
 
 protected:
-    static void CheckVersionCommand(QObject *player, const QVariant &data);
+    static void CheckVersionCommand(QObject *receiver, const QVariant &data);
+    static void SignupCommand(QObject *receiver, const QVariant &data);
     static void LoginCommand(QObject *receiver, const QVariant &data);
     static void LogoutCommand(QObject *receiver, const QVariant &);
     static void SpeakCommand(QObject *receiver, const QVariant &data);

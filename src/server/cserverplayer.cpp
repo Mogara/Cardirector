@@ -29,6 +29,7 @@ class CServerPlayerPrivate
 {
 public:
     CPacketRouter *router;
+    Room *room;
 };
 
 CServerPlayer::CServerPlayer(CTcpSocket *socket, QObject *parent)
@@ -40,11 +41,14 @@ CServerPlayer::CServerPlayer(CTcpSocket *socket, QObject *parent)
     connect(p_ptr->router, &CPacketRouter::unknownPacket, this, &CServerPlayer::handleUnknownPacket);
     connect(socket, &CTcpSocket::disconnected, this, &CServerPlayer::disconnected);
     initCallbacks();
+
+    p_ptr->room = NULL;
 }
 
 void CServerPlayer::initCallbacks()
 {
     p_ptr->router->addCallback(S_COMMAND_CHECK_VERSION, &CheckVersionCommand);
+    p_ptr->router->addCallback(S_COMMAND_SIGNUP, &SignupCommand);
     p_ptr->router->addCallback(S_COMMAND_LOGIN, &LoginCommand);
     p_ptr->router->addCallback(S_COMMAND_LOGOUT, &LogoutCommand);
     p_ptr->router->addCallback(S_COMMAND_SPEAK, &SpeakCommand);
@@ -60,9 +64,42 @@ void CServerPlayer::setSocket(CTcpSocket *socket)
     p_ptr->router->setSocket(socket);
 }
 
+Room *CServerPlayer::room() const
+{
+    return p_ptr->room;
+}
+
+void CServerPlayer::signup(const QString &username, const QString &password, const QString &screenName, const QString &avatar)
+{
+    //@to-do: check if the username is duplicated in the database.
+    //@to-do: encrypt the password
+
+    C_UNUSED(username);
+    C_UNUSED(password);
+
+    static uint playerId = 0;
+    playerId++;
+    setId(playerId);
+
+    setScreenName(screenName);
+    setAvatar(avatar);
+
+    login(username, password);
+}
+
+void CServerPlayer::login(const QString &username, const QString &password)
+{
+    //@todo: implement this after the database is ready
+    C_UNUSED(username);
+    C_UNUSED(password);
+
+    setState(Online);
+    notify(S_COMMAND_LOGIN, briefIntroduction());
+}
+
 void CServerPlayer::logout()
 {
-    setState(LoggedOut);
+    setState(Invalid);
     p_ptr->router->socket()->disconnectFromHost();
 }
 
@@ -97,28 +134,53 @@ QVariant CServerPlayer::waitForReply()
     return p_ptr->router->waitForReply();
 }
 
+QVariant CServerPlayer::briefIntroduction() const
+{
+    QVariantList arguments;
+    arguments << id();
+    arguments << screenName();
+    arguments << avatar();
+    return arguments;
+}
+
 /* Callbacks */
 
-void CServerPlayer::CheckVersionCommand(QObject *player, const QVariant &data)
+void CServerPlayer::CheckVersionCommand(QObject *receiver, const QVariant &data)
 {
-    C_UNUSED(player);
+    C_UNUSED(receiver);
     C_UNUSED(data);
 }
 
+void CServerPlayer::SignupCommand(QObject *receiver, const QVariant &data)
+{
+    QVariantList arguments(data.toList());
+    if (arguments.length() < 4)
+        return;
+
+    QString account = arguments.at(0).toString();
+    QString password = arguments.at(1).toString();
+    QString screenName = arguments.at(2).toString();
+    QString avatar = arguments.at(3).toString();
+
+    CServerPlayer *player = qobject_cast<CServerPlayer *>(receiver);
+    player->signup(account, password, screenName, avatar);
+}
+
+//currently unused
 void CServerPlayer::LoginCommand(QObject *receiver, const QVariant &data)
 {
-    QVariantList dataList(data.toList());
+    C_UNUSED(receiver);
+    C_UNUSED(data);
+
+    /*QVariantList dataList(data.toList());
     if (dataList.size() >= 2) {
         QString account = dataList.at(0).toString();
         QString password = dataList.at(1).toString();
 
-        C_UNUSED(account);
-        C_UNUSED(password);
-
         //@to-do: implement this after database is ready
         CServerPlayer *player = qobject_cast<CServerPlayer *>(receiver);
-        player->setState(Online);
-    }
+        player->login(account, password);
+    }*/
 }
 
 void CServerPlayer::LogoutCommand(QObject *receiver, const QVariant &)
@@ -131,10 +193,8 @@ void CServerPlayer::SpeakCommand(QObject *receiver, const QVariant &data)
 {
     CServerPlayer *player = qobject_cast<CServerPlayer *>(receiver);
     QString message = data.toString();
-    if (!message.isEmpty()) {
-        //@to-do: broadcast the message to all the clients
-        qDebug() << player->screenName() << message;
-    }
+    if (!message.isEmpty())
+        player->speak(message);
 }
 
 void CServerPlayer::handleUnknownPacket(const QByteArray &packet)

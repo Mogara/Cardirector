@@ -67,9 +67,9 @@
 #if defined(Q_CC_RVCT)
 template <typename T>
 inline void cUnused(T &x) { (void)x; }
-#  define C_UNUSED(x) cUnused(x);
+#  define C_UNUSED(x) cUnused(x)
 #else
-#  define C_UNUSED(x) (void)x;
+#  define C_UNUSED(x) (void)x
 #endif
 
 #if defined(MCD_COORD_TYPE)

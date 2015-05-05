@@ -22,6 +22,7 @@
 class CAbstractPlayerPrivate
 {
 public:
+    uint id;
     QString screenName;
     QString avatar;
     CAbstractPlayer::State state;
@@ -31,12 +32,23 @@ CAbstractPlayer::CAbstractPlayer(QObject *parent)
     : QObject(parent)
     , p_ptr(new CAbstractPlayerPrivate)
 {
-    p_ptr->state = Online;
+    p_ptr->state = Invalid;
+    p_ptr->id = 0;
 }
 
 CAbstractPlayer::~CAbstractPlayer()
 {
+    delete p_ptr;
+}
 
+uint CAbstractPlayer::id() const
+{
+    return p_ptr->id;
+}
+
+void CAbstractPlayer::setId(uint id)
+{
+    p_ptr->id = id;
 }
 
 QString CAbstractPlayer::screenName() const
@@ -47,6 +59,7 @@ QString CAbstractPlayer::screenName() const
 void CAbstractPlayer::setScreenName(const QString &name)
 {
     p_ptr->screenName = name;
+    emit screenNameChanged();
 }
 
 QString CAbstractPlayer::avatar() const
@@ -57,8 +70,8 @@ QString CAbstractPlayer::avatar() const
 void CAbstractPlayer::setAvatar(const QString &avatar)
 {
     p_ptr->avatar = avatar;
+    emit avatarChanged();
 }
-
 
 CAbstractPlayer::State CAbstractPlayer::state() const
 {
@@ -70,32 +83,29 @@ QString CAbstractPlayer::stateString() const
     switch (p_ptr->state) {
     case Online:
         return "online";
-    case LoggedOut:
-        return "logged_out";
     case Trust:
         return "trust";
     case Offline:
         return "offline";
     default:
-        return "unknown";
+        return "invalid";
     }
 }
 
 void CAbstractPlayer::setState(State state)
 {
     p_ptr->state = state;
+    emit stateChanged();
 }
 
 void CAbstractPlayer::setStateString(const QString &state)
 {
     if (state == "online")
-        p_ptr->state = Online;
-    else if (state == "logged_out")
-        p_ptr->state = LoggedOut;
+        setState(Online);
     else if (state == "trust")
-        p_ptr->state = Trust;
+        setState(Trust);
     else if (state == "offline")
-        p_ptr->state = Offline;
+        setState(Offline);
     else
-        qWarning("unknown state string");
+        setState(Invalid);
 }
