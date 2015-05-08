@@ -49,11 +49,11 @@ CServerPlayer::CServerPlayer(CTcpSocket *socket, CServer *server)
 
 void CServerPlayer::initCallbacks()
 {
-    p_ptr->router->addCallback(S_COMMAND_CHECK_VERSION, &CheckVersionCommand);
-    p_ptr->router->addCallback(S_COMMAND_SIGNUP, &SignupCommand);
-    p_ptr->router->addCallback(S_COMMAND_LOGIN, &LoginCommand);
-    p_ptr->router->addCallback(S_COMMAND_LOGOUT, &LogoutCommand);
-    p_ptr->router->addCallback(S_COMMAND_SPEAK, &SpeakCommand);
+    addCallback(S_COMMAND_CHECK_VERSION, &CheckVersionCommand);
+    addCallback(S_COMMAND_SIGNUP, &SignupCommand);
+    addCallback(S_COMMAND_LOGIN, &LoginCommand);
+    addCallback(S_COMMAND_LOGOUT, &LogoutCommand);
+    addCallback(S_COMMAND_SPEAK, &SpeakCommand);
 }
 
 CServerPlayer::~CServerPlayer()
@@ -143,6 +143,11 @@ QVariant CServerPlayer::briefIntroduction() const
     arguments << screenName();
     arguments << avatar();
     return arguments;
+}
+
+void CServerPlayer::addCallback(int command, void (*callback)(QObject *, const QVariant &))
+{
+    p_ptr->router->addCallback(command, callback);
 }
 
 /* Callbacks */

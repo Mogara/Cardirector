@@ -58,6 +58,8 @@ public:
 
     QVariant briefIntroduction() const;
 
+    void addCallback(int command, void (*callback)(QObject *, const QVariant &));
+
 signals:
     void disconnected();
 
