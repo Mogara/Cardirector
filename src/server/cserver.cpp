@@ -23,6 +23,7 @@
 #include "ctcpserver.h"
 #include "ctcpsocket.h"
 #include "cprotocol.h"
+#include "cjsonpacketparser.h"
 
 const int CServer::ONLINE_LIST_PAGE_SIZE = 50;
 
@@ -32,6 +33,7 @@ public:
     bool acceptMultipleClientsBehindOneIp;
     QHash<QHostAddress, CServerPlayer *> clientIp;
     CTcpServer *server;
+    CAbstractPacketParser *parser;
 
     QMap<uint, CServerPlayer *> players;
 };
@@ -40,6 +42,7 @@ CServer::CServer(QObject *parent)
     : QObject(parent)
     , p_ptr(new CServerPrivate)
 {
+    p_ptr->parser = new CJsonPacketParser;
     p_ptr->acceptMultipleClientsBehindOneIp = true;
     p_ptr->server = new CTcpServer(this);
     connect(p_ptr->server, &CTcpServer::newSocket, this, &CServer::handleNewConnection);
@@ -47,7 +50,23 @@ CServer::CServer(QObject *parent)
 
 CServer::~CServer()
 {
+    delete p_ptr->parser;
     delete p_ptr;
+}
+
+void CServer::setPacketParser(CAbstractPacketParser *parser)
+{
+    if (p_ptr->players.isEmpty()) {
+        delete p_ptr->parser;
+        p_ptr->parser = parser;
+    } else {
+        qWarning("Packet parser can't be switched after the server starts.");
+    }
+}
+
+CAbstractPacketParser *CServer::packetParser() const
+{
+    return p_ptr->parser;
 }
 
 bool CServer::listen(const QHostAddress &address, ushort port)

@@ -26,6 +26,7 @@ MCD_BEGIN_NAMESPACE
 
 class CClientPrivate;
 class CClientPlayer;
+class CAbstractPacketParser;
 
 class MCD_EXPORT CClient : public QObject
 {
@@ -34,6 +35,9 @@ class MCD_EXPORT CClient : public QObject
 public:
     CClient(QObject *parent = 0);
     ~CClient();
+
+    void setPacketParser(CAbstractPacketParser *parser);
+    CAbstractPacketParser *packetParser() const;
 
     void connectToHost(const QHostAddress &server, ushort port);
 

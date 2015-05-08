@@ -25,6 +25,7 @@
 #include <QObject>
 #include <QHostAddress>
 
+class CAbstractPacketParser;
 class CTcpServer;
 class CTcpSocket;
 class CServerPlayer;
@@ -45,6 +46,9 @@ public:
 
     CServerPlayer *findPlayer(uint id);
     QList<CServerPlayer *> players() const;
+
+    void setPacketParser(CAbstractPacketParser *parser);
+    CAbstractPacketParser *packetParser() const;
 
     void broadcastNofification(int command, const QVariant &data = QVariant(), CServerPlayer *except = NULL);
 

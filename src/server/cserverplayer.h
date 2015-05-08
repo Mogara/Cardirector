@@ -27,21 +27,22 @@
 
 MCD_BEGIN_NAMESPACE
 
-class CTcpSocket;
 class CAbstractPacketParser;
+class CRoom;
+class CServer;
 class CServerPlayerPrivate;
-class Room;
+class CTcpSocket;
 
 class MCD_EXPORT CServerPlayer : public CAbstractPlayer
 {
     Q_OBJECT
 
 public:
-    CServerPlayer(CTcpSocket *socket, QObject *parent = 0);
+    CServerPlayer(CTcpSocket *socket, CServer *server = 0);
     ~CServerPlayer();
 
     void setSocket(CTcpSocket *socket);
-    Room *room() const;
+    CRoom *room() const;
 
     void signup(const QString &username, const QString &password, const QString &screenName, const QString &avatar);
     void login(const QString &username, const QString &password);

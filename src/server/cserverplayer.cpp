@@ -17,11 +17,11 @@
     Mogara
     *********************************************************************/
 
+#include "cpacketrouter.h"
+#include "cprotocol.h"
+#include "cserver.h"
 #include "cserverplayer.h"
 #include "ctcpsocket.h"
-#include "cjsonpacketparser.h"
-#include "cprotocol.h"
-#include "cpacketrouter.h"
 
 #include <QCoreApplication>
 
@@ -29,15 +29,17 @@ class CServerPlayerPrivate
 {
 public:
     CPacketRouter *router;
-    Room *room;
+    CServer *server;
+    CRoom *room;
 };
 
-CServerPlayer::CServerPlayer(CTcpSocket *socket, QObject *parent)
-    : CAbstractPlayer(parent)
+CServerPlayer::CServerPlayer(CTcpSocket *socket, CServer *server)
+    : CAbstractPlayer(server)
 {
     p_ptr = new CServerPlayerPrivate;
+    p_ptr->server = server;
 
-    p_ptr->router = new CPacketRouter(this, socket, new CJsonPacketParser);
+    p_ptr->router = new CPacketRouter(this, socket, server->packetParser());
     connect(p_ptr->router, &CPacketRouter::unknownPacket, this, &CServerPlayer::handleUnknownPacket);
     connect(socket, &CTcpSocket::disconnected, this, &CServerPlayer::disconnected);
     initCallbacks();
@@ -64,7 +66,7 @@ void CServerPlayer::setSocket(CTcpSocket *socket)
     p_ptr->router->setSocket(socket);
 }
 
-Room *CServerPlayer::room() const
+CRoom *CServerPlayer::room() const
 {
     return p_ptr->room;
 }

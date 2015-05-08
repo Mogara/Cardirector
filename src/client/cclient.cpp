@@ -31,25 +31,39 @@ public:
     CPacketRouter *router;
     QMap<uint, CClientPlayer *> players;
     CClientPlayer *self;
+    CAbstractPacketParser *parser;
 };
 
 CClient::CClient(QObject *parent)
     : QObject(parent)
     , p_ptr(new CClientPrivate)
 {
+    p_ptr->parser = new CJsonPacketParser;
     initCallbacks();
     p_ptr->self = NULL;
 }
 
 CClient::~CClient()
 {
+    delete p_ptr->parser;
     delete p_ptr;
+}
+
+void CClient::setPacketParser(CAbstractPacketParser *parser)
+{
+    delete p_ptr->parser;
+    p_ptr->parser = parser;
+}
+
+CAbstractPacketParser *CClient::packetParser() const
+{
+    return p_ptr->parser;
 }
 
 void CClient::initCallbacks()
 {
     CTcpSocket *socket = new CTcpSocket;
-    p_ptr->router = new CPacketRouter(this, socket, new CJsonPacketParser);
+    p_ptr->router = new CPacketRouter(this, socket, p_ptr->parser);
     connect(socket, &CTcpSocket::connected, this, &CClient::connected);
 
     addCallback(S_COMMAND_SPEAK, &SpeakCommand);

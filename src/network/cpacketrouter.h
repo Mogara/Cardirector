@@ -38,7 +38,6 @@ class MCD_EXPORT CPacketRouter : public QObject
 public:
     typedef void (*Callback)(QObject *receiver, const QVariant &data);
 
-    //The router takes ownership of both the socket and the parser
     CPacketRouter(QObject *receiver, CTcpSocket *socket, CAbstractPacketParser *parser);
     ~CPacketRouter();
 

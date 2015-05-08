@@ -51,7 +51,6 @@ CPacketRouter::CPacketRouter(QObject *receiver, CTcpSocket *socket, CAbstractPac
 CPacketRouter::~CPacketRouter()
 {
     p_ptr->replyMutex.unlock();
-    delete p_ptr->parser;
     delete p_ptr;
 }
 
