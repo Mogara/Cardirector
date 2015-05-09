@@ -30,9 +30,9 @@ MCD_BEGIN_NAMESPACE
 class CAbstractPacketParser;
 class CRoom;
 class CServer;
-class CServerPlayerPrivate;
 class CTcpSocket;
 
+class CServerPlayerPrivate;
 class MCD_EXPORT CServerPlayer : public CAbstractPlayer
 {
     Q_OBJECT
@@ -42,7 +42,9 @@ public:
     ~CServerPlayer();
 
     void setSocket(CTcpSocket *socket);
+
     CRoom *room() const;
+    void setRoom(CRoom *room);
 
     void signup(const QString &username, const QString &password, const QString &screenName, const QString &avatar);
     void login(const QString &username, const QString &password);

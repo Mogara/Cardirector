@@ -54,6 +54,7 @@ SOURCES += \
     src/osc/cosc.cpp \
     src/resource/cresourcemanager.cpp \
     src/resource/cimageprovider.cpp \
+    src/server/croom.cpp \
     src/server/cserver.cpp \
     src/server/cserverplayer.cpp \
     src/sound/csound.cpp \
@@ -87,6 +88,7 @@ HEADERS += \
     src/osc/cosc.h \
     src/resource/cimageprovider.h \
     src/resource/cresourcemanager.h \
+    src/server/croom.h \
     src/server/cserver.h \
     src/server/cserverplayer.h \
     src/sound/csound.h \

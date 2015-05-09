@@ -71,6 +71,11 @@ CRoom *CServerPlayer::room() const
     return p_ptr->room;
 }
 
+void CServerPlayer::setRoom(CRoom *room)
+{
+    p_ptr->room = room;
+}
+
 void CServerPlayer::signup(const QString &username, const QString &password, const QString &screenName, const QString &avatar)
 {
     //@to-do: check if the username is duplicated in the database.

@@ -18,14 +18,13 @@
     *********************************************************************/
 
 #include "cpch.h"
+#include "croom.h"
 #include "cserver.h"
 #include "cserverplayer.h"
 #include "ctcpserver.h"
 #include "ctcpsocket.h"
 #include "cprotocol.h"
 #include "cjsonpacketparser.h"
-
-const int CServer::ONLINE_LIST_PAGE_SIZE = 50;
 
 class CServerPrivate
 {
@@ -36,6 +35,7 @@ public:
     CAbstractPacketParser *parser;
 
     QMap<uint, CServerPlayer *> players;
+    CRoom *lobby;
 };
 
 CServer::CServer(QObject *parent)
@@ -44,6 +44,7 @@ CServer::CServer(QObject *parent)
 {
     p_ptr->parser = new CJsonPacketParser;
     p_ptr->acceptMultipleClientsBehindOneIp = true;
+    p_ptr->lobby = new CRoom(this);
     p_ptr->server = new CTcpServer(this);
     connect(p_ptr->server, &CTcpServer::newSocket, this, &CServer::handleNewConnection);
 }
@@ -89,12 +90,12 @@ CServerPlayer *CServer::findPlayer(uint id)
     return p_ptr->players.value(id);
 }
 
-QList<CServerPlayer *> CServer::players() const
+QMap<uint, CServerPlayer *> CServer::players() const
 {
-    return p_ptr->players.values();
+    return p_ptr->players;
 }
 
-void CServer::broadcastNofification(int command, const QVariant &data, CServerPlayer *except)
+void CServer::broadcastNotification(int command, const QVariant &data, CServerPlayer *except)
 {
     foreach (CServerPlayer *player, p_ptr->players) {
         if (player != except)
@@ -120,25 +121,6 @@ void CServer::handleNewConnection(CTcpSocket *client)
     connect(player, &CServerPlayer::stateChanged, this, &CServer::onPlayerStateChanged);
 }
 
-void CServer::addPlayer(CServerPlayer *player)
-{
-    QVariantList playerList;
-    int count = 0;
-    foreach (CServerPlayer *other, p_ptr->players) {
-        playerList << other->briefIntroduction();
-        count++;
-        if (count >= ONLINE_LIST_PAGE_SIZE)
-            break;
-    }
-    player->notify(S_COMMAND_SET_PLAYER_LIST, playerList);
-
-    p_ptr->players.insert(player->id(), player);
-
-    connect(player, &CServerPlayer::speak, this, &CServer::onPlayerSpeaking);
-
-    broadcastNofification(S_COMMAND_ADD_PLAYER, player->briefIntroduction(), player);
-}
-
 void CServer::onPlayerDisconnected()
 {
     CServerPlayer *player = qobject_cast<CServerPlayer *>(sender());
@@ -146,24 +128,15 @@ void CServer::onPlayerDisconnected()
     //if (player && player->state() == CServerPlayer::LoggedOut)
     p_ptr->players.remove(player->id());
     player->deleteLater();
-
-    broadcastNofification(S_COMMAND_REMOVE_PLAYER, player->id());
 }
 
 void CServer::onPlayerStateChanged()
 {
     CServerPlayer *player = qobject_cast<CServerPlayer *>(sender());
     if (player->state() == CServerPlayer::Online) {
-        if (!p_ptr->players.contains(player->id()))
-            addPlayer(player);
+        if (!p_ptr->players.contains(player->id())) {
+            p_ptr->players.insert(player->id(), player);
+            p_ptr->lobby->addPlayer(player);
+        }
     }
-}
-
-void CServer::onPlayerSpeaking(const QString &message)
-{
-    CServerPlayer *player = qobject_cast<CServerPlayer *>(sender());
-    QVariantList arguments;
-    arguments << player->id();
-    arguments << message;
-    broadcastNofification(S_COMMAND_SPEAK, arguments, player);
 }
