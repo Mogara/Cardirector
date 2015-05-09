@@ -20,7 +20,7 @@
 #include "cpacketrouter.h"
 #include "ctcpsocket.h"
 
-#include <QMutex>
+#include <QSemaphore>
 
 class CPacketRouterPrivate
 {
@@ -34,7 +34,7 @@ public:
     int currentRequestId;
     int nextReplyId;
     QVariant reply;
-    QMutex replyMutex;
+    QSemaphore replySemaphore;
 };
 
 CPacketRouter::CPacketRouter(QObject *receiver, CTcpSocket *socket, CAbstractPacketParser *parser)
@@ -47,12 +47,10 @@ CPacketRouter::CPacketRouter(QObject *receiver, CTcpSocket *socket, CAbstractPac
     p_ptr->parser = parser;
     p_ptr->socket = NULL;
     setSocket(socket);
-    p_ptr->replyMutex.lock();
 }
 
 CPacketRouter::~CPacketRouter()
 {
-    p_ptr->replyMutex.unlock();
     delete p_ptr;
 }
 
@@ -126,8 +124,16 @@ void CPacketRouter::notify(int command, const QVariant &data)
 
 QVariant CPacketRouter::waitForReply()
 {
-    p_ptr->replyMutex.lock();
+    p_ptr->replySemaphore.acquire();
     return p_ptr->reply;
+}
+
+QVariant CPacketRouter::waitForReply(int timeout)
+{
+    if (p_ptr->replySemaphore.tryAcquire(1, timeout))
+        return p_ptr->reply;
+    else
+        return QVariant();
 }
 
 void CPacketRouter::handlePacket(const QByteArray &rawPacket)
@@ -177,6 +183,6 @@ void CPacketRouter::handlePacket(const QByteArray &rawPacket)
             if (func != NULL)
                 (*func)(p_ptr->receiver, p_ptr->reply);
         }
-        p_ptr->replyMutex.unlock();
+        p_ptr->replySemaphore.release(1);
     }
 }

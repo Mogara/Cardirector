@@ -54,6 +54,7 @@ public:
     void notify(int command, const QVariant &data = QVariant());
 
     QVariant waitForReply();
+    QVariant waitForReply(int timeout);
 
 signals:
     void unknownPacket(const QByteArray &packet);

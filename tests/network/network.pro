@@ -2,4 +2,5 @@ TEMPLATE = subdirs
 
 SUBDIRS = speak \
     room \
-    server
+    server \
+    request

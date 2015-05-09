@@ -130,6 +130,11 @@ QVariant CServerPlayer::waitForReply()
     return p_ptr->router->waitForReply();
 }
 
+QVariant CServerPlayer::waitForReply(int timeout)
+{
+    return p_ptr->router->waitForReply(timeout);
+}
+
 QVariant CServerPlayer::briefIntroduction() const
 {
     QVariantList arguments;

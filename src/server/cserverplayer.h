@@ -54,6 +54,7 @@ public:
     QHostAddress ip() const;
 
     QVariant waitForReply();
+    QVariant waitForReply(int timeout);
 
     QVariant briefIntroduction() const;
 

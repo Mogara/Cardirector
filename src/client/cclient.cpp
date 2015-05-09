@@ -158,6 +158,16 @@ CClientPlayer *CClient::addPlayer(const QVariant &data)
     return NULL;
 }
 
+QVariant CClient::waitForReply()
+{
+    return p_ptr->router->waitForReply();
+}
+
+QVariant CClient::waitForReply(int timeout)
+{
+    return p_ptr->router->waitForReply(timeout);
+}
+
 /* Callbacks */
 
 void CClient::InitCallbacks()

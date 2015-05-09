@@ -52,6 +52,9 @@ public:
     QList<const CClientPlayer *> players() const;
     CClientPlayer *self() const;
 
+    QVariant waitForReply();
+    QVariant waitForReply(int timeout);
+
     static void AddInteraction(int command, void (*callback)(QObject *, const QVariant &));
     static void AddCallback(int command, void (*callback)(QObject *, const QVariant &));
     static void InitCallbacks();
