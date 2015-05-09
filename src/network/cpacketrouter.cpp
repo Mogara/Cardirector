@@ -25,8 +25,8 @@
 class CPacketRouterPrivate
 {
 public:
-    QMap<int, CPacketRouter::Callback> interactions; //For requests
-    QMap<int, CPacketRouter::Callback> callbacks;    //For notifications
+    const QHash<int, CPacketRouter::Callback> *interactions; //For requests
+    const QHash<int, CPacketRouter::Callback> *callbacks;    //For notifications
 
     QObject *receiver;
     CTcpSocket *socket;
@@ -41,6 +41,8 @@ CPacketRouter::CPacketRouter(QObject *receiver, CTcpSocket *socket, CAbstractPac
     : QObject(receiver)
     , p_ptr(new CPacketRouterPrivate)
 {
+    p_ptr->interactions = NULL;
+    p_ptr->callbacks = NULL;
     p_ptr->receiver = receiver;
     p_ptr->parser = parser;
     p_ptr->socket = NULL;
@@ -79,16 +81,15 @@ CAbstractPacketParser *CPacketRouter::parser()
     return p_ptr->parser;
 }
 
-void CPacketRouter::addInteraction(int command, Callback func)
+void CPacketRouter::setInteractions(const QHash<int, Callback> *interactions)
 {
-    p_ptr->interactions[command] = func;
+    p_ptr->interactions = interactions;
 }
 
-void CPacketRouter::addCallback(int command, Callback func)
+void CPacketRouter::setCallbacks(const QHash<int, Callback> *callbacks)
 {
-    p_ptr->callbacks[command] = func;
+    p_ptr->callbacks = callbacks;
 }
-
 
 void CPacketRouter::request(int command, const QVariant &data)
 {
@@ -141,12 +142,16 @@ void CPacketRouter::handlePacket(const QByteArray &rawPacket)
     }
 
     if (packet.type() == CPacket::TYPE_NOTIFICATION) {
-        Callback func = p_ptr->callbacks.value(packet.command());
+        if (p_ptr->callbacks == NULL)
+            return;
+        Callback func = p_ptr->callbacks->value(packet.command());
         if (func)
             (*func)(p_ptr->receiver, packet.data());
 
     } else if (packet.type() == CPacket::TYPE_REQUEST) {
-        Callback func = p_ptr->interactions.value(packet.command());
+        if (p_ptr->interactions == NULL)
+            return;
+        Callback func = p_ptr->interactions->value(packet.command());
         if (func == NULL)
             return;
 
@@ -167,9 +172,11 @@ void CPacketRouter::handlePacket(const QByteArray &rawPacket)
             return;
 
         p_ptr->reply = dataList.at(1);
-        Callback func = p_ptr->callbacks.value(packet.command());
-        if (func != NULL)
-            (*func)(p_ptr->receiver, p_ptr->reply);
+        if (p_ptr->callbacks) {
+            Callback func = p_ptr->callbacks->value(packet.command());
+            if (func != NULL)
+                (*func)(p_ptr->receiver, p_ptr->reply);
+        }
         p_ptr->replyMutex.unlock();
     }
 }

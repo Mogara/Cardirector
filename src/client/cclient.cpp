@@ -34,13 +34,21 @@ public:
     CAbstractPacketParser *parser;
 };
 
+static QHash<int, CPacketRouter::Callback> interactions;
+static QHash<int, CPacketRouter::Callback> callbacks;
+
 CClient::CClient(QObject *parent)
     : QObject(parent)
     , p_ptr(new CClientPrivate)
 {
-    p_ptr->parser = new CJsonPacketParser;
-    initCallbacks();
     p_ptr->self = NULL;
+
+    p_ptr->parser = new CJsonPacketParser;
+    CTcpSocket *socket = new CTcpSocket;
+    p_ptr->router = new CPacketRouter(this, socket, p_ptr->parser);
+    p_ptr->router->setInteractions(&interactions);
+    p_ptr->router->setCallbacks(&callbacks);
+    connect(socket, &CTcpSocket::connected, this, &CClient::connected);
 }
 
 CClient::~CClient()
@@ -60,22 +68,14 @@ CAbstractPacketParser *CClient::packetParser() const
     return p_ptr->parser;
 }
 
-void CClient::initCallbacks()
+void CClient::AddInteraction(int command, void (*callback)(QObject *, const QVariant &))
 {
-    CTcpSocket *socket = new CTcpSocket;
-    p_ptr->router = new CPacketRouter(this, socket, p_ptr->parser);
-    connect(socket, &CTcpSocket::connected, this, &CClient::connected);
-
-    addCallback(S_COMMAND_SPEAK, &SpeakCommand);
-    addCallback(S_COMMAND_SET_PLAYER_LIST, &SetPlayerListCommand);
-    addCallback(S_COMMAND_ADD_PLAYER, &AddPlayerCommand);
-    addCallback(S_COMMAND_REMOVE_PLAYER, &RemovePlayerCommand);
-    addCallback(S_COMMAND_LOGIN, &LoginCommand);
+    interactions.insert(command, callback);
 }
 
-void CClient::addCallback(int command, void (*callback)(QObject *, const QVariant &))
+void CClient::AddCallback(int command, void (*callback)(QObject *, const QVariant &))
 {
-    p_ptr->router->addCallback(command, callback);
+    callbacks.insert(command, callback);
 }
 
 void CClient::connectToHost(const QHostAddress &server, ushort port)
@@ -157,6 +157,15 @@ CClientPlayer *CClient::addPlayer(const QVariant &data)
 
 /* Callbacks */
 
+void CClient::InitCallbacks()
+{
+    AddCallback(S_COMMAND_SPEAK, &SpeakCommand);
+    AddCallback(S_COMMAND_SET_PLAYER_LIST, &SetPlayerListCommand);
+    AddCallback(S_COMMAND_ADD_PLAYER, &AddPlayerCommand);
+    AddCallback(S_COMMAND_REMOVE_PLAYER, &RemovePlayerCommand);
+    AddCallback(S_COMMAND_LOGIN, &LoginCommand);
+}
+
 void CClient::SetPlayerListCommand(QObject *receiver, const QVariant &data)
 {
     QVariantList playerList(data.toList());
@@ -211,3 +220,12 @@ void CClient::SpeakCommand(QObject *receiver, const QVariant &data)
         player->speak(message);
     }
 }
+
+struct CClientCallbackAdder
+{
+    CClientCallbackAdder()
+    {
+        CClient::InitCallbacks();
+    }
+};
+CClientCallbackAdder callbackAdder;

@@ -60,7 +60,9 @@ public:
 
     QVariant briefIntroduction() const;
 
-    void addCallback(int command, void (*callback)(QObject *, const QVariant &));
+    static void AddInteraction(int command, void (*callback)(QObject *, const QVariant &));
+    static void AddCallback(int command, void (*callback)(QObject *, const QVariant &));
+    static void InitCallbacks();
 
 signals:
     void disconnected();
@@ -75,8 +77,6 @@ protected:
     void handleUnknownPacket(const QByteArray &packet);
 
 private:
-    void initCallbacks();
-
     C_DISABLE_COPY(CServerPlayer)
     C_DECLARE_PRIVATE(CServerPlayer)
 

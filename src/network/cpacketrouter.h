@@ -46,8 +46,8 @@ public:
 
     void setSocket(CTcpSocket *socket);
 
-    void addInteraction(int command, Callback func);
-    void addCallback(int command, Callback func);
+    void setInteractions(const QHash<int, Callback> *interactions);
+    void setCallbacks(const QHash<int, Callback> *callbacks);
 
     void request(int command, const QVariant &data = QVariant());
     void reply(int command, const QVariant &data = QVariant());

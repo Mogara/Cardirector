@@ -25,6 +25,9 @@
 
 #include <QCoreApplication>
 
+static QHash<int, CPacketRouter::Callback> interactions;
+static QHash<int, CPacketRouter::Callback> callbacks;
+
 class CServerPlayerPrivate
 {
 public:
@@ -40,20 +43,12 @@ CServerPlayer::CServerPlayer(CTcpSocket *socket, CServer *server)
     p_ptr->server = server;
 
     p_ptr->router = new CPacketRouter(this, socket, server->packetParser());
+    p_ptr->router->setInteractions(&interactions);
+    p_ptr->router->setCallbacks(&callbacks);
     connect(p_ptr->router, &CPacketRouter::unknownPacket, this, &CServerPlayer::handleUnknownPacket);
     connect(socket, &CTcpSocket::disconnected, this, &CServerPlayer::disconnected);
-    initCallbacks();
 
     p_ptr->room = NULL;
-}
-
-void CServerPlayer::initCallbacks()
-{
-    addCallback(S_COMMAND_CHECK_VERSION, &CheckVersionCommand);
-    addCallback(S_COMMAND_SIGNUP, &SignupCommand);
-    addCallback(S_COMMAND_LOGIN, &LoginCommand);
-    addCallback(S_COMMAND_LOGOUT, &LogoutCommand);
-    addCallback(S_COMMAND_SPEAK, &SpeakCommand);
 }
 
 CServerPlayer::~CServerPlayer()
@@ -150,12 +145,26 @@ QVariant CServerPlayer::briefIntroduction() const
     return arguments;
 }
 
-void CServerPlayer::addCallback(int command, void (*callback)(QObject *, const QVariant &))
+void CServerPlayer::AddInteraction(int command, void (*callback)(QObject *, const QVariant &))
 {
-    p_ptr->router->addCallback(command, callback);
+    interactions.insert(command, callback);
+}
+
+void CServerPlayer::AddCallback(int command, void (*callback)(QObject *, const QVariant &))
+{
+    callbacks.insert(command, callback);
 }
 
 /* Callbacks */
+
+void CServerPlayer::InitCallbacks()
+{
+    AddCallback(S_COMMAND_CHECK_VERSION, &CheckVersionCommand);
+    AddCallback(S_COMMAND_SIGNUP, &SignupCommand);
+    AddCallback(S_COMMAND_LOGIN, &LoginCommand);
+    AddCallback(S_COMMAND_LOGOUT, &LogoutCommand);
+    AddCallback(S_COMMAND_SPEAK, &SpeakCommand);
+}
 
 void CServerPlayer::CheckVersionCommand(QObject *receiver, const QVariant &data)
 {
@@ -236,3 +245,12 @@ void CServerPlayer::handleUnknownPacket(const QByteArray &packet)
         socket->disconnectFromHost();
     }
 }
+
+struct CServerCallbackAdder
+{
+    CServerCallbackAdder()
+    {
+        CServerPlayer::InitCallbacks();
+    }
+};
+CServerCallbackAdder callbackAdder;

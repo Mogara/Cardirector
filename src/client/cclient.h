@@ -52,7 +52,9 @@ public:
     QList<const CClientPlayer *> players() const;
     CClientPlayer *self() const;
 
-    void addCallback(int command, void (*callback)(QObject *, const QVariant &));
+    static void AddInteraction(int command, void (*callback)(QObject *, const QVariant &));
+    static void AddCallback(int command, void (*callback)(QObject *, const QVariant &));
+    static void InitCallbacks();
 
 signals:
     void connected();
@@ -64,7 +66,6 @@ protected:
     CClientPlayer *findPlayer(uint id);
     CClientPlayer *addPlayer(const QVariant &data);
 
-    void initCallbacks();
     static void SetPlayerListCommand(QObject *receiver, const QVariant &data);
     static void AddPlayerCommand(QObject *receiver, const QVariant &data);
     static void RemovePlayerCommand(QObject *receiver, const QVariant &data);
