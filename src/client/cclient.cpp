@@ -48,9 +48,6 @@ CClient::CClient(QObject *parent)
     p_ptr->router = new CPacketRouter(this, socket, p_ptr->parser);
     p_ptr->router->setInteractions(&interactions);
     p_ptr->router->setCallbacks(&callbacks);
-    connect(this, &CClient::requestServer, p_ptr->router, &CPacketRouter::request);
-    connect(this, &CClient::replyToServer, p_ptr->router, &CPacketRouter::reply);
-    connect(this, &CClient::notifyServer, p_ptr->router, &CPacketRouter::notify);
     connect(socket, &CTcpSocket::connected, this, &CClient::connected);
 }
 
@@ -156,6 +153,21 @@ CClientPlayer *CClient::addPlayer(const QVariant &data)
     }
 
     return NULL;
+}
+
+void CClient::requestServer(int command, const QVariant &data)
+{
+    p_ptr->router->request(command, data);
+}
+
+void CClient::replyToServer(int command, const QVariant &data)
+{
+    p_ptr->router->reply(command, data);
+}
+
+void CClient::notifyServer(int command, const QVariant &data)
+{
+    p_ptr->router->notify(command, data);
 }
 
 QVariant CClient::waitForReply()

@@ -47,9 +47,6 @@ CServerPlayer::CServerPlayer(CTcpSocket *socket, CServer *server)
     p_ptr->router->setInteractions(&interactions);
     p_ptr->router->setCallbacks(&callbacks);
     connect(p_ptr->router, &CPacketRouter::unknownPacket, this, &CServerPlayer::handleUnknownPacket);
-    connect(this, &CServerPlayer::request, p_ptr->router, &CPacketRouter::request);
-    connect(this, &CServerPlayer::reply, p_ptr->router, &CPacketRouter::reply);
-    connect(this, &CServerPlayer::notify, p_ptr->router, &CPacketRouter::notify);
     connect(socket, &CTcpSocket::disconnected, this, &CServerPlayer::disconnected);
 
     p_ptr->room = NULL;
@@ -123,6 +120,21 @@ void CServerPlayer::kick()
 QHostAddress CServerPlayer::ip() const
 {
     return p_ptr->router->socket()->peerAddress();
+}
+
+void CServerPlayer::request(int command, const QVariant &data)
+{
+    p_ptr->router->request(command, data);
+}
+
+void CServerPlayer::reply(int command, const QVariant &data)
+{
+    p_ptr->router->reply(command, data);
+}
+
+void CServerPlayer::notify(int command, const QVariant &data)
+{
+    p_ptr->router->notify(command, data);
 }
 
 QVariant CServerPlayer::waitForReply()

@@ -57,6 +57,7 @@ public:
     QVariant waitForReply(int timeout);
 
 signals:
+    void messageReady(const QByteArray &message);
     void unknownPacket(const QByteArray &packet);
 
 protected:

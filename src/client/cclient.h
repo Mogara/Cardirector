@@ -52,6 +52,10 @@ public:
     QList<const CClientPlayer *> players() const;
     CClientPlayer *self() const;
 
+    void requestServer(int command, const QVariant &data = QVariant());
+    void replyToServer(int command, const QVariant &data = QVariant());
+    void notifyServer(int command, const QVariant &data = QVariant());
+
     QVariant waitForReply();
     QVariant waitForReply(int timeout);
 
@@ -60,9 +64,6 @@ public:
     static void InitCallbacks();
 
 signals:
-    void requestServer(int command, const QVariant &data = QVariant());
-    void replyToServer(int command, const QVariant &data = QVariant());
-    void notifyServer(int command, const QVariant &data = QVariant());
 
     void connected();
     void loggedIn();

@@ -64,6 +64,7 @@ void CPacketRouter::setSocket(CTcpSocket *socket)
 
     p_ptr->socket = socket;
     if (p_ptr->socket != NULL) {
+        connect(this, &CPacketRouter::messageReady, p_ptr->socket, &CTcpSocket::writePacket);
         connect(p_ptr->socket, &CTcpSocket::newPacket, this, &CPacketRouter::handlePacket);
         p_ptr->socket->setParent(this);
     }
@@ -101,7 +102,7 @@ void CPacketRouter::request(int command, const QVariant &data)
 
     CPacket packet(command, CPacket::TYPE_REQUEST);
     packet.setData(body);
-    p_ptr->socket->writePacket(p_ptr->parser->parse(packet));
+    emit messageReady(p_ptr->parser->parse(packet));
 }
 
 void CPacketRouter::reply(int command, const QVariant &data)
@@ -112,14 +113,14 @@ void CPacketRouter::reply(int command, const QVariant &data)
 
     CPacket packet(command, CPacket::TYPE_REPLY);
     packet.setData(body);
-    p_ptr->socket->writePacket(p_ptr->parser->parse(packet));
+    emit messageReady(p_ptr->parser->parse(packet));
 }
 
 void CPacketRouter::notify(int command, const QVariant &data)
 {
     CPacket packet(command, CPacket::TYPE_NOTIFICATION);
     packet.setData(data);
-    p_ptr->socket->writePacket(p_ptr->parser->parse(packet));
+    emit messageReady(p_ptr->parser->parse(packet));
 }
 
 QVariant CPacketRouter::waitForReply()
