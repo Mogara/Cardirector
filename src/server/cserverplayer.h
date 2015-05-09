@@ -53,10 +53,6 @@ public:
     void kick();
     QHostAddress ip() const;
 
-    void request(int command, const QVariant &data = QVariant());
-    void reply(int command, const QVariant &data = QVariant());
-    void notify(int command, const QVariant &data = QVariant());
-
     QVariant waitForReply();
 
     QVariant briefIntroduction() const;
@@ -66,6 +62,10 @@ public:
     static void InitCallbacks();
 
 signals:
+    void request(int command, const QVariant &data = QVariant());
+    void reply(int command, const QVariant &data = QVariant());
+    void notify(int command, const QVariant &data = QVariant());
+
     void disconnected();
 
 protected:

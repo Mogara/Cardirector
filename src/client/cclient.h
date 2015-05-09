@@ -48,10 +48,6 @@ public:
     void enterRoom(uint id);
     void speakToServer(const QString &message);
 
-    void requestServer(int command, const QVariant &data = QVariant());
-    void replyToServer(int command, const QVariant &data = QVariant());
-    void notifyServer(int command, const QVariant &data = QVariant());
-
     const CClientPlayer *findPlayer(uint id) const;
     QList<const CClientPlayer *> players() const;
     CClientPlayer *self() const;
@@ -61,6 +57,10 @@ public:
     static void InitCallbacks();
 
 signals:
+    void requestServer(int command, const QVariant &data = QVariant());
+    void replyToServer(int command, const QVariant &data = QVariant());
+    void notifyServer(int command, const QVariant &data = QVariant());
+
     void connected();
     void loggedIn();
     void playerAdded(const CClientPlayer *player);
