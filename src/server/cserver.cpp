@@ -34,8 +34,9 @@ public:
     CTcpServer *server;
     CAbstractPacketParser *parser;
 
-    QMap<uint, CServerPlayer *> players;
+    QHash<uint, CServerPlayer *> players;
     CRoom *lobby;
+    QHash<uint, CRoom *> rooms;
 };
 
 CServer::CServer(QObject *parent)
@@ -45,6 +46,7 @@ CServer::CServer(QObject *parent)
     p_ptr->parser = new CJsonPacketParser;
     p_ptr->acceptMultipleClientsBehindOneIp = true;
     p_ptr->lobby = new CRoom(this);
+    connect(p_ptr->lobby, &CRoom::playerAdded, this, &CServer::updateRoomList);
     p_ptr->server = new CTcpServer(this);
     connect(p_ptr->server, &CTcpServer::newSocket, this, &CServer::handleNewConnection);
 }
@@ -90,9 +92,47 @@ CServerPlayer *CServer::findPlayer(uint id)
     return p_ptr->players.value(id);
 }
 
-QMap<uint, CServerPlayer *> CServer::players() const
+QHash<uint, CServerPlayer *> CServer::players() const
 {
     return p_ptr->players;
+}
+
+void CServer::createRoom(CServerPlayer *owner, const QVariant &config)
+{
+    C_UNUSED(config);
+    CRoom *room = new CRoom(this);
+    connect(room, &CRoom::abandoned, this, &CServer::onRoomAbandoned);
+    room->addPlayer(owner);
+    room->setOwner(owner);
+    p_ptr->rooms.insert(room->id(), room);
+}
+
+CRoom *CServer::findRoom(uint id) const
+{
+    return p_ptr->rooms.value(id);
+}
+
+QHash<uint, CRoom *> CServer::rooms() const
+{
+    return p_ptr->rooms;
+}
+
+CRoom *CServer::lobby() const
+{
+    return p_ptr->lobby;
+}
+
+void CServer::updateRoomList(CServerPlayer *player)
+{
+    QVariantList roomList;
+    foreach (CRoom *room, p_ptr->rooms) {
+        QVariantList roomInfo;
+        roomInfo << room->id();
+        roomInfo << (room->owner() ? room->owner()->briefIntroduction() : QVariant());
+        //@todo: add game mode configurations here
+        roomList << QVariant(roomInfo);
+    }
+    player->notify(S_COMMAND_SET_ROOM_LIST, roomList);
 }
 
 void CServer::broadcastNotification(int command, const QVariant &data, CServerPlayer *except)
@@ -121,6 +161,12 @@ void CServer::handleNewConnection(CTcpSocket *client)
     connect(player, &CServerPlayer::stateChanged, this, &CServer::onPlayerStateChanged);
 }
 
+void CServer::onRoomAbandoned()
+{
+    CRoom *room = qobject_cast<CRoom *>(sender());
+    p_ptr->rooms.remove(room->id());
+}
+
 void CServer::onPlayerDisconnected()
 {
     CServerPlayer *player = qobject_cast<CServerPlayer *>(sender());
@@ -137,6 +183,7 @@ void CServer::onPlayerStateChanged()
         if (!p_ptr->players.contains(player->id())) {
             p_ptr->players.insert(player->id(), player);
             p_ptr->lobby->addPlayer(player);
+            emit playerAdded(player);
         }
     }
 }

@@ -22,27 +22,58 @@
 #include "cserver.h"
 #include "cserverplayer.h"
 
-#include <QMultiMap>
-
 class CRoomPrivate
 {
 public:
     CServer *server;
+    uint id;
     CAbstractGameLogic *gameLogic;
     QMap<uint, CServerPlayer *> players;
+    CServerPlayer * owner;
 };
 
 CRoom::CRoom(CServer *server)
     : QObject(server)
     , p_ptr(new CRoomPrivate)
 {
+    static uint roomId = 0;
+    roomId++;
+    p_ptr->id = roomId;
     p_ptr->server = server;
     p_ptr->gameLogic = NULL;
+    p_ptr->owner = NULL;
 }
 
 CRoom::~CRoom()
 {
     delete p_ptr;
+}
+
+uint CRoom::id() const
+{
+    return p_ptr->id;
+}
+
+QVariant CRoom::config() const
+{
+    QVariantList info;
+    info << (p_ptr->server->lobby() != this ? p_ptr->id : 0);
+    return info;
+}
+
+CServer *CRoom::server() const
+{
+    return p_ptr->server;
+}
+
+void CRoom::setOwner(CServerPlayer *owner)
+{
+    p_ptr->owner = owner;
+}
+
+CServerPlayer *CRoom::owner() const
+{
+    return p_ptr->owner;
 }
 
 void CRoom::setGameLogic(CAbstractGameLogic *gameLogic)
@@ -73,6 +104,7 @@ void CRoom::addPlayer(CServerPlayer *player)
             break;
     }
     player->notify(S_COMMAND_SET_PLAYER_LIST, playerList);
+    player->notify(S_COMMAND_ENTER_ROOM, config());
 
     //Add the player
     p_ptr->players.insert(player->id(), player);
@@ -81,6 +113,7 @@ void CRoom::addPlayer(CServerPlayer *player)
     connect(player, &CServerPlayer::disconnected, this, &CRoom::onPlayerDisconnected);
 
     broadcastNotification(S_COMMAND_ADD_PLAYER, player->briefIntroduction(), player);
+    emit playerAdded(player);
 }
 
 void CRoom::removePlayer(CServerPlayer *player)
@@ -88,7 +121,20 @@ void CRoom::removePlayer(CServerPlayer *player)
     if (p_ptr->players.remove(player->id())) {
         player->disconnect(this);
         this->disconnect(player);
+
+        if (player == p_ptr->owner) {
+            if (!p_ptr->players.isEmpty()) {
+                p_ptr->owner = p_ptr->players.first();
+                //@todo: broadcast new owner
+            } else {
+                emit abandoned();
+                deleteLater();
+                return;
+            }
+        }
+
         broadcastNotification(S_COMMAND_REMOVE_PLAYER, player->id(), player);
+        emit playerRemoved(player);
     }
 }
 

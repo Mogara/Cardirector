@@ -19,6 +19,7 @@
 
 #include "cpacketrouter.h"
 #include "cprotocol.h"
+#include "croom.h"
 #include "cserver.h"
 #include "cserverplayer.h"
 #include "ctcpsocket.h"
@@ -59,6 +60,11 @@ CServerPlayer::~CServerPlayer()
 void CServerPlayer::setSocket(CTcpSocket *socket)
 {
     p_ptr->router->setSocket(socket);
+}
+
+CServer *CServerPlayer::server() const
+{
+    return p_ptr->server;
 }
 
 CRoom *CServerPlayer::room() const
@@ -164,6 +170,8 @@ void CServerPlayer::InitCallbacks()
     AddCallback(S_COMMAND_LOGIN, &LoginCommand);
     AddCallback(S_COMMAND_LOGOUT, &LogoutCommand);
     AddCallback(S_COMMAND_SPEAK, &SpeakCommand);
+    AddCallback(S_COMMAND_CREATE_ROOM, &CreateRoomCommand);
+    AddCallback(S_COMMAND_ENTER_ROOM, &EnterRoomCommand);
 }
 
 void CServerPlayer::CheckVersionCommand(QObject *receiver, const QVariant &data)
@@ -216,6 +224,23 @@ void CServerPlayer::SpeakCommand(QObject *receiver, const QVariant &data)
     QString message = data.toString();
     if (!message.isEmpty())
         player->speak(message);
+}
+
+void CServerPlayer::CreateRoomCommand(QObject *receiver, const QVariant &data)
+{
+    CServerPlayer *player = qobject_cast<CServerPlayer *>(receiver);
+    CServer *server = player->server();
+    server->createRoom(player, data);
+}
+
+void CServerPlayer::EnterRoomCommand(QObject *receiver, const QVariant &data)
+{
+    CServerPlayer *player = qobject_cast<CServerPlayer *>(receiver);
+    CServer *server = player->server();
+    uint roomId = data.toUInt();
+    CRoom *room = server->findRoom(roomId);
+    if (room)
+        room->addPlayer(player);
 }
 
 void CServerPlayer::handleUnknownPacket(const QByteArray &packet)

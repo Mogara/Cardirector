@@ -44,6 +44,10 @@ public:
     void signup(const QString &username, const QString &password, const QString &screenName, const QString &avatar);
     void login(const QString &username, const QString &password);
 
+    void createRoom();
+    void enterRoom(uint id);
+    void speakToServer(const QString &message);
+
     void requestServer(int command, const QVariant &data = QVariant());
     void replyToServer(int command, const QVariant &data = QVariant());
     void notifyServer(int command, const QVariant &data = QVariant());
@@ -61,6 +65,8 @@ signals:
     void loggedIn();
     void playerAdded(const CClientPlayer *player);
     void playerRemoved(const CClientPlayer *player);
+    void roomListUpdated(const QVariant &list);
+    void roomEntered(uint id);
 
 protected:
     CClientPlayer *findPlayer(uint id);
@@ -70,7 +76,9 @@ protected:
     static void AddPlayerCommand(QObject *receiver, const QVariant &data);
     static void RemovePlayerCommand(QObject *receiver, const QVariant &data);
     static void LoginCommand(QObject *receiver, const QVariant &data);
+    static void SetRoomListCommand(QObject *receiver, const QVariant &data);
     static void SpeakCommand(QObject *receiver, const QVariant &data);
+    static void EnterRoomCommand(QObject *receiver, const QVariant &data);
 
 private:
     C_DISABLE_COPY(CClient)

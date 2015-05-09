@@ -26,11 +26,12 @@
 #include <QHostAddress>
 
 class CAbstractPacketParser;
+class CRoom;
+class CServerPlayer;
 class CTcpServer;
 class CTcpSocket;
-class CServerPlayer;
-class CServerPrivate;
 
+class CServerPrivate;
 class MCD_EXPORT CServer : public QObject
 {
     Q_OBJECT
@@ -45,7 +46,14 @@ public:
     bool acceptMultipleClientsBehindOneIp() const;
 
     CServerPlayer *findPlayer(uint id);
-    QMap<uint, CServerPlayer *> players() const;
+    QHash<uint, CServerPlayer *> players() const;
+
+    void createRoom(CServerPlayer *owner, const QVariant &config);
+    CRoom *findRoom(uint id) const;
+    QHash<uint, CRoom *> rooms() const;
+    CRoom *lobby() const;
+
+    void updateRoomList(CServerPlayer *player);
 
     void setPacketParser(CAbstractPacketParser *parser);
     CAbstractPacketParser *packetParser() const;
@@ -53,11 +61,12 @@ public:
     void broadcastNotification(int command, const QVariant &data = QVariant(), CServerPlayer *except = NULL);
 
 signals:
-    void newPlayer(CServerPlayer *player);
+    void playerAdded(CServerPlayer *player);
 
 protected:
     void handleNewConnection(CTcpSocket *client);
 
+    void onRoomAbandoned();
     void onPlayerDisconnected();
     void onPlayerStateChanged();
 

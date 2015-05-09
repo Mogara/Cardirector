@@ -43,6 +43,7 @@ public:
 
     void setSocket(CTcpSocket *socket);
 
+    CServer *server() const;
     CRoom *room() const;
     void setRoom(CRoom *room);
 
@@ -73,6 +74,8 @@ protected:
     static void LoginCommand(QObject *receiver, const QVariant &data);
     static void LogoutCommand(QObject *receiver, const QVariant &);
     static void SpeakCommand(QObject *receiver, const QVariant &data);
+    static void CreateRoomCommand(QObject *receiver, const QVariant &data);
+    static void EnterRoomCommand(QObject *receiver, const QVariant &data);
 
     void handleUnknownPacket(const QByteArray &packet);
 

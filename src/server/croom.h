@@ -31,9 +31,19 @@ class CServerPlayer;
 class CRoomPrivate;
 class CRoom : public QObject
 {
+    Q_OBJECT
+
 public:
     CRoom(CServer *server);
     ~CRoom();
+
+    uint id() const;
+    QVariant config() const;
+
+    CServer *server() const;
+
+    void setOwner(CServerPlayer *owner);
+    CServerPlayer *owner() const;
 
     void setGameLogic(CAbstractGameLogic *gameLogic);
     CAbstractGameLogic *gameLogic() const;
@@ -44,6 +54,11 @@ public:
     CServerPlayer *findPlayer(int id) const;
 
     void broadcastNotification(int command, const QVariant &data, CServerPlayer *except = NULL);
+
+signals:
+    void abandoned();
+    void playerAdded(CServerPlayer *player);
+    void playerRemoved(CServerPlayer *player);
 
 protected:
     //Slots for CServerPlayer. Do not call them directly.

@@ -98,6 +98,21 @@ void CClient::login(const QString &username, const QString &password)
     notifyServer(S_COMMAND_LOGIN, arguments);
 }
 
+void CClient::createRoom()
+{
+    p_ptr->router->notify(S_COMMAND_CREATE_ROOM);
+}
+
+void CClient::enterRoom(uint id)
+{
+    p_ptr->router->notify(S_COMMAND_ENTER_ROOM, id);
+}
+
+void CClient::speakToServer(const QString &message)
+{
+    return p_ptr->router->notify(S_COMMAND_SPEAK, message);
+}
+
 void CClient::requestServer(int command, const QVariant &data)
 {
     p_ptr->router->request(command, data);
@@ -164,6 +179,8 @@ void CClient::InitCallbacks()
     AddCallback(S_COMMAND_ADD_PLAYER, &AddPlayerCommand);
     AddCallback(S_COMMAND_REMOVE_PLAYER, &RemovePlayerCommand);
     AddCallback(S_COMMAND_LOGIN, &LoginCommand);
+    AddCallback(S_COMMAND_SET_ROOM_LIST, &SetRoomListCommand);
+    AddCallback(S_COMMAND_ENTER_ROOM, &EnterRoomCommand);
 }
 
 void CClient::SetPlayerListCommand(QObject *receiver, const QVariant &data)
@@ -207,6 +224,12 @@ void CClient::LoginCommand(QObject *receiver, const QVariant &data)
     emit client->loggedIn();
 }
 
+void CClient::SetRoomListCommand(QObject *receiver, const QVariant &data)
+{
+    CClient *client = qobject_cast<CClient *>(receiver);
+    emit client->roomListUpdated(data);
+}
+
 void CClient::SpeakCommand(QObject *receiver, const QVariant &data)
 {
     QVariantList arguments = data.toList();
@@ -218,6 +241,16 @@ void CClient::SpeakCommand(QObject *receiver, const QVariant &data)
     if (player != NULL) {
         QString message = arguments.at(1).toString();
         player->speak(message);
+    }
+}
+
+void CClient::EnterRoomCommand(QObject *receiver, const QVariant &data)
+{
+    CClient *client = qobject_cast<CClient *>(receiver);
+    QVariantList arguments(data.toList());
+    if (arguments.length() > 0) {
+        uint id = arguments.at(0).toUInt();
+        emit client->roomEntered(id);
     }
 }
 

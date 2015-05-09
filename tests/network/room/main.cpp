@@ -11,14 +11,18 @@ int main(int argc, char *argv[])
     CClient *client = new CClient(&app);
 
     QObject::connect(client, &CClient::connected, [=](){
-        client->signup("", "", "Takashiro", "zhaoyun");
+        client->signup("", "", "Takashiro", "machao");
     });
 
-    QObject::connect(client, &CClient::loggedIn, [=](){
-        foreach (const CClientPlayer *player, client->players()) {
-            QObject::connect(player, &CClientPlayer::speak, [=](const QString &message){
-                qDebug() << QString("%1(%2) said: %3").arg(player->screenName()).arg(player->id()).arg(message);
-            });
+    QObject::connect(client, &CClient::roomListUpdated, [=](const QVariant &data){
+        QVariantList rooms(data.toList());
+        qDebug() << "Rooms: " << rooms;
+        if (rooms.isEmpty()) {
+            client->createRoom();
+        } else {
+            QVariantList room(rooms.at(0).toList());
+            uint roomId = room.at(0).toUInt();
+            client->enterRoom(roomId);
         }
     });
 
