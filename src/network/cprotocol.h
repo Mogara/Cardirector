@@ -45,10 +45,11 @@ enum CCommandType {
     CARDIRECTOR_SYSTEM_COMMAND_COUNT
 };
 
-extern QMap<CCommandType, QString> CCommandString; //Permanently saved commands should be converted to string instead of integer
+//Permanently saved commands should be converted to string instead of integer
+void MCD_EXPORT cRegisterCommand(int command, const QString &name);
 
 MCD_END_NAMESPACE
 
-#define C_REGISTER_COMMAND(command) CCommandString.insert(S_COMMAND_##command, #command)
+#define C_REGISTER_COMMAND(command) cRegisterCommand(S_COMMAND_##command, #command)
 
 #endif // CPROTOCOL_H

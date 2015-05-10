@@ -19,7 +19,12 @@
 
 #include "cprotocol.h"
 
-QMap<CCommandType, QString> CCommandString;
+static QMap<int, QString> CCommandString;
+
+void cRegisterCommand(int command, const QString &name)
+{
+    CCommandString.insert(command, name);
+}
 
 class CCommandAdder{
 public:
