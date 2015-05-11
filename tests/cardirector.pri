@@ -1,3 +1,4 @@
+CONFIG += c++11
 
 CARDIRECTOR = $$PWD/..
 
