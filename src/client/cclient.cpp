@@ -271,4 +271,4 @@ struct CClientCallbackAdder
         CClient::InitCallbacks();
     }
 };
-CClientCallbackAdder callbackAdder;
+static CClientCallbackAdder callbackAdder;

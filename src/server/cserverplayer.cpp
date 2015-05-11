@@ -283,4 +283,4 @@ struct CServerCallbackAdder
         CServerPlayer::InitCallbacks();
     }
 };
-CServerCallbackAdder callbackAdder;
+static CServerCallbackAdder callbackAdder;
