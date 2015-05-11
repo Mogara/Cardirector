@@ -182,17 +182,6 @@ QVariant CClient::waitForReply(int timeout)
 
 /* Callbacks */
 
-void CClient::InitCallbacks()
-{
-    AddCallback(S_COMMAND_SPEAK, &SpeakCommand);
-    AddCallback(S_COMMAND_SET_PLAYER_LIST, &SetPlayerListCommand);
-    AddCallback(S_COMMAND_ADD_PLAYER, &AddPlayerCommand);
-    AddCallback(S_COMMAND_REMOVE_PLAYER, &RemovePlayerCommand);
-    AddCallback(S_COMMAND_LOGIN, &LoginCommand);
-    AddCallback(S_COMMAND_SET_ROOM_LIST, &SetRoomListCommand);
-    AddCallback(S_COMMAND_ENTER_ROOM, &EnterRoomCommand);
-}
-
 void CClient::SetPlayerListCommand(QObject *receiver, const QVariant &data)
 {
     QVariantList playerList(data.toList());
@@ -264,11 +253,14 @@ void CClient::EnterRoomCommand(QObject *receiver, const QVariant &data)
     }
 }
 
-struct CClientCallbackAdder
+void CClient::Init()
 {
-    CClientCallbackAdder()
-    {
-        CClient::InitCallbacks();
-    }
-};
-static CClientCallbackAdder callbackAdder;
+    AddCallback(S_COMMAND_SPEAK, &SpeakCommand);
+    AddCallback(S_COMMAND_SET_PLAYER_LIST, &SetPlayerListCommand);
+    AddCallback(S_COMMAND_ADD_PLAYER, &AddPlayerCommand);
+    AddCallback(S_COMMAND_REMOVE_PLAYER, &RemovePlayerCommand);
+    AddCallback(S_COMMAND_LOGIN, &LoginCommand);
+    AddCallback(S_COMMAND_SET_ROOM_LIST, &SetRoomListCommand);
+    AddCallback(S_COMMAND_ENTER_ROOM, &EnterRoomCommand);
+}
+C_INITIALIZE_CLASS(CClient)

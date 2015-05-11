@@ -168,17 +168,6 @@ void CServerPlayer::AddCallback(int command, void (*callback)(QObject *, const Q
 
 /* Callbacks */
 
-void CServerPlayer::InitCallbacks()
-{
-    AddCallback(S_COMMAND_CHECK_VERSION, &CheckVersionCommand);
-    AddCallback(S_COMMAND_SIGNUP, &SignupCommand);
-    AddCallback(S_COMMAND_LOGIN, &LoginCommand);
-    AddCallback(S_COMMAND_LOGOUT, &LogoutCommand);
-    AddCallback(S_COMMAND_SPEAK, &SpeakCommand);
-    AddCallback(S_COMMAND_CREATE_ROOM, &CreateRoomCommand);
-    AddCallback(S_COMMAND_ENTER_ROOM, &EnterRoomCommand);
-}
-
 void CServerPlayer::CheckVersionCommand(QObject *receiver, const QVariant &data)
 {
     C_UNUSED(receiver);
@@ -276,11 +265,14 @@ void CServerPlayer::handleUnknownPacket(const QByteArray &packet)
     }
 }
 
-struct CServerCallbackAdder
+void CServerPlayer::Init()
 {
-    CServerCallbackAdder()
-    {
-        CServerPlayer::InitCallbacks();
-    }
-};
-static CServerCallbackAdder callbackAdder;
+    AddCallback(S_COMMAND_CHECK_VERSION, &CheckVersionCommand);
+    AddCallback(S_COMMAND_SIGNUP, &SignupCommand);
+    AddCallback(S_COMMAND_LOGIN, &LoginCommand);
+    AddCallback(S_COMMAND_LOGOUT, &LogoutCommand);
+    AddCallback(S_COMMAND_SPEAK, &SpeakCommand);
+    AddCallback(S_COMMAND_CREATE_ROOM, &CreateRoomCommand);
+    AddCallback(S_COMMAND_ENTER_ROOM, &EnterRoomCommand);
+}
+C_INITIALIZE_CLASS(CServerPlayer)

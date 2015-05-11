@@ -78,4 +78,16 @@ typedef MCD_COORD_TYPE creal;
 typedef double creal;
 #endif
 
+#define C_DECLARE_INITIALIZER(classname) friend struct classname##Initializer;\
+    static void Init();
+
+#define C_INITIALIZE_CLASS(classname) struct classname##Initializer\
+{\
+    classname##Initializer()\
+    {\
+        classname::Init();\
+    }\
+};\
+static classname##Initializer __initializer;
+
 #endif // CGLOBAL_H

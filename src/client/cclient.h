@@ -61,7 +61,6 @@ public:
 
     static void AddInteraction(int command, void (*callback)(QObject *, const QVariant &));
     static void AddCallback(int command, void (*callback)(QObject *, const QVariant &));
-    static void InitCallbacks();
 
 signals:
 
@@ -85,6 +84,8 @@ protected:
     static void EnterRoomCommand(QObject *receiver, const QVariant &data);
 
 private:
+    C_DECLARE_INITIALIZER(CClient)
+
     C_DISABLE_COPY(CClient)
     C_DECLARE_PRIVATE(CClient)
     CClientPrivate *p_ptr;
