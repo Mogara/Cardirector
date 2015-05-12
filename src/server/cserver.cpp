@@ -105,6 +105,7 @@ void CServer::createRoom(CServerPlayer *owner, const QVariant &config)
     room->addPlayer(owner);
     room->setOwner(owner);
     p_ptr->rooms.insert(room->id(), room);
+    emit roomCreated(room);
 }
 
 CRoom *CServer::findRoom(uint id) const

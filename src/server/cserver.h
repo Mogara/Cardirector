@@ -61,6 +61,7 @@ public:
     void broadcastNotification(int command, const QVariant &data = QVariant(), CServerPlayer *except = NULL);
 
 signals:
+    void roomCreated(CRoom *room);
     void playerAdded(CServerPlayer *player);
 
 protected:
