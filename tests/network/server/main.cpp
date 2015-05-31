@@ -18,6 +18,11 @@ int main(int argc, char *argv[])
 
     QObject::connect(server, &CServer::playerAdded, [=](CServerPlayer *player){
         qDebug() << QString("New player: %1(%2)").arg(player->screenName()).arg(player->id());
+
+        QObject::connect(player, &CServerPlayer::networkDelayChanged, [=](){
+            qDebug() << QString("Player %1(%2) Network Delay: %3").arg(player->screenName()).arg(player->id()).arg(player->networkDelay());
+        });
+        player->updateNetworkDelay();
     });
 
     QTimer::singleShot(20000, [=](){

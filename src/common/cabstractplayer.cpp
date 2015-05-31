@@ -26,6 +26,7 @@ public:
     QString screenName;
     QString avatar;
     CAbstractPlayer::State state;
+    qint64 networkDelay;
 };
 
 CAbstractPlayer::CAbstractPlayer(QObject *parent)
@@ -108,4 +109,15 @@ void CAbstractPlayer::setStateString(const QString &state)
         setState(Offline);
     else
         setState(Invalid);
+}
+
+qint64 CAbstractPlayer::networkDelay() const
+{
+    return p_ptr->networkDelay;
+}
+
+void CAbstractPlayer::setNetworkDelay(qint64 delay)
+{
+    p_ptr->networkDelay = delay;
+    emit networkDelayChanged();
 }

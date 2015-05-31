@@ -82,6 +82,7 @@ protected:
     static void SetRoomListCommand(QObject *receiver, const QVariant &data);
     static void SpeakCommand(QObject *receiver, const QVariant &data);
     static void EnterRoomCommand(QObject *receiver, const QVariant &data);
+    static void NetworkDelayCommand(QObject *receiver, const QVariant &data);
 
 private:
     C_DECLARE_INITIALIZER(CClient)

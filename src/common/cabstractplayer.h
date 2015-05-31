@@ -37,6 +37,7 @@ public:
     Q_PROPERTY(QString screenName READ screenName WRITE setScreenName NOTIFY screenNameChanged)
     Q_PROPERTY(QString state READ stateString WRITE setStateString NOTIFY stateChanged)
     Q_PROPERTY(QString avatar READ avatar WRITE setAvatar NOTIFY avatarChanged)
+    Q_PROPERTY(qint64 networkDelay READ networkDelay WRITE setNetworkDelay NOTIFY networkDelayChanged)
 
     enum State{
         Invalid,
@@ -61,6 +62,9 @@ public:
     void setState(State state);
     void setStateString(const QString &state);
 
+    qint64 networkDelay() const;
+    void setNetworkDelay(qint64 delay);
+
 protected:
     void setId(uint id);
 
@@ -70,6 +74,7 @@ signals:
     void screenNameChanged();
     void avatarChanged();
     void stateChanged();
+    void networkDelayChanged();
 
 private:
     C_DISABLE_COPY(CAbstractPlayer)

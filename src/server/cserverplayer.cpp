@@ -25,6 +25,7 @@
 #include "ctcpsocket.h"
 
 #include <QCoreApplication>
+#include <QDateTime>
 
 static QHash<int, CPacketRouter::Callback> interactions;
 static QHash<int, CPacketRouter::Callback> callbacks;
@@ -35,6 +36,9 @@ public:
     CPacketRouter *router;
     CServer *server;
     CRoom *room;
+
+    int networkDelayTestId;
+    QDateTime networkDelayStartTime;
 };
 
 CServerPlayer::CServerPlayer(CTcpSocket *socket, CServer *server)
@@ -50,6 +54,7 @@ CServerPlayer::CServerPlayer(CTcpSocket *socket, CServer *server)
     connect(socket, &CTcpSocket::disconnected, this, &CServerPlayer::disconnected);
 
     p_ptr->room = NULL;
+    p_ptr->networkDelayTestId = 0;
 }
 
 CServerPlayer::~CServerPlayer()
@@ -120,6 +125,13 @@ void CServerPlayer::kick()
 QHostAddress CServerPlayer::ip() const
 {
     return p_ptr->router->socket()->peerAddress();
+}
+
+void CServerPlayer::updateNetworkDelay()
+{
+    p_ptr->networkDelayTestId = qrand();
+    p_ptr->networkDelayStartTime = QDateTime::currentDateTime();
+    notify(S_COMMAND_NETWORK_DELAY, p_ptr->networkDelayTestId);
 }
 
 void CServerPlayer::request(int command, const QVariant &data)
@@ -237,6 +249,16 @@ void CServerPlayer::EnterRoomCommand(QObject *receiver, const QVariant &data)
         room->addPlayer(player);
 }
 
+void CServerPlayer::NetworkDelayCommand(QObject *receiver, const QVariant &data)
+{
+    CServerPlayer *player = qobject_cast<CServerPlayer *>(receiver);
+    CServerPlayerPrivate *p_ptr = player->p_ptr;
+    if (p_ptr->networkDelayTestId != 0 && p_ptr->networkDelayTestId == data.toInt()) {
+        player->setNetworkDelay(p_ptr->networkDelayStartTime.secsTo(QDateTime::currentDateTime()));
+        p_ptr->networkDelayTestId = 0;
+    }
+}
+
 void CServerPlayer::handleUnknownPacket(const QByteArray &packet)
 {
     //Handle requests from a browser
@@ -274,5 +296,6 @@ void CServerPlayer::Init()
     AddCallback(S_COMMAND_SPEAK, &SpeakCommand);
     AddCallback(S_COMMAND_CREATE_ROOM, &CreateRoomCommand);
     AddCallback(S_COMMAND_ENTER_ROOM, &EnterRoomCommand);
+    AddCallback(S_COMMAND_NETWORK_DELAY, &NetworkDelayCommand);
 }
 C_INITIALIZE_CLASS(CServerPlayer)

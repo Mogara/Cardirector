@@ -53,6 +53,8 @@ public:
     void kick();
     QHostAddress ip() const;
 
+    void updateNetworkDelay();
+
     void request(int command, const QVariant &data = QVariant());
     void reply(int command, const QVariant &data = QVariant());
     void notify(int command, const QVariant &data = QVariant());
@@ -76,6 +78,7 @@ protected:
     static void SpeakCommand(QObject *receiver, const QVariant &data);
     static void CreateRoomCommand(QObject *receiver, const QVariant &data);
     static void EnterRoomCommand(QObject *receiver, const QVariant &data);
+    static void NetworkDelayCommand(QObject *receiver, const QVariant &data);
 
     void handleUnknownPacket(const QByteArray &packet);
 

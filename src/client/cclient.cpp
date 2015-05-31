@@ -253,6 +253,13 @@ void CClient::EnterRoomCommand(QObject *receiver, const QVariant &data)
     }
 }
 
+void CClient::NetworkDelayCommand(QObject *receiver, const QVariant &data)
+{
+    CClient *client = qobject_cast<CClient *>(receiver);
+    qDebug() << data;
+    client->notifyServer(S_COMMAND_NETWORK_DELAY, data);
+}
+
 void CClient::Init()
 {
     AddCallback(S_COMMAND_SPEAK, &SpeakCommand);
@@ -262,5 +269,6 @@ void CClient::Init()
     AddCallback(S_COMMAND_LOGIN, &LoginCommand);
     AddCallback(S_COMMAND_SET_ROOM_LIST, &SetRoomListCommand);
     AddCallback(S_COMMAND_ENTER_ROOM, &EnterRoomCommand);
+    AddCallback(S_COMMAND_NETWORK_DELAY, &NetworkDelayCommand);
 }
 C_INITIALIZE_CLASS(CClient)
