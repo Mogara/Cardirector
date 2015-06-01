@@ -37,6 +37,8 @@ class MCD_EXPORT CServerPlayer : public CAbstractPlayer
 {
     Q_OBJECT
 
+    friend class CRoom;
+
 public:
     CServerPlayer(CTcpSocket *socket, CServer *server = 0);
     ~CServerPlayer();
@@ -55,9 +57,12 @@ public:
 
     void updateNetworkDelay();
 
-    void request(int command, const QVariant &data = QVariant());
+    void request(int command, const QVariant &data = QVariant(), int timeout = -1);
     void reply(int command, const QVariant &data = QVariant());
     void notify(int command, const QVariant &data = QVariant());
+
+    void prepareRequest(int command, const QVariant &data = QVariant());
+    void executeRequest(int timeout = -1);
 
     QVariant waitForReply();
     QVariant waitForReply(int timeout);

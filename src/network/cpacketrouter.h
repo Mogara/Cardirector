@@ -49,9 +49,11 @@ public:
     void setInteractions(const QHash<int, Callback> *interactions);
     void setCallbacks(const QHash<int, Callback> *callbacks);
 
-    void request(int command, const QVariant &data = QVariant());
+    void request(int command, const QVariant &data = QVariant(), int timeout = -1);
     void reply(int command, const QVariant &data = QVariant());
     void notify(int command, const QVariant &data = QVariant());
+
+    int requestTimeout() const;
 
     QVariant waitForReply();
     QVariant waitForReply(int timeout);

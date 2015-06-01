@@ -52,9 +52,11 @@ public:
     QList<const CClientPlayer *> players() const;
     CClientPlayer *self() const;
 
-    void requestServer(int command, const QVariant &data = QVariant());
+    void requestServer(int command, const QVariant &data = QVariant(), int timeout = -1);
     void replyToServer(int command, const QVariant &data = QVariant());
     void notifyServer(int command, const QVariant &data = QVariant());
+
+    int requestTimeout() const;
 
     QVariant waitForReply();
     QVariant waitForReply(int timeout);

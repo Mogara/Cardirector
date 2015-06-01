@@ -37,6 +37,9 @@ public:
     CServer *server;
     CRoom *room;
 
+    int requestCommand;
+    QVariant requestData;
+
     int networkDelayTestId;
     QDateTime networkDelayStartTime;
 };
@@ -134,9 +137,9 @@ void CServerPlayer::updateNetworkDelay()
     notify(S_COMMAND_NETWORK_DELAY, p_ptr->networkDelayTestId);
 }
 
-void CServerPlayer::request(int command, const QVariant &data)
+void CServerPlayer::request(int command, const QVariant &data, int timeout)
 {
-    p_ptr->router->request(command, data);
+    p_ptr->router->request(command, data, timeout);
 }
 
 void CServerPlayer::reply(int command, const QVariant &data)
@@ -147,6 +150,17 @@ void CServerPlayer::reply(int command, const QVariant &data)
 void CServerPlayer::notify(int command, const QVariant &data)
 {
     p_ptr->router->notify(command, data);
+}
+
+void CServerPlayer::prepareRequest(int command, const QVariant &data)
+{
+    p_ptr->requestCommand = command;
+    p_ptr->requestData = data;
+}
+
+void CServerPlayer::executeRequest(int timeout)
+{
+    request(p_ptr->requestCommand, p_ptr->requestData, timeout);
 }
 
 QVariant CServerPlayer::waitForReply()

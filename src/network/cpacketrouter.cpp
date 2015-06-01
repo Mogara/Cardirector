@@ -21,6 +21,7 @@
 #include "ctcpsocket.h"
 
 #include <QSemaphore>
+#include <QDateTime>
 
 class CPacketRouterPrivate
 {
@@ -31,7 +32,9 @@ public:
     QObject *receiver;
     CTcpSocket *socket;
     CAbstractPacketParser *parser;
-    int currentRequestId;
+    int requestId;
+    int requestTimeout;
+    QDateTime requestStartTime;
     int nextReplyId;
     QVariant reply;
     QSemaphore replySemaphore;
@@ -90,7 +93,7 @@ void CPacketRouter::setCallbacks(const QHash<int, Callback> *callbacks)
     p_ptr->callbacks = callbacks;
 }
 
-void CPacketRouter::request(int command, const QVariant &data)
+void CPacketRouter::request(int command, const QVariant &data, int timeout)
 {
     static int requestId = 0;
     requestId++;
@@ -98,17 +101,20 @@ void CPacketRouter::request(int command, const QVariant &data)
 
     QVariantList body;
     body << requestId;
+    body << timeout;
     body << data;
 
     CPacket packet(command, CPacket::TYPE_REQUEST);
     packet.setData(body);
     emit messageReady(p_ptr->parser->parse(packet));
+
+    p_ptr->requestStartTime = QDateTime::currentDateTime();
 }
 
 void CPacketRouter::reply(int command, const QVariant &data)
 {
     QVariantList body;
-    body << p_ptr->currentRequestId;
+    body << p_ptr->requestId;
     body << data;
 
     CPacket packet(command, CPacket::TYPE_REPLY);
@@ -121,6 +127,11 @@ void CPacketRouter::notify(int command, const QVariant &data)
     CPacket packet(command, CPacket::TYPE_NOTIFICATION);
     packet.setData(data);
     emit messageReady(p_ptr->parser->parse(packet));
+}
+
+int CPacketRouter::requestTimeout() const
+{
+    return p_ptr->requestTimeout;
 }
 
 QVariant CPacketRouter::waitForReply()
@@ -163,19 +174,20 @@ void CPacketRouter::handlePacket(const QByteArray &rawPacket)
             return;
 
         QVariantList dataList(packet.data().toList());
-        if (dataList.size() != 2)
+        if (dataList.size() != 3)
             return;
 
-        p_ptr->currentRequestId = dataList.at(0).toInt();
+        p_ptr->requestId = dataList.at(0).toInt();
+        p_ptr->requestTimeout = dataList.at(1).toInt();
 
-        (*func)(p_ptr->receiver, dataList.at(1));
+        (*func)(p_ptr->receiver, dataList.at(2));
 
     } else if (packet.type() == CPacket::TYPE_REPLY) {
         QVariantList dataList(packet.data().toList());
-        if (dataList.size() != 2)
+        if (dataList.size() != 2 || p_ptr->nextReplyId != dataList.at(0).toInt())
             return;
 
-        if (p_ptr->nextReplyId != dataList.at(0).toInt())
+        if (p_ptr->requestStartTime.secsTo(QDateTime::currentDateTime()) > p_ptr->requestTimeout)
             return;
 
         p_ptr->reply = dataList.at(1);

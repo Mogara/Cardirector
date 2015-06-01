@@ -155,9 +155,9 @@ CClientPlayer *CClient::addPlayer(const QVariant &data)
     return NULL;
 }
 
-void CClient::requestServer(int command, const QVariant &data)
+void CClient::requestServer(int command, const QVariant &data, int timeout)
 {
-    p_ptr->router->request(command, data);
+    p_ptr->router->request(command, data, timeout);
 }
 
 void CClient::replyToServer(int command, const QVariant &data)
@@ -168,6 +168,11 @@ void CClient::replyToServer(int command, const QVariant &data)
 void CClient::notifyServer(int command, const QVariant &data)
 {
     p_ptr->router->notify(command, data);
+}
+
+int CClient::requestTimeout() const
+{
+    return p_ptr->router->requestTimeout();
 }
 
 QVariant CClient::waitForReply()
