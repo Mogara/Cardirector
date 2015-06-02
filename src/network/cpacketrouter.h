@@ -55,12 +55,14 @@ public:
 
     int requestTimeout() const;
 
+    void cancelRequest();
     QVariant waitForReply();
     QVariant waitForReply(int timeout);
 
 signals:
     void messageReady(const QByteArray &message);
     void unknownPacket(const QByteArray &packet);
+    void replyReady();
 
 protected:
     void handlePacket(const QByteArray &rawPacket);

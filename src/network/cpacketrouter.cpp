@@ -32,12 +32,18 @@ public:
     QObject *receiver;
     CTcpSocket *socket;
     CAbstractPacketParser *parser;
+
+    //For the request receiver
     int requestId;
     int requestTimeout;
+
+    //For the request sender
     QDateTime requestStartTime;
-    int nextReplyId;
+    QMutex replyMutex;
+    int expectedReplyId;
+    int replyTimeout;
     QVariant reply;
-    QSemaphore replySemaphore;
+    QSemaphore replyReadySemaphore;
 };
 
 CPacketRouter::CPacketRouter(QObject *receiver, CTcpSocket *socket, CAbstractPacketParser *parser)
@@ -49,6 +55,7 @@ CPacketRouter::CPacketRouter(QObject *receiver, CTcpSocket *socket, CAbstractPac
     p_ptr->receiver = receiver;
     p_ptr->parser = parser;
     p_ptr->socket = NULL;
+    p_ptr->replyTimeout = 0;
     setSocket(socket);
 }
 
@@ -97,7 +104,12 @@ void CPacketRouter::request(int command, const QVariant &data, int timeout)
 {
     static int requestId = 0;
     requestId++;
-    p_ptr->nextReplyId = requestId;
+
+    p_ptr->replyMutex.lock();
+    p_ptr->expectedReplyId = requestId;
+    p_ptr->replyTimeout = timeout;
+    p_ptr->requestStartTime = QDateTime::currentDateTime();
+    p_ptr->replyMutex.unlock();
 
     QVariantList body;
     body << requestId;
@@ -107,8 +119,6 @@ void CPacketRouter::request(int command, const QVariant &data, int timeout)
     CPacket packet(command, CPacket::TYPE_REQUEST);
     packet.setData(body);
     emit messageReady(p_ptr->parser->parse(packet));
-
-    p_ptr->requestStartTime = QDateTime::currentDateTime();
 }
 
 void CPacketRouter::reply(int command, const QVariant &data)
@@ -134,15 +144,26 @@ int CPacketRouter::requestTimeout() const
     return p_ptr->requestTimeout;
 }
 
+void CPacketRouter::cancelRequest()
+{
+    p_ptr->replyMutex.lock();
+    p_ptr->expectedReplyId = -1;
+    p_ptr->replyTimeout = 0;
+    p_ptr->replyMutex.unlock();
+
+    if (p_ptr->replyReadySemaphore.available() > 0)
+        p_ptr->replyReadySemaphore.acquire(p_ptr->replyReadySemaphore.available());
+}
+
 QVariant CPacketRouter::waitForReply()
 {
-    p_ptr->replySemaphore.acquire();
+    p_ptr->replyReadySemaphore.acquire();
     return p_ptr->reply;
 }
 
 QVariant CPacketRouter::waitForReply(int timeout)
 {
-    if (p_ptr->replySemaphore.tryAcquire(1, timeout))
+    if (p_ptr->replyReadySemaphore.tryAcquire(1, timeout))
         return p_ptr->reply;
     else
         return QVariant();
@@ -184,10 +205,12 @@ void CPacketRouter::handlePacket(const QByteArray &rawPacket)
 
     } else if (packet.type() == CPacket::TYPE_REPLY) {
         QVariantList dataList(packet.data().toList());
-        if (dataList.size() != 2 || p_ptr->nextReplyId != dataList.at(0).toInt())
+
+        QMutexLocker locker(&p_ptr->replyMutex);
+        if (dataList.size() != 2 || p_ptr->expectedReplyId != dataList.at(0).toInt())
             return;
 
-        if (p_ptr->requestStartTime.secsTo(QDateTime::currentDateTime()) > p_ptr->requestTimeout)
+        if (0 <= p_ptr->replyTimeout && p_ptr->replyTimeout < p_ptr->requestStartTime.secsTo(QDateTime::currentDateTime()))
             return;
 
         p_ptr->reply = dataList.at(1);
@@ -196,6 +219,8 @@ void CPacketRouter::handlePacket(const QByteArray &rawPacket)
             if (func != NULL)
                 (*func)(p_ptr->receiver, p_ptr->reply);
         }
-        p_ptr->replySemaphore.release(1);
+        p_ptr->replyReadySemaphore.release(1);
+        locker.unlock();
+        emit replyReady();
     }
 }

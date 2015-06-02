@@ -54,6 +54,7 @@ CServerPlayer::CServerPlayer(CTcpSocket *socket, CServer *server)
     p_ptr->router->setInteractions(&interactions);
     p_ptr->router->setCallbacks(&callbacks);
     connect(p_ptr->router, &CPacketRouter::unknownPacket, this, &CServerPlayer::handleUnknownPacket);
+    connect(p_ptr->router, &CPacketRouter::replyReady, this, &CServerPlayer::replyReady);
     connect(socket, &CTcpSocket::disconnected, this, &CServerPlayer::disconnected);
 
     p_ptr->room = NULL;
@@ -161,6 +162,11 @@ void CServerPlayer::prepareRequest(int command, const QVariant &data)
 void CServerPlayer::executeRequest(int timeout)
 {
     request(p_ptr->requestCommand, p_ptr->requestData, timeout);
+}
+
+void CServerPlayer::cancelRequest()
+{
+    p_ptr->router->cancelRequest();
 }
 
 QVariant CServerPlayer::waitForReply()

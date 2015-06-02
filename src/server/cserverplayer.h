@@ -63,6 +63,7 @@ public:
 
     void prepareRequest(int command, const QVariant &data = QVariant());
     void executeRequest(int timeout = -1);
+    void cancelRequest();
 
     QVariant waitForReply();
     QVariant waitForReply(int timeout);
@@ -74,6 +75,7 @@ public:
 
 signals:
     void disconnected();
+    void replyReady();
 
 protected:
     static void CheckVersionCommand(QObject *receiver, const QVariant &data);
