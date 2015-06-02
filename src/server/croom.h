@@ -29,7 +29,7 @@ class CServer;
 class CServerPlayer;
 
 class CRoomPrivate;
-class CRoom : public QObject
+class MCD_EXPORT CRoom : public QObject
 {
     Q_OBJECT
 
@@ -53,7 +53,11 @@ public:
     QMap<uint, CServerPlayer *> players() const;
     CServerPlayer *findPlayer(int id) const;
 
-    void broadcastNotification(int command, const QVariant &data, CServerPlayer *except = NULL);
+    void broadcastRequest(const QList<CServerPlayer *> &targets);
+    void broadcastRequest(const QList<CServerPlayer *> &targets, int timeout);
+    CServerPlayer *broadcastRacingRequest(const QList<CServerPlayer *> &targets, int timeout);
+    void broadcastNotification(const QList<CServerPlayer *> &targets, int command, const QVariant &data = QVariant());
+    void broadcastNotification(int command, const QVariant &data = QVariant(), CServerPlayer *except = NULL);
 
 signals:
     void abandoned();
@@ -64,6 +68,7 @@ protected:
     //Slots for CServerPlayer. Do not call them directly.
     void onPlayerSpeaking(const QString &message);
     void onPlayerDisconnected();
+    void onPlayerReplyReady();
 
 private:
     C_DISABLE_COPY(CRoom)

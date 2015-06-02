@@ -22,6 +22,9 @@
 #include "cserver.h"
 #include "cserverplayer.h"
 
+#include <QTime>
+#include <QSemaphore>
+
 class CRoomPrivate
 {
 public:
@@ -29,7 +32,11 @@ public:
     uint id;
     CAbstractGameLogic *gameLogic;
     QMap<uint, CServerPlayer *> players;
-    CServerPlayer * owner;
+    CServerPlayer *owner;
+
+    QSemaphore racingRequestSemaphore;
+    QList<CServerPlayer *> racingRequestCandidates;
+    CServerPlayer *racingRequestWinner;
 };
 
 CRoom::CRoom(CServer *server)
@@ -146,6 +153,54 @@ QMap<uint, CServerPlayer *> CRoom::players() const
 CServerPlayer *CRoom::findPlayer(int id) const
 {
     return p_ptr->players.value(id);
+}
+
+void CRoom::broadcastRequest(const QList<CServerPlayer *> &targets)
+{
+    //@to-do: Add request timeout into the configuration of the room
+    int timeout = 15;//seconds
+    broadcastRequest(targets, timeout);
+}
+
+void CRoom::broadcastRequest(const QList<CServerPlayer *> &targets, int timeout)
+{
+    foreach (CServerPlayer *player, targets)
+        player->executeRequest(timeout);
+}
+
+CServerPlayer *CRoom::broadcastRacingRequest(const QList<CServerPlayer *> &targets, int timeout)
+{
+    p_ptr->racingRequestCandidates = targets;
+
+    foreach (CServerPlayer *player, targets)
+        connect(player, &CServerPlayer::replyReady, this, &CRoom::onPlayerReplyReady);
+
+    foreach (CServerPlayer *player, targets)
+        player->executeRequest(timeout);
+
+    p_ptr->racingRequestSemaphore.acquire();
+    return p_ptr->racingRequestWinner;
+}
+
+void CRoom::onPlayerReplyReady()
+{
+    p_ptr->racingRequestWinner = qobject_cast<CServerPlayer *>(sender());
+
+    foreach (CServerPlayer *player, p_ptr->racingRequestCandidates) {
+        if (player == p_ptr->racingRequestWinner)
+            continue;
+
+        player->cancelRequest();
+        disconnect(player, &CServerPlayer::replyReady, this, &CRoom::onPlayerReplyReady);
+    }
+
+    p_ptr->racingRequestSemaphore.release();
+}
+
+void CRoom::broadcastNotification(const QList<CServerPlayer *> &targets, int command, const QVariant &data)
+{
+    foreach (CServerPlayer *player, targets)
+        player->notify(command, data);
 }
 
 void CRoom::broadcastNotification(int command, const QVariant &data, CServerPlayer *except)
