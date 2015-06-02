@@ -210,6 +210,8 @@ void CPacketRouter::handlePacket(const QByteArray &rawPacket)
         if (dataList.size() != 2 || p_ptr->expectedReplyId != dataList.at(0).toInt())
             return;
 
+        p_ptr->expectedReplyId = -1;
+
         if (0 <= p_ptr->replyTimeout && p_ptr->replyTimeout < p_ptr->requestStartTime.secsTo(QDateTime::currentDateTime()))
             return;
 
