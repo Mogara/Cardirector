@@ -57,6 +57,11 @@ private:
     C_DECLARE_PRIVATE(CMainWindow)
 };
 
+#define MCD_INIT_GUI \
+    Q_INIT_RESOURCE(gui); \
+    Q_INIT_RESOURCE(font); \
+    Q_INIT_RESOURCE(image)
+
 MCD_END_NAMESPACE
 
 #endif // CWINDOW_H
