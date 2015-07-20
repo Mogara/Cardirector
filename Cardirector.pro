@@ -6,7 +6,7 @@
 TARGET = Cardirector
 TEMPLATE = lib
 CONFIG += precompile_header
-#CONFIG += staticlib
+CONFIG += staticlib
 
 QT += quick
 android:QT += androidextras
