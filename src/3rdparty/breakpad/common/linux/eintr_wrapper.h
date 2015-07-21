@@ -36,6 +36,10 @@
 // signal and return EINTR. See man 7 signal.
 //
 
+#ifdef __GXX_EXPERIMENTAL_CXX0X__
+#  define typeof decltype
+#endif
+
 #define HANDLE_EINTR(x) ({ \
   typeof(x) eintr_wrapper_result; \
   do { \

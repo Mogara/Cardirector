@@ -58,6 +58,9 @@ typedef Elf32_auxv_t elf_aux_entry;
 typedef Elf64_auxv_t elf_aux_entry;
 #endif
 
+#ifdef __GXX_EXPERIMENTAL_CXX0X__
+#  define typeof decltype
+#endif
 typedef typeof(((elf_aux_entry*) 0)->a_un.a_val) elf_aux_val_t;
 
 // When we find the VDSO mapping in the process's address space, this

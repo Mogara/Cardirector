@@ -22,6 +22,7 @@
 
 #include <QSemaphore>
 #include <QDateTime>
+#include <QMutexLocker>
 
 class CPacketRouterPrivate
 {

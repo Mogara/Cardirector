@@ -23,6 +23,7 @@
 #include "cglobal.h"
 
 #include <QObject>
+#include <QVariant>
 
 class CAbstractGameLogic;
 class CServer;

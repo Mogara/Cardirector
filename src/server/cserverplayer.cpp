@@ -90,10 +90,6 @@ void CServerPlayer::signup(const QString &username, const QString &password, con
 {
     //@to-do: check if the username is duplicated in the database.
     //@to-do: encrypt the password
-
-    C_UNUSED(username);
-    C_UNUSED(password);
-
     static uint playerId = 0;
     playerId++;
     setId(playerId);
