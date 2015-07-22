@@ -261,7 +261,6 @@ void CClient::EnterRoomCommand(QObject *receiver, const QVariant &data)
 void CClient::NetworkDelayCommand(QObject *receiver, const QVariant &data)
 {
     CClient *client = qobject_cast<CClient *>(receiver);
-    qDebug() << data;
     client->notifyServer(S_COMMAND_NETWORK_DELAY, data);
 }
 
