@@ -46,6 +46,12 @@ public:
     void setOwner(CServerPlayer *owner);
     CServerPlayer *owner() const;
 
+    QString name() const;
+    void setName(const QString &name);
+
+    uint capacity() const;
+    void setCapacity(uint capacity);
+
     void setGameLogic(CAbstractGameLogic *gameLogic);
     CAbstractGameLogic *gameLogic() const;
 

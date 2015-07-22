@@ -30,8 +30,10 @@ class CRoomPrivate
 public:
     CServer *server;
     uint id;
+    QString name;
     CAbstractGameLogic *gameLogic;
     QMap<uint, CServerPlayer *> players;
+    uint capacity;
     CServerPlayer *owner;
 
     QSemaphore racingRequestSemaphore;
@@ -49,6 +51,7 @@ CRoom::CRoom(CServer *server)
     p_ptr->server = server;
     p_ptr->gameLogic = NULL;
     p_ptr->owner = NULL;
+    p_ptr->capacity = 0;
 }
 
 CRoom::~CRoom()
@@ -63,8 +66,11 @@ uint CRoom::id() const
 
 QVariant CRoom::config() const
 {
-    QVariantList info;
-    info << (p_ptr->server->lobby() != this ? p_ptr->id : 0);
+    QVariantMap info;
+    info["id"] = (p_ptr->server->lobby() != this ? p_ptr->id : 0);
+    info["name"] = name();
+    info["playerNum"] = p_ptr->players.size();
+    info["capacity"] = capacity();
     return info;
 }
 
@@ -76,11 +82,33 @@ CServer *CRoom::server() const
 void CRoom::setOwner(CServerPlayer *owner)
 {
     p_ptr->owner = owner;
+    if (name().isEmpty())
+        setName(tr("%1's Room").arg(owner->screenName()));
 }
 
 CServerPlayer *CRoom::owner() const
 {
     return p_ptr->owner;
+}
+
+QString CRoom::name() const
+{
+    return p_ptr->name;
+}
+
+void CRoom::setName(const QString &name)
+{
+    p_ptr->name = name;
+}
+
+uint CRoom::capacity() const
+{
+    return p_ptr->capacity;
+}
+
+void CRoom::setCapacity(uint capacity)
+{
+    p_ptr->capacity = capacity;
 }
 
 void CRoom::setGameLogic(CAbstractGameLogic *gameLogic)

@@ -275,6 +275,13 @@ void CServerPlayer::NetworkDelayCommand(QObject *receiver, const QVariant &data)
     }
 }
 
+void CServerPlayer::SetRoomListCommand(QObject *receiver, const QVariant &)
+{
+    CServerPlayer *player = qobject_cast<CServerPlayer *>(receiver);
+    CServer *server = player->server();
+    server->updateRoomList(player);
+}
+
 void CServerPlayer::handleUnknownPacket(const QByteArray &packet)
 {
     //Handle requests from a browser
@@ -313,5 +320,6 @@ void CServerPlayer::Init()
     AddCallback(S_COMMAND_CREATE_ROOM, &CreateRoomCommand);
     AddCallback(S_COMMAND_ENTER_ROOM, &EnterRoomCommand);
     AddCallback(S_COMMAND_NETWORK_DELAY, &NetworkDelayCommand);
+    AddCallback(S_COMMAND_SET_ROOM_LIST, &SetRoomListCommand);
 }
 C_INITIALIZE_CLASS(CServerPlayer)

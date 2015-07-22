@@ -126,13 +126,8 @@ CRoom *CServer::lobby() const
 void CServer::updateRoomList(CServerPlayer *player)
 {
     QVariantList roomList;
-    foreach (CRoom *room, p_ptr->rooms) {
-        QVariantList roomInfo;
-        roomInfo << room->id();
-        roomInfo << (room->owner() ? room->owner()->briefIntroduction() : QVariant());
-        //@todo: add game mode configurations here
-        roomList << QVariant(roomInfo);
-    }
+    foreach (CRoom *room, p_ptr->rooms)
+        roomList << room->config();
     player->notify(S_COMMAND_SET_ROOM_LIST, roomList);
 }
 

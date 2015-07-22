@@ -137,6 +137,11 @@ CClientPlayer *CClient::self() const
     return p_ptr->self;
 }
 
+void CClient::fetchRoomList()
+{
+    notifyServer(S_COMMAND_SET_ROOM_LIST);
+}
+
 CClientPlayer *CClient::addPlayer(const QVariant &data)
 {
     QVariantList arguments = data.toList();
