@@ -65,7 +65,6 @@ public:
     static void AddCallback(int command, void (*callback)(QObject *, const QVariant &));
 
 signals:
-
     void connected();
     void loggedIn();
     void playerAdded(const CClientPlayer *player);

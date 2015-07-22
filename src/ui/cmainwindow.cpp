@@ -104,13 +104,15 @@ void CMainWindow::restoreAsClosed()
 {
     QSettings *config = p_ptr->settings;
     config->beginGroup("MainWindow");
+
+#ifndef MCD_FULLSCREEN_ONLY
     if (config->contains("pos"))
         setPosition(config->value("pos").toPoint());
     if (config->contains("state"))
         setWindowState(Qt::WindowState(config->value("state").toInt()));
     const QVariant size = config->value("size", QSize(1024, 768));
-
-    rootContext()->setContextProperty("preferredSize", size);
+        resize(size.toSize());
+#endif
 
     config->endGroup();
 }

@@ -90,4 +90,8 @@ typedef double creal;
 };\
 static classname##Initializer __initializer;
 
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+#  define MCD_FULLSCREEN_ONLY
+#endif
+
 #endif // CGLOBAL_H
