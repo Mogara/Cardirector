@@ -3,9 +3,19 @@ import Cardirector.Device 1.0
 //import QtGraphicalEffects 1.0
 
 Item {
+    property alias text: labelText.text
+    property alias iconSource: icon.source
+    property alias backgroundColor: rect.color
+    property alias border: rect.border
+    property bool autoHideText: true
+
+    signal clicked
+
+
     id: button
     width: Device.gu(154)
     height: Device.gu(154)
+    antialiasing: true
 
 //    RectangularGlow {
 //        anchors.fill: rect
@@ -23,15 +33,6 @@ Item {
         border.width: Device.gu(1)
         border.color: "#8CDA8C"
     }
-
-    signal clicked
-
-    property alias text: labelText.text
-    property alias iconSource: icon.source
-
-    property bool autoHideText: true
-
-    antialiasing: true
 
     transform: [
         Rotation {
