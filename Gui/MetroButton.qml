@@ -2,6 +2,16 @@ import QtQuick 2.4
 import Cardirector.Device 1.0
 
 Item {
+    property bool enabled: true
+    property alias text: title.text
+    property alias textColor: title.color
+    property alias textFont: title.font
+    property alias backgroundColor: bg.color
+    property alias border: bg.border
+    property alias iconSource: icon.source
+
+    signal clicked
+
     id: button
     width: Device.gu(189)
     height: Device.gu(46)
@@ -14,13 +24,6 @@ Item {
         border.color: "white"
         opacity: 0.8
     }
-
-    property bool enabled: true
-
-    property alias text: title.text
-    property alias iconSource: icon.source
-
-    signal clicked
 
     states: [
         State {
