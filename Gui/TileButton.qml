@@ -4,6 +4,8 @@ import Cardirector.Device 1.0
 
 Item {
     property alias text: labelText.text
+    property alias textColor: labelText.color
+    property alias textFont: labelText.font
     property alias iconSource: icon.source
     property alias backgroundColor: rect.color
     property alias border: rect.border
@@ -88,7 +90,7 @@ Item {
         visible: !autoHideText || mouse.containsMouse
 
         color: "white"
-        font.pointSize: 8
+        font.pixelSize: Device.gu(16)
         font.family: "WenQuanYi Micro Hei"
 
         text: "Button"
