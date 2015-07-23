@@ -199,9 +199,12 @@ void CClient::SetPlayerListCommand(QObject *receiver, const QVariant &data)
     CClient *client = qobject_cast<CClient *>(receiver);
 
     if (!client->p_ptr->players.isEmpty()) {
-        foreach (CClientPlayer *player, client->p_ptr->players)
-            player->deleteLater();
+        foreach (CClientPlayer *player, client->p_ptr->players) {
+            if (player != client->self())
+                player->deleteLater();
+        }
         client->p_ptr->players.clear();
+        client->p_ptr->players.insert(client->self()->id(), client->self());
     }
 
     foreach (const QVariant &player, playerList)
