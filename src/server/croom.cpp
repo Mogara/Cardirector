@@ -139,7 +139,6 @@ void CRoom::addPlayer(CServerPlayer *player)
             break;
     }
     player->notify(S_COMMAND_SET_PLAYER_LIST, playerList);
-    player->notify(S_COMMAND_ENTER_ROOM, config());
 
     //Add the player
     p_ptr->players.insert(player->id(), player);
@@ -147,6 +146,7 @@ void CRoom::addPlayer(CServerPlayer *player)
     connect(player, &CServerPlayer::speak, this, &CRoom::onPlayerSpeaking);
     connect(player, &CServerPlayer::disconnected, this, &CRoom::onPlayerDisconnected);
 
+    player->notify(S_COMMAND_ENTER_ROOM, config());
     broadcastNotification(S_COMMAND_ADD_PLAYER, player->briefIntroduction(), player);
     emit playerAdded(player);
 }
