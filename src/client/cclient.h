@@ -46,6 +46,7 @@ public:
 
     void createRoom();
     void enterRoom(uint id);
+    void exitRoom();
     void speakToServer(const QString &message);
 
     const CClientPlayer *findPlayer(uint id) const;

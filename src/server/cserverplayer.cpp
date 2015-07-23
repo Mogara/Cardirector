@@ -259,10 +259,16 @@ void CServerPlayer::EnterRoomCommand(QObject *receiver, const QVariant &data)
 {
     CServerPlayer *player = qobject_cast<CServerPlayer *>(receiver);
     CServer *server = player->server();
-    uint roomId = data.toUInt();
-    CRoom *room = server->findRoom(roomId);
-    if (room)
-        room->addPlayer(player);
+
+    if (data.isNull()) {
+        CRoom *lobby = server->lobby();
+        lobby->addPlayer(player);
+    } else {
+        uint roomId = data.toUInt();
+        CRoom *room = server->findRoom(roomId);
+        if (room)
+            room->addPlayer(player);
+    }
 }
 
 void CServerPlayer::NetworkDelayCommand(QObject *receiver, const QVariant &data)

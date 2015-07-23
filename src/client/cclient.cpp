@@ -108,6 +108,11 @@ void CClient::enterRoom(uint id)
     p_ptr->router->notify(S_COMMAND_ENTER_ROOM, id);
 }
 
+void CClient::exitRoom()
+{
+    p_ptr->router->notify(S_COMMAND_ENTER_ROOM);
+}
+
 void CClient::speakToServer(const QString &message)
 {
     p_ptr->self->speak(message);
@@ -253,7 +258,7 @@ void CClient::SpeakCommand(QObject *receiver, const QVariant &data)
     CClientPlayer *player = client->findPlayer(arguments.at(0).toUInt());
     if (player != NULL) {
         QString message = arguments.at(1).toString();
-        player->speak(message);
+        emit player->speak(message);
     }
 }
 
