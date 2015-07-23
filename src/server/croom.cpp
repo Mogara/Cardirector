@@ -46,8 +46,8 @@ CRoom::CRoom(CServer *server)
     , p_ptr(new CRoomPrivate)
 {
     static uint roomId = 0;
-    roomId++;
     p_ptr->id = roomId;
+    roomId++;
     p_ptr->server = server;
     p_ptr->gameLogic = NULL;
     p_ptr->owner = NULL;
