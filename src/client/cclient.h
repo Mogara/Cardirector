@@ -72,7 +72,7 @@ signals:
     void playerAdded(const CClientPlayer *player);
     void playerRemoved(const CClientPlayer *player);
     void roomListUpdated(const QVariant &list);
-    void roomEntered(uint id);
+    void roomEntered(const QVariant &config);
 
 protected:
     CClientPlayer *findPlayer(uint id);

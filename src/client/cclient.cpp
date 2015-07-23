@@ -260,11 +260,7 @@ void CClient::SpeakCommand(QObject *receiver, const QVariant &data)
 void CClient::EnterRoomCommand(QObject *receiver, const QVariant &data)
 {
     CClient *client = qobject_cast<CClient *>(receiver);
-    QVariantList arguments(data.toList());
-    if (arguments.length() > 0) {
-        uint id = arguments.at(0).toUInt();
-        emit client->roomEntered(id);
-    }
+    emit client->roomEntered(data);
 }
 
 void CClient::NetworkDelayCommand(QObject *receiver, const QVariant &data)
