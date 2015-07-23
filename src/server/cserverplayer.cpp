@@ -106,8 +106,8 @@ void CServerPlayer::login(const QString &username, const QString &password)
     C_UNUSED(username);
     C_UNUSED(password);
 
-    setState(Online);
     notify(S_COMMAND_LOGIN, briefIntroduction());
+    setState(Online);
 }
 
 void CServerPlayer::logout()
