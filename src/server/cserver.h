@@ -41,6 +41,8 @@ public:
     ~CServer();
 
     bool listen(const QHostAddress &address = QHostAddress::Any, ushort port = 0);
+    QHostAddress address() const;
+    ushort port() const;
 
     void setAcceptMultipleClientsBehindOneIp(bool enabled);
     bool acceptMultipleClientsBehindOneIp() const;

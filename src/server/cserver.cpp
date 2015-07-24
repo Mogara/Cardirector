@@ -77,6 +77,16 @@ bool CServer::listen(const QHostAddress &address, ushort port)
     return p_ptr->server->listen(address, port);
 }
 
+QHostAddress CServer::address() const
+{
+    return p_ptr->server->serverAddress();
+}
+
+ushort CServer::port() const
+{
+    return p_ptr->server->serverPort();
+}
+
 void CServer::setAcceptMultipleClientsBehindOneIp(bool enabled)
 {
     p_ptr->acceptMultipleClientsBehindOneIp = enabled;
