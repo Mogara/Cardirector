@@ -15,7 +15,7 @@
     See the LICENSE file for more details.
 
     Mogara
-    *********************************************************************/
+*********************************************************************/
 
 #ifndef CCLIENTSETTINGS_H
 #define CCLIENTSETTINGS_H

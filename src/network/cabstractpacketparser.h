@@ -15,7 +15,7 @@
     See the LICENSE file for more details.
 
     Mogara
-    *********************************************************************/
+*********************************************************************/
 
 #ifndef CABSTRACTPACKETPARSER_H
 #define CABSTRACTPACKETPARSER_H

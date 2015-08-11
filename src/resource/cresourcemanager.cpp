@@ -15,7 +15,7 @@
     See the LICENSE file for more details.
 
     Mogara
-    *********************************************************************/
+*********************************************************************/
 
 
 #include "cpch.h"
@@ -32,7 +32,7 @@ protected:
     explicit CResourceManagerPrivate(CResourceManager *const b)
         : b_ptr(b)
     {
-        
+
     }
 
 //    QCache<QString, QPixmap> m_pixmapCache;

@@ -15,7 +15,7 @@
     See the LICENSE file for more details.
 
     Mogara
-    *********************************************************************/
+*********************************************************************/
 
 #ifndef CABSTRACTPLAYER_H
 #define CABSTRACTPLAYER_H

@@ -15,7 +15,7 @@
     See the LICENSE file for more details.
 
     Mogara
-    *********************************************************************/
+*********************************************************************/
 
 #ifndef CIMAGEPROVIDER_H
 #define CIMAGEPROVIDER_H

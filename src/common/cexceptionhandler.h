@@ -15,7 +15,7 @@
     See the LICENSE file for more details.
 
     Mogara
-    *********************************************************************/
+*********************************************************************/
 
 #ifndef CEXCEPTIONHANDLER_H
 #define CEXCEPTIONHANDLER_H

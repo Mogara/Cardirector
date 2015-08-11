@@ -15,7 +15,7 @@
     See the LICENSE file for more details.
 
     Mogara
-    *********************************************************************/
+*********************************************************************/
 
 #ifndef CRESOURCEMANAGER_H
 #define CRESOURCEMANAGER_H

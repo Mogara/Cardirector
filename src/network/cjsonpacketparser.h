@@ -15,7 +15,7 @@
     See the LICENSE file for more details.
 
     Mogara
-    *********************************************************************/
+*********************************************************************/
 
 #ifndef CJSONPACKETPARSER_H
 #define CJSONPACKETPARSER_H
