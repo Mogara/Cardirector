@@ -158,7 +158,12 @@ for(file, HEADERS) {
 
 win32 {
     DESTDIR = bin
-    QMAKE_POST_LINK = $$QMAKE_COPY $$system_path($$OUT_PWD/$$DESTDIR/$${TARGET}.lib) $$system_path($$PWD/lib)
+    win32-msvc* {
+        QMAKE_POST_LINK = $$QMAKE_COPY $$system_path($$OUT_PWD/$$DESTDIR/$${TARGET}.lib) $$system_path($$PWD/lib)
+    }
+    win32-g++ {
+        QMAKE_POST_LINK = $$QMAKE_COPY $$system_path($$OUT_PWD/$$DESTDIR/lib$${TARGET}.a) $$system_path($$PWD/lib)
+    }
     !CONFIG(staticlib) {
         QMAKE_POST_LINK += \
             && $$QMAKE_COPY $$system_path($$OUT_PWD/$$DESTDIR/$${TARGET}.dll) $$system_path($$PWD/bin) \
