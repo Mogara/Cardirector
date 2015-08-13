@@ -14,7 +14,9 @@ static QAndroidJniObject manager = activity.callObjectMethod("getSystemService",
 #include <QProcess>
 #include <QTextStream>
 #include <shellapi.h>
+#ifdef _MSC_VER
 #pragma comment(lib, "Shell32.lib")
+#endif
 
 void seek(QTextStream &stream, char target){
     char ch;

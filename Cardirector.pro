@@ -165,9 +165,10 @@ win32 {
         QMAKE_POST_LINK = $$QMAKE_COPY $$system_path($$OUT_PWD/$$DESTDIR/lib$${TARGET}.a) $$system_path($$PWD/lib)
     }
     !CONFIG(staticlib) {
-        QMAKE_POST_LINK += \
-            && $$QMAKE_COPY $$system_path($$OUT_PWD/$$DESTDIR/$${TARGET}.dll) $$system_path($$PWD/bin) \
-            && $$QMAKE_COPY $$system_path($$OUT_PWD/$$DESTDIR/$${TARGET}.exp) $$system_path($$PWD/bin)
+        QMAKE_POST_LINK += && $$QMAKE_COPY $$system_path($$OUT_PWD/$$DESTDIR/$${TARGET}.dll) $$system_path($$PWD/bin)
+        win32-msvc {
+            QMAKE_POST_LINK += && $$QMAKE_COPY $$system_path($$OUT_PWD/$$DESTDIR/$${TARGET}.exp) $$system_path($$PWD/bin)
+        }
     }
 }
 linux {
