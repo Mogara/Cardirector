@@ -43,6 +43,7 @@ public:
         C_REGISTER_COMMAND(SET_ROOM_LIST);
         C_REGISTER_COMMAND(CREATE_ROOM);
         C_REGISTER_COMMAND(ENTER_ROOM);
+        C_REGISTER_COMMAND(GAME_START);
     }
 };
 CCommandAdder adder;

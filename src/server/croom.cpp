@@ -17,6 +17,7 @@
     Mogara
 *********************************************************************/
 
+#include "cabstractgamelogic.h"
 #include "cprotocol.h"
 #include "croom.h"
 #include "cserver.h"
@@ -56,6 +57,8 @@ CRoom::CRoom(CServer *server)
 
 CRoom::~CRoom()
 {
+    if (p_ptr->gameLogic)
+        p_ptr->gameLogic->wait();
     delete p_ptr;
 }
 
@@ -181,6 +184,13 @@ QMap<uint, CServerPlayer *> CRoom::players() const
 CServerPlayer *CRoom::findPlayer(int id) const
 {
     return p_ptr->players.value(id);
+}
+
+void CRoom::broadcastSystemMessage(const QString &message)
+{
+    QVariantList data;
+    data << QVariant() << message;
+    broadcastNotification(S_COMMAND_SPEAK, data);
 }
 
 void CRoom::broadcastRequest(const QList<CServerPlayer *> &targets)

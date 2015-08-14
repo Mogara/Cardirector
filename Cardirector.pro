@@ -24,11 +24,13 @@ else {
 }
 
 INCLUDEPATH += src \
-               src/common \
-               src/client \
-               src/ui \
-               src/resource \
-               src/network
+    src/common \
+    src/client \
+    src/gamelogic \
+    src/ui \
+    src/resource \
+    src/server \
+    src/network
 
 SOURCES += \
     src/ai/cabstractai.cpp \
@@ -60,7 +62,8 @@ SOURCES += \
     src/sound/csound.cpp \
     src/ui/cabstractui.cpp \
     src/ui/cmainwindow.cpp \
-    src/ui/cqmlengine.cpp
+    src/ui/cqmlengine.cpp \
+    src/gamelogic/cabstractgameplayer.cpp
 
 HEADERS += \
     src/ai/cabstractai.h \
@@ -95,7 +98,8 @@ HEADERS += \
     src/ui/cabstractui.h \
     src/ui/cmainwindow.h \
     src/ui/cqmlengine.h \
-    src/cpch.h
+    src/cpch.h \
+    src/gamelogic/cabstractgameplayer.h
 
 QML_FILES += Gui/Dialog.qml \
              Gui/MetroButton.qml \

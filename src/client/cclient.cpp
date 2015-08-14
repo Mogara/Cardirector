@@ -17,7 +17,6 @@
     Mogara
 *********************************************************************/
 
-#include "cpch.h"
 #include "cclient.h"
 #include "cpacketrouter.h"
 #include "ctcpsocket.h"
@@ -255,10 +254,14 @@ void CClient::SpeakCommand(QObject *receiver, const QVariant &data)
         return;
 
     CClient *client = qobject_cast<CClient *>(receiver);
-    CClientPlayer *player = client->findPlayer(arguments.at(0).toUInt());
-    if (player != NULL) {
-        QString message = arguments.at(1).toString();
-        emit player->speak(message);
+    const QVariant who = arguments.at(0);
+    QString message = arguments.at(1).toString();
+    if (who.isNull()) {
+        emit client->systemMessage(message);
+    } else {
+        CClientPlayer *player = client->findPlayer(who.toUInt());
+        if (player != NULL)
+            emit player->speak(message);
     }
 }
 

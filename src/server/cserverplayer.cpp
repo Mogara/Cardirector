@@ -17,6 +17,7 @@
     Mogara
 *********************************************************************/
 
+#include "cabstractgamelogic.h"
 #include "cpacketrouter.h"
 #include "cprotocol.h"
 #include "croom.h"
@@ -288,6 +289,14 @@ void CServerPlayer::SetRoomListCommand(QObject *receiver, const QVariant &)
     server->updateRoomList(player);
 }
 
+void CServerPlayer::GameStartCommand(QObject *receiver, const QVariant &)
+{
+    CServerPlayer *player = qobject_cast<CServerPlayer *>(receiver);
+    CRoom *room = player->room();
+    CAbstractGameLogic *gameLogic = room->gameLogic();
+    gameLogic->start();
+}
+
 void CServerPlayer::handleUnknownPacket(const QByteArray &packet)
 {
     //Handle requests from a browser
@@ -327,5 +336,6 @@ void CServerPlayer::Init()
     AddCallback(S_COMMAND_ENTER_ROOM, &EnterRoomCommand);
     AddCallback(S_COMMAND_NETWORK_DELAY, &NetworkDelayCommand);
     AddCallback(S_COMMAND_SET_ROOM_LIST, &SetRoomListCommand);
+    AddCallback(S_COMMAND_GAME_START, &GameStartCommand);
 }
 C_INITIALIZE_CLASS(CServerPlayer)

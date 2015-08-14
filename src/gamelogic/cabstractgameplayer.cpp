@@ -17,41 +17,10 @@
     Mogara
 *********************************************************************/
 
-#ifndef CABSTRACTGAMELOGIC_H
-#define CABSTRACTGAMELOGIC_H
+#include "cabstractgameplayer.h"
 
-#include "cglobal.h"
-
-#include <QThread>
-
-MCD_BEGIN_NAMESPACE
-
-class CRoom;
-class CAbstractGamePlayer;
-class CAbstractGameLogicPrivate;
-
-class MCD_EXPORT CAbstractGameLogic : public QThread
+CAbstractGamePlayer::CAbstractGamePlayer(QObject *parent)
+    : QObject(parent)
 {
-    Q_OBJECT
 
-public:
-    explicit CAbstractGameLogic(CRoom *parent = 0);
-    ~CAbstractGameLogic();
-
-    CRoom *room() const;
-
-    void start(Priority priority = InheritPriority);
-
-protected:
-    virtual CAbstractGamePlayer *createPlayer() = 0;
-
-private:
-    C_DISABLE_COPY(CAbstractGameLogic)
-    C_DECLARE_PRIVATE(CAbstractGameLogic)
-    CAbstractGameLogicPrivate *p_ptr;
-};
-
-MCD_END_NAMESPACE
-
-#endif // CABSTRACTGAMELOGIC_H
-
+}

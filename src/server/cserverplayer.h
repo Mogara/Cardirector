@@ -87,6 +87,7 @@ protected:
     static void EnterRoomCommand(QObject *receiver, const QVariant &data);
     static void NetworkDelayCommand(QObject *receiver, const QVariant &data);
     static void SetRoomListCommand(QObject *receiver, const QVariant &);
+    static void GameStartCommand(QObject *receiver, const QVariant &);
 
     void handleUnknownPacket(const QByteArray &packet);
 

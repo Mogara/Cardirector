@@ -60,6 +60,8 @@ public:
     QMap<uint, CServerPlayer *> players() const;
     CServerPlayer *findPlayer(int id) const;
 
+    void broadcastSystemMessage(const QString &message);
+
     void broadcastRequest(const QList<CServerPlayer *> &targets);
     void broadcastRequest(const QList<CServerPlayer *> &targets, int timeout);
     CServerPlayer *broadcastRacingRequest(const QList<CServerPlayer *> &targets, int timeout);
