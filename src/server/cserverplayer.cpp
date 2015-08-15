@@ -294,7 +294,8 @@ void CServerPlayer::GameStartCommand(QObject *receiver, const QVariant &)
     CServerPlayer *player = qobject_cast<CServerPlayer *>(receiver);
     CRoom *room = player->room();
     CAbstractGameLogic *gameLogic = room->gameLogic();
-    gameLogic->start();
+    if (gameLogic && !gameLogic->isRunning())
+        gameLogic->start();
 }
 
 void CServerPlayer::handleUnknownPacket(const QByteArray &packet)

@@ -48,7 +48,9 @@ CRoom *CAbstractGameLogic::room() const
 void CAbstractGameLogic::start(Priority priority)
 {
     QMapIterator<uint, CServerPlayer *> iter(p_ptr->room->players());
-    while (iter.hasNext())
+    while (iter.hasNext()) {
+        iter.next();
         p_ptr->players.insert(iter.key(), createPlayer());
+    }
     QThread::start(priority);
 }
