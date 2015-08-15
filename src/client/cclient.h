@@ -49,6 +49,8 @@ public:
     void exitRoom();
     void speakToServer(const QString &message);
 
+    void startGame();
+
     const CClientPlayer *findPlayer(uint id) const;
     QList<const CClientPlayer *> players() const;
     CClientPlayer *self() const;

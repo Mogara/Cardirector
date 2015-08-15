@@ -118,6 +118,11 @@ void CClient::speakToServer(const QString &message)
     return p_ptr->router->notify(S_COMMAND_SPEAK, message);
 }
 
+void CClient::startGame()
+{
+    p_ptr->router->notify(S_COMMAND_GAME_START);
+}
+
 const CClientPlayer *CClient::findPlayer(uint id) const
 {
     return p_ptr->players.value(id);
