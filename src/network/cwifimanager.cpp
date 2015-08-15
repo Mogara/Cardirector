@@ -20,9 +20,9 @@ static QAndroidJniObject manager = activity.callObjectMethod("getSystemService",
 
 void seek(QTextStream &stream, char target){
     char ch;
-    do{
+    do {
         stream >> ch;
-    }while(ch != target);
+    } while(ch != target);
     stream.skipWhiteSpace();
 }
 
@@ -109,7 +109,7 @@ bool CWifiManager::setWifiEnabled(bool enabled)
 
 QStringList CWifiManager::detectServer()
 {
-    if(!isWifiEnabled())
+    if (!isWifiEnabled())
         setWifiEnabled(true);
 
     QStringList hotspots;
