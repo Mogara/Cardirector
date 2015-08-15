@@ -183,6 +183,4 @@ linux {
     }
 }
 
-#!android{
-    include(src/3rdparty/breakpad.pri)
-#}
+include(src/3rdparty/breakpad.pri)
