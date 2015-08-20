@@ -25,7 +25,7 @@
 MCD_BEGIN_NAMESPACE
 
 class CClientPrivate;
-class CClientPlayer;
+class CClientUser;
 class CAbstractPacketParser;
 
 class MCD_EXPORT CClient : public QObject
@@ -51,9 +51,9 @@ public:
 
     void startGame();
 
-    const CClientPlayer *findPlayer(uint id) const;
-    QList<const CClientPlayer *> players() const;
-    CClientPlayer *self() const;
+    const CClientUser *findUser(uint id) const;
+    QList<const CClientUser *> users() const;
+    CClientUser *self() const;
 
     void fetchRoomList();
 
@@ -72,19 +72,19 @@ public:
 signals:
     void connected();
     void loggedIn();
-    void playerAdded(const CClientPlayer *player);
-    void playerRemoved(const CClientPlayer *player);
+    void userAdded(const CClientUser *user);
+    void userRemoved(const CClientUser *user);
     void roomListUpdated(const QVariant &list);
     void roomEntered(const QVariant &config);
     void systemMessage(const QString &message);
 
 protected:
-    CClientPlayer *findPlayer(uint id);
-    CClientPlayer *addPlayer(const QVariant &data);
+    CClientUser *findUser(uint id);
+    CClientUser *addUser(const QVariant &data);
 
-    static void SetPlayerListCommand(QObject *receiver, const QVariant &data);
-    static void AddPlayerCommand(QObject *receiver, const QVariant &data);
-    static void RemovePlayerCommand(QObject *receiver, const QVariant &data);
+    static void SetUserListCommand(QObject *receiver, const QVariant &data);
+    static void AddUserCommand(QObject *receiver, const QVariant &data);
+    static void RemoveUserCommand(QObject *receiver, const QVariant &data);
     static void LoginCommand(QObject *receiver, const QVariant &data);
     static void SetRoomListCommand(QObject *receiver, const QVariant &data);
     static void SpeakCommand(QObject *receiver, const QVariant &data);

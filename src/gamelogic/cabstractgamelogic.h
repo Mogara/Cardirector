@@ -27,7 +27,7 @@
 MCD_BEGIN_NAMESPACE
 
 class CRoom;
-class CAbstractGamePlayer;
+class CAbstractPlayer;
 class CAbstractGameLogicPrivate;
 
 class MCD_EXPORT CAbstractGameLogic : public QThread
@@ -43,7 +43,7 @@ public:
     void start(Priority priority = InheritPriority);
 
 protected:
-    virtual CAbstractGamePlayer *createPlayer() = 0;
+    virtual CAbstractPlayer *createPlayer() = 0;
 
 private:
     C_DISABLE_COPY(CAbstractGameLogic)

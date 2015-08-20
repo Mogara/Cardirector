@@ -17,15 +17,10 @@
     Mogara
 *********************************************************************/
 
-#include "cclientplayer.h"
+#include "cabstractplayer.h"
 
-CClientPlayer::CClientPlayer(uint id, QObject *parent)
-    : CAbstractPlayer(parent)
-{
-    setId(id);
-}
-
-CClientPlayer::~CClientPlayer()
+CAbstractPlayer::CAbstractPlayer(QObject *parent)
+    : QObject(parent)
 {
 
 }

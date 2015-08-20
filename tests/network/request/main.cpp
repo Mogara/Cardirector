@@ -4,7 +4,7 @@
 #include <QTimer>
 
 #include <cserver.h>
-#include <cserverplayer.h>
+#include <cserveruser.h>
 #include <cclient.h>
 #include <cprotocol.h>
 
@@ -27,8 +27,8 @@ void ClientRequestSuccessorCommand(QObject *receiver, const QVariant &data)
 
 void ServerRequestSuccessorCommand(QObject *receiver, const QVariant &data)
 {
-    CServerPlayer *player = qobject_cast<CServerPlayer *>(receiver);
-    qDebug("Reply callback executed. %d replied %d", player->id(), data.toInt());
+    CServerUser *user = qobject_cast<CServerUser *>(receiver);
+    qDebug("Reply callback executed. %d replied %d", user->id(), data.toInt());
 }
 
 void ShutdownCommand(QObject *, const QVariant &)
@@ -39,9 +39,9 @@ void ShutdownCommand(QObject *, const QVariant &)
 class RoomRequest : public QThread
 {
 public:
-    RoomRequest(CServerPlayer *player, QObject *parent = 0)
+    RoomRequest(CServerUser *user, QObject *parent = 0)
         : QThread(parent)
-        , player(player)
+        , user(user)
     {
     }
 
@@ -49,25 +49,25 @@ protected:
     void run()
     {
         int number = qrand();
-        qDebug("Ask %d for the successor of %d", player->id(), number);
-        player->request(S_COMMAND_REQUEST_SUCCESSOR, number);
+        qDebug("Ask %d for the successor of %d", user->id(), number);
+        user->request(S_COMMAND_REQUEST_SUCCESSOR, number);
         qDebug("Wait for reply....");
-        QVariant result = player->waitForReply(5000);
+        QVariant result = user->waitForReply(5000);
         if (!result.isNull())
             qDebug("The result is: %d\n", result.toInt());
         else
             qDebug("timeout.");
-        player->notify(S_COMMAND_SHUTDOWN);
+        user->notify(S_COMMAND_SHUTDOWN);
     }
 
-    CServerPlayer *player;
+    CServerUser *user;
 };
 
 int main(int argc, char **argv)
 {
     CClient::AddInteraction(S_COMMAND_REQUEST_SUCCESSOR, &ClientRequestSuccessorCommand);
     CClient::AddCallback(S_COMMAND_SHUTDOWN, &ShutdownCommand);
-    CServerPlayer::AddCallback(S_COMMAND_REQUEST_SUCCESSOR, &ServerRequestSuccessorCommand);
+    CServerUser::AddCallback(S_COMMAND_REQUEST_SUCCESSOR, &ServerRequestSuccessorCommand);
 
     QCoreApplication app(argc, argv);
     qsrand(QTime::currentTime().msecsSinceStartOfDay());
@@ -87,8 +87,8 @@ int main(int argc, char **argv)
     } else {
         qDebug("work as a server.");
 
-        QObject::connect(server, &CServer::playerAdded, [=](CServerPlayer *player){
-            RoomRequest *request = new RoomRequest(player);
+        QObject::connect(server, &CServer::userAdded, [=](CServerUser *user){
+            RoomRequest *request = new RoomRequest(user);
             request->start();
             QObject::connect(request, &RoomRequest::finished, request, &RoomRequest::deleteLater);
             QObject::connect(request, &RoomRequest::finished, qApp, &QCoreApplication::quit);

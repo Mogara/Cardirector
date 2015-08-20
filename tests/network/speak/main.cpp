@@ -2,7 +2,7 @@
 #include <QTimer>
 
 #include <cclient.h>
-#include <cclientplayer.h>
+#include <cclientuser.h>
 
 int main(int argc, char *argv[])
 {
@@ -15,27 +15,27 @@ int main(int argc, char *argv[])
     });
 
     QObject::connect(client, &CClient::loggedIn, [=](){
-        foreach (const CClientPlayer *player, client->players()) {
-            QObject::connect(player, &CClientPlayer::speak, [=](const QString &message){
-                qDebug() << QString("%1(%2) said: %3").arg(player->screenName()).arg(player->id()).arg(message);
+        foreach (const CClientUser *user, client->users()) {
+            QObject::connect(user, &CClientUser::speak, [=](const QString &message){
+                qDebug() << QString("%1(%2) said: %3").arg(user->screenName()).arg(user->id()).arg(message);
             });
         }
     });
 
-    QObject::connect(client, &CClient::playerAdded, [=](const CClientPlayer *player){
-        qDebug() << QString("%1(%2) came").arg(player->screenName()).arg(player->id());
-        QObject::connect(player, &CClientPlayer::speak, [=](const QString &message){
-            qDebug() << QString("%1(%2) said: %3").arg(player->screenName()).arg(player->id()).arg(message);
+    QObject::connect(client, &CClient::userAdded, [=](const CClientUser *user){
+        qDebug() << QString("%1(%2) came").arg(user->screenName()).arg(user->id());
+        QObject::connect(user, &CClientUser::speak, [=](const QString &message){
+            qDebug() << QString("%1(%2) said: %3").arg(user->screenName()).arg(user->id()).arg(message);
         });
 
         //Say hello to him.
-        CClientPlayer *self = client->self();
-        if (self && self != player)
-            client->speakToServer(QString("welcome, %2(%1)!").arg(player->id()).arg(player->screenName()));
+        CClientUser *self = client->self();
+        if (self && self != user)
+            client->speakToServer(QString("welcome, %2(%1)!").arg(user->id()).arg(user->screenName()));
     });
 
-    QObject::connect(client, &CClient::playerRemoved, [](const CClientPlayer *player){
-        qDebug() << QString("%1(%2) left").arg(player->screenName()).arg(player->id());
+    QObject::connect(client, &CClient::userRemoved, [](const CClientUser *user){
+        qDebug() << QString("%1(%2) left").arg(user->screenName()).arg(user->id());
     });
 
     client->connectToHost(QHostAddress::LocalHostIPv6, 5927);

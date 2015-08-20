@@ -17,8 +17,8 @@
     Mogara
 *********************************************************************/
 
-#ifndef CABSTRACTPLAYER_H
-#define CABSTRACTPLAYER_H
+#ifndef CABSTRACTUSER_H
+#define CABSTRACTUSER_H
 
 #include "cglobal.h"
 
@@ -26,9 +26,9 @@
 
 MCD_BEGIN_NAMESPACE
 
-class CAbstractPlayerPrivate;
+class CAbstractUserPrivate;
 
-class MCD_EXPORT CAbstractPlayer : public QObject
+class MCD_EXPORT CAbstractUser : public QObject
 {
     Q_OBJECT
 
@@ -46,8 +46,8 @@ public:
         Offline
     };
 
-    explicit CAbstractPlayer(QObject *parent = 0);
-    ~CAbstractPlayer();
+    explicit CAbstractUser(QObject *parent = 0);
+    ~CAbstractUser();
 
     uint id() const;
 
@@ -77,11 +77,11 @@ signals:
     void networkDelayChanged();
 
 private:
-    C_DISABLE_COPY(CAbstractPlayer)
-    C_DECLARE_PRIVATE(CAbstractPlayer)
-    CAbstractPlayerPrivate *p_ptr;
+    C_DISABLE_COPY(CAbstractUser)
+    C_DECLARE_PRIVATE(CAbstractUser)
+    CAbstractUserPrivate *p_ptr;
 };
 
 MCD_END_NAMESPACE
 
-#endif // CABSTRACTPLAYER_H
+#endif // CABSTRACTUSER_H

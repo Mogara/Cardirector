@@ -17,69 +17,69 @@
     Mogara
 *********************************************************************/
 
-#include "cabstractplayer.h"
+#include "cabstractuser.h"
 
-class CAbstractPlayerPrivate
+class CAbstractUserPrivate
 {
 public:
     uint id;
     QString screenName;
     QString avatar;
-    CAbstractPlayer::State state;
+    CAbstractUser::State state;
     qint64 networkDelay;
 };
 
-CAbstractPlayer::CAbstractPlayer(QObject *parent)
+CAbstractUser::CAbstractUser(QObject *parent)
     : QObject(parent)
-    , p_ptr(new CAbstractPlayerPrivate)
+    , p_ptr(new CAbstractUserPrivate)
 {
     p_ptr->state = Invalid;
     p_ptr->id = 0;
 }
 
-CAbstractPlayer::~CAbstractPlayer()
+CAbstractUser::~CAbstractUser()
 {
     delete p_ptr;
 }
 
-uint CAbstractPlayer::id() const
+uint CAbstractUser::id() const
 {
     return p_ptr->id;
 }
 
-void CAbstractPlayer::setId(uint id)
+void CAbstractUser::setId(uint id)
 {
     p_ptr->id = id;
 }
 
-QString CAbstractPlayer::screenName() const
+QString CAbstractUser::screenName() const
 {
     return p_ptr->screenName;
 }
 
-void CAbstractPlayer::setScreenName(const QString &name)
+void CAbstractUser::setScreenName(const QString &name)
 {
     p_ptr->screenName = name;
     emit screenNameChanged();
 }
 
-QString CAbstractPlayer::avatar() const
+QString CAbstractUser::avatar() const
 {
     return p_ptr->avatar;
 }
 
-void CAbstractPlayer::setAvatar(const QString &avatar)
+void CAbstractUser::setAvatar(const QString &avatar)
 {
     p_ptr->avatar = avatar;
     emit avatarChanged();
 }
 
-CAbstractPlayer::State CAbstractPlayer::state() const
+CAbstractUser::State CAbstractUser::state() const
 {
     return p_ptr->state;
 }
 
-QString CAbstractPlayer::stateString() const
+QString CAbstractUser::stateString() const
 {
     switch (p_ptr->state) {
     case Online:
@@ -93,13 +93,13 @@ QString CAbstractPlayer::stateString() const
     }
 }
 
-void CAbstractPlayer::setState(State state)
+void CAbstractUser::setState(State state)
 {
     p_ptr->state = state;
     emit stateChanged();
 }
 
-void CAbstractPlayer::setStateString(const QString &state)
+void CAbstractUser::setStateString(const QString &state)
 {
     if (state == "online")
         setState(Online);
@@ -111,12 +111,12 @@ void CAbstractPlayer::setStateString(const QString &state)
         setState(Invalid);
 }
 
-qint64 CAbstractPlayer::networkDelay() const
+qint64 CAbstractUser::networkDelay() const
 {
     return p_ptr->networkDelay;
 }
 
-void CAbstractPlayer::setNetworkDelay(qint64 delay)
+void CAbstractUser::setNetworkDelay(qint64 delay)
 {
     p_ptr->networkDelay = delay;
     emit networkDelayChanged();

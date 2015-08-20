@@ -17,18 +17,18 @@
     Mogara
 *********************************************************************/
 
-#ifndef CABSTRACTGAMEPLAYER_H
-#define CABSTRACTGAMEPLAYER_H
+#ifndef CABSTRACTPLAYER_H
+#define CABSTRACTPLAYER_H
 
 #include "cglobal.h"
 #include <QObject>
 
-class MCD_EXPORT CAbstractGamePlayer : public QObject
+class MCD_EXPORT CAbstractPlayer : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit CAbstractGamePlayer(QObject *parent = 0);
+    explicit CAbstractPlayer(QObject *parent = 0);
 };
 
-#endif // CABSTRACTGAMEPLAYER_H
+#endif // CABSTRACTPLAYER_H

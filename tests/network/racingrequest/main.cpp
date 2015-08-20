@@ -4,7 +4,7 @@
 #include <QTimer>
 
 #include <cserver.h>
-#include <cserverplayer.h>
+#include <cserveruser.h>
 #include <croom.h>
 #include <cclient.h>
 #include <cprotocol.h>
@@ -42,24 +42,24 @@ public:
     {
     }
 
-    QList<CServerPlayer *> players;
+    QList<CServerUser *> users;
 
 protected:
     void run()
     {
-        qDebug("4 players are ready.");
+        qDebug("4 users are ready.");
 
         int data = 0;
-        foreach (CServerPlayer *player, players) {
-            player->prepareRequest(S_COMMAND_RACING, data);
+        foreach (CServerUser *user, users) {
+            user->prepareRequest(S_COMMAND_RACING, data);
             data++;
         }
 
-        CRoom *room = players.at(0)->room();
+        CRoom *room = users.at(0)->room();
         qDebug("Start!");
 
         for (int i = 0; i < 2; i++) {
-            CServerPlayer *winner = room->broadcastRacingRequest(players, 1000);
+            CServerUser *winner = room->broadcastRacingRequest(users, 1000);
             if (winner) {
                 int answer = winner->waitForReply().toInt();
                 qDebug("The winner is %d (answer: %d)", winner->id(), answer);
@@ -91,12 +91,12 @@ int main(int argc, char *argv[])
         QObject::connect(request, &RoomRequest::finished, request, &RoomRequest::deleteLater);
         QObject::connect(request, &RoomRequest::finished, qApp, &QCoreApplication::quit);
 
-        QObject::connect(server, &CServer::playerAdded, [=](CServerPlayer *player){
-            if (request->players.length() > 4) {
-                player->kick();
+        QObject::connect(server, &CServer::userAdded, [=](CServerUser *user){
+            if (request->users.length() > 4) {
+                user->kick();
             } else {
-                request->players << player;
-                if (request->players.length() == 4)
+                request->users << user;
+                if (request->users.length() == 4)
                     request->start();
             }
         });

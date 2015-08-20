@@ -17,10 +17,22 @@
     Mogara
 *********************************************************************/
 
-#include "cabstractgameplayer.h"
+#ifndef CCLIENTUSER_H
+#define CCLIENTUSER_H
 
-CAbstractGamePlayer::CAbstractGamePlayer(QObject *parent)
-    : QObject(parent)
+#include "cabstractuser.h"
+
+MCD_BEGIN_NAMESPACE
+
+class MCD_EXPORT CClientUser : public CAbstractUser
 {
+    Q_OBJECT
 
-}
+public:
+    CClientUser(uint id, QObject *parent = 0);
+    ~CClientUser();
+};
+
+MCD_END_NAMESPACE
+
+#endif // CCLIENTUSER_H

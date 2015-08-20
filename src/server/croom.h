@@ -27,7 +27,7 @@
 
 class CAbstractGameLogic;
 class CServer;
-class CServerPlayer;
+class CServerUser;
 
 class CRoomPrivate;
 class MCD_EXPORT CRoom : public QObject
@@ -43,8 +43,8 @@ public:
 
     CServer *server() const;
 
-    void setOwner(CServerPlayer *owner);
-    CServerPlayer *owner() const;
+    void setOwner(CServerUser *owner);
+    CServerUser *owner() const;
 
     QString name() const;
     void setName(const QString &name);
@@ -55,29 +55,29 @@ public:
     void setGameLogic(CAbstractGameLogic *gameLogic);
     CAbstractGameLogic *gameLogic() const;
 
-    void addPlayer(CServerPlayer *player);
-    void removePlayer(CServerPlayer *player);
-    QMap<uint, CServerPlayer *> players() const;
-    CServerPlayer *findPlayer(int id) const;
+    void addUser(CServerUser *user);
+    void removeUser(CServerUser *user);
+    QMap<uint, CServerUser *> users() const;
+    CServerUser *findUser(int id) const;
 
     void broadcastSystemMessage(const QString &message);
 
-    void broadcastRequest(const QList<CServerPlayer *> &targets);
-    void broadcastRequest(const QList<CServerPlayer *> &targets, int timeout);
-    CServerPlayer *broadcastRacingRequest(const QList<CServerPlayer *> &targets, int timeout);
-    void broadcastNotification(const QList<CServerPlayer *> &targets, int command, const QVariant &data = QVariant());
-    void broadcastNotification(int command, const QVariant &data = QVariant(), CServerPlayer *except = NULL);
+    void broadcastRequest(const QList<CServerUser *> &targets);
+    void broadcastRequest(const QList<CServerUser *> &targets, int timeout);
+    CServerUser *broadcastRacingRequest(const QList<CServerUser *> &targets, int timeout);
+    void broadcastNotification(const QList<CServerUser *> &targets, int command, const QVariant &data = QVariant());
+    void broadcastNotification(int command, const QVariant &data = QVariant(), CServerUser *except = NULL);
 
 signals:
     void abandoned();
-    void playerAdded(CServerPlayer *player);
-    void playerRemoved(CServerPlayer *player);
+    void userAdded(CServerUser *user);
+    void userRemoved(CServerUser *user);
 
 protected:
-    //Slots for CServerPlayer. Do not call them directly.
-    void onPlayerSpeaking(const QString &message);
-    void onPlayerDisconnected();
-    void onPlayerReplyReady();
+    //Slots for CServerUser. Do not call them directly.
+    void onUserSpeaking(const QString &message);
+    void onUserDisconnected();
+    void onUserReplyReady();
 
 private:
     C_DISABLE_COPY(CRoom)

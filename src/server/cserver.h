@@ -27,7 +27,7 @@
 
 class CAbstractPacketParser;
 class CRoom;
-class CServerPlayer;
+class CServerUser;
 class CTcpServer;
 class CTcpSocket;
 
@@ -47,31 +47,31 @@ public:
     void setAcceptMultipleClientsBehindOneIp(bool enabled);
     bool acceptMultipleClientsBehindOneIp() const;
 
-    CServerPlayer *findPlayer(uint id);
-    QHash<uint, CServerPlayer *> players() const;
+    CServerUser *findUser(uint id);
+    QHash<uint, CServerUser *> users() const;
 
-    void createRoom(CServerPlayer *owner, const QVariant &config);
+    void createRoom(CServerUser *owner, const QVariant &config);
     CRoom *findRoom(uint id) const;
     QHash<uint, CRoom *> rooms() const;
     CRoom *lobby() const;
 
-    void updateRoomList(CServerPlayer *player);
+    void updateRoomList(CServerUser *user);
 
     void setPacketParser(CAbstractPacketParser *parser);
     CAbstractPacketParser *packetParser() const;
 
-    void broadcastNotification(int command, const QVariant &data = QVariant(), CServerPlayer *except = NULL);
+    void broadcastNotification(int command, const QVariant &data = QVariant(), CServerUser *except = NULL);
 
 signals:
     void roomCreated(CRoom *room);
-    void playerAdded(CServerPlayer *player);
+    void userAdded(CServerUser *user);
 
 protected:
     void handleNewConnection(CTcpSocket *client);
 
     void onRoomAbandoned();
-    void onPlayerDisconnected();
-    void onPlayerStateChanged();
+    void onUserDisconnected();
+    void onUserStateChanged();
 
 private:
     C_DISABLE_COPY(CServer)

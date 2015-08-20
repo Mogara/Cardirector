@@ -35,16 +35,17 @@ INCLUDEPATH += src \
 SOURCES += \
     src/ai/cabstractai.cpp \
     src/client/cclient.cpp \
-    src/client/cclientplayer.cpp \
     src/client/cclientsettings.cpp \
+    src/client/cclientuser.cpp \
     src/client/cuserdata.cpp \
+    src/common/cabstractuser.cpp \
     src/common/cdeviceinfo.cpp \
-    src/common/cabstractplayer.cpp \
     src/common/cexceptionhandler.cpp \
     src/controller/cabstractaicontroller.cpp \
     src/controller/cabstractcontroller.cpp \
     src/controller/cabstractuicontroller.cpp \
     src/gamelogic/cabstractgamelogic.cpp \
+    src/gamelogic/cabstractplayer.cpp \
     src/network/cjsonpacketparser.cpp \
     src/network/cnetwork.cpp \
     src/network/cpacket.cpp \
@@ -58,27 +59,27 @@ SOURCES += \
     src/resource/cimageprovider.cpp \
     src/server/croom.cpp \
     src/server/cserver.cpp \
-    src/server/cserverplayer.cpp \
     src/sound/csound.cpp \
     src/ui/cabstractui.cpp \
     src/ui/cmainwindow.cpp \
     src/ui/cqmlengine.cpp \
-    src/gamelogic/cabstractgameplayer.cpp
+    src/server/cserveruser.cpp
 
 HEADERS += \
     src/ai/cabstractai.h \
     src/client/cclient.h \
-    src/client/cclientplayer.h \
     src/client/cclientsettings.h \
+    src/client/cclientuser.h \
     src/client/cuserdata.h \
+    src/common/cabstractuser.h \
     src/common/cdeviceinfo.h \
     src/common/cglobal.h \
-    src/common/cabstractplayer.h \
     src/common/cexceptionhandler.h \
     src/controller/cabstractaicontroller.h \
     src/controller/cabstractcontroller.h \
     src/controller/cabstractuicontroller.h \
     src/gamelogic/cabstractgamelogic.h \
+    src/gamelogic/cabstractplayer.h \
     src/network/cabstractpacketparser.h \
     src/network/cjsonpacketparser.h \
     src/network/cnetwork.h \
@@ -93,13 +94,12 @@ HEADERS += \
     src/resource/cresourcemanager.h \
     src/server/croom.h \
     src/server/cserver.h \
-    src/server/cserverplayer.h \
+    src/server/cserveruser.h \
     src/sound/csound.h \
     src/ui/cabstractui.h \
     src/ui/cmainwindow.h \
     src/ui/cqmlengine.h \
-    src/cpch.h \
-    src/gamelogic/cabstractgameplayer.h
+    src/cpch.h
 
 QML_FILES += Gui/Dialog.qml \
              Gui/MetroButton.qml \

@@ -20,7 +20,7 @@
 #include "cpch.h"
 #include "croom.h"
 #include "cserver.h"
-#include "cserverplayer.h"
+#include "cserveruser.h"
 #include "ctcpserver.h"
 #include "ctcpsocket.h"
 #include "cprotocol.h"
@@ -30,11 +30,11 @@ class CServerPrivate
 {
 public:
     bool acceptMultipleClientsBehindOneIp;
-    QHash<QHostAddress, CServerPlayer *> clientIp;
+    QHash<QHostAddress, CServerUser *> clientIp;
     CTcpServer *server;
     CAbstractPacketParser *parser;
 
-    QHash<uint, CServerPlayer *> players;
+    QHash<uint, CServerUser *> users;
     CRoom *lobby;
     QHash<uint, CRoom *> rooms;
 };
@@ -46,7 +46,7 @@ CServer::CServer(QObject *parent)
     p_ptr->parser = new CJsonPacketParser;
     p_ptr->acceptMultipleClientsBehindOneIp = true;
     p_ptr->lobby = new CRoom(this);
-    connect(p_ptr->lobby, &CRoom::playerAdded, this, &CServer::updateRoomList);
+    connect(p_ptr->lobby, &CRoom::userAdded, this, &CServer::updateRoomList);
     p_ptr->server = new CTcpServer(this);
     connect(p_ptr->server, &CTcpServer::newSocket, this, &CServer::handleNewConnection);
 }
@@ -59,7 +59,7 @@ CServer::~CServer()
 
 void CServer::setPacketParser(CAbstractPacketParser *parser)
 {
-    if (p_ptr->players.isEmpty()) {
+    if (p_ptr->users.isEmpty()) {
         delete p_ptr->parser;
         p_ptr->parser = parser;
     } else {
@@ -97,23 +97,23 @@ bool CServer::acceptMultipleClientsBehindOneIp() const
     return p_ptr->acceptMultipleClientsBehindOneIp;
 }
 
-CServerPlayer *CServer::findPlayer(uint id)
+CServerUser *CServer::findUser(uint id)
 {
-    return p_ptr->players.value(id);
+    return p_ptr->users.value(id);
 }
 
-QHash<uint, CServerPlayer *> CServer::players() const
+QHash<uint, CServerUser *> CServer::users() const
 {
-    return p_ptr->players;
+    return p_ptr->users;
 }
 
-void CServer::createRoom(CServerPlayer *owner, const QVariant &config)
+void CServer::createRoom(CServerUser *owner, const QVariant &config)
 {
     C_UNUSED(config);
     CRoom *room = new CRoom(this);
     connect(room, &CRoom::abandoned, this, &CServer::onRoomAbandoned);
     room->setOwner(owner);
-    room->addPlayer(owner);
+    room->addUser(owner);
     p_ptr->rooms.insert(room->id(), room);
     emit roomCreated(room);
 }
@@ -133,38 +133,38 @@ CRoom *CServer::lobby() const
     return p_ptr->lobby;
 }
 
-void CServer::updateRoomList(CServerPlayer *player)
+void CServer::updateRoomList(CServerUser *user)
 {
     QVariantList roomList;
     foreach (CRoom *room, p_ptr->rooms)
         roomList << room->config();
-    player->notify(S_COMMAND_SET_ROOM_LIST, roomList);
+    user->notify(S_COMMAND_SET_ROOM_LIST, roomList);
 }
 
-void CServer::broadcastNotification(int command, const QVariant &data, CServerPlayer *except)
+void CServer::broadcastNotification(int command, const QVariant &data, CServerUser *except)
 {
-    foreach (CServerPlayer *player, p_ptr->players) {
-        if (player != except)
-            player->notify(command, data);
+    foreach (CServerUser *user, p_ptr->users) {
+        if (user != except)
+            user->notify(command, data);
     }
 }
 
 void CServer::handleNewConnection(CTcpSocket *client)
 {
-    CServerPlayer *player = new CServerPlayer(client, this);
+    CServerUser *user = new CServerUser(client, this);
 
     if (!acceptMultipleClientsBehindOneIp()) {
-        if (p_ptr->clientIp.contains(player->ip())) {
-            CServerPlayer *prevPlayer = p_ptr->clientIp.value(player->ip());
-            prevPlayer->kick();
-            prevPlayer->deleteLater();
+        if (p_ptr->clientIp.contains(user->ip())) {
+            CServerUser *prevUser = p_ptr->clientIp.value(user->ip());
+            prevUser->kick();
+            prevUser->deleteLater();
         }
 
-        p_ptr->clientIp.insert(player->ip(), player);
+        p_ptr->clientIp.insert(user->ip(), user);
     }
 
-    connect(player, &CServerPlayer::disconnected, this, &CServer::onPlayerDisconnected);
-    connect(player, &CServerPlayer::stateChanged, this, &CServer::onPlayerStateChanged);
+    connect(user, &CServerUser::disconnected, this, &CServer::onUserDisconnected);
+    connect(user, &CServerUser::stateChanged, this, &CServer::onUserStateChanged);
 }
 
 void CServer::onRoomAbandoned()
@@ -173,23 +173,23 @@ void CServer::onRoomAbandoned()
     p_ptr->rooms.remove(room->id());
 }
 
-void CServer::onPlayerDisconnected()
+void CServer::onUserDisconnected()
 {
-    CServerPlayer *player = qobject_cast<CServerPlayer *>(sender());
+    CServerUser *user = qobject_cast<CServerUser *>(sender());
     //@todo: check the state and enable reconnection
-    //if (player && player->state() == CServerPlayer::LoggedOut)
-    p_ptr->players.remove(player->id());
-    player->deleteLater();
+    //if (user && user->state() == CServerUser::LoggedOut)
+    p_ptr->users.remove(user->id());
+    user->deleteLater();
 }
 
-void CServer::onPlayerStateChanged()
+void CServer::onUserStateChanged()
 {
-    CServerPlayer *player = qobject_cast<CServerPlayer *>(sender());
-    if (player->state() == CServerPlayer::Online) {
-        if (!p_ptr->players.contains(player->id())) {
-            p_ptr->players.insert(player->id(), player);
-            p_ptr->lobby->addPlayer(player);
-            emit playerAdded(player);
+    CServerUser *user = qobject_cast<CServerUser *>(sender());
+    if (user->state() == CServerUser::Online) {
+        if (!p_ptr->users.contains(user->id())) {
+            p_ptr->users.insert(user->id(), user);
+            p_ptr->lobby->addUser(user);
+            emit userAdded(user);
         }
     }
 }

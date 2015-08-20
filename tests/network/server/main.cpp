@@ -2,7 +2,7 @@
 #include <QTimer>
 
 #include <cserver.h>
-#include <cserverplayer.h>
+#include <cserveruser.h>
 
 int main(int argc, char *argv[])
 {
@@ -16,13 +16,13 @@ int main(int argc, char *argv[])
 
     qDebug("The server is listening on 5927");
 
-    QObject::connect(server, &CServer::playerAdded, [=](CServerPlayer *player){
-        qDebug() << QString("New player: %1(%2)").arg(player->screenName()).arg(player->id());
+    QObject::connect(server, &CServer::userAdded, [=](CServerUser *user){
+        qDebug() << QString("New user: %1(%2)").arg(user->screenName()).arg(user->id());
 
-        QObject::connect(player, &CServerPlayer::networkDelayChanged, [=](){
-            qDebug() << QString("Player %1(%2) Network Delay: %3").arg(player->screenName()).arg(player->id()).arg(player->networkDelay());
+        QObject::connect(user, &CServerUser::networkDelayChanged, [=](){
+            qDebug() << QString("User %1(%2) Network Delay: %3").arg(user->screenName()).arg(user->id()).arg(user->networkDelay());
         });
-        player->updateNetworkDelay();
+        user->updateNetworkDelay();
     });
 
     QTimer::singleShot(20000, [=](){

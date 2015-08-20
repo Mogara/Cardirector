@@ -18,14 +18,14 @@
 *********************************************************************/
 
 #include "cabstractgamelogic.h"
-#include "cabstractgameplayer.h"
+#include "cabstractuser.h"
 #include "croom.h"
 
 class CAbstractGameLogicPrivate
 {
 public:
     CRoom *room;
-    QMap<uint, CAbstractGamePlayer *> players;
+    QMap<uint, CAbstractPlayer *> players;
 };
 
 CAbstractGameLogic::CAbstractGameLogic(CRoom *parent)
@@ -47,7 +47,7 @@ CRoom *CAbstractGameLogic::room() const
 
 void CAbstractGameLogic::start(Priority priority)
 {
-    QMapIterator<uint, CServerPlayer *> iter(p_ptr->room->players());
+    QMapIterator<uint, CServerUser *> iter(p_ptr->room->users());
     while (iter.hasNext()) {
         iter.next();
         p_ptr->players.insert(iter.key(), createPlayer());

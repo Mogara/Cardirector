@@ -22,14 +22,14 @@
 #include "ctcpsocket.h"
 #include "cjsonpacketparser.h"
 #include "cprotocol.h"
-#include "cclientplayer.h"
+#include "cclientuser.h"
 
 class CClientPrivate
 {
 public:
     CPacketRouter *router;
-    QMap<uint, CClientPlayer *> players;
-    CClientPlayer *self;
+    QMap<uint, CClientUser *> users;
+    CClientUser *self;
     CAbstractPacketParser *parser;
 };
 
@@ -123,25 +123,25 @@ void CClient::startGame()
     p_ptr->router->notify(S_COMMAND_GAME_START);
 }
 
-const CClientPlayer *CClient::findPlayer(uint id) const
+const CClientUser *CClient::findUser(uint id) const
 {
-    return p_ptr->players.value(id);
+    return p_ptr->users.value(id);
 }
 
-QList<const CClientPlayer *> CClient::players() const
+QList<const CClientUser *> CClient::users() const
 {
-    QList<const CClientPlayer *> playerList;
-    foreach (const CClientPlayer *player, p_ptr->players)
-        playerList << player;
-    return playerList;
+    QList<const CClientUser *> userList;
+    foreach (const CClientUser *user, p_ptr->users)
+        userList << user;
+    return userList;
 }
 
-CClientPlayer *CClient::findPlayer(uint id)
+CClientUser *CClient::findUser(uint id)
 {
-    return p_ptr->players.value(id);
+    return p_ptr->users.value(id);
 }
 
-CClientPlayer *CClient::self() const
+CClientUser *CClient::self() const
 {
     return p_ptr->self;
 }
@@ -151,20 +151,20 @@ void CClient::fetchRoomList()
     notifyServer(S_COMMAND_SET_ROOM_LIST);
 }
 
-CClientPlayer *CClient::addPlayer(const QVariant &data)
+CClientUser *CClient::addUser(const QVariant &data)
 {
     QVariantList arguments = data.toList();
     if (arguments.length() < 3)
         return NULL;
 
-    uint playerId = arguments.at(0).toUInt();
-    if (playerId > 0) {
-        CClientPlayer *player = new CClientPlayer(playerId, this);
-        player->setScreenName(arguments.at(1).toString());
-        player->setAvatar(arguments.at(2).toString());
+    uint userId = arguments.at(0).toUInt();
+    if (userId > 0) {
+        CClientUser *user = new CClientUser(userId, this);
+        user->setScreenName(arguments.at(1).toString());
+        user->setAvatar(arguments.at(2).toString());
 
-        p_ptr->players.insert(playerId, player);
-        return player;
+        p_ptr->users.insert(userId, user);
+        return user;
     }
 
     return NULL;
@@ -202,47 +202,47 @@ QVariant CClient::waitForReply(int timeout)
 
 /* Callbacks */
 
-void CClient::SetPlayerListCommand(QObject *receiver, const QVariant &data)
+void CClient::SetUserListCommand(QObject *receiver, const QVariant &data)
 {
-    QVariantList playerList(data.toList());
+    QVariantList userList(data.toList());
     CClient *client = qobject_cast<CClient *>(receiver);
 
-    if (!client->p_ptr->players.isEmpty()) {
-        foreach (CClientPlayer *player, client->p_ptr->players) {
-            if (player != client->self())
-                player->deleteLater();
+    if (!client->p_ptr->users.isEmpty()) {
+        foreach (CClientUser *user, client->p_ptr->users) {
+            if (user != client->self())
+                user->deleteLater();
         }
-        client->p_ptr->players.clear();
-        client->p_ptr->players.insert(client->self()->id(), client->self());
+        client->p_ptr->users.clear();
+        client->p_ptr->users.insert(client->self()->id(), client->self());
     }
 
-    foreach (const QVariant &player, playerList)
-        client->addPlayer(player);
+    foreach (const QVariant &user, userList)
+        client->addUser(user);
 }
 
-void CClient::AddPlayerCommand(QObject *receiver, const QVariant &data)
+void CClient::AddUserCommand(QObject *receiver, const QVariant &data)
 {
     CClient *client = qobject_cast<CClient *>(receiver);
-    CClientPlayer *player = client->addPlayer(data);
-    emit client->playerAdded(player);
+    CClientUser *user = client->addUser(data);
+    emit client->userAdded(user);
 }
 
-void CClient::RemovePlayerCommand(QObject *receiver, const QVariant &data)
+void CClient::RemoveUserCommand(QObject *receiver, const QVariant &data)
 {
     CClient *client = qobject_cast<CClient *>(receiver);
-    uint playerId = data.toUInt();
-    CClientPlayer *player = client->findPlayer(playerId);
-    if (player != NULL) {
-        emit client->playerRemoved(player);
-        client->p_ptr->players.remove(playerId);
-        player->deleteLater();
+    uint userId = data.toUInt();
+    CClientUser *user = client->findUser(userId);
+    if (user != NULL) {
+        emit client->userRemoved(user);
+        client->p_ptr->users.remove(userId);
+        user->deleteLater();
     }
 }
 
 void CClient::LoginCommand(QObject *receiver, const QVariant &data)
 {
     CClient *client = qobject_cast<CClient *>(receiver);
-    client->p_ptr->self = client->addPlayer(data);
+    client->p_ptr->self = client->addUser(data);
     emit client->loggedIn();
 }
 
@@ -264,9 +264,9 @@ void CClient::SpeakCommand(QObject *receiver, const QVariant &data)
     if (who.isNull()) {
         emit client->systemMessage(message);
     } else {
-        CClientPlayer *player = client->findPlayer(who.toUInt());
-        if (player != NULL)
-            emit player->speak(message);
+        CClientUser *user = client->findUser(who.toUInt());
+        if (user != NULL)
+            emit user->speak(message);
     }
 }
 
@@ -285,9 +285,9 @@ void CClient::NetworkDelayCommand(QObject *receiver, const QVariant &data)
 void CClient::Init()
 {
     AddCallback(S_COMMAND_SPEAK, &SpeakCommand);
-    AddCallback(S_COMMAND_SET_PLAYER_LIST, &SetPlayerListCommand);
-    AddCallback(S_COMMAND_ADD_PLAYER, &AddPlayerCommand);
-    AddCallback(S_COMMAND_REMOVE_PLAYER, &RemovePlayerCommand);
+    AddCallback(S_COMMAND_SET_USER_LIST, &SetUserListCommand);
+    AddCallback(S_COMMAND_ADD_USER, &AddUserCommand);
+    AddCallback(S_COMMAND_REMOVE_USER, &RemoveUserCommand);
     AddCallback(S_COMMAND_LOGIN, &LoginCommand);
     AddCallback(S_COMMAND_SET_ROOM_LIST, &SetRoomListCommand);
     AddCallback(S_COMMAND_ENTER_ROOM, &EnterRoomCommand);

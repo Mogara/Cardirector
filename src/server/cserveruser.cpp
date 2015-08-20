@@ -22,7 +22,7 @@
 #include "cprotocol.h"
 #include "croom.h"
 #include "cserver.h"
-#include "cserverplayer.h"
+#include "cserveruser.h"
 #include "ctcpsocket.h"
 
 #include <QCoreApplication>
@@ -31,7 +31,7 @@
 static QHash<int, CPacketRouter::Callback> interactions;
 static QHash<int, CPacketRouter::Callback> callbacks;
 
-class CServerPlayerPrivate
+class CServerUserPrivate
 {
 public:
     CPacketRouter *router;
@@ -45,55 +45,55 @@ public:
     QDateTime networkDelayStartTime;
 };
 
-CServerPlayer::CServerPlayer(CTcpSocket *socket, CServer *server)
-    : CAbstractPlayer(server)
+CServerUser::CServerUser(CTcpSocket *socket, CServer *server)
+    : CAbstractUser(server)
 {
-    p_ptr = new CServerPlayerPrivate;
+    p_ptr = new CServerUserPrivate;
     p_ptr->server = server;
 
     p_ptr->router = new CPacketRouter(this, socket, server->packetParser());
     p_ptr->router->setInteractions(&interactions);
     p_ptr->router->setCallbacks(&callbacks);
-    connect(p_ptr->router, &CPacketRouter::unknownPacket, this, &CServerPlayer::handleUnknownPacket);
-    connect(p_ptr->router, &CPacketRouter::replyReady, this, &CServerPlayer::replyReady);
-    connect(socket, &CTcpSocket::disconnected, this, &CServerPlayer::disconnected);
+    connect(p_ptr->router, &CPacketRouter::unknownPacket, this, &CServerUser::handleUnknownPacket);
+    connect(p_ptr->router, &CPacketRouter::replyReady, this, &CServerUser::replyReady);
+    connect(socket, &CTcpSocket::disconnected, this, &CServerUser::disconnected);
 
     p_ptr->room = NULL;
     p_ptr->networkDelayTestId = 0;
 }
 
-CServerPlayer::~CServerPlayer()
+CServerUser::~CServerUser()
 {
     delete p_ptr;
 }
 
-void CServerPlayer::setSocket(CTcpSocket *socket)
+void CServerUser::setSocket(CTcpSocket *socket)
 {
     p_ptr->router->setSocket(socket);
 }
 
-CServer *CServerPlayer::server() const
+CServer *CServerUser::server() const
 {
     return p_ptr->server;
 }
 
-CRoom *CServerPlayer::room() const
+CRoom *CServerUser::room() const
 {
     return p_ptr->room;
 }
 
-void CServerPlayer::setRoom(CRoom *room)
+void CServerUser::setRoom(CRoom *room)
 {
     p_ptr->room = room;
 }
 
-void CServerPlayer::signup(const QString &username, const QString &password, const QString &screenName, const QString &avatar)
+void CServerUser::signup(const QString &username, const QString &password, const QString &screenName, const QString &avatar)
 {
     //@to-do: check if the username is duplicated in the database.
     //@to-do: encrypt the password
-    static uint playerId = 0;
-    playerId++;
-    setId(playerId);
+    static uint userId = 0;
+    userId++;
+    setId(userId);
 
     setScreenName(screenName);
     setAvatar(avatar);
@@ -101,7 +101,7 @@ void CServerPlayer::signup(const QString &username, const QString &password, con
     login(username, password);
 }
 
-void CServerPlayer::login(const QString &username, const QString &password)
+void CServerUser::login(const QString &username, const QString &password)
 {
     //@todo: implement this after the database is ready
     C_UNUSED(username);
@@ -111,72 +111,72 @@ void CServerPlayer::login(const QString &username, const QString &password)
     setState(Online);
 }
 
-void CServerPlayer::logout()
+void CServerUser::logout()
 {
     setState(Invalid);
     p_ptr->router->socket()->disconnectFromHost();
 }
 
-void CServerPlayer::kick()
+void CServerUser::kick()
 {
     //@to-do: send a warning
     logout();
 }
 
-QHostAddress CServerPlayer::ip() const
+QHostAddress CServerUser::ip() const
 {
     return p_ptr->router->socket()->peerAddress();
 }
 
-void CServerPlayer::updateNetworkDelay()
+void CServerUser::updateNetworkDelay()
 {
     p_ptr->networkDelayTestId = qrand();
     p_ptr->networkDelayStartTime = QDateTime::currentDateTime();
     notify(S_COMMAND_NETWORK_DELAY, p_ptr->networkDelayTestId);
 }
 
-void CServerPlayer::request(int command, const QVariant &data, int timeout)
+void CServerUser::request(int command, const QVariant &data, int timeout)
 {
     p_ptr->router->request(command, data, timeout);
 }
 
-void CServerPlayer::reply(int command, const QVariant &data)
+void CServerUser::reply(int command, const QVariant &data)
 {
     p_ptr->router->reply(command, data);
 }
 
-void CServerPlayer::notify(int command, const QVariant &data)
+void CServerUser::notify(int command, const QVariant &data)
 {
     p_ptr->router->notify(command, data);
 }
 
-void CServerPlayer::prepareRequest(int command, const QVariant &data)
+void CServerUser::prepareRequest(int command, const QVariant &data)
 {
     p_ptr->requestCommand = command;
     p_ptr->requestData = data;
 }
 
-void CServerPlayer::executeRequest(int timeout)
+void CServerUser::executeRequest(int timeout)
 {
     request(p_ptr->requestCommand, p_ptr->requestData, timeout);
 }
 
-void CServerPlayer::cancelRequest()
+void CServerUser::cancelRequest()
 {
     p_ptr->router->cancelRequest();
 }
 
-QVariant CServerPlayer::waitForReply()
+QVariant CServerUser::waitForReply()
 {
     return p_ptr->router->waitForReply();
 }
 
-QVariant CServerPlayer::waitForReply(int timeout)
+QVariant CServerUser::waitForReply(int timeout)
 {
     return p_ptr->router->waitForReply(timeout);
 }
 
-QVariant CServerPlayer::briefIntroduction() const
+QVariant CServerUser::briefIntroduction() const
 {
     QVariantList arguments;
     arguments << id();
@@ -185,25 +185,25 @@ QVariant CServerPlayer::briefIntroduction() const
     return arguments;
 }
 
-void CServerPlayer::AddInteraction(int command, void (*callback)(QObject *, const QVariant &))
+void CServerUser::AddInteraction(int command, void (*callback)(QObject *, const QVariant &))
 {
     interactions.insert(command, callback);
 }
 
-void CServerPlayer::AddCallback(int command, void (*callback)(QObject *, const QVariant &))
+void CServerUser::AddCallback(int command, void (*callback)(QObject *, const QVariant &))
 {
     callbacks.insert(command, callback);
 }
 
 /* Callbacks */
 
-void CServerPlayer::CheckVersionCommand(QObject *receiver, const QVariant &data)
+void CServerUser::CheckVersionCommand(QObject *receiver, const QVariant &data)
 {
     C_UNUSED(receiver);
     C_UNUSED(data);
 }
 
-void CServerPlayer::SignupCommand(QObject *receiver, const QVariant &data)
+void CServerUser::SignupCommand(QObject *receiver, const QVariant &data)
 {
     QVariantList arguments(data.toList());
     if (arguments.length() < 4)
@@ -214,12 +214,12 @@ void CServerPlayer::SignupCommand(QObject *receiver, const QVariant &data)
     QString screenName = arguments.at(2).toString();
     QString avatar = arguments.at(3).toString();
 
-    CServerPlayer *player = qobject_cast<CServerPlayer *>(receiver);
-    player->signup(account, password, screenName, avatar);
+    CServerUser *user = qobject_cast<CServerUser *>(receiver);
+    user->signup(account, password, screenName, avatar);
 }
 
 //currently unused
-void CServerPlayer::LoginCommand(QObject *receiver, const QVariant &data)
+void CServerUser::LoginCommand(QObject *receiver, const QVariant &data)
 {
     C_UNUSED(receiver);
     C_UNUSED(data);
@@ -230,75 +230,75 @@ void CServerPlayer::LoginCommand(QObject *receiver, const QVariant &data)
         QString password = dataList.at(1).toString();
 
         //@to-do: implement this after database is ready
-        CServerPlayer *player = qobject_cast<CServerPlayer *>(receiver);
-        player->login(account, password);
+        CServerUser *user = qobject_cast<CServerUser *>(receiver);
+        user->login(account, password);
     }*/
 }
 
-void CServerPlayer::LogoutCommand(QObject *receiver, const QVariant &)
+void CServerUser::LogoutCommand(QObject *receiver, const QVariant &)
 {
-    CServerPlayer *player = qobject_cast<CServerPlayer *>(receiver);
-    player->logout();
+    CServerUser *user = qobject_cast<CServerUser *>(receiver);
+    user->logout();
 }
 
-void CServerPlayer::SpeakCommand(QObject *receiver, const QVariant &data)
+void CServerUser::SpeakCommand(QObject *receiver, const QVariant &data)
 {
-    CServerPlayer *player = qobject_cast<CServerPlayer *>(receiver);
+    CServerUser *user = qobject_cast<CServerUser *>(receiver);
     QString message = data.toString();
     if (!message.isEmpty())
-        player->speak(message);
+        user->speak(message);
 }
 
-void CServerPlayer::CreateRoomCommand(QObject *receiver, const QVariant &data)
+void CServerUser::CreateRoomCommand(QObject *receiver, const QVariant &data)
 {
-    CServerPlayer *player = qobject_cast<CServerPlayer *>(receiver);
-    CServer *server = player->server();
-    server->createRoom(player, data);
+    CServerUser *user = qobject_cast<CServerUser *>(receiver);
+    CServer *server = user->server();
+    server->createRoom(user, data);
 }
 
-void CServerPlayer::EnterRoomCommand(QObject *receiver, const QVariant &data)
+void CServerUser::EnterRoomCommand(QObject *receiver, const QVariant &data)
 {
-    CServerPlayer *player = qobject_cast<CServerPlayer *>(receiver);
-    CServer *server = player->server();
+    CServerUser *user = qobject_cast<CServerUser *>(receiver);
+    CServer *server = user->server();
 
     if (data.isNull()) {
         CRoom *lobby = server->lobby();
-        lobby->addPlayer(player);
+        lobby->addUser(user);
     } else {
         uint roomId = data.toUInt();
         CRoom *room = server->findRoom(roomId);
         if (room)
-            room->addPlayer(player);
+            room->addUser(user);
     }
 }
 
-void CServerPlayer::NetworkDelayCommand(QObject *receiver, const QVariant &data)
+void CServerUser::NetworkDelayCommand(QObject *receiver, const QVariant &data)
 {
-    CServerPlayer *player = qobject_cast<CServerPlayer *>(receiver);
-    CServerPlayerPrivate *p_ptr = player->p_ptr;
+    CServerUser *user = qobject_cast<CServerUser *>(receiver);
+    CServerUserPrivate *p_ptr = user->p_ptr;
     if (p_ptr->networkDelayTestId != 0 && p_ptr->networkDelayTestId == data.toInt()) {
-        player->setNetworkDelay(p_ptr->networkDelayStartTime.secsTo(QDateTime::currentDateTime()));
+        user->setNetworkDelay(p_ptr->networkDelayStartTime.secsTo(QDateTime::currentDateTime()));
         p_ptr->networkDelayTestId = 0;
     }
 }
 
-void CServerPlayer::SetRoomListCommand(QObject *receiver, const QVariant &)
+void CServerUser::SetRoomListCommand(QObject *receiver, const QVariant &)
 {
-    CServerPlayer *player = qobject_cast<CServerPlayer *>(receiver);
-    CServer *server = player->server();
-    server->updateRoomList(player);
+    CServerUser *user = qobject_cast<CServerUser *>(receiver);
+    CServer *server = user->server();
+    server->updateRoomList(user);
 }
 
-void CServerPlayer::GameStartCommand(QObject *receiver, const QVariant &)
+void CServerUser::GameStartCommand(QObject *receiver, const QVariant &)
 {
-    CServerPlayer *player = qobject_cast<CServerPlayer *>(receiver);
-    CRoom *room = player->room();
+    CServerUser *user = qobject_cast<CServerUser *>(receiver);
+    CRoom *room = user->room();
     CAbstractGameLogic *gameLogic = room->gameLogic();
     if (gameLogic && !gameLogic->isRunning())
         gameLogic->start();
 }
 
-void CServerPlayer::handleUnknownPacket(const QByteArray &packet)
+void CServerUser::handleUnknownPacket(const QByteArray &packet)
 {
     //Handle requests from a browser
     if (packet.startsWith("GET") || packet.startsWith("POST")) {
@@ -326,7 +326,7 @@ void CServerPlayer::handleUnknownPacket(const QByteArray &packet)
     }
 }
 
-void CServerPlayer::Init()
+void CServerUser::Init()
 {
     AddCallback(S_COMMAND_CHECK_VERSION, &CheckVersionCommand);
     AddCallback(S_COMMAND_SIGNUP, &SignupCommand);
@@ -339,4 +339,4 @@ void CServerPlayer::Init()
     AddCallback(S_COMMAND_SET_ROOM_LIST, &SetRoomListCommand);
     AddCallback(S_COMMAND_GAME_START, &GameStartCommand);
 }
-C_INITIALIZE_CLASS(CServerPlayer)
+C_INITIALIZE_CLASS(CServerUser)

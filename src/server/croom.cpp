@@ -21,7 +21,7 @@
 #include "cprotocol.h"
 #include "croom.h"
 #include "cserver.h"
-#include "cserverplayer.h"
+#include "cserveruser.h"
 
 #include <QTime>
 #include <QSemaphore>
@@ -33,13 +33,13 @@ public:
     uint id;
     QString name;
     CAbstractGameLogic *gameLogic;
-    QMap<uint, CServerPlayer *> players;
+    QMap<uint, CServerUser *> users;
     uint capacity;
-    CServerPlayer *owner;
+    CServerUser *owner;
 
     QSemaphore racingRequestSemaphore;
-    QList<CServerPlayer *> racingRequestCandidates;
-    CServerPlayer *racingRequestWinner;
+    QList<CServerUser *> racingRequestCandidates;
+    CServerUser *racingRequestWinner;
 };
 
 CRoom::CRoom(CServer *server)
@@ -72,7 +72,7 @@ QVariant CRoom::config() const
     QVariantMap info;
     info["id"] = (p_ptr->server->lobby() != this ? p_ptr->id : 0);
     info["name"] = name();
-    info["playerNum"] = p_ptr->players.size();
+    info["userNum"] = p_ptr->users.size();
     info["capacity"] = capacity();
     return info;
 }
@@ -82,14 +82,14 @@ CServer *CRoom::server() const
     return p_ptr->server;
 }
 
-void CRoom::setOwner(CServerPlayer *owner)
+void CRoom::setOwner(CServerUser *owner)
 {
     p_ptr->owner = owner;
     if (name().isEmpty())
         setName(tr("%1's Room").arg(owner->screenName()));
 }
 
-CServerPlayer *CRoom::owner() const
+CServerUser *CRoom::owner() const
 {
     return p_ptr->owner;
 }
@@ -124,45 +124,45 @@ CAbstractGameLogic *CRoom::gameLogic() const
     return p_ptr->gameLogic;
 }
 
-void CRoom::addPlayer(CServerPlayer *player)
+void CRoom::addUser(CServerUser *user)
 {
     //Exit the previous room
-    CRoom *prevRoom = player->room();
+    CRoom *prevRoom = user->room();
     if (prevRoom)
-        prevRoom->removePlayer(player);
+        prevRoom->removeUser(user);
 
     //Update online user list
-    QVariantList playerList;
+    QVariantList userList;
     int count = 0;
-    foreach (CServerPlayer *other, p_ptr->players) {
-        playerList << other->briefIntroduction();
+    foreach (CServerUser *other, p_ptr->users) {
+        userList << other->briefIntroduction();
         count++;
         //@todo: save the number 50 into CServerSettings
         if (count >= 50)
             break;
     }
-    player->notify(S_COMMAND_SET_PLAYER_LIST, playerList);
+    user->notify(S_COMMAND_SET_USER_LIST, userList);
 
-    //Add the player
-    p_ptr->players.insert(player->id(), player);
-    player->setRoom(this);
-    connect(player, &CServerPlayer::speak, this, &CRoom::onPlayerSpeaking);
-    connect(player, &CServerPlayer::disconnected, this, &CRoom::onPlayerDisconnected);
+    //Add the user
+    p_ptr->users.insert(user->id(), user);
+    user->setRoom(this);
+    connect(user, &CServerUser::speak, this, &CRoom::onUserSpeaking);
+    connect(user, &CServerUser::disconnected, this, &CRoom::onUserDisconnected);
 
-    player->notify(S_COMMAND_ENTER_ROOM, config());
-    broadcastNotification(S_COMMAND_ADD_PLAYER, player->briefIntroduction(), player);
-    emit playerAdded(player);
+    user->notify(S_COMMAND_ENTER_ROOM, config());
+    broadcastNotification(S_COMMAND_ADD_USER, user->briefIntroduction(), user);
+    emit userAdded(user);
 }
 
-void CRoom::removePlayer(CServerPlayer *player)
+void CRoom::removeUser(CServerUser *user)
 {
-    if (p_ptr->players.remove(player->id())) {
-        player->disconnect(this);
-        this->disconnect(player);
+    if (p_ptr->users.remove(user->id())) {
+        user->disconnect(this);
+        this->disconnect(user);
 
-        if (player == p_ptr->owner) {
-            if (!p_ptr->players.isEmpty()) {
-                p_ptr->owner = p_ptr->players.first();
+        if (user == p_ptr->owner) {
+            if (!p_ptr->users.isEmpty()) {
+                p_ptr->owner = p_ptr->users.first();
                 //@todo: broadcast new owner
             } else {
                 emit abandoned();
@@ -171,19 +171,19 @@ void CRoom::removePlayer(CServerPlayer *player)
             }
         }
 
-        broadcastNotification(S_COMMAND_REMOVE_PLAYER, player->id(), player);
-        emit playerRemoved(player);
+        broadcastNotification(S_COMMAND_REMOVE_USER, user->id(), user);
+        emit userRemoved(user);
     }
 }
 
-QMap<uint, CServerPlayer *> CRoom::players() const
+QMap<uint, CServerUser *> CRoom::users() const
 {
-    return p_ptr->players;
+    return p_ptr->users;
 }
 
-CServerPlayer *CRoom::findPlayer(int id) const
+CServerUser *CRoom::findUser(int id) const
 {
-    return p_ptr->players.value(id);
+    return p_ptr->users.value(id);
 }
 
 void CRoom::broadcastSystemMessage(const QString &message)
@@ -193,73 +193,73 @@ void CRoom::broadcastSystemMessage(const QString &message)
     broadcastNotification(S_COMMAND_SPEAK, data);
 }
 
-void CRoom::broadcastRequest(const QList<CServerPlayer *> &targets)
+void CRoom::broadcastRequest(const QList<CServerUser *> &targets)
 {
     //@to-do: Add request timeout into the configuration of the room
     int timeout = 15;//seconds
     broadcastRequest(targets, timeout);
 }
 
-void CRoom::broadcastRequest(const QList<CServerPlayer *> &targets, int timeout)
+void CRoom::broadcastRequest(const QList<CServerUser *> &targets, int timeout)
 {
-    foreach (CServerPlayer *player, targets)
-        player->executeRequest(timeout);
+    foreach (CServerUser *user, targets)
+        user->executeRequest(timeout);
 }
 
-CServerPlayer *CRoom::broadcastRacingRequest(const QList<CServerPlayer *> &targets, int timeout)
+CServerUser *CRoom::broadcastRacingRequest(const QList<CServerUser *> &targets, int timeout)
 {
     p_ptr->racingRequestCandidates = targets;
 
-    foreach (CServerPlayer *player, targets)
-        connect(player, &CServerPlayer::replyReady, this, &CRoom::onPlayerReplyReady);
+    foreach (CServerUser *user, targets)
+        connect(user, &CServerUser::replyReady, this, &CRoom::onUserReplyReady);
 
-    foreach (CServerPlayer *player, targets)
-        player->executeRequest(timeout);
+    foreach (CServerUser *user, targets)
+        user->executeRequest(timeout);
 
     p_ptr->racingRequestSemaphore.acquire();
     return p_ptr->racingRequestWinner;
 }
 
-void CRoom::onPlayerReplyReady()
+void CRoom::onUserReplyReady()
 {
-    p_ptr->racingRequestWinner = qobject_cast<CServerPlayer *>(sender());
+    p_ptr->racingRequestWinner = qobject_cast<CServerUser *>(sender());
 
-    foreach (CServerPlayer *player, p_ptr->racingRequestCandidates) {
-        if (player == p_ptr->racingRequestWinner)
+    foreach (CServerUser *user, p_ptr->racingRequestCandidates) {
+        if (user == p_ptr->racingRequestWinner)
             continue;
 
-        player->cancelRequest();
-        disconnect(player, &CServerPlayer::replyReady, this, &CRoom::onPlayerReplyReady);
+        user->cancelRequest();
+        disconnect(user, &CServerUser::replyReady, this, &CRoom::onUserReplyReady);
     }
 
     p_ptr->racingRequestSemaphore.release();
 }
 
-void CRoom::broadcastNotification(const QList<CServerPlayer *> &targets, int command, const QVariant &data)
+void CRoom::broadcastNotification(const QList<CServerUser *> &targets, int command, const QVariant &data)
 {
-    foreach (CServerPlayer *player, targets)
-        player->notify(command, data);
+    foreach (CServerUser *user, targets)
+        user->notify(command, data);
 }
 
-void CRoom::broadcastNotification(int command, const QVariant &data, CServerPlayer *except)
+void CRoom::broadcastNotification(int command, const QVariant &data, CServerUser *except)
 {
-    foreach (CServerPlayer *player, p_ptr->players) {
-        if (player != except)
-            player->notify(command, data);
+    foreach (CServerUser *user, p_ptr->users) {
+        if (user != except)
+            user->notify(command, data);
     }
 }
 
-void CRoom::onPlayerSpeaking(const QString &message)
+void CRoom::onUserSpeaking(const QString &message)
 {
-    CServerPlayer *player = qobject_cast<CServerPlayer *>(sender());
+    CServerUser *user = qobject_cast<CServerUser *>(sender());
     QVariantList arguments;
-    arguments << player->id();
+    arguments << user->id();
     arguments << message;
-    broadcastNotification(S_COMMAND_SPEAK, arguments, player);
+    broadcastNotification(S_COMMAND_SPEAK, arguments, user);
 }
 
-void CRoom::onPlayerDisconnected()
+void CRoom::onUserDisconnected()
 {
-    CServerPlayer *player = qobject_cast<CServerPlayer *>(sender());
-    removePlayer(player);
+    CServerUser *user = qobject_cast<CServerUser *>(sender());
+    removeUser(user);
 }

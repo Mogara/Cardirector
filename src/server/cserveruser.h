@@ -17,10 +17,10 @@
     Mogara
 *********************************************************************/
 
-#ifndef CSERVERPLAYER_H
-#define CSERVERPLAYER_H
+#ifndef CSERVERUSER_H
+#define CSERVERUSER_H
 
-#include "cabstractplayer.h"
+#include "cabstractuser.h"
 
 #include <QObject>
 #include <QHostAddress>
@@ -32,16 +32,16 @@ class CRoom;
 class CServer;
 class CTcpSocket;
 
-class CServerPlayerPrivate;
-class MCD_EXPORT CServerPlayer : public CAbstractPlayer
+class CServerUserPrivate;
+class MCD_EXPORT CServerUser : public CAbstractUser
 {
     Q_OBJECT
 
     friend class CRoom;
 
 public:
-    CServerPlayer(CTcpSocket *socket, CServer *server = 0);
-    ~CServerPlayer();
+    CServerUser(CTcpSocket *socket, CServer *server = 0);
+    ~CServerUser();
 
     void setSocket(CTcpSocket *socket);
 
@@ -92,13 +92,13 @@ protected:
     void handleUnknownPacket(const QByteArray &packet);
 
 private:
-    C_DECLARE_INITIALIZER(CServerPlayer)
+    C_DECLARE_INITIALIZER(CServerUser)
 
-    C_DISABLE_COPY(CServerPlayer)
-    C_DECLARE_PRIVATE(CServerPlayer)
-    CServerPlayerPrivate *p_ptr;
+    C_DISABLE_COPY(CServerUser)
+    C_DECLARE_PRIVATE(CServerUser)
+    CServerUserPrivate *p_ptr;
 };
 
 MCD_END_NAMESPACE
 
-#endif // CSERVERPLAYER_H
+#endif // CSERVERUSER_H
