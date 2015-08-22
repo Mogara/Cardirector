@@ -107,11 +107,12 @@ QHash<uint, CServerUser *> CServer::users() const
     return p_ptr->users;
 }
 
-void CServer::createRoom(CServerUser *owner, const QVariant &config)
+void CServer::createRoom(CServerUser *owner, const QString &name, uint capacity)
 {
-    C_UNUSED(config);
     CRoom *room = new CRoom(this);
     connect(room, &CRoom::abandoned, this, &CServer::onRoomAbandoned);
+    room->setName(name);
+    room->setCapacity(capacity);
     room->setOwner(owner);
     room->addUser(owner);
     p_ptr->rooms.insert(room->id(), room);

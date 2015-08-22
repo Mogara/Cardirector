@@ -50,7 +50,7 @@ public:
     CServerUser *findUser(uint id);
     QHash<uint, CServerUser *> users() const;
 
-    void createRoom(CServerUser *owner, const QVariant &config);
+    void createRoom(CServerUser *owner, const QString &name, uint capacity);
     CRoom *findRoom(uint id) const;
     QHash<uint, CRoom *> rooms() const;
     CRoom *lobby() const;
