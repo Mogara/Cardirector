@@ -253,7 +253,12 @@ void CServerUser::CreateRoomCommand(QObject *receiver, const QVariant &data)
 {
     CServerUser *user = qobject_cast<CServerUser *>(receiver);
     CServer *server = user->server();
-    server->createRoom(user, data);
+
+    QVariantMap config = data.toMap();
+    QString name = config.value("name").toString();
+    uint capacity = config.value("capacity", 0).toUInt();
+
+    server->createRoom(user, name, capacity);
 }
 
 void CServerUser::EnterRoomCommand(QObject *receiver, const QVariant &data)
