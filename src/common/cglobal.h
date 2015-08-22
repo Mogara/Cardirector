@@ -94,4 +94,10 @@ static classname##Initializer __initializer;
 #  define MCD_FULLSCREEN_ONLY
 #endif
 
+#define C_REGISTER_QMLTYPE(uri, versionMajor, versionMinor, qmlName) static void __cRegisterQmlType()\
+{\
+    qmlRegisterType<qmlName>(uri, versionMajor, versionMinor, #qmlName);\
+}\
+Q_COREAPP_STARTUP_FUNCTION(__cRegisterQmlType)
+
 #endif // CGLOBAL_H
