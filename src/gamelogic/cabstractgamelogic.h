@@ -42,6 +42,9 @@ public:
 
     void start(Priority priority = InheritPriority);
 
+signals:
+    void gameOver();
+
 protected:
     virtual CAbstractPlayer *createPlayer() = 0;
 
