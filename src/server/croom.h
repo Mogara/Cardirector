@@ -91,6 +91,8 @@ protected:
     void onUserDisconnected();
     void onUserReplyReady();
 
+    void onGameOver();
+
 private:
     C_DISABLE_COPY(CRoom)
     C_DECLARE_PRIVATE(CRoom)

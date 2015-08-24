@@ -154,7 +154,14 @@ bool CRoom::isFull() const
 
 void CRoom::setGameLogic(CAbstractGameLogic *gameLogic)
 {
+    if (p_ptr->gameLogic != NULL && p_ptr->gameLogic->isRunning())
+        return;
+
+    if (p_ptr->gameLogic != NULL)
+        gameLogic->deleteLater();
+
     p_ptr->gameLogic = gameLogic;
+    connect(gameLogic, &CAbstractGameLogic::gameOver, this, &CRoom::onGameOver);
 }
 
 CAbstractGameLogic *CRoom::gameLogic() const
@@ -311,6 +318,14 @@ void CRoom::onUserReplyReady()
     }
 
     p_ptr->racingRequestSemaphore.release();
+}
+
+void CRoom::onGameOver()
+{
+    foreach (uint id, p_ptr->robots.keys()) {
+        removeRobot(p_ptr->robots.value(id));
+        p_ptr->server->killRobot(id);
+    }
 }
 
 void CRoom::broadcastNotification(const QList<CServerUser *> &targets, int command, const QVariant &data)
