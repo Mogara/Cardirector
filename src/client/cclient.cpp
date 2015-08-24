@@ -118,6 +118,11 @@ void CClient::speakToServer(const QString &message)
     return p_ptr->router->notify(S_COMMAND_SPEAK, message);
 }
 
+void CClient::addRobot()
+{
+    p_ptr->router->notify(S_COMMAND_ADD_ROBOT);
+}
+
 void CClient::startGame()
 {
     p_ptr->router->notify(S_COMMAND_GAME_START);

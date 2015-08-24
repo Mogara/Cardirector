@@ -273,6 +273,16 @@ void CServerUser::GameStartCommand(QObject *receiver, const QVariant &)
         gameLogic->start();
 }
 
+void CServerUser::AddRobotCommand(QObject *receiver, const QVariant &)
+{
+    CServerUser *user = qobject_cast<CServerUser *>(receiver);
+    CRoom *room = user->room();
+    if (!room->isFull()) {
+        CServer *server = user->server();
+        server->createRobot(room);
+    }
+}
+
 void CServerUser::handleUnknownPacket(const QByteArray &packet)
 {
     //Handle requests from a browser
@@ -313,5 +323,6 @@ void CServerUser::Init()
     AddCallback(S_COMMAND_NETWORK_DELAY, &NetworkDelayCommand);
     AddCallback(S_COMMAND_SET_ROOM_LIST, &SetRoomListCommand);
     AddCallback(S_COMMAND_GAME_START, &GameStartCommand);
+    AddCallback(S_COMMAND_ADD_ROBOT, &AddRobotCommand);
 }
 C_INITIALIZE_CLASS(CServerUser)

@@ -49,6 +49,7 @@ public:
     void exitRoom();
     void speakToServer(const QString &message);
 
+    void addRobot();
     void startGame();
 
     const CClientUser *findUser(uint id) const;
