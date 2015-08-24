@@ -28,5 +28,11 @@ CRobot::CRobot(CRoom *room)
 {
     room->addRobot(this);
     setId(server()->newUserId());
+    setScreenName(room->newRobotName());
+}
+
+CRobot::~CRobot()
+{
+
 }
 
