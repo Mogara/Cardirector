@@ -25,6 +25,7 @@
 MCD_BEGIN_NAMESPACE
 
 class CRoom;
+class CRobot;
 class CServer;
 class CServerUser;
 
@@ -46,6 +47,7 @@ public:
     virtual bool controlledByClient() const = 0;
 
     CServerUser *toServerUser();
+    CRobot *toRobot();
 
 private:
     C_DISABLE_COPY(CAbstractServerUser)

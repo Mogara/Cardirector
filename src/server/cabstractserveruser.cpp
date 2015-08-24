@@ -18,6 +18,7 @@
 *********************************************************************/
 
 #include "cabstractserveruser.h"
+#include "crobot.h"
 #include "cserver.h"
 #include "cserveruser.h"
 
@@ -68,9 +69,11 @@ QVariant CAbstractServerUser::briefIntroduction() const
 
 CServerUser *CAbstractServerUser::toServerUser()
 {
-    if (!controlledByClient())
-        return NULL;
-    else
-        return qobject_cast<CServerUser *>(this);
+    return qobject_cast<CServerUser *>(this);
+}
+
+CRobot *CAbstractServerUser::toRobot()
+{
+    return qobject_cast<CRobot *>(this);
 }
 
