@@ -53,6 +53,7 @@ public:
 
     uint capacity() const;
     void setCapacity(uint capacity);
+    bool isFull() const;
 
     void setGameLogic(CAbstractGameLogic *gameLogic);
     CAbstractGameLogic *gameLogic() const;

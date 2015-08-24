@@ -147,6 +147,11 @@ void CRoom::setCapacity(uint capacity)
     p_ptr->capacity = capacity;
 }
 
+bool CRoom::isFull() const
+{
+    return p_ptr->users.size() >= p_ptr->capacity;
+}
+
 void CRoom::setGameLogic(CAbstractGameLogic *gameLogic)
 {
     p_ptr->gameLogic = gameLogic;
@@ -159,6 +164,9 @@ CAbstractGameLogic *CRoom::gameLogic() const
 
 void CRoom::addHumanUser(CServerUser *user)
 {
+    if (isFull())
+        return;
+
     //Exit the previous room
     CRoom *prevRoom = user->room();
     if (prevRoom)
