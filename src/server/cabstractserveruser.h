@@ -17,40 +17,42 @@
     Mogara
 *********************************************************************/
 
-#include "cabstractgamelogic.h"
-#include "cabstractuser.h"
-#include "croom.h"
+#ifndef CABSTRACTSERVERUSER_H
+#define CABSTRACTSERVERUSER_H
 
-class CAbstractGameLogicPrivate
+#include "cabstractuser.h"
+
+MCD_BEGIN_NAMESPACE
+
+class CRoom;
+class CServer;
+class CServerUser;
+
+class CAbstractServerUserPrivate;
+class MCD_EXPORT CAbstractServerUser : public CAbstractUser
 {
+    Q_OBJECT
+
 public:
-    CRoom *room;
-    QMap<uint, CAbstractPlayer *> players;
+    explicit CAbstractServerUser(CServer *server = 0);
+    ~CAbstractServerUser();
+
+    CServer *server() const;
+    CRoom *room() const;
+    void setRoom(CRoom *room);
+
+    QVariant briefIntroduction() const;
+
+    virtual bool controlledByClient() const = 0;
+
+    CServerUser *toServerUser();
+
+private:
+    C_DISABLE_COPY(CAbstractServerUser)
+    C_DECLARE_PRIVATE(CAbstractServerUser)
+    CAbstractServerUserPrivate *p_ptr;
 };
 
-CAbstractGameLogic::CAbstractGameLogic(CRoom *parent)
-    : QThread(parent)
-    , p_ptr(new CAbstractGameLogicPrivate)
-{
-    p_ptr->room = parent;
-}
+MCD_END_NAMESPACE
 
-CAbstractGameLogic::~CAbstractGameLogic()
-{
-    delete p_ptr;
-}
-
-CRoom *CAbstractGameLogic::room() const
-{
-    return p_ptr->room;
-}
-
-void CAbstractGameLogic::start(Priority priority)
-{
-    QMapIterator<uint, CAbstractServerUser *> iter(p_ptr->room->users());
-    while (iter.hasNext()) {
-        iter.next();
-        p_ptr->players.insert(iter.key(), createPlayer());
-    }
-    QThread::start(priority);
-}
+#endif // CABSTRACTSERVERUSER_H

@@ -63,7 +63,9 @@ SOURCES += \
     src/ui/cabstractui.cpp \
     src/ui/cmainwindow.cpp \
     src/ui/cqmlengine.cpp \
-    src/server/cserveruser.cpp
+    src/server/cserveruser.cpp \
+    src/server/cabstractserveruser.cpp \
+    src/server/crobot.cpp
 
 HEADERS += \
     src/ai/cabstractai.h \
@@ -99,7 +101,9 @@ HEADERS += \
     src/ui/cabstractui.h \
     src/ui/cmainwindow.h \
     src/ui/cqmlengine.h \
-    src/cpch.h
+    src/cpch.h \
+    src/server/cabstractserveruser.h \
+    src/server/crobot.h
 
 QML_FILES += Gui/Dialog.qml \
              Gui/MetroButton.qml \

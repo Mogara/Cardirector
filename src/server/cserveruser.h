@@ -20,7 +20,7 @@
 #ifndef CSERVERUSER_H
 #define CSERVERUSER_H
 
-#include "cabstractuser.h"
+#include "cabstractserveruser.h"
 
 #include <QObject>
 #include <QHostAddress>
@@ -28,26 +28,18 @@
 MCD_BEGIN_NAMESPACE
 
 class CAbstractPacketParser;
-class CRoom;
-class CServer;
 class CTcpSocket;
 
 class CServerUserPrivate;
-class MCD_EXPORT CServerUser : public CAbstractUser
+class MCD_EXPORT CServerUser : public CAbstractServerUser
 {
     Q_OBJECT
-
-    friend class CRoom;
 
 public:
     CServerUser(CTcpSocket *socket, CServer *server = 0);
     ~CServerUser();
 
     void setSocket(CTcpSocket *socket);
-
-    CServer *server() const;
-    CRoom *room() const;
-    void setRoom(CRoom *room);
 
     void signup(const QString &username, const QString &password, const QString &screenName, const QString &avatar);
     void login(const QString &username, const QString &password);
@@ -68,10 +60,10 @@ public:
     QVariant waitForReply();
     QVariant waitForReply(int timeout);
 
-    QVariant briefIntroduction() const;
-
     static void AddInteraction(int command, void (*callback)(QObject *, const QVariant &));
     static void AddCallback(int command, void (*callback)(QObject *, const QVariant &));
+
+    bool controlledByClient() const {    return true;    }
 
 signals:
     void disconnected();

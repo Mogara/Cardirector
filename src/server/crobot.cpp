@@ -17,40 +17,16 @@
     Mogara
 *********************************************************************/
 
-#include "cabstractgamelogic.h"
-#include "cabstractuser.h"
+#include "crobot.h"
 #include "croom.h"
+#include "cserver.h"
 
-class CAbstractGameLogicPrivate
-{
-public:
-    CRoom *room;
-    QMap<uint, CAbstractPlayer *> players;
-};
+//class CRobotPrivate;
 
-CAbstractGameLogic::CAbstractGameLogic(CRoom *parent)
-    : QThread(parent)
-    , p_ptr(new CAbstractGameLogicPrivate)
+CRobot::CRobot(CRoom *room)
+    : CAbstractServerUser(room->server())
 {
-    p_ptr->room = parent;
+    room->addRobot(this);
+    setId(server()->newUserId());
 }
 
-CAbstractGameLogic::~CAbstractGameLogic()
-{
-    delete p_ptr;
-}
-
-CRoom *CAbstractGameLogic::room() const
-{
-    return p_ptr->room;
-}
-
-void CAbstractGameLogic::start(Priority priority)
-{
-    QMapIterator<uint, CAbstractServerUser *> iter(p_ptr->room->users());
-    while (iter.hasNext()) {
-        iter.next();
-        p_ptr->players.insert(iter.key(), createPlayer());
-    }
-    QThread::start(priority);
-}

@@ -26,6 +26,8 @@
 #include <QVariant>
 
 class CAbstractGameLogic;
+class CAbstractServerUser;
+class CRobot;
 class CServer;
 class CServerUser;
 
@@ -55,10 +57,17 @@ public:
     void setGameLogic(CAbstractGameLogic *gameLogic);
     CAbstractGameLogic *gameLogic() const;
 
-    void addUser(CServerUser *user);
-    void removeUser(CServerUser *user);
-    QMap<uint, CServerUser *> users() const;
-    CServerUser *findUser(int id) const;
+    void addHumanUser(CServerUser *user);
+    void removeHumanUser(CServerUser *user);
+    void addRobot(CRobot *robot);
+    void removeRobot(CRobot *robot);
+
+    CAbstractServerUser *findUser(uint id) const;
+    QMap<uint, CAbstractServerUser *> users() const;
+    CServerUser *findHumanUser(uint id) const;
+    QMap<uint, CServerUser *> humanUsers() const;
+    CRobot *findRobot(uint id) const;
+    QMap<uint, CRobot *> robots();
 
     void broadcastSystemMessage(const QString &message);
 
@@ -70,8 +79,10 @@ public:
 
 signals:
     void abandoned();
-    void userAdded(CServerUser *user);
-    void userRemoved(CServerUser *user);
+    void humanUserAdded(CServerUser *user);
+    void humanUserRemoved(CServerUser *user);
+    void robotAdded(CRobot *robot);
+    void robotRemoved(CRobot *robot);
 
 protected:
     //Slots for CServerUser. Do not call them directly.

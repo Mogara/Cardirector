@@ -17,40 +17,30 @@
     Mogara
 *********************************************************************/
 
-#include "cabstractgamelogic.h"
-#include "cabstractuser.h"
-#include "croom.h"
+#ifndef CROBOT_H
+#define CROBOT_H
 
-class CAbstractGameLogicPrivate
+#include "cabstractserveruser.h"
+
+MCD_BEGIN_NAMESPACE
+
+class CRobotPrivate;
+class MCD_EXPORT CRobot : public CAbstractServerUser
 {
+    Q_OBJECT
+
 public:
-    CRoom *room;
-    QMap<uint, CAbstractPlayer *> players;
+    explicit CRobot(CRoom *room);
+    ~CRobot();
+
+    bool controlledByClient() const {    return false;    }
+
+private:
+    C_DISABLE_COPY(CRobot)
+    C_DECLARE_PRIVATE(CRobot)
+    CRobotPrivate *p_ptr;
 };
 
-CAbstractGameLogic::CAbstractGameLogic(CRoom *parent)
-    : QThread(parent)
-    , p_ptr(new CAbstractGameLogicPrivate)
-{
-    p_ptr->room = parent;
-}
+MCD_END_NAMESPACE
 
-CAbstractGameLogic::~CAbstractGameLogic()
-{
-    delete p_ptr;
-}
-
-CRoom *CAbstractGameLogic::room() const
-{
-    return p_ptr->room;
-}
-
-void CAbstractGameLogic::start(Priority priority)
-{
-    QMapIterator<uint, CAbstractServerUser *> iter(p_ptr->room->users());
-    while (iter.hasNext()) {
-        iter.next();
-        p_ptr->players.insert(iter.key(), createPlayer());
-    }
-    QThread::start(priority);
-}
+#endif // CROBOT_H

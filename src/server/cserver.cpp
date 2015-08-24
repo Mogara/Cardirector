@@ -17,14 +17,15 @@
     Mogara
 *********************************************************************/
 
-#include "cpch.h"
+#include "cabstractserveruser.h"
+#include "cjsonpacketparser.h"
+#include "cprotocol.h"
+#include "crobot.h"
 #include "croom.h"
 #include "cserver.h"
 #include "cserveruser.h"
 #include "ctcpserver.h"
 #include "ctcpsocket.h"
-#include "cprotocol.h"
-#include "cjsonpacketparser.h"
 
 class CServerPrivate
 {
@@ -34,9 +35,41 @@ public:
     CTcpServer *server;
     CAbstractPacketParser *parser;
 
-    QHash<uint, CServerUser *> users;
+    QHash<uint, CServerUser *> humanUsers;
+    QHash<uint, CRobot *> robots;
+    QHash<uint, CAbstractServerUser *> users;
     CRoom *lobby;
     QHash<uint, CRoom *> rooms;
+
+    void insertHumanUser(uint id, CServerUser *user)
+    {
+        humanUsers.insert(id, user);
+        users.insert(id, user);
+    }
+    bool removeHumanUser(uint id)
+    {
+        humanUsers.remove(id);
+
+        if (users.remove(id))
+            return true;
+
+        return false;
+    }
+
+    void insertRobot(uint id, CRobot *robot)
+    {
+        robots.insert(id, robot);
+        users.insert(id, robot);
+    }
+    bool removeRobot(uint id)
+    {
+        robots.remove(id);
+
+        if (users.remove(id))
+            return true;
+
+        return false;
+    }
 };
 
 CServer::CServer(QObject *parent)
@@ -46,7 +79,7 @@ CServer::CServer(QObject *parent)
     p_ptr->parser = new CJsonPacketParser;
     p_ptr->acceptMultipleClientsBehindOneIp = true;
     p_ptr->lobby = new CRoom(this);
-    connect(p_ptr->lobby, &CRoom::userAdded, this, &CServer::updateRoomList);
+    connect(p_ptr->lobby, &CRoom::humanUserAdded, this, &CServer::updateRoomList);
     p_ptr->server = new CTcpServer(this);
     connect(p_ptr->server, &CTcpServer::newSocket, this, &CServer::handleNewConnection);
 }
@@ -59,7 +92,7 @@ CServer::~CServer()
 
 void CServer::setPacketParser(CAbstractPacketParser *parser)
 {
-    if (p_ptr->users.isEmpty()) {
+    if (p_ptr->humanUsers.isEmpty()) {
         delete p_ptr->parser;
         p_ptr->parser = parser;
     } else {
@@ -97,14 +130,59 @@ bool CServer::acceptMultipleClientsBehindOneIp() const
     return p_ptr->acceptMultipleClientsBehindOneIp;
 }
 
-CServerUser *CServer::findUser(uint id)
+uint CServer::newUserId() const
+{
+    static uint id = 0;
+    ++id;
+
+    return id;
+}
+
+void CServer::createRobot(CRoom *room)
+{
+    CRobot *robot = new CRobot(room);
+
+    p_ptr->insertRobot(robot->id(), robot);
+    emit userAdded(robot);
+}
+
+void CServer::killRobot(uint id)
+{
+    CRobot *robot = p_ptr->robots.value(id);
+    if (robot != NULL) {
+        p_ptr->removeRobot(id);
+        robot->deleteLater();
+    }
+}
+
+CAbstractServerUser *CServer::findUser(uint id) const
 {
     return p_ptr->users.value(id);
 }
 
-QHash<uint, CServerUser *> CServer::users() const
+QHash<uint, CAbstractServerUser *> CServer::users() const
 {
     return p_ptr->users;
+}
+
+CServerUser *CServer::findHumanUser(uint id) const
+{
+    return p_ptr->humanUsers.value(id);
+}
+
+QHash<uint, CServerUser *> CServer::humanUsers() const
+{
+    return p_ptr->humanUsers;
+}
+
+CRobot *CServer::findRobot(uint id) const
+{
+    return p_ptr->robots.value(id);
+}
+
+QHash<uint, CRobot *> CServer::robots() const
+{
+    return p_ptr->robots;
 }
 
 void CServer::createRoom(CServerUser *owner, const QString &name, uint capacity)
@@ -114,7 +192,7 @@ void CServer::createRoom(CServerUser *owner, const QString &name, uint capacity)
     room->setName(name);
     room->setCapacity(capacity);
     room->setOwner(owner);
-    room->addUser(owner);
+    room->addHumanUser(owner);
     p_ptr->rooms.insert(room->id(), room);
     emit roomCreated(room);
 }
@@ -144,7 +222,7 @@ void CServer::updateRoomList(CServerUser *user)
 
 void CServer::broadcastNotification(int command, const QVariant &data, CServerUser *except)
 {
-    foreach (CServerUser *user, p_ptr->users) {
+    foreach (CServerUser *user, p_ptr->humanUsers) {
         if (user != except)
             user->notify(command, data);
     }
@@ -179,7 +257,8 @@ void CServer::onUserDisconnected()
     CServerUser *user = qobject_cast<CServerUser *>(sender());
     //@todo: check the state and enable reconnection
     //if (user && user->state() == CServerUser::LoggedOut)
-    p_ptr->users.remove(user->id());
+    uint id = user->id();
+    p_ptr->removeHumanUser(id);
     user->deleteLater();
 }
 
@@ -187,9 +266,10 @@ void CServer::onUserStateChanged()
 {
     CServerUser *user = qobject_cast<CServerUser *>(sender());
     if (user->state() == CServerUser::Online) {
-        if (!p_ptr->users.contains(user->id())) {
-            p_ptr->users.insert(user->id(), user);
-            p_ptr->lobby->addUser(user);
+        if (!p_ptr->humanUsers.contains(user->id())) {
+            uint id = user->id();
+            p_ptr->insertHumanUser(id, user);
+            p_ptr->lobby->addHumanUser(user);
             emit userAdded(user);
         }
     }

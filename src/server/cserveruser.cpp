@@ -35,8 +35,6 @@ class CServerUserPrivate
 {
 public:
     CPacketRouter *router;
-    CServer *server;
-    CRoom *room;
 
     int requestCommand;
     QVariant requestData;
@@ -46,10 +44,9 @@ public:
 };
 
 CServerUser::CServerUser(CTcpSocket *socket, CServer *server)
-    : CAbstractUser(server)
+    : CAbstractServerUser(server)
 {
     p_ptr = new CServerUserPrivate;
-    p_ptr->server = server;
 
     p_ptr->router = new CPacketRouter(this, socket, server->packetParser());
     p_ptr->router->setInteractions(&interactions);
@@ -58,7 +55,6 @@ CServerUser::CServerUser(CTcpSocket *socket, CServer *server)
     connect(p_ptr->router, &CPacketRouter::replyReady, this, &CServerUser::replyReady);
     connect(socket, &CTcpSocket::disconnected, this, &CServerUser::disconnected);
 
-    p_ptr->room = NULL;
     p_ptr->networkDelayTestId = 0;
 }
 
@@ -72,28 +68,11 @@ void CServerUser::setSocket(CTcpSocket *socket)
     p_ptr->router->setSocket(socket);
 }
 
-CServer *CServerUser::server() const
-{
-    return p_ptr->server;
-}
-
-CRoom *CServerUser::room() const
-{
-    return p_ptr->room;
-}
-
-void CServerUser::setRoom(CRoom *room)
-{
-    p_ptr->room = room;
-}
-
 void CServerUser::signup(const QString &username, const QString &password, const QString &screenName, const QString &avatar)
 {
     //@to-do: check if the username is duplicated in the database.
     //@to-do: encrypt the password
-    static uint userId = 0;
-    userId++;
-    setId(userId);
+    setId(server()->newUserId());
 
     setScreenName(screenName);
     setAvatar(avatar);
@@ -174,15 +153,6 @@ QVariant CServerUser::waitForReply()
 QVariant CServerUser::waitForReply(int timeout)
 {
     return p_ptr->router->waitForReply(timeout);
-}
-
-QVariant CServerUser::briefIntroduction() const
-{
-    QVariantList arguments;
-    arguments << id();
-    arguments << screenName();
-    arguments << avatar();
-    return arguments;
 }
 
 void CServerUser::AddInteraction(int command, void (*callback)(QObject *, const QVariant &))
@@ -268,12 +238,12 @@ void CServerUser::EnterRoomCommand(QObject *receiver, const QVariant &data)
 
     if (data.isNull()) {
         CRoom *lobby = server->lobby();
-        lobby->addUser(user);
+        lobby->addHumanUser(user);
     } else {
         uint roomId = data.toUInt();
         CRoom *room = server->findRoom(roomId);
         if (room)
-            room->addUser(user);
+            room->addHumanUser(user);
     }
 }
 
