@@ -63,6 +63,8 @@ public:
     void addRobot(CRobot *robot);
     void removeRobot(CRobot *robot);
 
+    QString newRobotName() const;
+
     CAbstractServerUser *findUser(uint id) const;
     QMap<uint, CAbstractServerUser *> users() const;
     CServerUser *findHumanUser(uint id) const;

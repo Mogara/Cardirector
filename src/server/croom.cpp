@@ -44,6 +44,8 @@ public:
     QList<CServerUser *> racingRequestCandidates;
     CServerUser *racingRequestWinner;
 
+    char robotNameCode;
+
     void insertHumanUser(uint id, CServerUser *user)
     {
         humanUsers.insert(id, user);
@@ -86,6 +88,7 @@ CRoom::CRoom(CServer *server)
     p_ptr->gameLogic = NULL;
     p_ptr->owner = NULL;
     p_ptr->capacity = 0;
+    p_ptr->robotNameCode = 'A';
 }
 
 CRoom::~CRoom()
@@ -241,6 +244,14 @@ void CRoom::removeRobot(CRobot *robot)
     }
 }
 
+QString CRoom::newRobotName() const
+{
+    char code = p_ptr->robotNameCode;
+    p_ptr->robotNameCode = p_ptr->robotNameCode + 1;
+
+    return tr("Robot %1").arg(code);
+}
+
 CAbstractServerUser *CRoom::findUser(uint id) const
 {
     return p_ptr->users.value(id);
@@ -326,6 +337,7 @@ void CRoom::onGameOver()
         removeRobot(p_ptr->robots.value(id));
         p_ptr->server->killRobot(id);
     }
+    p_ptr->robotNameCode = 'A';
 }
 
 void CRoom::broadcastNotification(const QList<CServerUser *> &targets, int command, const QVariant &data)
