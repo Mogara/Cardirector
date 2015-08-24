@@ -26,9 +26,10 @@
 CRobot::CRobot(CRoom *room)
     : CAbstractServerUser(room->server())
 {
-    room->addRobot(this);
     setId(server()->newUserId());
     setScreenName(room->newRobotName());
+
+    room->addRobot(this);
 }
 
 CRobot::~CRobot()
