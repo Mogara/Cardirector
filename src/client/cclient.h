@@ -73,6 +73,7 @@ public:
 signals:
     void connected();
     void loggedIn();
+    void gameStarted();
     void userAdded(const CClientUser *user);
     void userRemoved(const CClientUser *user);
     void roomListUpdated(const QVariant &list);
@@ -91,6 +92,7 @@ protected:
     static void SpeakCommand(QObject *receiver, const QVariant &data);
     static void EnterRoomCommand(QObject *receiver, const QVariant &data);
     static void NetworkDelayCommand(QObject *receiver, const QVariant &data);
+    static void StartGameCommand(QObject *receiver, const QVariant &data);
 
 private:
     C_DECLARE_INITIALIZER(CClient)

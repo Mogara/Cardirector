@@ -241,6 +241,14 @@ QMap<uint, CRobot *> CRoom::robots()
     return p_ptr->robots;
 }
 
+void CRoom::startGame()
+{
+    if (p_ptr->gameLogic && !p_ptr->gameLogic->isRunning()) {
+        broadcastNotification(S_COMMAND_GAME_START);
+        p_ptr->gameLogic->start();
+    }
+}
+
 void CRoom::broadcastSystemMessage(const QString &message)
 {
     QVariantList data;

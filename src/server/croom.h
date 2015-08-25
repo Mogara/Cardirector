@@ -71,6 +71,8 @@ public:
     CRobot *findRobot(uint id) const;
     QMap<uint, CRobot *> robots();
 
+    void startGame();
+
     void broadcastSystemMessage(const QString &message);
 
     void broadcastRequest(const QList<CServerUser *> &targets);
