@@ -37,8 +37,6 @@ class MCD_EXPORT CAbstractGameLogic : public QThread
 {
     Q_OBJECT
 
-    friend class CAbstractPlayer;
-
 public:
     explicit CAbstractGameLogic(CRoom *parent = 0);
     ~CAbstractGameLogic();
@@ -52,8 +50,6 @@ signals:
     void gameOver();
 
 protected:
-    uint createPlayerId();
-
     //Parent must be the game logic
     virtual CAbstractPlayer *createPlayer(CServerUser *user) = 0;
     virtual CAbstractPlayer *createPlayer(CRobot *user) = 0;

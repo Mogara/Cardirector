@@ -75,10 +75,3 @@ void CAbstractGameLogic::start(Priority priority)
 
     QThread::start(priority);
 }
-
-uint CAbstractGameLogic::createPlayerId()
-{
-    static uint playerId = 0;
-    playerId++;
-    return playerId;
-}
