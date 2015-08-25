@@ -31,6 +31,8 @@ public:
 CAbstractPlayer::CAbstractPlayer(QObject *parent)
     : QObject(parent)
 {
+    p_ptr = new CAbstractPlayerPrivate;
+
     p_ptr->id = 0;
 }
 
