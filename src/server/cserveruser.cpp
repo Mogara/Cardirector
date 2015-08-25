@@ -266,7 +266,7 @@ void CServerUser::SetRoomListCommand(QObject *receiver, const QVariant &)
     server->updateRoomList(user);
 }
 
-void CServerUser::GameStartCommand(QObject *receiver, const QVariant &)
+void CServerUser::StartGameCommand(QObject *receiver, const QVariant &)
 {
     CServerUser *user = qobject_cast<CServerUser *>(receiver);
     CRoom *room = user->room();
@@ -323,7 +323,7 @@ void CServerUser::Init()
     AddCallback(S_COMMAND_ENTER_ROOM, &EnterRoomCommand);
     AddCallback(S_COMMAND_NETWORK_DELAY, &NetworkDelayCommand);
     AddCallback(S_COMMAND_SET_ROOM_LIST, &SetRoomListCommand);
-    AddCallback(S_COMMAND_GAME_START, &GameStartCommand);
+    AddCallback(S_COMMAND_START_GAME, &StartGameCommand);
     AddCallback(S_COMMAND_ADD_ROBOT, &AddRobotCommand);
 }
 C_INITIALIZE_CLASS(CServerUser)

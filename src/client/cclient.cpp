@@ -125,7 +125,7 @@ void CClient::addRobot()
 
 void CClient::startGame()
 {
-    p_ptr->router->notify(S_COMMAND_GAME_START);
+    p_ptr->router->notify(S_COMMAND_START_GAME);
 }
 
 const CClientUser *CClient::findUser(uint id) const
@@ -303,6 +303,6 @@ void CClient::Init()
     AddCallback(S_COMMAND_SET_ROOM_LIST, &SetRoomListCommand);
     AddCallback(S_COMMAND_ENTER_ROOM, &EnterRoomCommand);
     AddCallback(S_COMMAND_NETWORK_DELAY, &NetworkDelayCommand);
-    AddCallback(S_COMMAND_GAME_START, &StartGameCommand);
+    AddCallback(S_COMMAND_START_GAME, &StartGameCommand);
 }
 C_INITIALIZE_CLASS(CClient)

@@ -244,7 +244,7 @@ QMap<uint, CRobot *> CRoom::robots()
 void CRoom::startGame()
 {
     if (p_ptr->gameLogic && !p_ptr->gameLogic->isRunning()) {
-        broadcastNotification(S_COMMAND_GAME_START);
+        broadcastNotification(S_COMMAND_START_GAME);
         p_ptr->gameLogic->start();
     }
 }
