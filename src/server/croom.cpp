@@ -34,10 +34,9 @@ public:
     uint id;
     QString name;
     CAbstractGameLogic *gameLogic;
-    QMap<uint, CServerUser *> humanUsers;
+    QMap<uint, CServerUser *> users;
     QMap<uint, CRobot *> robots;
-    QMap<uint, CAbstractServerUser *> users;
-    uint capacity;
+    int capacity;
     CServerUser *owner;
 
     QSemaphore racingRequestSemaphore;
@@ -45,36 +44,6 @@ public:
     CServerUser *racingRequestWinner;
 
     char robotNameCode;
-
-    void insertHumanUser(uint id, CServerUser *user)
-    {
-        humanUsers.insert(id, user);
-        users.insert(id, user);
-    }
-    bool removeHumanUser(uint id)
-    {
-        humanUsers.remove(id);
-
-        if (users.remove(id))
-            return true;
-
-        return false;
-    }
-
-    void insertRobot(uint id, CRobot *robot)
-    {
-        robots.insert(id, robot);
-        users.insert(id, robot);
-    }
-    bool removeRobot(uint id)
-    {
-        robots.remove(id);
-
-        if (users.remove(id))
-            return true;
-
-        return false;
-    }
 };
 
 CRoom::CRoom(CServer *server)
@@ -108,7 +77,7 @@ QVariant CRoom::config() const
     QVariantMap info;
     info["id"] = (p_ptr->server->lobby() != this ? p_ptr->id : 0);
     info["name"] = name();
-    info["userNum"] = p_ptr->users.size();
+    info["userNum"] = p_ptr->users.size() + p_ptr->robots.size();
     info["capacity"] = capacity();
     return info;
 }
@@ -140,19 +109,19 @@ void CRoom::setName(const QString &name)
     p_ptr->name = name;
 }
 
-uint CRoom::capacity() const
+int CRoom::capacity() const
 {
     return p_ptr->capacity;
 }
 
-void CRoom::setCapacity(uint capacity)
+void CRoom::setCapacity(int capacity)
 {
     p_ptr->capacity = capacity;
 }
 
 bool CRoom::isFull() const
 {
-    return p_ptr->users.size() >= p_ptr->capacity;
+    return p_ptr->capacity > 0 && p_ptr->users.size() + p_ptr->robots.size() >= p_ptr->capacity;
 }
 
 void CRoom::setGameLogic(CAbstractGameLogic *gameLogic)
@@ -172,7 +141,7 @@ CAbstractGameLogic *CRoom::gameLogic() const
     return p_ptr->gameLogic;
 }
 
-void CRoom::addHumanUser(CServerUser *user)
+void CRoom::addUser(CServerUser *user)
 {
     if (isFull())
         return;
@@ -180,12 +149,12 @@ void CRoom::addHumanUser(CServerUser *user)
     //Exit the previous room
     CRoom *prevRoom = user->room();
     if (prevRoom)
-        prevRoom->removeHumanUser(user);
+        prevRoom->removeUser(user);
 
     //Update online user list
     QVariantList userList;
     int count = 0;
-    foreach (CAbstractServerUser *other, p_ptr->users) {
+    foreach (CServerUser *other, p_ptr->users) {
         userList << other->briefIntroduction();
         count++;
         //@todo: save the number 50 into CServerSettings
@@ -195,25 +164,25 @@ void CRoom::addHumanUser(CServerUser *user)
     user->notify(S_COMMAND_SET_USER_LIST, userList);
 
     //Add the user
-    p_ptr->insertHumanUser(user->id(), user);
+    p_ptr->users.insert(user->id(), user);
     user->setRoom(this);
     connect(user, &CServerUser::speak, this, &CRoom::onUserSpeaking);
     connect(user, &CServerUser::disconnected, this, &CRoom::onUserDisconnected);
 
     user->notify(S_COMMAND_ENTER_ROOM, config());
     broadcastNotification(S_COMMAND_ADD_USER, user->briefIntroduction(), user);
-    emit humanUserAdded(user);
+    emit userAdded(user);
 }
 
-void CRoom::removeHumanUser(CServerUser *user)
+void CRoom::removeUser(CServerUser *user)
 {
-    if (p_ptr->removeHumanUser(user->id())) {
+    if (p_ptr->users.remove(user->id())) {
         user->disconnect(this);
         this->disconnect(user);
 
         if (user == p_ptr->owner) {
-            if (!p_ptr->humanUsers.isEmpty()) {
-                p_ptr->owner = p_ptr->humanUsers.first();
+            if (!p_ptr->users.isEmpty()) {
+                p_ptr->owner = p_ptr->users.first();
                 //@todo: broadcast new owner
             } else {
                 emit abandoned();
@@ -223,13 +192,13 @@ void CRoom::removeHumanUser(CServerUser *user)
         }
 
         broadcastNotification(S_COMMAND_REMOVE_USER, user->id(), user);
-        emit humanUserRemoved(user);
+        emit userRemoved(user);
     }
 }
 
 void CRoom::addRobot(CRobot *robot)
 {
-    p_ptr->insertRobot(robot->id(), robot);
+    p_ptr->robots.insert(robot->id(), robot);
     robot->setRoom(this);
 
     broadcastNotification(S_COMMAND_ADD_USER, robot->briefIntroduction());
@@ -238,7 +207,7 @@ void CRoom::addRobot(CRobot *robot)
 
 void CRoom::removeRobot(CRobot *robot)
 {
-    if (p_ptr->removeRobot(robot->id())) {
+    if (p_ptr->robots.remove(robot->id())) {
         broadcastNotification(S_COMMAND_REMOVE_USER, robot->id());
         emit robotRemoved(robot);
     }
@@ -252,24 +221,14 @@ QString CRoom::newRobotName() const
     return tr("Robot %1").arg(code);
 }
 
-CAbstractServerUser *CRoom::findUser(uint id) const
+CServerUser *CRoom::findUser(uint id) const
 {
     return p_ptr->users.value(id);
 }
 
-QMap<uint, CAbstractServerUser *> CRoom::users() const
+QMap<uint, CServerUser *> CRoom::users() const
 {
     return p_ptr->users;
-}
-
-CServerUser *CRoom::findHumanUser(uint id) const
-{
-    return p_ptr->humanUsers.value(id);
-}
-
-QMap<uint, CServerUser *> CRoom::humanUsers() const
-{
-    return p_ptr->humanUsers;
 }
 
 CRobot *CRoom::findRobot(uint id) const
@@ -348,7 +307,7 @@ void CRoom::broadcastNotification(const QList<CServerUser *> &targets, int comma
 
 void CRoom::broadcastNotification(int command, const QVariant &data, CServerUser *except)
 {
-    foreach (CServerUser *user, p_ptr->humanUsers) {
+    foreach (CServerUser *user, p_ptr->users) {
         if (user != except)
             user->notify(command, data);
     }
@@ -366,5 +325,5 @@ void CRoom::onUserSpeaking(const QString &message)
 void CRoom::onUserDisconnected()
 {
     CServerUser *user = qobject_cast<CServerUser *>(sender());
-    removeHumanUser(user);
+    removeUser(user);
 }

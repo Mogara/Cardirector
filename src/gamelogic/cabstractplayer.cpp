@@ -17,10 +17,34 @@
     Mogara
 *********************************************************************/
 
+#include "cabstractgamelogic.h"
 #include "cabstractplayer.h"
+#include "crobot.h"
+#include "croom.h"
+
+class CAbstractPlayerPrivate
+{
+public:
+    uint id;
+};
 
 CAbstractPlayer::CAbstractPlayer(QObject *parent)
     : QObject(parent)
 {
+    p_ptr->id = 0;
+}
 
+CAbstractPlayer::~CAbstractPlayer()
+{
+    delete p_ptr;
+}
+
+uint CAbstractPlayer::id() const
+{
+    return p_ptr->id;
+}
+
+void CAbstractPlayer::setId(uint id)
+{
+    p_ptr->id = id;
 }

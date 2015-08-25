@@ -26,7 +26,7 @@
 #include <QVariant>
 
 class CAbstractGameLogic;
-class CAbstractServerUser;
+class CAbstractUser;
 class CRobot;
 class CServer;
 class CServerUser;
@@ -51,24 +51,23 @@ public:
     QString name() const;
     void setName(const QString &name);
 
-    uint capacity() const;
-    void setCapacity(uint capacity);
+    int capacity() const;
+    void setCapacity(int capacity);
     bool isFull() const;
 
     void setGameLogic(CAbstractGameLogic *gameLogic);
     CAbstractGameLogic *gameLogic() const;
 
-    void addHumanUser(CServerUser *user);
-    void removeHumanUser(CServerUser *user);
+    void addUser(CServerUser *user);
+    void removeUser(CServerUser *user);
+
+    CServerUser *findUser(uint id) const;
+    QMap<uint, CServerUser *> users() const;
+
     void addRobot(CRobot *robot);
     void removeRobot(CRobot *robot);
-
     QString newRobotName() const;
 
-    CAbstractServerUser *findUser(uint id) const;
-    QMap<uint, CAbstractServerUser *> users() const;
-    CServerUser *findHumanUser(uint id) const;
-    QMap<uint, CServerUser *> humanUsers() const;
     CRobot *findRobot(uint id) const;
     QMap<uint, CRobot *> robots();
 
@@ -82,8 +81,8 @@ public:
 
 signals:
     void abandoned();
-    void humanUserAdded(CServerUser *user);
-    void humanUserRemoved(CServerUser *user);
+    void userAdded(CServerUser *user);
+    void userRemoved(CServerUser *user);
     void robotAdded(CRobot *robot);
     void robotRemoved(CRobot *robot);
 

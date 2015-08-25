@@ -26,27 +26,37 @@
 
 MCD_BEGIN_NAMESPACE
 
-class CRoom;
 class CAbstractPlayer;
-class CAbstractGameLogicPrivate;
+class CAbstractServerUser;
+class CRobot;
+class CRoom;
+class CServerUser;
 
+class CAbstractGameLogicPrivate;
 class MCD_EXPORT CAbstractGameLogic : public QThread
 {
     Q_OBJECT
+
+    friend class CAbstractPlayer;
 
 public:
     explicit CAbstractGameLogic(CRoom *parent = 0);
     ~CAbstractGameLogic();
 
-    CRoom *room() const;
-
     void start(Priority priority = InheritPriority);
+
+    CRoom *room() const;
+    CAbstractServerUser *findAbstractUser(CAbstractPlayer *player);
 
 signals:
     void gameOver();
 
 protected:
-    virtual CAbstractPlayer *createPlayer() = 0;
+    uint createPlayerId();
+
+    //Parent must be the game logic
+    virtual CAbstractPlayer *createPlayer(CServerUser *user) = 0;
+    virtual CAbstractPlayer *createPlayer(CRobot *user) = 0;
 
 private:
     C_DISABLE_COPY(CAbstractGameLogic)

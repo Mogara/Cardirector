@@ -18,7 +18,9 @@
 *********************************************************************/
 
 #include "cabstractgamelogic.h"
-#include "cabstractuser.h"
+#include "cabstractplayer.h"
+#include "cserveruser.h"
+#include "crobot.h"
 #include "croom.h"
 
 class CAbstractGameLogicPrivate
@@ -26,6 +28,7 @@ class CAbstractGameLogicPrivate
 public:
     CRoom *room;
     QMap<uint, CAbstractPlayer *> players;
+    QMap<CAbstractPlayer *, CAbstractServerUser *> users;
 };
 
 CAbstractGameLogic::CAbstractGameLogic(CRoom *parent)
@@ -45,12 +48,37 @@ CRoom *CAbstractGameLogic::room() const
     return p_ptr->room;
 }
 
+CAbstractServerUser *CAbstractGameLogic::findAbstractUser(CAbstractPlayer *player)
+{
+    return p_ptr->users.value(player);
+}
+
 void CAbstractGameLogic::start(Priority priority)
 {
-    QMapIterator<uint, CAbstractServerUser *> iter(p_ptr->room->users());
-    while (iter.hasNext()) {
-        iter.next();
-        p_ptr->players.insert(iter.key(), createPlayer());
+    int playerId = 0;
+
+    foreach (CServerUser *user, p_ptr->room->users()) {
+        CAbstractPlayer *player = createPlayer(user);
+        player->setId(++playerId);
+
+        p_ptr->players.insert(player->id(), player);
+        p_ptr->users.insert(player, user);
     }
+
+    foreach (CRobot *robot, p_ptr->room->robots()) {
+        CAbstractPlayer *player = createPlayer(robot);
+        player->setId(++playerId);
+
+        p_ptr->players.insert(player->id(), player);
+        p_ptr->users.insert(player, robot);
+    }
+
     QThread::start(priority);
+}
+
+uint CAbstractGameLogic::createPlayerId()
+{
+    static uint playerId = 0;
+    playerId++;
+    return playerId;
 }

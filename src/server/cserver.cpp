@@ -35,41 +35,10 @@ public:
     CTcpServer *server;
     CAbstractPacketParser *parser;
 
-    QHash<uint, CServerUser *> humanUsers;
+    QHash<uint, CServerUser *> users;
     QHash<uint, CRobot *> robots;
-    QHash<uint, CAbstractServerUser *> users;
     CRoom *lobby;
     QHash<uint, CRoom *> rooms;
-
-    void insertHumanUser(uint id, CServerUser *user)
-    {
-        humanUsers.insert(id, user);
-        users.insert(id, user);
-    }
-    bool removeHumanUser(uint id)
-    {
-        humanUsers.remove(id);
-
-        if (users.remove(id))
-            return true;
-
-        return false;
-    }
-
-    void insertRobot(uint id, CRobot *robot)
-    {
-        robots.insert(id, robot);
-        users.insert(id, robot);
-    }
-    bool removeRobot(uint id)
-    {
-        robots.remove(id);
-
-        if (users.remove(id))
-            return true;
-
-        return false;
-    }
 };
 
 CServer::CServer(QObject *parent)
@@ -79,7 +48,7 @@ CServer::CServer(QObject *parent)
     p_ptr->parser = new CJsonPacketParser;
     p_ptr->acceptMultipleClientsBehindOneIp = true;
     p_ptr->lobby = new CRoom(this);
-    connect(p_ptr->lobby, &CRoom::humanUserAdded, this, &CServer::updateRoomList);
+    connect(p_ptr->lobby, &CRoom::userAdded, this, &CServer::updateRoomList);
     p_ptr->server = new CTcpServer(this);
     connect(p_ptr->server, &CTcpServer::newSocket, this, &CServer::handleNewConnection);
 }
@@ -92,7 +61,7 @@ CServer::~CServer()
 
 void CServer::setPacketParser(CAbstractPacketParser *parser)
 {
-    if (p_ptr->humanUsers.isEmpty()) {
+    if (p_ptr->users.isEmpty()) {
         delete p_ptr->parser;
         p_ptr->parser = parser;
     } else {
@@ -130,49 +99,30 @@ bool CServer::acceptMultipleClientsBehindOneIp() const
     return p_ptr->acceptMultipleClientsBehindOneIp;
 }
 
-uint CServer::newUserId() const
-{
-    static uint id = 0;
-    ++id;
-
-    return id;
-}
-
 void CServer::createRobot(CRoom *room)
 {
     CRobot *robot = new CRobot(room);
-
-    p_ptr->insertRobot(robot->id(), robot);
-    emit userAdded(robot);
+    p_ptr->robots.insert(robot->id(), robot);
+    emit robotAdded(robot);
 }
 
 void CServer::killRobot(uint id)
 {
     CRobot *robot = p_ptr->robots.value(id);
     if (robot != NULL) {
-        p_ptr->removeRobot(id);
+        p_ptr->robots.remove(id);
         robot->deleteLater();
     }
 }
 
-CAbstractServerUser *CServer::findUser(uint id) const
+CServerUser *CServer::findUser(uint id) const
 {
     return p_ptr->users.value(id);
 }
 
-QHash<uint, CAbstractServerUser *> CServer::users() const
+QHash<uint, CServerUser *> CServer::users() const
 {
     return p_ptr->users;
-}
-
-CServerUser *CServer::findHumanUser(uint id) const
-{
-    return p_ptr->humanUsers.value(id);
-}
-
-QHash<uint, CServerUser *> CServer::humanUsers() const
-{
-    return p_ptr->humanUsers;
 }
 
 CRobot *CServer::findRobot(uint id) const
@@ -192,7 +142,7 @@ void CServer::createRoom(CServerUser *owner, const QString &name, uint capacity)
     room->setName(name);
     room->setCapacity(capacity);
     room->setOwner(owner);
-    room->addHumanUser(owner);
+    room->addUser(owner);
     p_ptr->rooms.insert(room->id(), room);
     emit roomCreated(room);
 }
@@ -222,7 +172,7 @@ void CServer::updateRoomList(CServerUser *user)
 
 void CServer::broadcastNotification(int command, const QVariant &data, CServerUser *except)
 {
-    foreach (CServerUser *user, p_ptr->humanUsers) {
+    foreach (CServerUser *user, p_ptr->users) {
         if (user != except)
             user->notify(command, data);
     }
@@ -258,7 +208,7 @@ void CServer::onUserDisconnected()
     //@todo: check the state and enable reconnection
     //if (user && user->state() == CServerUser::LoggedOut)
     uint id = user->id();
-    p_ptr->removeHumanUser(id);
+    p_ptr->users.remove(id);
     user->deleteLater();
 }
 
@@ -266,10 +216,10 @@ void CServer::onUserStateChanged()
 {
     CServerUser *user = qobject_cast<CServerUser *>(sender());
     if (user->state() == CServerUser::Online) {
-        if (!p_ptr->humanUsers.contains(user->id())) {
+        if (!p_ptr->users.contains(user->id())) {
             uint id = user->id();
-            p_ptr->insertHumanUser(id, user);
-            p_ptr->lobby->addHumanUser(user);
+            p_ptr->users.insert(id, user);
+            p_ptr->lobby->addUser(user);
             emit userAdded(user);
         }
     }

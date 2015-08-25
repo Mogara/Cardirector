@@ -21,14 +21,29 @@
 #define CABSTRACTPLAYER_H
 
 #include "cglobal.h"
+
 #include <QObject>
 
+class CAbstractPlayerPrivate;
 class MCD_EXPORT CAbstractPlayer : public QObject
 {
     Q_OBJECT
 
+    friend class CAbstractGameLogic;
+
 public:
-    explicit CAbstractPlayer(QObject *parent = 0);
+    CAbstractPlayer(QObject *parent = 0);
+    ~CAbstractPlayer();
+
+    uint id() const;
+
+protected:
+    void setId(uint id);
+
+private:
+    C_DISABLE_COPY(CAbstractPlayer)
+    C_DECLARE_PRIVATE(CAbstractPlayer)
+    CAbstractPlayerPrivate *p_ptr;
 };
 
 #endif // CABSTRACTPLAYER_H

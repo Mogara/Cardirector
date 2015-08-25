@@ -26,7 +26,7 @@
 #include <QHostAddress>
 
 class CAbstractPacketParser;
-class CAbstractServerUser;
+class CAbstractUser;
 class CRobot;
 class CRoom;
 class CServerUser;
@@ -49,15 +49,12 @@ public:
     void setAcceptMultipleClientsBehindOneIp(bool enabled);
     bool acceptMultipleClientsBehindOneIp() const;
 
-    uint newUserId() const;
-
     void createRobot(CRoom *room);
     void killRobot(uint id);
 
-    CAbstractServerUser *findUser(uint id) const;
-    QHash<uint, CAbstractServerUser *> users() const;
-    CServerUser *findHumanUser(uint id) const;
-    QHash<uint, CServerUser *> humanUsers() const;
+    CServerUser *findUser(uint id) const;
+    QHash<uint, CServerUser *> users() const;
+
     CRobot *findRobot(uint id) const;
     QHash<uint, CRobot *> robots() const;
 
@@ -75,7 +72,9 @@ public:
 
 signals:
     void roomCreated(CRoom *room);
-    void userAdded(CAbstractServerUser *user);
+
+    void userAdded(CServerUser *user);
+    void robotAdded(CRobot *robot);
 
 protected:
     void handleNewConnection(CTcpSocket *client);

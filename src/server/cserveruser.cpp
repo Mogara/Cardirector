@@ -72,7 +72,9 @@ void CServerUser::signup(const QString &username, const QString &password, const
 {
     //@to-do: check if the username is duplicated in the database.
     //@to-do: encrypt the password
-    setId(server()->newUserId());
+    static uint userId = 0;
+    userId++;
+    setId(userId);
 
     setScreenName(screenName);
     setAvatar(avatar);
@@ -238,12 +240,12 @@ void CServerUser::EnterRoomCommand(QObject *receiver, const QVariant &data)
 
     if (data.isNull()) {
         CRoom *lobby = server->lobby();
-        lobby->addHumanUser(user);
+        lobby->addUser(user);
     } else {
         uint roomId = data.toUInt();
         CRoom *room = server->findRoom(roomId);
         if (room)
-            room->addHumanUser(user);
+            room->addUser(user);
     }
 }
 
