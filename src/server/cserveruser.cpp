@@ -270,16 +270,15 @@ void CServerUser::GameStartCommand(QObject *receiver, const QVariant &)
 {
     CServerUser *user = qobject_cast<CServerUser *>(receiver);
     CRoom *room = user->room();
-    CAbstractGameLogic *gameLogic = room->gameLogic();
-    if (gameLogic && !gameLogic->isRunning())
-        gameLogic->start();
+    if (room->owner() == user)
+        room->startGame();
 }
 
 void CServerUser::AddRobotCommand(QObject *receiver, const QVariant &)
 {
     CServerUser *user = qobject_cast<CServerUser *>(receiver);
     CRoom *room = user->room();
-    if (!room->isFull()) {
+    if (room->owner() == user && !room->isFull()) {
         CServer *server = user->server();
         server->createRobot(room);
     }
