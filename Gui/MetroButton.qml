@@ -9,12 +9,13 @@ Item {
     property alias backgroundColor: bg.color
     property alias border: bg.border
     property alias iconSource: icon.source
+    property int padding: Device.gu(5)
 
     signal clicked
 
     id: button
-    width: Device.gu(189)
-    height: Device.gu(46)
+    width: icon.width + title.implicitWidth + padding * 2
+    height: Math.max(icon.height, title.implicitHeight) + padding * 2
 
     Rectangle {
         id: bg
@@ -45,8 +46,11 @@ Item {
     }
 
     Row {
+        x: padding
+        y: padding
         anchors.centerIn: parent
         spacing: Device.gu(5)
+
         Image {
             id: icon
             anchors.verticalCenter: parent.verticalCenter
