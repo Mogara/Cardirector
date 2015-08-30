@@ -27,8 +27,8 @@
 MCD_BEGIN_NAMESPACE
 
 class CAbstractPlayer;
-class CAbstractServerUser;
-class CRobot;
+class CServerAgent;
+class CServerRobot;
 class CRoom;
 class CServerUser;
 
@@ -44,7 +44,7 @@ public:
     void start(Priority priority = InheritPriority);
 
     CRoom *room() const;
-    CAbstractServerUser *findAbstractUser(CAbstractPlayer *player);
+    CServerAgent *findAbstractUser(CAbstractPlayer *player);
 
 signals:
     void gameOver();
@@ -52,7 +52,7 @@ signals:
 protected:
     //Parent must be the game logic
     virtual CAbstractPlayer *createPlayer(CServerUser *user) = 0;
-    virtual CAbstractPlayer *createPlayer(CRobot *user) = 0;
+    virtual CAbstractPlayer *createPlayer(CServerRobot *user) = 0;
 
 private:
     C_DISABLE_COPY(CAbstractGameLogic)

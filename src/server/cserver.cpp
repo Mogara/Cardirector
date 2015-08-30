@@ -17,10 +17,10 @@
     Mogara
 *********************************************************************/
 
-#include "cabstractserveruser.h"
+#include "cserveragent.h"
 #include "cjsonpacketparser.h"
 #include "cprotocol.h"
-#include "crobot.h"
+#include "cserverrobot.h"
 #include "croom.h"
 #include "cserver.h"
 #include "cserveruser.h"
@@ -36,7 +36,7 @@ public:
     CAbstractPacketParser *parser;
 
     QHash<uint, CServerUser *> users;
-    QHash<uint, CRobot *> robots;
+    QHash<uint, CServerRobot *> robots;
     CRoom *lobby;
     QHash<uint, CRoom *> rooms;
 };
@@ -47,8 +47,10 @@ CServer::CServer(QObject *parent)
 {
     p_ptr->parser = new CJsonPacketParser;
     p_ptr->acceptMultipleClientsBehindOneIp = true;
+
     p_ptr->lobby = new CRoom(this);
     connect(p_ptr->lobby, &CRoom::userAdded, this, &CServer::updateRoomList);
+
     p_ptr->server = new CTcpServer(this);
     connect(p_ptr->server, &CTcpServer::newSocket, this, &CServer::handleNewConnection);
 }
@@ -101,14 +103,14 @@ bool CServer::acceptMultipleClientsBehindOneIp() const
 
 void CServer::createRobot(CRoom *room)
 {
-    CRobot *robot = new CRobot(room);
+    CServerRobot *robot = new CServerRobot(room);
     p_ptr->robots.insert(robot->id(), robot);
     emit robotAdded(robot);
 }
 
 void CServer::killRobot(uint id)
 {
-    CRobot *robot = p_ptr->robots.value(id);
+    CServerRobot *robot = p_ptr->robots.value(id);
     if (robot != NULL) {
         p_ptr->robots.remove(id);
         robot->deleteLater();
@@ -125,14 +127,24 @@ QHash<uint, CServerUser *> CServer::users() const
     return p_ptr->users;
 }
 
-CRobot *CServer::findRobot(uint id) const
+CServerRobot *CServer::findRobot(uint id) const
 {
     return p_ptr->robots.value(id);
 }
 
-QHash<uint, CRobot *> CServer::robots() const
+QHash<uint, CServerRobot *> CServer::robots() const
 {
     return p_ptr->robots;
+}
+
+QList<CServerAgent *> CServer::agents() const
+{
+    QList<CServerAgent *> agents;
+    foreach (CServerUser *user, p_ptr->users)
+        agents << user;
+    foreach (CServerRobot *robot, p_ptr->robots)
+        agents << robot;
+    return agents;
 }
 
 void CServer::createRoom(CServerUser *owner, const QString &name, uint capacity)

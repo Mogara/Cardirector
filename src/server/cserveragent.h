@@ -17,26 +17,26 @@
     Mogara
 *********************************************************************/
 
-#ifndef CABSTRACTSERVERUSER_H
-#define CABSTRACTSERVERUSER_H
+#ifndef CSERVERAGENT_H
+#define CSERVERAGENT_H
 
 #include "cabstractuser.h"
 
 MCD_BEGIN_NAMESPACE
 
 class CRoom;
-class CRobot;
+class CServerRobot;
 class CServer;
 class CServerUser;
 
-class CAbstractServerUserPrivate;
-class MCD_EXPORT CAbstractServerUser : public CAbstractUser
+class CServerAgentPrivate;
+class MCD_EXPORT CServerAgent : public CAbstractUser
 {
     Q_OBJECT
 
 public:
-    explicit CAbstractServerUser(CServer *server = 0);
-    ~CAbstractServerUser();
+    explicit CServerAgent(CServer *server = 0);
+    ~CServerAgent();
 
     CServer *server() const;
     CRoom *room() const;
@@ -47,14 +47,14 @@ public:
     virtual bool controlledByClient() const = 0;
 
     CServerUser *toServerUser();
-    CRobot *toRobot();
+    CServerRobot *toRobot();
 
 private:
-    C_DISABLE_COPY(CAbstractServerUser)
-    C_DECLARE_PRIVATE(CAbstractServerUser)
-    CAbstractServerUserPrivate *p_ptr;
+    C_DISABLE_COPY(CServerAgent)
+    C_DECLARE_PRIVATE(CServerAgent)
+    CServerAgentPrivate *p_ptr;
 };
 
 MCD_END_NAMESPACE
 
-#endif // CABSTRACTSERVERUSER_H
+#endif // CSERVERAGENT_H

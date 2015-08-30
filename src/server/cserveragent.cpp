@@ -17,48 +17,48 @@
     Mogara
 *********************************************************************/
 
-#include "cabstractserveruser.h"
-#include "crobot.h"
+#include "cserveragent.h"
+#include "cserverrobot.h"
 #include "cserver.h"
 #include "cserveruser.h"
 
-class CAbstractServerUserPrivate
+class CServerAgentPrivate
 {
 public:
     CServer *server;
     CRoom *room;
 };
 
-CAbstractServerUser::CAbstractServerUser(CServer *server)
+CServerAgent::CServerAgent(CServer *server)
     : CAbstractUser(server)
 {
-    p_ptr = new CAbstractServerUserPrivate;
+    p_ptr = new CServerAgentPrivate;
 
     p_ptr->server = server;
     p_ptr->room = NULL;
 }
 
-CAbstractServerUser::~CAbstractServerUser()
+CServerAgent::~CServerAgent()
 {
     delete p_ptr;
 }
 
-CServer *CAbstractServerUser::server() const
+CServer *CServerAgent::server() const
 {
     return p_ptr->server;
 }
 
-CRoom *CAbstractServerUser::room() const
+CRoom *CServerAgent::room() const
 {
     return p_ptr->room;
 }
 
-void CAbstractServerUser::setRoom(CRoom *room)
+void CServerAgent::setRoom(CRoom *room)
 {
     p_ptr->room = room;
 }
 
-QVariant CAbstractServerUser::briefIntroduction() const
+QVariant CServerAgent::briefIntroduction() const
 {
     QVariantList arguments;
     arguments << id();
@@ -67,13 +67,13 @@ QVariant CAbstractServerUser::briefIntroduction() const
     return arguments;
 }
 
-CServerUser *CAbstractServerUser::toServerUser()
+CServerUser *CServerAgent::toServerUser()
 {
     return qobject_cast<CServerUser *>(this);
 }
 
-CRobot *CAbstractServerUser::toRobot()
+CServerRobot *CServerAgent::toRobot()
 {
-    return qobject_cast<CRobot *>(this);
+    return qobject_cast<CServerRobot *>(this);
 }
 

@@ -19,7 +19,7 @@
 
 #include "cabstractgamelogic.h"
 #include "cabstractplayer.h"
-#include "crobot.h"
+#include "cserverrobot.h"
 #include "croom.h"
 
 class CAbstractPlayerPrivate

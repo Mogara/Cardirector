@@ -20,7 +20,7 @@
 #include "cabstractgamelogic.h"
 #include "cabstractplayer.h"
 #include "cserveruser.h"
-#include "crobot.h"
+#include "cserverrobot.h"
 #include "croom.h"
 
 class CAbstractGameLogicPrivate
@@ -28,7 +28,7 @@ class CAbstractGameLogicPrivate
 public:
     CRoom *room;
     QMap<uint, CAbstractPlayer *> players;
-    QMap<CAbstractPlayer *, CAbstractServerUser *> users;
+    QMap<CAbstractPlayer *, CServerAgent *> users;
 };
 
 CAbstractGameLogic::CAbstractGameLogic(CRoom *parent)
@@ -48,7 +48,7 @@ CRoom *CAbstractGameLogic::room() const
     return p_ptr->room;
 }
 
-CAbstractServerUser *CAbstractGameLogic::findAbstractUser(CAbstractPlayer *player)
+CServerAgent *CAbstractGameLogic::findAbstractUser(CAbstractPlayer *player)
 {
     return p_ptr->users.value(player);
 }
@@ -65,7 +65,7 @@ void CAbstractGameLogic::start(Priority priority)
         p_ptr->users.insert(player, user);
     }
 
-    foreach (CRobot *robot, p_ptr->room->robots()) {
+    foreach (CServerRobot *robot, p_ptr->room->robots()) {
         CAbstractPlayer *player = createPlayer(robot);
         player->setId(++playerId);
 

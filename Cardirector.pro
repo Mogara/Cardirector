@@ -59,13 +59,13 @@ SOURCES += \
     src/resource/cimageprovider.cpp \
     src/server/croom.cpp \
     src/server/cserver.cpp \
+    src/server/cserveragent.cpp \
+    src/server/cserverrobot.cpp \
+    src/server/cserveruser.cpp \
     src/sound/csound.cpp \
     src/ui/cabstractui.cpp \
     src/ui/cmainwindow.cpp \
-    src/ui/cqmlengine.cpp \
-    src/server/cserveruser.cpp \
-    src/server/cabstractserveruser.cpp \
-    src/server/crobot.cpp
+    src/ui/cqmlengine.cpp
 
 HEADERS += \
     src/ai/cabstractai.h \
@@ -96,14 +96,14 @@ HEADERS += \
     src/resource/cresourcemanager.h \
     src/server/croom.h \
     src/server/cserver.h \
+    src/server/cserveragent.h \
+    src/server/cserverrobot.h \
     src/server/cserveruser.h \
     src/sound/csound.h \
     src/ui/cabstractui.h \
     src/ui/cmainwindow.h \
     src/ui/cqmlengine.h \
-    src/cpch.h \
-    src/server/cabstractserveruser.h \
-    src/server/crobot.h
+    src/cpch.h
 
 QML_FILES += Gui/Dialog.qml \
              Gui/MetroButton.qml \

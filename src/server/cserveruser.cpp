@@ -44,7 +44,7 @@ public:
 };
 
 CServerUser::CServerUser(CTcpSocket *socket, CServer *server)
-    : CAbstractServerUser(server)
+    : CServerAgent(server)
 {
     p_ptr = new CServerUserPrivate;
 

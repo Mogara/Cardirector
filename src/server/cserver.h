@@ -27,8 +27,9 @@
 
 class CAbstractPacketParser;
 class CAbstractUser;
-class CRobot;
 class CRoom;
+class CServerAgent;
+class CServerRobot;
 class CServerUser;
 class CTcpServer;
 class CTcpSocket;
@@ -55,8 +56,10 @@ public:
     CServerUser *findUser(uint id) const;
     QHash<uint, CServerUser *> users() const;
 
-    CRobot *findRobot(uint id) const;
-    QHash<uint, CRobot *> robots() const;
+    CServerRobot *findRobot(uint id) const;
+    QHash<uint, CServerRobot *> robots() const;
+
+    QList<CServerAgent *> agents() const;
 
     void createRoom(CServerUser *owner, const QString &name, uint capacity);
     CRoom *findRoom(uint id) const;
@@ -74,7 +77,7 @@ signals:
     void roomCreated(CRoom *room);
 
     void userAdded(CServerUser *user);
-    void robotAdded(CRobot *robot);
+    void robotAdded(CServerRobot *robot);
 
 protected:
     void handleNewConnection(CTcpSocket *client);

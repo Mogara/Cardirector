@@ -17,25 +17,30 @@
     Mogara
 *********************************************************************/
 
-#include "crobot.h"
-#include "croom.h"
-#include "cserver.h"
+#ifndef CSERVERROBOT_H
+#define CSERVERROBOT_H
 
-//class CRobotPrivate;
+#include "cserveragent.h"
 
-CRobot::CRobot(CRoom *room)
-    : CAbstractServerUser(room->server())
+MCD_BEGIN_NAMESPACE
+
+class CServerRobotPrivate;
+class MCD_EXPORT CServerRobot : public CServerAgent
 {
-    static uint robotId = 0;
-    robotId++;
-    setId(robotId);
-    setScreenName(room->newRobotName());
+    Q_OBJECT
 
-    room->addRobot(this);
-}
+public:
+    explicit CServerRobot(CRoom *room);
+    ~CServerRobot();
 
-CRobot::~CRobot()
-{
+    bool controlledByClient() const {    return false;    }
 
-}
+private:
+    C_DISABLE_COPY(CServerRobot)
+    C_DECLARE_PRIVATE(CServerRobot)
+    CServerRobotPrivate *p_ptr;
+};
 
+MCD_END_NAMESPACE
+
+#endif // CSERVERROBOT_H

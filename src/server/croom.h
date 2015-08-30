@@ -27,8 +27,9 @@
 
 class CAbstractGameLogic;
 class CAbstractUser;
-class CRobot;
 class CServer;
+class CServerAgent;
+class CServerRobot;
 class CServerUser;
 
 class CRoomPrivate;
@@ -64,12 +65,14 @@ public:
     CServerUser *findUser(uint id) const;
     QMap<uint, CServerUser *> users() const;
 
-    void addRobot(CRobot *robot);
-    void removeRobot(CRobot *robot);
+    void addRobot(CServerRobot *robot);
+    void removeRobot(CServerRobot *robot);
     QString newRobotName() const;
 
-    CRobot *findRobot(uint id) const;
-    QMap<uint, CRobot *> robots();
+    CServerRobot *findRobot(uint id) const;
+    QMap<uint, CServerRobot *> robots();
+
+    QList<CServerAgent *> agents() const;
 
     void startGame();
 
@@ -85,8 +88,8 @@ signals:
     void abandoned();
     void userAdded(CServerUser *user);
     void userRemoved(CServerUser *user);
-    void robotAdded(CRobot *robot);
-    void robotRemoved(CRobot *robot);
+    void robotAdded(CServerRobot *robot);
+    void robotRemoved(CServerRobot *robot);
 
 protected:
     //Slots for CServerUser. Do not call them directly.

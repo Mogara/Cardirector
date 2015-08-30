@@ -20,7 +20,7 @@
 #ifndef CSERVERUSER_H
 #define CSERVERUSER_H
 
-#include "cabstractserveruser.h"
+#include "cserveragent.h"
 
 #include <QObject>
 #include <QHostAddress>
@@ -31,7 +31,7 @@ class CAbstractPacketParser;
 class CTcpSocket;
 
 class CServerUserPrivate;
-class MCD_EXPORT CServerUser : public CAbstractServerUser
+class MCD_EXPORT CServerUser : public CServerAgent
 {
     Q_OBJECT
 

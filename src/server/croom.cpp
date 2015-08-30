@@ -19,7 +19,7 @@
 
 #include "cabstractgamelogic.h"
 #include "cprotocol.h"
-#include "crobot.h"
+#include "cserverrobot.h"
 #include "croom.h"
 #include "cserver.h"
 #include "cserveruser.h"
@@ -35,7 +35,7 @@ public:
     QString name;
     CAbstractGameLogic *gameLogic;
     QMap<uint, CServerUser *> users;
-    QMap<uint, CRobot *> robots;
+    QMap<uint, CServerRobot *> robots;
     int capacity;
     CServerUser *owner;
 
@@ -196,7 +196,7 @@ void CRoom::removeUser(CServerUser *user)
     }
 }
 
-void CRoom::addRobot(CRobot *robot)
+void CRoom::addRobot(CServerRobot *robot)
 {
     p_ptr->robots.insert(robot->id(), robot);
     robot->setRoom(this);
@@ -205,7 +205,7 @@ void CRoom::addRobot(CRobot *robot)
     emit robotAdded(robot);
 }
 
-void CRoom::removeRobot(CRobot *robot)
+void CRoom::removeRobot(CServerRobot *robot)
 {
     if (p_ptr->robots.remove(robot->id())) {
         broadcastNotification(S_COMMAND_REMOVE_USER, robot->id());
@@ -231,14 +231,24 @@ QMap<uint, CServerUser *> CRoom::users() const
     return p_ptr->users;
 }
 
-CRobot *CRoom::findRobot(uint id) const
+CServerRobot *CRoom::findRobot(uint id) const
 {
     return p_ptr->robots.value(id);
 }
 
-QMap<uint, CRobot *> CRoom::robots()
+QMap<uint, CServerRobot *> CRoom::robots()
 {
     return p_ptr->robots;
+}
+
+QList<CServerAgent *> CRoom::agents() const
+{
+    QList<CServerAgent *> agents;
+    foreach (CServerUser *user, p_ptr->users)
+        agents << user;
+    foreach (CServerRobot *robot, p_ptr->robots)
+        agents << robot;
+    return agents;
 }
 
 void CRoom::startGame()
