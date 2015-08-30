@@ -236,7 +236,7 @@ CServerRobot *CRoom::findRobot(uint id) const
     return p_ptr->robots.value(id);
 }
 
-QMap<uint, CServerRobot *> CRoom::robots()
+QMap<uint, CServerRobot *> CRoom::robots() const
 {
     return p_ptr->robots;
 }

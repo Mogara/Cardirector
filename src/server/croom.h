@@ -70,7 +70,7 @@ public:
     QString newRobotName() const;
 
     CServerRobot *findRobot(uint id) const;
-    QMap<uint, CServerRobot *> robots();
+    QMap<uint, CServerRobot *> robots() const;
 
     QList<CServerAgent *> agents() const;
 
