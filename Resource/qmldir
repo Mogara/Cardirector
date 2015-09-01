@@ -1,0 +1,2 @@
+module Cardirector.Resource
+typeinfo resource.qmltypes

@@ -1,0 +1,20 @@
+import QtQuick.tooling 1.1
+
+Module {
+    Component {
+        name: "CImageProvider"
+        prototype: "QQuickImageProvider"
+        exports: [
+            "Cardirector.Resource/ImageProvider 1.0"
+        ]
+
+        Property {
+            name: "providerId"
+            type: "string"
+        }
+
+        Signal {
+            name: "providerIdChanged"
+        }
+    }
+}

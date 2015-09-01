@@ -1,0 +1,19 @@
+import QtQuick.tooling 1.1
+
+Module {
+    Component {
+        name: "CDeviceInfo"
+        prototype: "QObject"
+        exports: [
+            "Cardirector.Device/Device 1.0"
+        ]
+
+        Method {
+            name: "gu"
+            Parameter {
+                type: "variant"
+                name: "point"
+            }
+        }
+    }
+}
