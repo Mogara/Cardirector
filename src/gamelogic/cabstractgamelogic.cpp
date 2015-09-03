@@ -48,7 +48,17 @@ CRoom *CAbstractGameLogic::room() const
     return p_ptr->room;
 }
 
-CServerAgent *CAbstractGameLogic::findAbstractUser(CAbstractPlayer *player)
+QMap<uint, CAbstractPlayer *> CAbstractGameLogic::abstractPlayers() const
+{
+    return p_ptr->players;
+}
+
+CAbstractPlayer *CAbstractGameLogic::findAbstractPlayer(uint id) const
+{
+    return p_ptr->players.value(id);
+}
+
+CServerAgent *CAbstractGameLogic::findAbstractUser(CAbstractPlayer *player) const
 {
     return p_ptr->users.value(player);
 }

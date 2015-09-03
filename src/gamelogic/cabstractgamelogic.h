@@ -44,7 +44,10 @@ public:
     void start(Priority priority = InheritPriority);
 
     CRoom *room() const;
-    CServerAgent *findAbstractUser(CAbstractPlayer *player);
+
+    QMap<uint, CAbstractPlayer *> abstractPlayers() const;
+    CAbstractPlayer *findAbstractPlayer(uint id) const;
+    CServerAgent *findAbstractUser(CAbstractPlayer *player) const;
 
 signals:
     void gameOver();
