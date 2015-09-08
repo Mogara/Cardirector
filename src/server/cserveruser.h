@@ -66,7 +66,6 @@ public:
 
 signals:
     void disconnected();
-    void replyReady();
 
 protected:
     static void CheckVersionCommand(QObject *receiver, const QVariant &data);

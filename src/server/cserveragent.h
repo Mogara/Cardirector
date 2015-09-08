@@ -59,6 +59,9 @@ public:
     CServerUser *toServerUser();
     CServerRobot *toRobot();
 
+signals:
+    void replyReady();
+
 protected:
     int requestCommand() const;
     QVariant requestData() const;

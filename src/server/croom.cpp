@@ -40,8 +40,8 @@ public:
     CServerUser *owner;
 
     QSemaphore racingRequestSemaphore;
-    QList<CServerUser *> racingRequestCandidates;
-    CServerUser *racingRequestWinner;
+    QList<CServerAgent *> racingRequestCandidates;
+    CServerAgent *racingRequestWinner;
 
     char robotNameCode;
 };
@@ -154,7 +154,8 @@ void CRoom::addUser(CServerUser *user)
     //Update online user list
     QVariantList userList;
     int count = 0;
-    foreach (CServerUser *other, p_ptr->users) {
+    QList<CServerAgent *> agents = this->agents();
+    foreach (CServerAgent *other, agents) {
         userList << other->briefIntroduction();
         count++;
         //@todo: save the number 50 into CServerSettings
@@ -266,43 +267,55 @@ void CRoom::broadcastSystemMessage(const QString &message)
     broadcastNotification(S_COMMAND_SPEAK, data);
 }
 
-void CRoom::broadcastRequest(const QList<CServerUser *> &targets)
+void CRoom::broadcastRequest()
+{
+    //@to-do: Add request timeout into the configuration of the room
+    int timeout = 15;//seconds
+    broadcastRequest(agents(), timeout);
+}
+
+void CRoom::broadcastRequest(int timeout)
+{
+    broadcastRequest(agents(), timeout);
+}
+
+void CRoom::broadcastRequest(const QList<CServerAgent *> &targets)
 {
     //@to-do: Add request timeout into the configuration of the room
     int timeout = 15;//seconds
     broadcastRequest(targets, timeout);
 }
 
-void CRoom::broadcastRequest(const QList<CServerUser *> &targets, int timeout)
+void CRoom::broadcastRequest(const QList<CServerAgent *> &targets, int timeout)
 {
-    foreach (CServerUser *user, targets)
-        user->executeRequest(timeout);
+    foreach (CServerAgent *agent, targets)
+        agent->executeRequest(timeout);
 }
 
-CServerUser *CRoom::broadcastRacingRequest(const QList<CServerUser *> &targets, int timeout)
+CServerAgent *CRoom::broadcastRacingRequest(const QList<CServerAgent *> &targets, int timeout)
 {
     p_ptr->racingRequestCandidates = targets;
 
-    foreach (CServerUser *user, targets)
-        connect(user, &CServerUser::replyReady, this, &CRoom::onUserReplyReady);
+    foreach (CServerAgent *agent, targets)
+        connect(agent, &CServerAgent::replyReady, this, &CRoom::onAgentReplyReady);
 
-    foreach (CServerUser *user, targets)
+    foreach (CServerAgent *user, targets)
         user->executeRequest(timeout);
 
     p_ptr->racingRequestSemaphore.acquire();
     return p_ptr->racingRequestWinner;
 }
 
-void CRoom::onUserReplyReady()
+void CRoom::onAgentReplyReady()
 {
-    p_ptr->racingRequestWinner = qobject_cast<CServerUser *>(sender());
+    p_ptr->racingRequestWinner = qobject_cast<CServerAgent *>(sender());
 
-    foreach (CServerUser *user, p_ptr->racingRequestCandidates) {
-        if (user == p_ptr->racingRequestWinner)
+    foreach (CServerAgent *agent, p_ptr->racingRequestCandidates) {
+        if (agent == p_ptr->racingRequestWinner)
             continue;
 
-        user->cancelRequest();
-        disconnect(user, &CServerUser::replyReady, this, &CRoom::onUserReplyReady);
+        agent->cancelRequest();
+        disconnect(agent, &CServerAgent::replyReady, this, &CRoom::onAgentReplyReady);
     }
 
     p_ptr->racingRequestSemaphore.release();
@@ -317,17 +330,18 @@ void CRoom::onGameOver()
     p_ptr->robotNameCode = 'A';
 }
 
-void CRoom::broadcastNotification(const QList<CServerUser *> &targets, int command, const QVariant &data)
+void CRoom::broadcastNotification(const QList<CServerAgent *> &targets, int command, const QVariant &data)
 {
-    foreach (CServerUser *user, targets)
+    foreach (CServerAgent *user, targets)
         user->notify(command, data);
 }
 
-void CRoom::broadcastNotification(int command, const QVariant &data, CServerUser *except)
+void CRoom::broadcastNotification(int command, const QVariant &data, CServerAgent *except)
 {
-    foreach (CServerUser *user, p_ptr->users) {
-        if (user != except)
-            user->notify(command, data);
+    QList<CServerAgent *> agents = this->agents();
+    foreach (CServerAgent *agent, agents) {
+        if (agent != except)
+            agent->notify(command, data);
     }
 }
 

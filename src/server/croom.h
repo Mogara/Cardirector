@@ -78,11 +78,13 @@ public:
 
     void broadcastSystemMessage(const QString &message);
 
-    void broadcastRequest(const QList<CServerUser *> &targets);
-    void broadcastRequest(const QList<CServerUser *> &targets, int timeout);
-    CServerUser *broadcastRacingRequest(const QList<CServerUser *> &targets, int timeout);
-    void broadcastNotification(const QList<CServerUser *> &targets, int command, const QVariant &data = QVariant());
-    void broadcastNotification(int command, const QVariant &data = QVariant(), CServerUser *except = NULL);
+    void broadcastRequest();
+    void broadcastRequest(int timeout);
+    void broadcastRequest(const QList<CServerAgent *> &targets);
+    void broadcastRequest(const QList<CServerAgent *> &targets, int timeout);
+    CServerAgent *broadcastRacingRequest(const QList<CServerAgent *> &targets, int timeout);
+    void broadcastNotification(const QList<CServerAgent *> &targets, int command, const QVariant &data = QVariant());
+    void broadcastNotification(int command, const QVariant &data = QVariant(), CServerAgent *except = NULL);
 
 signals:
     void abandoned();
@@ -95,7 +97,7 @@ protected:
     //Slots for CServerUser. Do not call them directly.
     void onUserSpeaking(const QString &message);
     void onUserDisconnected();
-    void onUserReplyReady();
+    void onAgentReplyReady();
 
     void onGameOver();
 
