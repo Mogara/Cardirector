@@ -47,7 +47,10 @@ public:
 
     QMap<uint, CAbstractPlayer *> abstractPlayers() const;
     CAbstractPlayer *findAbstractPlayer(uint id) const;
-    CServerAgent *findAbstractUser(CAbstractPlayer *player) const;
+
+    CServerAgent *findAgent(CAbstractPlayer *player) const;
+    CServerUser *findUser(CAbstractPlayer *player) const;
+    CServerRobot *findRobot(CAbstractPlayer *player) const;
 
 signals:
     void gameOver();
