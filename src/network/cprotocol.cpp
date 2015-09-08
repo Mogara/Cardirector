@@ -45,6 +45,7 @@ public:
         C_REGISTER_COMMAND(ENTER_ROOM);
         C_REGISTER_COMMAND(START_GAME);
         C_REGISTER_COMMAND(ADD_ROBOT);
+        C_REGISTER_COMMAND(REMOVE_ROBOT);
     }
 };
 static CCommandAdder adder;

@@ -92,7 +92,7 @@ protected:
     static void SpeakCommand(QObject *receiver, const QVariant &data);
     static void EnterRoomCommand(QObject *receiver, const QVariant &data);
     static void NetworkDelayCommand(QObject *receiver, const QVariant &data);
-    static void StartGameCommand(QObject *receiver, const QVariant &data);
+    static void StartGameCommand(QObject *receiver, const QVariant &);
 
 private:
     C_DECLARE_INITIALIZER(CClient)

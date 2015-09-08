@@ -202,14 +202,14 @@ void CRoom::addRobot(CServerRobot *robot)
     p_ptr->robots.insert(robot->id(), robot);
     robot->setRoom(this);
 
-    broadcastNotification(S_COMMAND_ADD_USER, robot->briefIntroduction());
+    broadcastNotification(S_COMMAND_ADD_ROBOT, robot->briefIntroduction());
     emit robotAdded(robot);
 }
 
 void CRoom::removeRobot(CServerRobot *robot)
 {
     if (p_ptr->robots.remove(robot->id())) {
-        broadcastNotification(S_COMMAND_REMOVE_USER, robot->id());
+        broadcastNotification(S_COMMAND_REMOVE_ROBOT, robot->id());
         emit robotRemoved(robot);
     }
 }

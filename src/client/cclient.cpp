@@ -287,7 +287,7 @@ void CClient::NetworkDelayCommand(QObject *receiver, const QVariant &data)
     client->notifyServer(S_COMMAND_NETWORK_DELAY, data);
 }
 
-void CClient::StartGameCommand(QObject *receiver, const QVariant &data)
+void CClient::StartGameCommand(QObject *receiver, const QVariant &)
 {
     CClient *client = qobject_cast<CClient *>(receiver);
     emit client->gameStarted();
