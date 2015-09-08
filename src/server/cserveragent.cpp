@@ -27,6 +27,9 @@ class CServerAgentPrivate
 public:
     CServer *server;
     CRoom *room;
+
+    int requestCommand;
+    QVariant requestData;
 };
 
 CServerAgent::CServerAgent(CServer *server)
@@ -67,6 +70,12 @@ QVariant CServerAgent::briefIntroduction() const
     return arguments;
 }
 
+void CServerAgent::prepareRequest(int command, const QVariant &data)
+{
+    p_ptr->requestCommand = command;
+    p_ptr->requestData = data;
+}
+
 CServerUser *CServerAgent::toServerUser()
 {
     return qobject_cast<CServerUser *>(this);
@@ -77,3 +86,12 @@ CServerRobot *CServerAgent::toRobot()
     return qobject_cast<CServerRobot *>(this);
 }
 
+int CServerAgent::requestCommand() const
+{
+    return p_ptr->requestCommand;
+}
+
+QVariant CServerAgent::requestData() const
+{
+    return p_ptr->requestData;
+}

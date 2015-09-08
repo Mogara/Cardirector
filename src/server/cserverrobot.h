@@ -33,7 +33,17 @@ public:
     explicit CServerRobot(CRoom *room);
     ~CServerRobot();
 
-    bool controlledByClient() const {    return false;    }
+    void request(int command, const QVariant &data = QVariant(), int timeout = -1);
+    void reply(int command, const QVariant &data = QVariant());
+    void notify(int command, const QVariant &data = QVariant());
+
+    void executeRequest(int timeout = -1);
+    void cancelRequest();
+
+    QVariant waitForReply();
+    QVariant waitForReply(int timeout);
+
+    bool controlledByClient() const { return false; }
 
 private:
     C_DISABLE_COPY(CServerRobot)

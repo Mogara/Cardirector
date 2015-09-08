@@ -36,9 +36,6 @@ class CServerUserPrivate
 public:
     CPacketRouter *router;
 
-    int requestCommand;
-    QVariant requestData;
-
     int networkDelayTestId;
     QDateTime networkDelayStartTime;
 };
@@ -131,15 +128,9 @@ void CServerUser::notify(int command, const QVariant &data)
     p_ptr->router->notify(command, data);
 }
 
-void CServerUser::prepareRequest(int command, const QVariant &data)
-{
-    p_ptr->requestCommand = command;
-    p_ptr->requestData = data;
-}
-
 void CServerUser::executeRequest(int timeout)
 {
-    request(p_ptr->requestCommand, p_ptr->requestData, timeout);
+    request(requestCommand(), requestData(), timeout);
 }
 
 void CServerUser::cancelRequest()

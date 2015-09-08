@@ -53,7 +53,6 @@ public:
     void reply(int command, const QVariant &data = QVariant());
     void notify(int command, const QVariant &data = QVariant());
 
-    void prepareRequest(int command, const QVariant &data = QVariant());
     void executeRequest(int timeout = -1);
     void cancelRequest();
 
@@ -63,7 +62,7 @@ public:
     static void AddInteraction(int command, void (*callback)(QObject *, const QVariant &));
     static void AddCallback(int command, void (*callback)(QObject *, const QVariant &));
 
-    bool controlledByClient() const {    return true;    }
+    bool controlledByClient() const { return true; }
 
 signals:
     void disconnected();

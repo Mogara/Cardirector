@@ -39,3 +39,44 @@ CServerRobot::~CServerRobot()
 
 }
 
+//@to-do: implement all interactive functions below
+void CServerRobot::request(int command, const QVariant &data, int timeout)
+{
+    C_UNUSED(command);
+    C_UNUSED(data);
+    C_UNUSED(timeout);
+}
+
+void CServerRobot::reply(int command, const QVariant &data)
+{
+    C_UNUSED(command);
+    C_UNUSED(data);
+}
+
+void CServerRobot::notify(int command, const QVariant &data)
+{
+    C_UNUSED(command);
+    C_UNUSED(data);
+}
+
+void CServerRobot::executeRequest(int timeout)
+{
+    C_UNUSED(timeout);
+}
+
+void CServerRobot::cancelRequest()
+{
+
+}
+
+QVariant CServerRobot::waitForReply()
+{
+    return QVariant();
+}
+
+QVariant CServerRobot::waitForReply(int timeout)
+{
+    C_UNUSED(timeout);
+    return QVariant();
+}
+

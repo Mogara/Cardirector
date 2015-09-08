@@ -44,10 +44,24 @@ public:
 
     QVariant briefIntroduction() const;
 
+    virtual void request(int command, const QVariant &data = QVariant(), int timeout = -1) = 0;
+    virtual void reply(int command, const QVariant &data = QVariant()) = 0;
+    virtual void notify(int command, const QVariant &data = QVariant()) = 0;
+
+    void prepareRequest(int command, const QVariant &data = QVariant());
+    virtual void executeRequest(int timeout = -1) = 0;
+    virtual void cancelRequest() = 0;
+
+    virtual QVariant waitForReply() = 0;
+    virtual QVariant waitForReply(int timeout) = 0;
     virtual bool controlledByClient() const = 0;
 
     CServerUser *toServerUser();
     CServerRobot *toRobot();
+
+protected:
+    int requestCommand() const;
+    QVariant requestData() const;
 
 private:
     C_DISABLE_COPY(CServerAgent)
