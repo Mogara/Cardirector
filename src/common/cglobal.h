@@ -21,6 +21,7 @@
 #define CGLOBAL_H
 
 #include <QtCore/qglobal.h>
+#include <QCoreApplication>
 
 #ifndef MCD_STATIC
 #ifdef MCD_BUILD
@@ -88,7 +89,10 @@ typedef double creal;
         classname::Init();\
     }\
 };\
-static classname##Initializer __initializer;
+static void __##classname##Init(){\
+    classname##Initializer initializer;\
+}\
+Q_COREAPP_STARTUP_FUNCTION(__##classname##Init)
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
 #  define MCD_FULLSCREEN_ONLY
