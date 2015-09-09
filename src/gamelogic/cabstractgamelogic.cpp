@@ -28,7 +28,8 @@ class CAbstractGameLogicPrivate
 public:
     CRoom *room;
     QMap<uint, CAbstractPlayer *> players;
-    QMap<CAbstractPlayer *, CServerAgent *> agents;
+    QMap<CAbstractPlayer *, CServerAgent *> player2agent;
+    QMap<CServerAgent *, CAbstractPlayer *> agent2player;
 };
 
 CAbstractGameLogic::CAbstractGameLogic(CRoom *parent)
@@ -58,19 +59,24 @@ CAbstractPlayer *CAbstractGameLogic::findAbstractPlayer(uint id) const
     return p_ptr->players.value(id);
 }
 
+CAbstractPlayer *CAbstractGameLogic::findAbstractPlayer(CServerAgent *agent) const
+{
+    return p_ptr->agent2player.value(agent);
+}
+
 CServerAgent *CAbstractGameLogic::findAgent(CAbstractPlayer *player) const
 {
-    return p_ptr->agents.value(player);
+    return p_ptr->player2agent.value(player);
 }
 
 CServerUser *CAbstractGameLogic::findUser(CAbstractPlayer *player) const
 {
-    return qobject_cast<CServerUser *>(p_ptr->agents.value(player));
+    return qobject_cast<CServerUser *>(p_ptr->player2agent.value(player));
 }
 
 CServerRobot *CAbstractGameLogic::findRobot(CAbstractPlayer *player) const
 {
-    return qobject_cast<CServerRobot *>(p_ptr->agents.value(player));
+    return qobject_cast<CServerRobot *>(p_ptr->player2agent.value(player));
 }
 
 void CAbstractGameLogic::start(Priority priority)
@@ -82,7 +88,8 @@ void CAbstractGameLogic::start(Priority priority)
         player->setId(++playerId);
 
         p_ptr->players.insert(player->id(), player);
-        p_ptr->agents.insert(player, user);
+        p_ptr->player2agent.insert(player, user);
+        p_ptr->agent2player.insert(user, player);
     }
 
     foreach (CServerRobot *robot, p_ptr->room->robots()) {
@@ -90,7 +97,8 @@ void CAbstractGameLogic::start(Priority priority)
         player->setId(++playerId);
 
         p_ptr->players.insert(player->id(), player);
-        p_ptr->agents.insert(player, robot);
+        p_ptr->player2agent.insert(player, robot);
+        p_ptr->agent2player.insert(robot, player);
     }
 
     QThread::start(priority);

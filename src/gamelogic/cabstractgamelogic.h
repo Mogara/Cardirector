@@ -47,6 +47,7 @@ public:
 
     QMap<uint, CAbstractPlayer *> abstractPlayers() const;
     CAbstractPlayer *findAbstractPlayer(uint id) const;
+    CAbstractPlayer *findAbstractPlayer(CServerAgent *agent) const;
 
     CServerAgent *findAgent(CAbstractPlayer *player) const;
     CServerUser *findUser(CAbstractPlayer *player) const;
