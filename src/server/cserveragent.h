@@ -21,6 +21,7 @@
 #define CSERVERAGENT_H
 
 #include "cabstractuser.h"
+#include <QVariant>
 
 MCD_BEGIN_NAMESPACE
 
