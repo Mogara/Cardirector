@@ -56,6 +56,7 @@ public:
     void executeRequest(int timeout = -1);
     void cancelRequest();
 
+    void setReplyReadySemaphore(QSemaphore *semaphore);
     QVariant waitForReply();
     QVariant waitForReply(int timeout);
 

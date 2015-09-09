@@ -29,6 +29,7 @@ class CRoom;
 class CServerRobot;
 class CServer;
 class CServerUser;
+class QSemaphore;
 
 class CServerAgentPrivate;
 class MCD_EXPORT CServerAgent : public CAbstractUser
@@ -50,6 +51,7 @@ public:
     virtual void notify(int command, const QVariant &data = QVariant()) = 0;
 
     void prepareRequest(int command, const QVariant &data = QVariant());
+    virtual void setReplyReadySemaphore(QSemaphore *semaphore) = 0;
     virtual void executeRequest(int timeout = -1) = 0;
     virtual void cancelRequest() = 0;
 

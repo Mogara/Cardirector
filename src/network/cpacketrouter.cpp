@@ -45,6 +45,7 @@ public:
     int replyTimeout;
     QVariant reply;
     QSemaphore replyReadySemaphore;
+    QSemaphore *extraReplyReadySemaphore;
 };
 
 CPacketRouter::CPacketRouter(QObject *receiver, CTcpSocket *socket, CAbstractPacketParser *parser)
@@ -57,6 +58,7 @@ CPacketRouter::CPacketRouter(QObject *receiver, CTcpSocket *socket, CAbstractPac
     p_ptr->parser = parser;
     p_ptr->socket = NULL;
     p_ptr->replyTimeout = 0;
+    p_ptr->extraReplyReadySemaphore = NULL;
     setSocket(socket);
 }
 
@@ -101,8 +103,17 @@ void CPacketRouter::setCallbacks(const QHash<int, Callback> *callbacks)
     p_ptr->callbacks = callbacks;
 }
 
+void CPacketRouter::setReplyReadySemaphore(QSemaphore *semaphore)
+{
+    p_ptr->extraReplyReadySemaphore = semaphore;
+}
+
 void CPacketRouter::request(int command, const QVariant &data, int timeout)
 {
+    //In case a request is called without a following waitForReply call
+    if (p_ptr->replyReadySemaphore.available() > 0)
+        p_ptr->replyReadySemaphore.acquire(p_ptr->replyReadySemaphore.available());
+
     static int requestId = 0;
     requestId++;
 
@@ -150,6 +161,7 @@ void CPacketRouter::cancelRequest()
     p_ptr->replyMutex.lock();
     p_ptr->expectedReplyId = -1;
     p_ptr->replyTimeout = 0;
+    p_ptr->extraReplyReadySemaphore = NULL;
     p_ptr->replyMutex.unlock();
 
     if (p_ptr->replyReadySemaphore.available() > 0)
@@ -223,6 +235,10 @@ void CPacketRouter::handlePacket(const QByteArray &rawPacket)
                 (*func)(p_ptr->receiver, p_ptr->reply);
         }
         p_ptr->replyReadySemaphore.release(1);
+        if (p_ptr->extraReplyReadySemaphore) {
+            p_ptr->extraReplyReadySemaphore->release(1);
+            p_ptr->extraReplyReadySemaphore = NULL;
+        }
         locker.unlock();
         emit replyReady();
     }

@@ -138,6 +138,11 @@ void CServerUser::cancelRequest()
     p_ptr->router->cancelRequest();
 }
 
+void CServerUser::setReplyReadySemaphore(QSemaphore *semaphore)
+{
+    p_ptr->router->setReplyReadySemaphore(semaphore);
+}
+
 QVariant CServerUser::waitForReply()
 {
     return p_ptr->router->waitForReply();

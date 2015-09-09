@@ -30,6 +30,7 @@ MCD_BEGIN_NAMESPACE
 
 class CTcpSocket;
 class CPacketRouterPrivate;
+class QSemaphore;
 
 class MCD_EXPORT CPacketRouter : public QObject
 {
@@ -48,6 +49,8 @@ public:
 
     void setInteractions(const QHash<int, Callback> *interactions);
     void setCallbacks(const QHash<int, Callback> *callbacks);
+
+    void setReplyReadySemaphore(QSemaphore *semaphore);
 
     void request(int command, const QVariant &data = QVariant(), int timeout = -1);
     void reply(int command, const QVariant &data = QVariant());

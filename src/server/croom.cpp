@@ -292,8 +292,16 @@ void CRoom::broadcastRequest(const QList<CServerAgent *> &targets)
 
 void CRoom::broadcastRequest(const QList<CServerAgent *> &targets, int timeout)
 {
+    QSemaphore semaphore;
+    foreach (CServerAgent *agent, targets)
+        agent->setReplyReadySemaphore(&semaphore);
+
     foreach (CServerAgent *agent, targets)
         agent->executeRequest(timeout);
+
+    semaphore.tryAcquire(targets.length(), timeout * 1000);
+    foreach (CServerAgent *agent, targets)
+        agent->cancelRequest();
 }
 
 CServerAgent *CRoom::broadcastRacingRequest(const QList<CServerAgent *> &targets, int timeout)

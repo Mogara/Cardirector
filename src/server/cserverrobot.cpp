@@ -21,6 +21,8 @@
 #include "cserver.h"
 #include "cserverrobot.h"
 
+#include <QSemaphore>
+
 //class CServerRobotPrivate;
 
 CServerRobot::CServerRobot(CRoom *room)
@@ -67,6 +69,12 @@ void CServerRobot::executeRequest(int timeout)
 void CServerRobot::cancelRequest()
 {
 
+}
+
+void CServerRobot::setReplyReadySemaphore(QSemaphore *semaphore)
+{
+    //@to-do: implement this
+    semaphore->release(1);
 }
 
 QVariant CServerRobot::waitForReply()
