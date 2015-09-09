@@ -79,6 +79,7 @@ QVariant CRoom::config() const
     info["name"] = name();
     info["userNum"] = p_ptr->users.size() + p_ptr->robots.size();
     info["capacity"] = capacity();
+    info["ownerId"] = ownerId();
     return info;
 }
 
@@ -90,13 +91,16 @@ CServer *CRoom::server() const
 void CRoom::setOwner(CServerUser *owner)
 {
     p_ptr->owner = owner;
-    if (name().isEmpty())
-        setName(tr("%1's Room").arg(owner->screenName()));
 }
 
 CServerUser *CRoom::owner() const
 {
     return p_ptr->owner;
+}
+
+uint CRoom::ownerId() const
+{
+    return p_ptr->owner != NULL ? p_ptr->owner->id() : 0;
 }
 
 QString CRoom::name() const
@@ -184,7 +188,7 @@ void CRoom::removeUser(CServerUser *user)
         if (user == p_ptr->owner) {
             if (!p_ptr->users.isEmpty()) {
                 p_ptr->owner = p_ptr->users.first();
-                //@todo: broadcast new owner
+                notifyProperty("ownerId");
             } else {
                 emit abandoned();
                 deleteLater();
@@ -330,19 +334,27 @@ void CRoom::onGameOver()
     p_ptr->robotNameCode = 'A';
 }
 
-void CRoom::broadcastNotification(const QList<CServerAgent *> &targets, int command, const QVariant &data)
+void CRoom::broadcastNotification(const QList<CServerAgent *> &targets, int command, const QVariant &data) const
 {
     foreach (CServerAgent *user, targets)
         user->notify(command, data);
 }
 
-void CRoom::broadcastNotification(int command, const QVariant &data, CServerAgent *except)
+void CRoom::broadcastNotification(int command, const QVariant &data, CServerAgent *except) const
 {
     QList<CServerAgent *> agents = this->agents();
     foreach (CServerAgent *agent, agents) {
         if (agent != except)
             agent->notify(command, data);
     }
+}
+
+void CRoom::notifyProperty(const char *name) const
+{
+    QVariantList data;
+    data << name;
+    data << property(name);
+    broadcastNotification(S_COMMAND_UPDATE_ROOM_PROPERTY, data);
 }
 
 void CRoom::onUserSpeaking(const QString &message)

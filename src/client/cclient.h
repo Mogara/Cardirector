@@ -78,6 +78,7 @@ signals:
     void userRemoved(const CClientUser *user);
     void roomListUpdated(const QVariant &list);
     void roomEntered(const QVariant &config);
+    void roomPropertyChanged(const QString &name, const QVariant &value);
     void systemMessage(const QString &message);
 
 protected:
@@ -91,6 +92,7 @@ protected:
     static void SetRoomListCommand(QObject *receiver, const QVariant &data);
     static void SpeakCommand(QObject *receiver, const QVariant &data);
     static void EnterRoomCommand(QObject *receiver, const QVariant &data);
+    static void UpdateRoomPropertyCommand(QObject *receiver, const QVariant &data);
     static void NetworkDelayCommand(QObject *receiver, const QVariant &data);
     static void StartGameCommand(QObject *receiver, const QVariant &);
 

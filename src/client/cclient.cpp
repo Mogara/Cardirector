@@ -281,6 +281,19 @@ void CClient::EnterRoomCommand(QObject *receiver, const QVariant &data)
     emit client->roomEntered(data);
 }
 
+void CClient::UpdateRoomPropertyCommand(QObject *receiver, const QVariant &data)
+{
+    QVariantList dataList = data.toList();
+    if (dataList.length() != 2)
+        return;
+
+    QString name = dataList.at(0).toString();
+    QVariant value = dataList.at(1);
+
+    CClient *client = qobject_cast<CClient *>(receiver);
+    emit client->roomPropertyChanged(name, value);
+}
+
 void CClient::NetworkDelayCommand(QObject *receiver, const QVariant &data)
 {
     CClient *client = qobject_cast<CClient *>(receiver);
@@ -302,6 +315,7 @@ void CClient::Init()
     AddCallback(S_COMMAND_LOGIN, &LoginCommand);
     AddCallback(S_COMMAND_SET_ROOM_LIST, &SetRoomListCommand);
     AddCallback(S_COMMAND_ENTER_ROOM, &EnterRoomCommand);
+    AddCallback(S_COMMAND_UPDATE_ROOM_PROPERTY, &UpdateRoomPropertyCommand);
     AddCallback(S_COMMAND_NETWORK_DELAY, &NetworkDelayCommand);
     AddCallback(S_COMMAND_START_GAME, &StartGameCommand);
 }

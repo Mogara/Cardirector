@@ -37,6 +37,11 @@ class MCD_EXPORT CRoom : public QObject
 {
     Q_OBJECT
 
+    Q_PROPERTY(QString name READ name WRITE setName)
+    Q_PROPERTY(uint ownerId READ ownerId)
+    Q_PROPERTY(int capacity READ capacity WRITE setCapacity)
+    Q_PROPERTY(bool isFull READ isFull)
+
 public:
     CRoom(CServer *server);
     ~CRoom();
@@ -48,6 +53,7 @@ public:
 
     void setOwner(CServerUser *owner);
     CServerUser *owner() const;
+    uint ownerId() const;
 
     QString name() const;
     void setName(const QString &name);
@@ -83,8 +89,10 @@ public:
     void broadcastRequest(const QList<CServerAgent *> &targets);
     void broadcastRequest(const QList<CServerAgent *> &targets, int timeout);
     CServerAgent *broadcastRacingRequest(const QList<CServerAgent *> &targets, int timeout);
-    void broadcastNotification(const QList<CServerAgent *> &targets, int command, const QVariant &data = QVariant());
-    void broadcastNotification(int command, const QVariant &data = QVariant(), CServerAgent *except = NULL);
+    void broadcastNotification(const QList<CServerAgent *> &targets, int command, const QVariant &data = QVariant()) const;
+    void broadcastNotification(int command, const QVariant &data = QVariant(), CServerAgent *except = NULL) const;
+
+    void notifyProperty(const char *name) const;
 
 signals:
     void abandoned();
@@ -94,6 +102,7 @@ signals:
     void robotRemoved(CServerRobot *robot);
 
 protected:
+
     //Slots for CServerUser. Do not call them directly.
     void onUserSpeaking(const QString &message);
     void onUserDisconnected();
