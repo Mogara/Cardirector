@@ -59,6 +59,7 @@ public:
     int requestTimeout() const;
 
     void cancelRequest();
+
     QVariant waitForReply();
     QVariant waitForReply(int timeout);
 
@@ -68,6 +69,7 @@ signals:
     void replyReady();
 
 protected:
+    void abortRequest();
     void handlePacket(const QByteArray &rawPacket);
 
 private:

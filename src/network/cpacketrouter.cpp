@@ -57,6 +57,7 @@ CPacketRouter::CPacketRouter(QObject *receiver, CTcpSocket *socket, CAbstractPac
     p_ptr->receiver = receiver;
     p_ptr->parser = parser;
     p_ptr->socket = NULL;
+    p_ptr->expectedReplyId = -1;
     p_ptr->replyTimeout = 0;
     p_ptr->extraReplyReadySemaphore = NULL;
     setSocket(socket);
@@ -64,6 +65,7 @@ CPacketRouter::CPacketRouter(QObject *receiver, CTcpSocket *socket, CAbstractPac
 
 CPacketRouter::~CPacketRouter()
 {
+    abortRequest();
     delete p_ptr;
 }
 
@@ -79,6 +81,7 @@ void CPacketRouter::setSocket(CTcpSocket *socket)
     if (p_ptr->socket != NULL) {
         connect(this, &CPacketRouter::messageReady, p_ptr->socket, &CTcpSocket::writePacket);
         connect(p_ptr->socket, &CTcpSocket::newPacket, this, &CPacketRouter::handlePacket);
+        connect(p_ptr->socket, &CTcpSocket::disconnected, this, &CPacketRouter::abortRequest);
         p_ptr->socket->setParent(this);
     }
 }
@@ -156,6 +159,7 @@ int CPacketRouter::requestTimeout() const
     return p_ptr->requestTimeout;
 }
 
+//Used by a waiting object, to cancel the latest request from it
 void CPacketRouter::cancelRequest()
 {
     p_ptr->replyMutex.lock();
@@ -180,6 +184,20 @@ QVariant CPacketRouter::waitForReply(int timeout)
         return p_ptr->reply;
     else
         return QVariant();
+}
+
+//Force all waiting objects to wake up
+void CPacketRouter::abortRequest()
+{
+    p_ptr->replyMutex.lock();
+    if (p_ptr->expectedReplyId != -1) {
+        p_ptr->replyReadySemaphore.release();
+        if (p_ptr->extraReplyReadySemaphore)
+            p_ptr->extraReplyReadySemaphore->release();
+        p_ptr->expectedReplyId = -1;
+        p_ptr->extraReplyReadySemaphore = NULL;
+    }
+    p_ptr->replyMutex.unlock();
 }
 
 void CPacketRouter::handlePacket(const QByteArray &rawPacket)
@@ -234,9 +252,9 @@ void CPacketRouter::handlePacket(const QByteArray &rawPacket)
             if (func != NULL)
                 (*func)(p_ptr->receiver, p_ptr->reply);
         }
-        p_ptr->replyReadySemaphore.release(1);
+        p_ptr->replyReadySemaphore.release();
         if (p_ptr->extraReplyReadySemaphore) {
-            p_ptr->extraReplyReadySemaphore->release(1);
+            p_ptr->extraReplyReadySemaphore->release();
             p_ptr->extraReplyReadySemaphore = NULL;
         }
         locker.unlock();
