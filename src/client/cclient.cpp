@@ -306,6 +306,15 @@ void CClient::StartGameCommand(QObject *receiver, const QVariant &)
     emit client->gameStarted();
 }
 
+void CClient::AddRobotCommand(QObject *receiver, const QVariant &data)
+{
+    CClient *client = qobject_cast<CClient *>(receiver);
+
+    // to-do: implement the robot working in the client side
+    CClientUser *user = client->addUser(data);
+    emit client->userAdded(user);
+}
+
 void CClient::Init()
 {
     AddCallback(S_COMMAND_SPEAK, &SpeakCommand);
@@ -318,5 +327,6 @@ void CClient::Init()
     AddCallback(S_COMMAND_UPDATE_ROOM_PROPERTY, &UpdateRoomPropertyCommand);
     AddCallback(S_COMMAND_NETWORK_DELAY, &NetworkDelayCommand);
     AddCallback(S_COMMAND_START_GAME, &StartGameCommand);
+    AddCallback(S_COMMAND_ADD_ROBOT, &AddRobotCommand);
 }
 C_INITIALIZE_CLASS(CClient)

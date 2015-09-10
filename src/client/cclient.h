@@ -95,6 +95,7 @@ protected:
     static void UpdateRoomPropertyCommand(QObject *receiver, const QVariant &data);
     static void NetworkDelayCommand(QObject *receiver, const QVariant &data);
     static void StartGameCommand(QObject *receiver, const QVariant &);
+    static void AddRobotCommand(QObject *receiver, const QVariant &data);
 
 private:
     C_DECLARE_INITIALIZER(CClient)
