@@ -221,7 +221,11 @@ void CServer::onUserDisconnected()
     //if (user && user->state() == CServerUser::LoggedOut)
     uint id = user->id();
     p_ptr->users.remove(id);
-    user->deleteLater();
+
+    if (user->room() == p_ptr->lobby)
+        user->deleteLater();
+    else
+        connect(user->room(), &CRoom::finished, user, &CServerUser::deleteLater);
 }
 
 void CServer::onUserStateChanged()

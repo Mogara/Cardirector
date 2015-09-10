@@ -138,6 +138,8 @@ void CRoom::setGameLogic(CAbstractGameLogic *gameLogic)
 
     p_ptr->gameLogic = gameLogic;
     connect(gameLogic, &CAbstractGameLogic::gameOver, this, &CRoom::onGameOver);
+    connect(gameLogic, &CAbstractGameLogic::started, this, &CRoom::started);
+    connect(gameLogic, &CAbstractGameLogic::finished, this, &CRoom::finished);
 }
 
 CAbstractGameLogic *CRoom::gameLogic() const

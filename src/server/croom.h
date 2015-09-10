@@ -96,6 +96,9 @@ public:
 
 signals:
     void abandoned();
+    void started();
+    void finished();
+
     void userAdded(CServerUser *user);
     void userRemoved(CServerUser *user);
     void robotAdded(CServerRobot *robot);
