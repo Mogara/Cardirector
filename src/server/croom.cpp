@@ -62,8 +62,10 @@ CRoom::CRoom(CServer *server)
 
 CRoom::~CRoom()
 {
-    if (p_ptr->gameLogic)
-        p_ptr->gameLogic->wait();
+    if (p_ptr->gameLogic && p_ptr->gameLogic->isRunning()) {
+        p_ptr->gameLogic->setParent(NULL);
+        connect(p_ptr->gameLogic, &CAbstractGameLogic::finished, p_ptr->gameLogic, &CAbstractGameLogic::deleteLater);
+    }
     delete p_ptr;
 }
 
