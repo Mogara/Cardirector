@@ -25,6 +25,18 @@ win32-msvc*{
     }
 }
 
+win32-g++ {
+    CONFIG(release, debug|release) {
+        QMAKE_CXXFLAGS += -g
+        DEFINES += USE_BREAKPAD
+        INCLUDEPATH += \
+            $$PWD/breakpad \
+            $$PWD/breakpad/client/windows
+
+        LIBS += -lbreakpad_MinGW
+    }
+}
+
 linux{
     CONFIG(release, debug|release) {
         SOURCES += \
