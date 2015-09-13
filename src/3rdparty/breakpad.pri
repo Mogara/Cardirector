@@ -39,14 +39,45 @@ win32-g++ {
 
 osx {
     CONFIG(release, debug|release) {
+        QMAKE_LFLAGS += -framework CoreFoundation
+
+        SOURCES += \
+            $$PWD/breakpad/client/mac/crash_generation/crash_generation_client.cc \
+            $$PWD/breakpad/client/mac/crash_generation/crash_generation_server.cc \
+            $$PWD/breakpad/client/mac/handler/exception_handler.cc \
+            $$PWD/breakpad/client/mac/handler/minidump_generator.cc \
+            $$PWD/breakpad/client/mac/handler/breakpad_nlist_64.cc \
+            $$PWD/breakpad/client/mac/handler/dynamic_images.cc \
+            $$PWD/breakpad/client/mac/handler/protected_memory_allocator.cc \
+            $$PWD/breakpad/client/minidump_file_writer.cc \
+            $$PWD/breakpad/common/convert_UTF.c \
+            $$PWD/breakpad/common/md5.cc \
+            $$PWD/breakpad/common/string_conversion.cc \
+            $$PWD/breakpad/common/mac/arch_utilities.cc \
+            $$PWD/breakpad/common/mac/bootstrap_compat.cc \
+            $$PWD/breakpad/common/mac/file_id.cc \
+            $$PWD/breakpad/common/mac/launch_reporter.cc \
+            $$PWD/breakpad/common/mac/macho_id.cc \
+            $$PWD/breakpad/common/mac/macho_reader.cc \
+            $$PWD/breakpad/common/mac/macho_utilities.cc \
+            $$PWD/breakpad/common/mac/macho_walker.cc \
+            $$PWD/breakpad/common/mac/string_utilities.cc
+
+        OBJECTIVE_SOURCES += \
+            $$PWD/breakpad/common/mac/dump_syms.mm \
+            $$PWD/breakpad/common/mac/HTTPMultipartUpload.m \
+            $$PWD/breakpad/common/mac/MachIPC.mm
+
+        HEADERS += \
+            $$PWD/breakpad/client/mac/handler/exception_handler.h
+
+
         QMAKE_CXXFLAGS += -g
         DEFINES += USE_BREAKPAD
         INCLUDEPATH += \
             $$PWD/breakpad \
             $$PWD/breakpad/client/mac
             $$PWD/breakpad/client/apple
-
-        LIBS += -lbreakpad_MacOS
     }
 }
 
