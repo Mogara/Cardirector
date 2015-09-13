@@ -35,7 +35,17 @@ static bool GoogleBreakpadCallback(const google_breakpad::MinidumpDescriptor &md
         (*CDumpCallback)(md.path());
     return succeeded;
 }
-
+#elif defined (Q_OS_OSX)
+static bool GoogleBreakpadCallback(const char *,
+                                   const char *minidump_id,
+                                   void *, bool succeeded)
+{
+    if (succeeded && CDumpCallback) {
+        QString fileName = QString::fromLatin1(minidump_id) + ".dmp";
+        (*CDumpCallback)(fileName);
+    }
+    return succeeded;
+}
 #elif defined(Q_OS_WIN)
 static bool GoogleBreakpadCallback(const wchar_t *, const wchar_t *id, void *, EXCEPTION_POINTERS *, MDRawAssertionInfo *, bool succeeded)
 {
@@ -55,9 +65,11 @@ CExceptionHandler::CExceptionHandler(const QString &directory, MinidumpCallback 
 
 #ifdef USE_BREAKPAD
 #if defined(Q_OS_LINUX)
-    static google_breakpad::ExceptionHandler eh(google_breakpad::MinidumpDescriptor(directory.toStdString()), NULL, GoogleBreakpadCallback, NULL, true, -1);
+    static google_breakpad::ExceptionHandler eh(google_breakpad::MinidumpDescriptor(directory.toStdString()), NULL, &GoogleBreakpadCallback, NULL, true, -1);
 #elif defined(Q_OS_WIN)
-    static google_breakpad::ExceptionHandler eh(directory.toStdWString(), NULL, GoogleBreakpadCallback, NULL, google_breakpad::ExceptionHandler::HANDLER_ALL);
+    static google_breakpad::ExceptionHandler eh(directory.toStdWString(), NULL, &GoogleBreakpadCallback, NULL, google_breakpad::ExceptionHandler::HANDLER_ALL);
+#elif defined(Q_OS_OSX)
+    static google_breakpad::ExceptionHandler eh(directory.toStdString(), NULL, &GoogleBreakpadCallback, NULL, true, NULL);
 #endif
 #else
     C_UNUSED(directory);

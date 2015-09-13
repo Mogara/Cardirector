@@ -31,6 +31,19 @@ win32 {
     }
 }
 
+osx {
+    CONFIG(release, debug|release) {
+        QMAKE_CXXFLAGS += -g
+        DEFINES += USE_BREAKPAD
+        INCLUDEPATH += \
+            $$PWD/breakpad \
+            $$PWD/breakpad/client/mac
+            $$PWD/breakpad/client/apple
+
+        LIBS += -lbreakpad_MacOS
+    }
+}
+
 linux{
     CONFIG(release, debug|release) {
         SOURCES += \

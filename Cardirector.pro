@@ -186,5 +186,12 @@ linux {
         QMAKE_POST_LINK = $$QMAKE_COPY $$system_path($$OUT_PWD/lib$${TARGET}.so) $$system_path($$PWD/lib)
     }
 }
+macx {
+    CONFIG(staticlib) {
+        QMAKE_POST_LINK = $$QMAKE_COPY $$system_path($$OUT_PWD/lib$${TARGET}.a) $$system_path($$PWD/lib)
+    } else {
+        QMAKE_POST_LINK = $$QMAKE_COPY $$system_path($$OUT_PWD/lib$${TARGET}.dylib) $$system_path($$PWD/lib)
+    }
+}
 
 include(src/3rdparty/breakpad.pri)
