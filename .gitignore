@@ -39,3 +39,4 @@ lib/
 gui.qrc
 .DS_Store
 
+*.orig
