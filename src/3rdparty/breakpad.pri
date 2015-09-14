@@ -80,7 +80,6 @@ linux{
         SOURCES += \
             $$PWD/breakpad/client/linux/crash_generation/crash_generation_client.cc \
             $$PWD/breakpad/client/linux/crash_generation/crash_generation_server.cc \
-            $$PWD/breakpad/client/linux/dump_writer_common/seccomp_unwinder.cc \
             $$PWD/breakpad/client/linux/dump_writer_common/thread_info.cc \
             $$PWD/breakpad/client/linux/dump_writer_common/ucontext_reader.cc \
             $$PWD/breakpad/client/linux/handler/exception_handler.cc \
