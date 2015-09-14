@@ -22,7 +22,7 @@
 
 #include "cglobal.h"
 
-#include <QThread>
+#include <QObject>
 
 MCD_BEGIN_NAMESPACE
 
@@ -33,15 +33,16 @@ class CRoom;
 class CServerUser;
 
 class CAbstractGameLogicPrivate;
-class MCD_EXPORT CAbstractGameLogic : public QThread
+class MCD_EXPORT CAbstractGameLogic : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit CAbstractGameLogic(CRoom *parent = 0);
+    explicit CAbstractGameLogic(CRoom *room);
     ~CAbstractGameLogic();
 
-    void start(Priority priority = InheritPriority);
+    void start();
+    bool isRunning() const;
 
     CRoom *room() const;
 
@@ -54,9 +55,12 @@ public:
     CServerRobot *findRobot(CAbstractPlayer *player) const;
 
 signals:
-    void gameOver();
+    void started();
+    void finished();
 
 protected:
+    virtual void run() = 0;
+
     //Parent must be the game logic
     virtual CAbstractPlayer *createPlayer(CServerUser *user) = 0;
     virtual CAbstractPlayer *createPlayer(CServerRobot *user) = 0;

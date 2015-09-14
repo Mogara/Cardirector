@@ -30,13 +30,14 @@ public:
     QMap<uint, CAbstractPlayer *> players;
     QMap<CAbstractPlayer *, CServerAgent *> player2agent;
     QMap<CServerAgent *, CAbstractPlayer *> agent2player;
+    bool isRunning;
 };
 
-CAbstractGameLogic::CAbstractGameLogic(CRoom *parent)
-    : QThread(parent)
-    , p_ptr(new CAbstractGameLogicPrivate)
+CAbstractGameLogic::CAbstractGameLogic(CRoom *room)
+    : p_ptr(new CAbstractGameLogicPrivate)
 {
-    p_ptr->room = parent;
+    p_ptr->room = room;
+    p_ptr->isRunning = false;
 }
 
 CAbstractGameLogic::~CAbstractGameLogic()
@@ -79,7 +80,7 @@ CServerRobot *CAbstractGameLogic::findRobot(CAbstractPlayer *player) const
     return qobject_cast<CServerRobot *>(p_ptr->player2agent.value(player));
 }
 
-void CAbstractGameLogic::start(Priority priority)
+void CAbstractGameLogic::start()
 {
     int playerId = 0;
 
@@ -101,5 +102,14 @@ void CAbstractGameLogic::start(Priority priority)
         p_ptr->agent2player.insert(robot, player);
     }
 
-    QThread::start(priority);
+    p_ptr->isRunning = true;
+    emit started();
+    run();
+    p_ptr->isRunning = false;
+    emit finished();
+}
+
+bool CAbstractGameLogic::isRunning() const
+{
+    return p_ptr->isRunning;
 }

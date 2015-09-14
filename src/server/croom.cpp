@@ -24,6 +24,7 @@
 #include "cserver.h"
 #include "cserveruser.h"
 
+#include <QThread>
 #include <QTime>
 #include <QSemaphore>
 
@@ -44,6 +45,7 @@ public:
     CServerAgent *racingRequestWinner;
 
     char robotNameCode;
+    QThread *thread;
 };
 
 CRoom::CRoom(CServer *server)
@@ -58,13 +60,17 @@ CRoom::CRoom(CServer *server)
     p_ptr->owner = NULL;
     p_ptr->capacity = 0;
     p_ptr->robotNameCode = 'A';
+
+    p_ptr->thread = new QThread(this);
+    p_ptr->thread->start();
 }
 
 CRoom::~CRoom()
 {
-    if (p_ptr->gameLogic && p_ptr->gameLogic->isRunning()) {
-        p_ptr->gameLogic->setParent(NULL);
-        connect(p_ptr->gameLogic, &CAbstractGameLogic::finished, p_ptr->gameLogic, &CAbstractGameLogic::deleteLater);
+    if (p_ptr->thread->isRunning()) {
+        connect(p_ptr->thread, &QThread::finished, p_ptr->thread, &QThread::deleteLater);
+        p_ptr->thread->setParent(NULL);
+        p_ptr->thread->quit();
     }
     delete p_ptr;
 }
@@ -132,16 +138,18 @@ bool CRoom::isFull() const
 
 void CRoom::setGameLogic(CAbstractGameLogic *gameLogic)
 {
-    if (p_ptr->gameLogic != NULL && p_ptr->gameLogic->isRunning())
-        return;
-
-    if (p_ptr->gameLogic != NULL)
+    if (p_ptr->gameLogic != NULL) {
+        if (p_ptr->gameLogic->isRunning())
+            return;
         gameLogic->deleteLater();
+    }
 
     p_ptr->gameLogic = gameLogic;
-    connect(gameLogic, &CAbstractGameLogic::gameOver, this, &CRoom::onGameOver);
+    connect(this, &CRoom::aboutToStart, gameLogic, &CAbstractGameLogic::start);
     connect(gameLogic, &CAbstractGameLogic::started, this, &CRoom::started);
+    connect(gameLogic, &CAbstractGameLogic::finished, this, &CRoom::onGameOver);
     connect(gameLogic, &CAbstractGameLogic::finished, this, &CRoom::finished);
+    gameLogic->moveToThread(p_ptr->thread);
 }
 
 CAbstractGameLogic *CRoom::gameLogic() const
@@ -264,7 +272,7 @@ void CRoom::startGame()
 {
     if (p_ptr->gameLogic && !p_ptr->gameLogic->isRunning()) {
         broadcastNotification(S_COMMAND_START_GAME);
-        p_ptr->gameLogic->start();
+        emit aboutToStart();
     }
 }
 

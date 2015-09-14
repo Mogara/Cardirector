@@ -96,6 +96,8 @@ public:
 
 signals:
     void abandoned();
+
+    void aboutToStart();
     void started();
     void finished();
 
