@@ -62,6 +62,8 @@ public:
     void setCapacity(int capacity);
     bool isFull() const;
 
+    bool isAbandoned() const;
+
     void setGameLogic(CAbstractGameLogic *gameLogic);
     CAbstractGameLogic *gameLogic() const;
 

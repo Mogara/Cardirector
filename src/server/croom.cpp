@@ -39,6 +39,7 @@ public:
     QMap<uint, CServerRobot *> robots;
     int capacity;
     CServerUser *owner;
+    bool isAbandoned;
 
     QSemaphore racingRequestSemaphore;
     QList<CServerAgent *> racingRequestCandidates;
@@ -58,20 +59,18 @@ CRoom::CRoom(CServer *server)
     p_ptr->server = server;
     p_ptr->gameLogic = NULL;
     p_ptr->owner = NULL;
+    p_ptr->isAbandoned = false;
     p_ptr->capacity = 0;
     p_ptr->robotNameCode = 'A';
 
-    p_ptr->thread = new QThread(this);
+    p_ptr->thread = new QThread;
+    connect(p_ptr->thread, &QThread::finished, p_ptr->thread, &QThread::deleteLater);
+    connect(p_ptr->thread, &QThread::finished, this, &CRoom::deleteLater);
     p_ptr->thread->start();
 }
 
 CRoom::~CRoom()
 {
-    if (p_ptr->thread->isRunning()) {
-        connect(p_ptr->thread, &QThread::finished, p_ptr->thread, &QThread::deleteLater);
-        p_ptr->thread->setParent(NULL);
-        p_ptr->thread->quit();
-    }
     delete p_ptr;
 }
 
@@ -134,6 +133,11 @@ void CRoom::setCapacity(int capacity)
 bool CRoom::isFull() const
 {
     return p_ptr->capacity > 0 && p_ptr->users.size() + p_ptr->robots.size() >= p_ptr->capacity;
+}
+
+bool CRoom::isAbandoned() const
+{
+    return p_ptr->isAbandoned;
 }
 
 void CRoom::setGameLogic(CAbstractGameLogic *gameLogic)
@@ -203,7 +207,8 @@ void CRoom::removeUser(CServerUser *user)
                 notifyProperty("ownerId");
             } else {
                 emit abandoned();
-                deleteLater();
+                p_ptr->isAbandoned = true;
+                p_ptr->thread->quit();
                 return;
             }
         }
