@@ -108,13 +108,13 @@ linux{
         INCLUDEPATH += \
             $$PWD/breakpad \
             $$PWD/breakpad/client/linux
-    }
 
-    android{
-        DEFINES += __STDINT_LIMITS
-        CONFIG(release, debug|release) {
-            SOURCES += $$PWD/breakpad/common/android/breakpad_getcontext.S
-            INCLUDEPATH += $$PWD/breakpad/common/android/include
+        android{
+            DEFINES += __STDINT_LIMITS
+            CONFIG(release, debug|release) {
+                SOURCES += $$PWD/breakpad/common/android/breakpad_getcontext.S
+                INCLUDEPATH += $$PWD/breakpad/common/android/include
+            }
         }
     }
 }
