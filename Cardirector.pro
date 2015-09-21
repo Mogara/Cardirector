@@ -65,7 +65,8 @@ SOURCES += \
     src/sound/csound.cpp \
     src/ui/cabstractui.cpp \
     src/ui/cmainwindow.cpp \
-    src/ui/cqmlengine.cpp
+    src/ui/cqmlengine.cpp \
+    src/ui/ctranslator.cpp
 
 HEADERS += \
     src/ai/cabstractai.h \
@@ -103,6 +104,7 @@ HEADERS += \
     src/ui/cabstractui.h \
     src/ui/cmainwindow.h \
     src/ui/cqmlengine.h \
+    src/ui/ctranslator.h \
     src/cpch.h
 
 QML_FILES += Gui/Dialog.qml \
