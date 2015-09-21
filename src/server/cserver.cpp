@@ -17,6 +17,7 @@
     Mogara
 *********************************************************************/
 
+#include "cabstractgamelogic.h"
 #include "cserveragent.h"
 #include "cjsonpacketparser.h"
 #include "cprotocol.h"
@@ -222,10 +223,12 @@ void CServer::onUserDisconnected()
     uint id = user->id();
     p_ptr->users.remove(id);
 
-    if (user->room() == p_ptr->lobby)
+    if (user->room() == p_ptr->lobby) {
         user->deleteLater();
-    else
-        connect(user->room(), &CRoom::finished, user, &CServerUser::deleteLater);
+    } else {
+        user->setParent(NULL);
+        connect(user->room()->gameLogic(), &CAbstractGameLogic::destroyed, user, &CServerUser::deleteLater);
+    }
 }
 
 void CServer::onUserStateChanged()
