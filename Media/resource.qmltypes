@@ -1,0 +1,47 @@
+import QtQuick.tooling 1.1
+
+Module {
+    Component {
+        name: "CSound"
+        prototype: "QQuickItem"
+        exports: [
+            "Cardirector.Media/CSound 1.0"
+        ]
+
+        Property {
+            name: "fileName"
+            type: "string"
+        }
+
+        Property {
+            name: "isPlaying"
+            type: "bool"
+        }
+
+        Property {
+            name: "isLoop"
+            type: "bool"
+        }
+
+        Property {
+            name: "volume"
+            type: "qreal"
+        }
+
+        Signal {
+            name: "started"
+        }
+
+        Signal {
+            name: "stopped"
+        }
+
+        Method {
+            name: "play"
+        }
+
+        Method {
+            name: "stop"
+        }
+    }
+}

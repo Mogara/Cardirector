@@ -21,6 +21,7 @@
 #include "cclientsettings.h"
 #include "cdeviceinfo.h"
 #include "cimageprovider.h"
+#include "csound.h"
 
 #include <QtQml>
 #include <QFile>
@@ -87,6 +88,7 @@ CQmlEngine::CQmlEngine(QObject *p)
 
     qmlRegisterType<CClientSettings>("Cardirector.Client", 1, 0, "ClientSettings");
     qmlRegisterType<CImageProvider>("Cardirector.Resource", 1, 0, "ImageProvider");
+    qmlRegisterType<CSound>("Cardirector.Media", 1, 0, "CSound");
 
     qmlRegisterSingletonType<CDeviceInfo>("Cardirector.Device", 1, 0, "Device", cDeviceInfoProvider);
 

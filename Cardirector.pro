@@ -30,6 +30,7 @@ INCLUDEPATH += src \
     src/ui \
     src/resource \
     src/server \
+    src/media \
     src/network
 
 SOURCES += \
@@ -46,6 +47,8 @@ SOURCES += \
     src/controller/cabstractuicontroller.cpp \
     src/gamelogic/cabstractgamelogic.cpp \
     src/gamelogic/cabstractplayer.cpp \
+    src/media/coggfile.cpp \
+    src/media/csound.cpp \
     src/network/cjsonpacketparser.cpp \
     src/network/cnetwork.cpp \
     src/network/cpacket.cpp \
@@ -62,8 +65,6 @@ SOURCES += \
     src/server/cserveragent.cpp \
     src/server/cserverrobot.cpp \
     src/server/cserveruser.cpp \
-    src/sound/coggfile.cpp \
-    src/sound/csound.cpp \
     src/ui/cabstractui.cpp \
     src/ui/cmainwindow.cpp \
     src/ui/cqmlengine.cpp \
@@ -84,6 +85,8 @@ HEADERS += \
     src/controller/cabstractuicontroller.h \
     src/gamelogic/cabstractgamelogic.h \
     src/gamelogic/cabstractplayer.h \
+    src/media/coggfile.h \
+    src/media/csound.h \
     src/network/cabstractpacketparser.h \
     src/network/cjsonpacketparser.h \
     src/network/cnetwork.h \
@@ -101,8 +104,6 @@ HEADERS += \
     src/server/cserveragent.h \
     src/server/cserverrobot.h \
     src/server/cserveruser.h \
-    src/sound/coggfile.h \
-    src/sound/csound.h \
     src/ui/cabstractui.h \
     src/ui/cmainwindow.h \
     src/ui/cqmlengine.h \
