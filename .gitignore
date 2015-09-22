@@ -35,7 +35,7 @@ ipch/
 *.vcxproj.user
 bin/
 /include/
-lib/
+/lib/
 gui.qrc
 .DS_Store
 

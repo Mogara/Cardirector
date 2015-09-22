@@ -8,7 +8,7 @@ TEMPLATE = lib
 CONFIG += precompile_header
 CONFIG += staticlib
 
-QT += quick
+QT += quick multimedia
 android:QT += androidextras
 
 # Use Precompiled headers (PCH)
@@ -62,6 +62,7 @@ SOURCES += \
     src/server/cserveragent.cpp \
     src/server/cserverrobot.cpp \
     src/server/cserveruser.cpp \
+    src/sound/coggfile.cpp \
     src/sound/csound.cpp \
     src/ui/cabstractui.cpp \
     src/ui/cmainwindow.cpp \
@@ -100,6 +101,7 @@ HEADERS += \
     src/server/cserveragent.h \
     src/server/cserverrobot.h \
     src/server/cserveruser.h \
+    src/sound/coggfile.h \
     src/sound/csound.h \
     src/ui/cabstractui.h \
     src/ui/cmainwindow.h \
@@ -196,4 +198,6 @@ macx {
     }
 }
 
-include(src/3rdparty/breakpad.pri)
+include(src/3rdparty/breakpad/breakpad.pri)
+include(src/3rdparty/libogg/libogg.pri)
+include(src/3rdparty/libvorbis/libvorbis.pri)
