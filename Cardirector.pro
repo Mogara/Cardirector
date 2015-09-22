@@ -31,7 +31,8 @@ INCLUDEPATH += src \
     src/resource \
     src/server \
     src/media \
-    src/network
+    src/network \
+    src/3rdparty
 
 SOURCES += \
     src/ai/cabstractai.cpp \

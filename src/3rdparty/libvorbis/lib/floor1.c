@@ -25,7 +25,7 @@
 #include "codebook.h"
 #include "misc.h"
 #include "scales.h"
-#include "warning.h"
+#include "nowarning.h"
 
 #include <stdio.h>
 

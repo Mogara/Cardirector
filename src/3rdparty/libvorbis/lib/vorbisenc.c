@@ -26,7 +26,7 @@
 
 #include "os.h"
 #include "misc.h"
-#include "warning.h"
+#include "nowarning.h"
 
 /* careful with this; it's using static array sizing to make managing
    all the modes a little less annoying.  If we use a residue backend

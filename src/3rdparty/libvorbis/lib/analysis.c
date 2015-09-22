@@ -25,7 +25,7 @@
 #include "scales.h"
 #include "os.h"
 #include "misc.h"
-#include "warning.h"
+#include "nowarning.h"
 
 /* decides between modes, dispatches to the appropriate mapping. */
 int vorbis_analysis(vorbis_block *vb, ogg_packet *op){

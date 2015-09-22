@@ -40,7 +40,7 @@
 #include "misc.h"
 #include "lookup.h"
 #include "scales.h"
-#include "warning.h"
+#include "nowarning.h"
 
 /* three possible LSP to f curve functions; the exact computation
    (float), a lookup based float implementation, and an integer

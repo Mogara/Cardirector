@@ -30,7 +30,7 @@
 #include "codebook.h"
 #include "misc.h"
 #include "os.h"
-#include "warning.h"
+#include "nowarning.h"
 
 //#define TRAIN_RES 1
 //#define TRAIN_RESAUX 1

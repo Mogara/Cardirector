@@ -22,7 +22,7 @@
 #include <math.h>
 
 #include "vorbis/codec.h"
-#include "warning.h"
+#include "nowarning.h"
 
 /* we don't need or want the static callback symbols here */
 #define OV_EXCLUDE_STATIC_CALLBACKS

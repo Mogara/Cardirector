@@ -20,7 +20,7 @@
 #include "lookup_data.h"
 #include "os.h"
 #include "misc.h"
-#include "warning.h"
+#include "nowarning.h"
 
 #ifdef FLOAT_LOOKUP
 

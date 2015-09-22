@@ -28,6 +28,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "client/linux/crash_generation/crash_generation_client.h"
+#include "nowarning.h"
 
 #include <stdio.h>
 #include <sys/socket.h>

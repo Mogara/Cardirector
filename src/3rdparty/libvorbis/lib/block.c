@@ -30,7 +30,7 @@
 #include "lpc.h"
 #include "registry.h"
 #include "misc.h"
-#include "warning.h"
+#include "nowarning.h"
 
 /* pcm accumulator examples (not exhaustive):
 

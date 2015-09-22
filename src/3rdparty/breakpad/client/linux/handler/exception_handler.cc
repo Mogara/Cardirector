@@ -64,6 +64,7 @@
 // context which it runs in.
 
 #include "client/linux/handler/exception_handler.h"
+#include "nowarning.h"
 
 #include <errno.h>
 #include <fcntl.h>

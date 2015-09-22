@@ -30,6 +30,7 @@
 #ifndef COMMON_LINUX_IGNORE_RET_H_
 #define COMMON_LINUX_IGNORE_RET_H_
 
+#include "nowarning.h"
 // Some compilers are prone to warn about unused return values. In cases where
 // either a) the call cannot fail, or b) there is nothing that can be done when
 // the call fails, IGNORE_RET() can be used to mark the return code as ignored.

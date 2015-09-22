@@ -19,7 +19,7 @@
 #include "codec_internal.h"
 #include "registry.h"
 #include "misc.h"
-#include "warning.h"
+#include "nowarning.h"
 
 /* seems like major overkill now; the backend numbers will grow into
    the infrastructure soon enough */
