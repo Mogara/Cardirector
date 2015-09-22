@@ -6,7 +6,7 @@
 #include <QTranslator>
 
 class CTranslatorPrivate;
-MCD_EXPORT class CTranslator : public QTranslator
+class MCD_EXPORT CTranslator : public QTranslator
 {
 public:
     CTranslator(QObject *parent = 0);
