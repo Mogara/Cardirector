@@ -28,7 +28,7 @@ class CSoundPrivate
 public:
     QBuffer *buffer;
     QAudioOutput *output;
-    QString fileName;
+    QString source;
     bool loop;
     qreal volume;
 
@@ -52,21 +52,21 @@ CSound::~CSound()
     delete p_ptr;
 }
 
-QString CSound::fileName() const
+QString CSound::source() const
 {
-    return p_ptr->fileName;
+    return p_ptr->source;
 }
 
-void CSound::setFileName(const QString &fileName)
+void CSound::setSource(const QString &source)
 {
-    p_ptr->fileName = fileName;
+    p_ptr->source = source;
 
     QIODevice *file = NULL;
     QAudioFormat format;
 
     //@to-do: if-else is not propriate to extend more formats
-    if (fileName.endsWith(".ogg")) {
-        COggFile *ogg = new COggFile(fileName, this);
+    if (source.endsWith(".ogg")) {
+        COggFile *ogg = new COggFile(source, this);
         if (ogg->open(QFile::ReadOnly)) {
             format = ogg->format();
             file = ogg;

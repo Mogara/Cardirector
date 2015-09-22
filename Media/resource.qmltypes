@@ -9,7 +9,7 @@ Module {
         ]
 
         Property {
-            name: "fileName"
+            name: "source"
             type: "string"
         }
 

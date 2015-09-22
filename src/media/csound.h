@@ -27,7 +27,7 @@ class MCD_EXPORT CSound : public QQuickItem
 {
     Q_OBJECT
 
-    Q_PROPERTY(QString fileName READ fileName WRITE setFileName)
+    Q_PROPERTY(QString source READ source WRITE setSource)
     Q_PROPERTY(bool isPlaying READ isPlaying)
     Q_PROPERTY(bool isLoop READ isLoop WRITE setLoop)
     Q_PROPERTY(qreal volume READ volume WRITE setVolume)
@@ -36,8 +36,8 @@ public:
     CSound(QQuickItem *parent = 0);
     ~CSound();
 
-    QString fileName() const;
-    void setFileName(const QString &fileName);
+    QString source() const;
+    void setSource(const QString &source);
 
     Q_INVOKABLE void play();
     Q_INVOKABLE void stop();
