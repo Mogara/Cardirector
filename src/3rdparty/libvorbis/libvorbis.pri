@@ -24,3 +24,4 @@ SOURCES += \
     $$PWD/lib/vorbisfile.c
 
 INCLUDEPATH += $$PWD/include
+INCLUDEPATH += $$PWD/lib

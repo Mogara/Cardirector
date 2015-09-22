@@ -23,6 +23,7 @@ extern "C"
 {
 #endif /* __cplusplus */
 
+#include "warning.h"
 #include <stdio.h>
 #include "codec.h"
 
