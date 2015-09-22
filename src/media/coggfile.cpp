@@ -58,13 +58,19 @@ COggFile::~COggFile()
 
 bool COggFile::open(QIODevice::OpenMode mode)
 {
-    setOpenMode(mode);
-    return 0 == ov_fopen(p_ptr->filePath.toLatin1().constData(), &p_ptr->file);
+    if (0 == ov_fopen(p_ptr->filePath.toLatin1().constData(), &p_ptr->file)) {
+        setOpenMode(mode);
+        return true;
+    } else {
+        setOpenMode(NotOpen);
+        return false;
+    }
 }
 
 void COggFile::close()
 {
-    ov_clear(&p_ptr->file);
+    if (isOpen())
+        ov_clear(&p_ptr->file);
 }
 
 QAudioFormat COggFile::format() const
