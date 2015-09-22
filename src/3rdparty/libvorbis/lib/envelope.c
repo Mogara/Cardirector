@@ -28,6 +28,7 @@
 #include "envelope.h"
 #include "mdct.h"
 #include "misc.h"
+#include "warning.h"
 
 void _ve_envelope_init(envelope_lookup *e,vorbis_info *vi){
   codec_setup_info *ci=vi->codec_setup;

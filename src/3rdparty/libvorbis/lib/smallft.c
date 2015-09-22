@@ -34,6 +34,7 @@
 #include "smallft.h"
 #include "os.h"
 #include "misc.h"
+#include "warning.h"
 
 static void drfti1(int n, float *wa, int *ifac){
   static int ntryh[4] = { 4,2,3,5 };

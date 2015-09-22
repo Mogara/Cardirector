@@ -28,6 +28,7 @@
 #include "scales.h"
 #include "misc.h"
 #include "os.h"
+#include "warning.h"
 
 #include "misc.h"
 #include <stdio.h>

@@ -27,6 +27,7 @@
 #include "registry.h"
 #include "psy.h"
 #include "misc.h"
+#include "warning.h"
 
 /* simplistic, wasteful way of doing this (unique lookup for each
    mode/submapping); there should be a central repository for

@@ -45,6 +45,7 @@
 #include "mdct.h"
 #include "os.h"
 #include "misc.h"
+#include "warning.h"
 
 /* build lookups for trig functions; also pre-figure scaling and
    some window function algebra. */
