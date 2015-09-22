@@ -1,0 +1,48 @@
+import QtQuick.tooling 1.1
+
+Module {
+    Component {
+        name: "ClientSettings"
+        prototype: "QSettings"
+        exports: [
+            "Cardirector.Client/ClientSettings 1.0"
+        ]
+
+        Property {
+            name: "locale"
+            type: "string"
+        }
+
+        Signal {
+            name: "localeChanged"
+        }
+
+        Method {
+            name: "value"
+
+            Parameter {
+                name: "key"
+                type: "QString"
+            }
+
+            Parameter {
+                name : "defaultValue"
+                type: "QString"
+            }
+        }
+
+        Method {
+            name: "setValue"
+
+            Parameter {
+                name: "key"
+                type: "QString"
+            }
+
+            Parameter {
+                name : "value"
+                type: "QString"
+            }
+        }
+    }
+}
