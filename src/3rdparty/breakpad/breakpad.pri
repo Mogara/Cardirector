@@ -1,14 +1,22 @@
-#win32-msvc*{
-win32 {
-    CONFIG(release, debug|release) {
-        win32-msvc* {
-            QMAKE_LFLAGS_RELEASE = $$QMAKE_LFLAGS_RELEASE_WITH_DEBUGINFO
-        }
-        win32-g++ {
-            QMAKE_CXXFLAGS += -g
-        }
-        DEFINES += USE_BREAKPAD
 
+CONFIG(release, debug|release) {
+    DEFINES += USE_BREAKPAD
+
+    win32-msvc* {
+        QMAKE_LFLAGS_RELEASE = $$QMAKE_LFLAGS_RELEASE_WITH_DEBUGINFO
+    } else {
+        QMAKE_CXXFLAGS += -g
+    }
+
+    INCLUDEPATH += $$PWD
+
+    SOURCES += \
+        $$PWD/client/minidump_file_writer.cc \
+        $$PWD/common/convert_UTF.c \
+        $$PWD/common/md5.cc \
+        $$PWD/common/string_conversion.cc \
+
+    win32 {
         SOURCES += \
             $$PWD/client/windows/crash_generation/client_info.cc \
             $$PWD/client/windows/crash_generation/crash_generation_client.cc \
@@ -26,13 +34,10 @@ win32 {
             $$PWD/common/windows/guid_string.h
 
         INCLUDEPATH += \
-            $$PWD \
             $$PWD/client/windows
     }
-}
 
-osx {
-    CONFIG(release, debug|release) {
+    osx {
         QMAKE_LFLAGS += -framework CoreFoundation
 
         SOURCES += \
@@ -43,10 +48,6 @@ osx {
             $$PWD/client/mac/handler/breakpad_nlist_64.cc \
             $$PWD/client/mac/handler/dynamic_images.cc \
             $$PWD/client/mac/handler/protected_memory_allocator.cc \
-            $$PWD/client/minidump_file_writer.cc \
-            $$PWD/common/convert_UTF.c \
-            $$PWD/common/md5.cc \
-            $$PWD/common/string_conversion.cc \
             $$PWD/common/mac/arch_utilities.cc \
             $$PWD/common/mac/bootstrap_compat.cc \
             $$PWD/common/mac/file_id.cc \
@@ -58,6 +59,11 @@ osx {
             $$PWD/common/mac/string_utilities.cc
 
         OBJECTIVE_SOURCES += \
+            $$PWD/client/mac/crash_generation/ConfigFile.mm \
+            $$PWD/client/mac/crash_generation/Inspector.mm \
+            $$PWD/client/mac/crash_generation/InspectorMain.mm \
+            $$PWD/client/mac/Framework/Breakpad.mm \
+            $$PWD/client/mac/Framework/OnDemandServer.mm \
             $$PWD/common/mac/dump_syms.mm \
             $$PWD/common/mac/HTTPMultipartUpload.m \
             $$PWD/common/mac/MachIPC.mm
@@ -65,18 +71,12 @@ osx {
         HEADERS += \
             $$PWD/client/mac/handler/exception_handler.h
 
-
-        QMAKE_CXXFLAGS += -g
-        DEFINES += USE_BREAKPAD
         INCLUDEPATH += \
-            $$PWD \
-            $$PWD/client/mac
+            $$PWD/client/mac \
             $$PWD/client/apple
     }
-}
 
-linux{
-    CONFIG(release, debug|release) {
+    linux{
         SOURCES += \
             $$PWD/client/linux/crash_generation/crash_generation_client.cc \
             $$PWD/client/linux/crash_generation/crash_generation_server.cc \
@@ -89,10 +89,6 @@ linux{
             $$PWD/client/linux/minidump_writer/linux_dumper.cc \
             $$PWD/client/linux/minidump_writer/linux_ptrace_dumper.cc \
             $$PWD/client/linux/minidump_writer/minidump_writer.cc \
-            $$PWD/client/minidump_file_writer.cc \
-            $$PWD/common/convert_UTF.c \
-            $$PWD/common/md5.cc \
-            $$PWD/common/string_conversion.cc \
             $$PWD/common/linux/elfutils.cc \
             $$PWD/common/linux/file_id.cc \
             $$PWD/common/linux/guid_creator.cc \
@@ -103,10 +99,7 @@ linux{
         HEADERS += \
             $$PWD/client/linux/handler/exception_handler.h
 
-        QMAKE_CXXFLAGS += -g
-        DEFINES += USE_BREAKPAD
         INCLUDEPATH += \
-            $$PWD \
             $$PWD/client/linux
 
         android{
