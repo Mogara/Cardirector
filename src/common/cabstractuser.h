@@ -32,13 +32,13 @@ class MCD_EXPORT CAbstractUser : public QObject
 {
     Q_OBJECT
 
-public:
     Q_PROPERTY(uint id READ id)
     Q_PROPERTY(QString screenName READ screenName WRITE setScreenName NOTIFY screenNameChanged)
     Q_PROPERTY(QString state READ stateString WRITE setStateString NOTIFY stateChanged)
     Q_PROPERTY(QString avatar READ avatar WRITE setAvatar NOTIFY avatarChanged)
     Q_PROPERTY(qint64 networkDelay READ networkDelay WRITE setNetworkDelay NOTIFY networkDelayChanged)
 
+public:
     enum State{
         Invalid,
         Online,

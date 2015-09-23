@@ -33,9 +33,9 @@ class MCD_EXPORT CImageProvider : public QObject, public QQuickImageProvider
 {
     Q_OBJECT
 
-public:
     Q_PROPERTY(QString providerId READ providerId WRITE setProviderId NOTIFY providerIdChanged)
 
+public:
     CImageProvider();
     ~CImageProvider();
 
