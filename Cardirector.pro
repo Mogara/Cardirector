@@ -31,6 +31,23 @@ TARGET = $$qtLibraryTarget($$TARGET)
 
 include (./Cardirector.pri)
 
+defineTest(copy) {
+    file = $$1
+    path = $$2
+    !exists($$file): return(false)
+    system("$$QMAKE_COPY $$system_path($$file) $$system_path($$path)")
+
+    return(true)
+}
+
+!build_pass {
+    for(file, HEADERS) {
+        !equals(file, "src/cpch.h") {
+            copy($$file, include/)
+        }
+    }
+}
+
 win32 {
     DESTDIR = bin
     win32-msvc* {

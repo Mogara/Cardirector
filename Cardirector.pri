@@ -132,24 +132,6 @@ RESOURCES += \
     $$PWD/image.qrc \
     $$PWD/font.qrc
 
-defineTest(copy) {
-    file = $$1
-    path = $$2
-    !exists($$file): return(false)
-    system("$$QMAKE_COPY $$system_path($$file) $$system_path($$path)")
-
-    return(true)
-}
-
-!build_pass {
-    for(file, HEADERS) {
-        !equals(file, "src/cpch.h") {
-            copy($$file, include/)
-        }
-    }
-}
-
-
 include($$PWD/src/3rdparty/breakpad/breakpad.pri)
 include($$PWD/src/3rdparty/libogg/libogg.pri)
 include($$PWD/src/3rdparty/libvorbis/libvorbis.pri)
