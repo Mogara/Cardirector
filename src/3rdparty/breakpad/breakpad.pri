@@ -29,7 +29,7 @@ CONFIG(release, debug|release) {
     }
 
     osx {
-        QMAKE_LFLAGS += -framework CoreFoundation
+        QMAKE_LFLAGS += -framework CoreFoundation -framework Foundation
 
         SOURCES += \
             $$PWD/client/mac/crash_generation/crash_generation_client.cc \
@@ -55,16 +55,17 @@ CONFIG(release, debug|release) {
         OBJECTIVE_SOURCES += \
             $$PWD/client/mac/crash_generation/ConfigFile.mm \
             $$PWD/client/mac/crash_generation/Inspector.mm \
-            $$PWD/client/mac/crash_generation/InspectorMain.mm \
+#            $$PWD/client/mac/crash_generation/InspectorMain.mm \
             $$PWD/client/mac/Framework/Breakpad.mm \
             $$PWD/client/mac/Framework/OnDemandServer.mm \
-            $$PWD/common/mac/dump_syms.mm \
+#            $$PWD/common/mac/dump_syms.mm \
             $$PWD/common/mac/HTTPMultipartUpload.m \
             $$PWD/common/mac/MachIPC.mm
 
         INCLUDEPATH += \
             $$PWD/client/mac \
-            $$PWD/client/apple
+            $$PWD/client/apple/Framework \
+            $$PWD/common/mac
     }
 
     linux{
