@@ -13,6 +13,7 @@ static QAndroidJniObject manager = activity.callObjectMethod("getSystemService",
 
 #include <QProcess>
 #include <QTextStream>
+#include <windows.h>
 #include <shellapi.h>
 #ifdef _MSC_VER
 #pragma comment(lib, "Shell32.lib")
