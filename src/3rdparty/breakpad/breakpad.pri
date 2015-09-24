@@ -4,6 +4,8 @@ CONFIG(release, debug|release) {
 
     win32-msvc* {
         QMAKE_LFLAGS_RELEASE = $$QMAKE_LFLAGS_RELEASE_WITH_DEBUGINFO
+        SOURCES += \
+            $$PWD/client/minidump_file_writer.cc \
     } else {
         QMAKE_CXXFLAGS += -g
     }
@@ -11,7 +13,6 @@ CONFIG(release, debug|release) {
     INCLUDEPATH += $$PWD
 
     SOURCES += \
-        $$PWD/client/minidump_file_writer.cc \
         $$PWD/common/convert_UTF.c \
         $$PWD/common/md5.cc \
         $$PWD/common/string_conversion.cc \
@@ -58,6 +59,9 @@ CONFIG(release, debug|release) {
             $$PWD/common/mac/macho_walker.cc \
             $$PWD/common/mac/string_utilities.cc
 
+        SOURCES += \
+            $$PWD/client/minidump_file_writer.cc \
+
         OBJECTIVE_SOURCES += \
             $$PWD/client/mac/crash_generation/ConfigFile.mm \
             $$PWD/client/mac/crash_generation/Inspector.mm \
@@ -95,6 +99,9 @@ CONFIG(release, debug|release) {
             $$PWD/common/linux/linux_libc_support.cc \
             $$PWD/common/linux/memory_mapped_file.cc \
             $$PWD/common/linux/safe_readlink.cc
+
+        SOURCES += \
+            $$PWD/client/minidump_file_writer.cc \
 
         HEADERS += \
             $$PWD/client/linux/handler/exception_handler.h
