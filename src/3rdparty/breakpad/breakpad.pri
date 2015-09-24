@@ -4,8 +4,6 @@ CONFIG(release, debug|release) {
 
     win32-msvc* {
         QMAKE_LFLAGS_RELEASE = $$QMAKE_LFLAGS_RELEASE_WITH_DEBUGINFO
-        SOURCES += \
-            $$PWD/client/minidump_file_writer.cc \
     } else {
         QMAKE_CXXFLAGS += -g
     }
@@ -25,14 +23,6 @@ CONFIG(release, debug|release) {
             $$PWD/client/windows/crash_generation/minidump_generator.cc \
             $$PWD/client/windows/handler/exception_handler.cc \
             $$PWD/common/windows/guid_string.cc
-
-        HEADERS += \
-            $$PWD/client/windows/crash_generation/client_info.h \
-            $$PWD/client/windows/crash_generation/crash_generation_client.h \
-            $$PWD/client/windows/crash_generation/crash_generation_server.h \
-            $$PWD/client/windows/crash_generation/minidump_generator.h \
-            $$PWD/client/windows/handler/exception_handler.h \
-            $$PWD/common/windows/guid_string.h
 
         INCLUDEPATH += \
             $$PWD/client/windows
@@ -72,9 +62,6 @@ CONFIG(release, debug|release) {
             $$PWD/common/mac/HTTPMultipartUpload.m \
             $$PWD/common/mac/MachIPC.mm
 
-        HEADERS += \
-            $$PWD/client/mac/handler/exception_handler.h
-
         INCLUDEPATH += \
             $$PWD/client/mac \
             $$PWD/client/apple
@@ -102,9 +89,6 @@ CONFIG(release, debug|release) {
 
         SOURCES += \
             $$PWD/client/minidump_file_writer.cc \
-
-        HEADERS += \
-            $$PWD/client/linux/handler/exception_handler.h
 
         INCLUDEPATH += \
             $$PWD/client/linux
