@@ -77,3 +77,13 @@ macx {
         QMAKE_POST_LINK = $$QMAKE_COPY $$system_path($$OUT_PWD/lib$${TARGET}.dylib) $$system_path($$PWD/lib)
     }
 }
+
+DISTFILES = $$PWD/Gui/qmldir
+
+qmldir.files = $$PWD/Gui/qmldir
+unix {
+    installPath = $$[QT_INSTALL_QML]/$$replace(uri, \\., /)
+    qmldir.path = $$installPath
+    target.path = $$installPath
+    INSTALLS += target qmldir
+}

@@ -96,16 +96,6 @@ QML_FILES += Gui/Dialog.qml \
 
 include($$PWD/Gui/Private/private.pri)
 
-DISTFILES = $$PWD/Gui/qmldir
-
-qmldir.files = $$PWD/Gui/qmldir
-unix {
-    installPath = $$[QT_INSTALL_QML]/$$replace(uri, \\., /)
-    qmldir.path = $$installPath
-    target.path = $$installPath
-    INSTALLS += target qmldir
-}
-
 # Create the resource file
 GENERATED_RESOURCE_FILE = $$PWD/gui.qrc
 
