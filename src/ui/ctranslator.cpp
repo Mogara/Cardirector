@@ -51,10 +51,8 @@ public:
 
         QJsonParseError error;
         QJsonDocument doc = QJsonDocument::fromJson(file.readAll(), &error);
-        if (error.error != QJsonParseError::NoError) {
-            qDebug() << error.errorString();
+        if (error.error != QJsonParseError::NoError)
             return;
-        }
 
         const QJsonObject translations = doc.object();
         for (QJsonObject::ConstIterator i = translations.constBegin(); i != translations.constEnd(); i++)
