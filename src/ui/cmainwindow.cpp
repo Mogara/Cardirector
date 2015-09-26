@@ -139,4 +139,5 @@ void CMainWindow::setSource(const QUrl &source)
     QQuickView::setSource(source);
     QQmlContext *context = rootContext();
     context->setContextProperty("Root", QVariant::fromValue(rootObject()));
+    context->setContextProperty("LocalDirPath", QDir::currentPath());
 }
