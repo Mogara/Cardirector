@@ -73,6 +73,12 @@ void CClientSettings::init()
 
 CClientSettings::~CClientSettings()
 {
+    const QMetaObject *meta = metaObject();
+    int maxi = meta->propertyCount();
+    for (int i = meta->propertyOffset(); i < maxi; i++) {
+        const QMetaProperty prop = meta->property(i);
+        setValue(prop.name(), prop.read(this));
+    }
     delete p_ptr;
 }
 
