@@ -58,9 +58,9 @@ private:
 };
 
 #define MCD_INIT_GUI \
-    Q_INIT_RESOURCE(gui); \
-    Q_INIT_RESOURCE(font); \
-    Q_INIT_RESOURCE(image)
+    Q_INIT_RESOURCE(cgui); \
+    Q_INIT_RESOURCE(cfont); \
+    Q_INIT_RESOURCE(cimage)
 
 MCD_END_NAMESPACE
 

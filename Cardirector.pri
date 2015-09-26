@@ -97,7 +97,7 @@ QML_FILES += Gui/Dialog.qml \
 include($$PWD/Gui/Private/private.pri)
 
 # Create the resource file
-GENERATED_RESOURCE_FILE = $$PWD/gui.qrc
+GENERATED_RESOURCE_FILE = $$PWD/cgui.qrc
 
 INCLUDED_RESOURCE_FILES = $$QML_FILES
 
@@ -119,8 +119,8 @@ write_file($$GENERATED_RESOURCE_FILE, RESOURCE_CONTENT)|error("Aborting.")
 
 RESOURCES += \
     $$GENERATED_RESOURCE_FILE \
-    $$PWD/image.qrc \
-    $$PWD/font.qrc
+    $$PWD/cimage.qrc \
+    $$PWD/cfont.qrc
 
 include($$PWD/src/3rdparty/breakpad/breakpad.pri)
 include($$PWD/src/3rdparty/libogg/libogg.pri)
