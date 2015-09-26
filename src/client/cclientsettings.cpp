@@ -59,7 +59,7 @@ CClientSettings::CClientSettings(const QString &fileName, QSettings::Format form
 }
 
 CClientSettings::CClientSettings(QObject *parent)
-    : QSettings(parent)
+    : QSettings(QSettings::IniFormat, UserScope, qApp->organizationName(), qApp->applicationName(), parent)
 {
     init();
 }
