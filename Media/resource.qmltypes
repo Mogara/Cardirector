@@ -3,7 +3,7 @@ import QtQuick.tooling 1.1
 Module {
     Component {
         name: "Sound"
-        prototype: "QQuickItem"
+        prototype: "QObject"
         exports: [
             "Cardirector.Media/CSound 1.0"
         ]

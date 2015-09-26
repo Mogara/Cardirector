@@ -41,10 +41,17 @@ public:
     }
 };
 
-CSound::CSound(QQuickItem *parent)
-    : QQuickItem(parent)
+CSound::CSound(QObject *parent)
+    : QObject(parent)
     , p_ptr(new CSoundPrivate)
 {
+}
+
+CSound::CSound(const QString &source, QObject *parent)
+    : QObject(parent)
+    , p_ptr(new CSoundPrivate)
+{
+    setSource(source);
 }
 
 CSound::~CSound()

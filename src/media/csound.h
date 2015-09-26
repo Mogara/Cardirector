@@ -23,7 +23,7 @@
 #include <QAudio>
 
 class CSoundPrivate;
-class MCD_EXPORT CSound : public QQuickItem
+class MCD_EXPORT CSound : public QObject
 {
     Q_OBJECT
 
@@ -33,7 +33,8 @@ class MCD_EXPORT CSound : public QQuickItem
     Q_PROPERTY(qreal volume READ volume WRITE setVolume)
 
 public:
-    CSound(QQuickItem *parent = 0);
+    CSound(QObject *parent = 0);
+    CSound(const QString &source, QObject *parent = 0);
     ~CSound();
 
     QString source() const;
