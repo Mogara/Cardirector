@@ -58,6 +58,22 @@ CServer::CServer(QObject *parent)
 
 CServer::~CServer()
 {
+    foreach (CServerUser *user, p_ptr->users) {
+        if (user->room() != p_ptr->lobby) {
+            CAbstractGameLogic *logic = user->room()->gameLogic();
+            if (logic && logic->isRunning()) {
+                user->setParent(NULL);
+                connect(logic, &CAbstractGameLogic::destroyed, user, &CServerUser::deleteLater);
+            }
+        }
+    }
+
+    foreach (CRoom *room, p_ptr->rooms) {
+        CAbstractGameLogic *logic = room->gameLogic();
+        if (!logic || !logic->isRunning())
+            room->deleteLater();
+    }
+
     delete p_ptr->parser;
     delete p_ptr;
 }
@@ -112,10 +128,8 @@ void CServer::createRobot(CRoom *room)
 void CServer::killRobot(uint id)
 {
     CServerRobot *robot = p_ptr->robots.value(id);
-    if (robot != NULL) {
+    if (robot != NULL)
         p_ptr->robots.remove(id);
-        robot->deleteLater();
-    }
 }
 
 CServerUser *CServer::findUser(uint id) const
@@ -226,8 +240,13 @@ void CServer::onUserDisconnected()
     if (user->room() == p_ptr->lobby) {
         user->deleteLater();
     } else {
-        user->setParent(NULL);
-        connect(user->room()->gameLogic(), &CAbstractGameLogic::destroyed, user, &CServerUser::deleteLater);
+        CAbstractGameLogic *logic = user->room()->gameLogic();
+        if (logic && logic->isRunning()) {
+            user->setParent(NULL);
+            connect(logic, &CAbstractGameLogic::destroyed, user, &CServerUser::deleteLater);
+        } else {
+            user->deleteLater();
+        }
     }
 }
 

@@ -24,14 +24,16 @@
 #include "cserver.h"
 #include "cserveruser.h"
 
+#include <QPointer>
+#include <QSemaphore>
 #include <QThread>
 #include <QTime>
-#include <QSemaphore>
+
 
 class CRoomPrivate
 {
 public:
-    CServer *server;
+    QPointer<CServer> server;
     uint id;
     QString name;
     CAbstractGameLogic *gameLogic;
@@ -50,8 +52,7 @@ public:
 };
 
 CRoom::CRoom(CServer *server)
-    : QObject(server)
-    , p_ptr(new CRoomPrivate)
+    : p_ptr(new CRoomPrivate)
 {
     static uint roomId = 0;
     p_ptr->id = roomId;
@@ -82,7 +83,7 @@ uint CRoom::id() const
 QVariant CRoom::config() const
 {
     QVariantMap info;
-    info["id"] = (p_ptr->server->lobby() != this ? p_ptr->id : 0);
+    info["id"] = (!p_ptr->server.isNull() && p_ptr->server->lobby() != this ? p_ptr->id : 0);
     info["name"] = name();
     info["userNum"] = p_ptr->users.size() + p_ptr->robots.size();
     info["capacity"] = capacity();
@@ -92,7 +93,7 @@ QVariant CRoom::config() const
 
 CServer *CRoom::server() const
 {
-    return p_ptr->server;
+    return p_ptr->server.data();
 }
 
 void CRoom::setOwner(CServerUser *owner)
@@ -352,9 +353,15 @@ void CRoom::onAgentReplyReady()
 
 void CRoom::onGameOver()
 {
-    foreach (uint id, p_ptr->robots.keys()) {
-        removeRobot(p_ptr->robots.value(id));
-        p_ptr->server->killRobot(id);
+    QMapIterator<uint, CServerRobot *> iter(p_ptr->robots);
+    while (iter.hasNext()) {
+        iter.next();
+        uint id = iter.key();
+        CServerRobot *robot = iter.value();
+        removeRobot(robot);
+        if (!p_ptr->server.isNull())
+            p_ptr->server->killRobot(id);
+        robot->deleteLater();
     }
     p_ptr->robotNameCode = 'A';
 }
