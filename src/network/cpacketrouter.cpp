@@ -124,6 +124,7 @@ void CPacketRouter::request(int command, const QVariant &data, int timeout)
     p_ptr->expectedReplyId = requestId;
     p_ptr->replyTimeout = timeout;
     p_ptr->requestStartTime = QDateTime::currentDateTime();
+    p_ptr->reply = QVariant();
     p_ptr->replyMutex.unlock();
 
     QVariantList body;
@@ -180,10 +181,8 @@ QVariant CPacketRouter::waitForReply()
 
 QVariant CPacketRouter::waitForReply(int timeout)
 {
-    if (p_ptr->replyReadySemaphore.tryAcquire(1, timeout))
-        return p_ptr->reply;
-    else
-        return QVariant();
+    p_ptr->replyReadySemaphore.tryAcquire(1, timeout);
+    return p_ptr->reply;
 }
 
 //Force all waiting objects to wake up
