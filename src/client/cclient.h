@@ -56,6 +56,9 @@ public:
     QList<const CClientUser *> users() const;
     CClientUser *self() const;
 
+    QList<const CClientUser *> robots() const;
+    const CClientUser *findRobot(uint id) const;
+
     void fetchRoomList();
 
     void requestServer(int command, const QVariant &data = QVariant(), int timeout = -1);
@@ -84,6 +87,8 @@ signals:
 protected:
     CClientUser *findUser(uint id);
     CClientUser *addUser(const QVariant &data);
+
+    CClientUser *findRobot(uint id);
 
     static void SetUserListCommand(QObject *receiver, const QVariant &data);
     static void AddUserCommand(QObject *receiver, const QVariant &data);

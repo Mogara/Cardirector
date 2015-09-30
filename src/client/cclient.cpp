@@ -29,6 +29,7 @@ class CClientPrivate
 public:
     CPacketRouter *router;
     QMap<uint, CClientUser *> users;
+    QMap<uint, CClientUser *> robots;
     CClientUser *self;
     CAbstractPacketParser *parser;
 };
@@ -151,6 +152,19 @@ CClientUser *CClient::self() const
     return p_ptr->self;
 }
 
+QList<const CClientUser *> CClient::robots() const
+{
+    QList<const CClientUser *> robotList;
+    foreach (const CClientUser *robot, p_ptr->robots)
+        robotList << robot;
+    return robotList;
+}
+
+const CClientUser *CClient::findRobot(uint id) const
+{
+    return p_ptr->robots.value(id);
+}
+
 void CClient::fetchRoomList()
 {
     notifyServer(S_COMMAND_SET_ROOM_LIST);
@@ -173,6 +187,11 @@ CClientUser *CClient::addUser(const QVariant &data)
     }
 
     return NULL;
+}
+
+CClientUser *CClient::findRobot(uint id)
+{
+    return p_ptr->robots.value(id);
 }
 
 void CClient::requestServer(int command, const QVariant &data, int timeout)
@@ -278,6 +297,11 @@ void CClient::SpeakCommand(QObject *receiver, const QVariant &data)
 void CClient::EnterRoomCommand(QObject *receiver, const QVariant &data)
 {
     CClient *client = qobject_cast<CClient *>(receiver);
+
+    foreach (CClientUser *robot, client->p_ptr->robots)
+        robot->deleteLater();
+    client->p_ptr->robots.clear();
+
     emit client->roomEntered(data);
 }
 
@@ -310,9 +334,20 @@ void CClient::AddRobotCommand(QObject *receiver, const QVariant &data)
 {
     CClient *client = qobject_cast<CClient *>(receiver);
 
+    QVariantList arguments = data.toList();
+    if (arguments.length() < 3)
+        return;
+
     // to-do: implement the robot working in the client side
-    CClientUser *user = client->addUser(data);
-    emit client->userAdded(user);
+    uint robotId = arguments.at(0).toUInt();
+    if (robotId > 0) {
+        CClientUser *robot = new CClientUser(robotId, client);
+        robot->setScreenName(arguments.at(1).toString());
+        robot->setAvatar(arguments.at(2).toString());
+
+        client->p_ptr->robots.insert(robotId, robot);
+        emit client->userAdded(robot);
+    }
 }
 
 void CClient::Init()
