@@ -41,7 +41,6 @@
 
 #include <vector>
 
-#include "nowarning.h"
 #include "client/linux/crash_generation/crash_generation_server.h"
 #include "client/linux/crash_generation/client_info.h"
 #include "client/linux/handler/exception_handler.h"

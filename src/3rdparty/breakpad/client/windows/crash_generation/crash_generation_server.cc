@@ -397,7 +397,6 @@ void CrashGenerationServer::HandleReadingState() {
     EnterStateImmediately(IPC_SERVER_STATE_READ_DONE);
     return;
   }
-
 #ifdef _DEBUG
   assert(!CheckForIOIncomplete(success));
 #endif

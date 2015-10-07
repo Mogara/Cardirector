@@ -15,7 +15,6 @@
 
 #include <string.h>
 
-#include "nowarning.h"
 #include "common/md5.h"
 
 namespace google_breakpad {
