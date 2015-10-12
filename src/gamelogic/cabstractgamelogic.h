@@ -54,6 +54,10 @@ public:
     CServerUser *findUser(CAbstractPlayer *player) const;
     CServerRobot *findRobot(CAbstractPlayer *player) const;
 
+    static void sleep(ulong secs);
+    static void msleep(ulong msecs);
+    static void usleep(ulong usecs);
+
 signals:
     void started();
     void finished();

@@ -23,6 +23,8 @@
 #include "cserverrobot.h"
 #include "croom.h"
 
+#include <QThread>
+
 class CAbstractGameLogicPrivate
 {
 public:
@@ -78,6 +80,21 @@ CServerUser *CAbstractGameLogic::findUser(CAbstractPlayer *player) const
 CServerRobot *CAbstractGameLogic::findRobot(CAbstractPlayer *player) const
 {
     return qobject_cast<CServerRobot *>(p_ptr->player2agent.value(player));
+}
+
+void CAbstractGameLogic::sleep(ulong secs)
+{
+    QThread::currentThread()->sleep(secs);
+}
+
+void CAbstractGameLogic::msleep(ulong msecs)
+{
+    QThread::currentThread()->msleep(msecs);
+}
+
+void CAbstractGameLogic::usleep(ulong usecs)
+{
+    QThread::currentThread()->usleep(usecs);
 }
 
 void CAbstractGameLogic::start()
