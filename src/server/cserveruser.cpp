@@ -57,6 +57,7 @@ CServerUser::CServerUser(CTcpSocket *socket, CServer *server)
 
 CServerUser::~CServerUser()
 {
+    delete p_ptr->router;
     delete p_ptr;
 }
 
@@ -153,25 +154,30 @@ QVariant CServerUser::waitForReply(int timeout)
     return p_ptr->router->waitForReply(timeout);
 }
 
-void CServerUser::AddInteraction(int command, void (*callback)(QObject *, const QVariant &))
+bool CServerUser::controlledByClient() const
 {
-    interactions.insert(command, callback);
+    return true;
 }
 
-void CServerUser::AddCallback(int command, void (*callback)(QObject *, const QVariant &))
+void CServerUser::AddInteraction(int command, Callback callback)
 {
-    callbacks.insert(command, callback);
+    interactions.insert(command, reinterpret_cast<CPacketRouter::Callback>(callback));
+}
+
+void CServerUser::AddCallback(int command, Callback callback)
+{
+    callbacks.insert(command, reinterpret_cast<CPacketRouter::Callback>(callback));
 }
 
 /* Callbacks */
 
-void CServerUser::CheckVersionCommand(QObject *receiver, const QVariant &data)
+void CServerUser::CheckVersionCommand(CServerUser *user, const QVariant &data)
 {
-    C_UNUSED(receiver);
+    C_UNUSED(user);
     C_UNUSED(data);
 }
 
-void CServerUser::SignupCommand(QObject *receiver, const QVariant &data)
+void CServerUser::SignupCommand(CServerUser *user, const QVariant &data)
 {
     QVariantList arguments(data.toList());
     if (arguments.length() < 4)
@@ -182,14 +188,13 @@ void CServerUser::SignupCommand(QObject *receiver, const QVariant &data)
     QString screenName = arguments.at(2).toString();
     QString avatar = arguments.at(3).toString();
 
-    CServerUser *user = qobject_cast<CServerUser *>(receiver);
     user->signup(account, password, screenName, avatar);
 }
 
 //currently unused
-void CServerUser::LoginCommand(QObject *receiver, const QVariant &data)
+void CServerUser::LoginCommand(CServerUser *user, const QVariant &data)
 {
-    C_UNUSED(receiver);
+    C_UNUSED(user);
     C_UNUSED(data);
 
     /*QVariantList dataList(data.toList());
@@ -203,23 +208,20 @@ void CServerUser::LoginCommand(QObject *receiver, const QVariant &data)
     }*/
 }
 
-void CServerUser::LogoutCommand(QObject *receiver, const QVariant &)
+void CServerUser::LogoutCommand(CServerUser *user, const QVariant &)
 {
-    CServerUser *user = qobject_cast<CServerUser *>(receiver);
     user->logout();
 }
 
-void CServerUser::SpeakCommand(QObject *receiver, const QVariant &data)
+void CServerUser::SpeakCommand(CServerUser *user, const QVariant &data)
 {
-    CServerUser *user = qobject_cast<CServerUser *>(receiver);
     QString message = data.toString();
     if (!message.isEmpty())
         user->speak(message);
 }
 
-void CServerUser::CreateRoomCommand(QObject *receiver, const QVariant &data)
+void CServerUser::CreateRoomCommand(CServerUser *user, const QVariant &data)
 {
-    CServerUser *user = qobject_cast<CServerUser *>(receiver);
     CServer *server = user->server();
 
     QVariantMap config = data.toMap();
@@ -229,9 +231,8 @@ void CServerUser::CreateRoomCommand(QObject *receiver, const QVariant &data)
     server->createRoom(user, name, capacity);
 }
 
-void CServerUser::EnterRoomCommand(QObject *receiver, const QVariant &data)
+void CServerUser::EnterRoomCommand(CServerUser *user, const QVariant &data)
 {
-    CServerUser *user = qobject_cast<CServerUser *>(receiver);
     CServer *server = user->server();
 
     if (data.isNull()) {
@@ -245,9 +246,8 @@ void CServerUser::EnterRoomCommand(QObject *receiver, const QVariant &data)
     }
 }
 
-void CServerUser::NetworkDelayCommand(QObject *receiver, const QVariant &data)
+void CServerUser::NetworkDelayCommand(CServerUser *user, const QVariant &data)
 {
-    CServerUser *user = qobject_cast<CServerUser *>(receiver);
     CServerUserPrivate *p_ptr = user->p_ptr;
     if (p_ptr->networkDelayTestId != 0 && p_ptr->networkDelayTestId == data.toInt()) {
         user->setNetworkDelay(p_ptr->networkDelayStartTime.secsTo(QDateTime::currentDateTime()));
@@ -255,24 +255,21 @@ void CServerUser::NetworkDelayCommand(QObject *receiver, const QVariant &data)
     }
 }
 
-void CServerUser::SetRoomListCommand(QObject *receiver, const QVariant &)
+void CServerUser::SetRoomListCommand(CServerUser *user, const QVariant &)
 {
-    CServerUser *user = qobject_cast<CServerUser *>(receiver);
     CServer *server = user->server();
     server->updateRoomList(user);
 }
 
-void CServerUser::StartGameCommand(QObject *receiver, const QVariant &)
+void CServerUser::StartGameCommand(CServerUser *user, const QVariant &)
 {
-    CServerUser *user = qobject_cast<CServerUser *>(receiver);
     CRoom *room = user->room();
     if (room->owner() == user)
         room->startGame();
 }
 
-void CServerUser::AddRobotCommand(QObject *receiver, const QVariant &)
+void CServerUser::AddRobotCommand(CServerUser *user, const QVariant &)
 {
-    CServerUser *user = qobject_cast<CServerUser *>(receiver);
     CRoom *room = user->room();
     if (room->owner() == user && !room->isFull()) {
         CServer *server = user->server();

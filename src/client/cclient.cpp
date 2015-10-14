@@ -53,6 +53,7 @@ CClient::CClient(QObject *parent)
 
 CClient::~CClient()
 {
+    delete p_ptr->router;
     delete p_ptr->parser;
     delete p_ptr;
 }
@@ -68,14 +69,14 @@ CAbstractPacketParser *CClient::packetParser() const
     return p_ptr->parser;
 }
 
-void CClient::AddInteraction(int command, void (*callback)(QObject *, const QVariant &))
+void CClient::AddInteraction(int command, Callback callback)
 {
-    interactions.insert(command, callback);
+    interactions.insert(command, reinterpret_cast<CPacketRouter::Callback>(callback));
 }
 
-void CClient::AddCallback(int command, void (*callback)(QObject *, const QVariant &))
+void CClient::AddCallback(int command, Callback callback)
 {
-    callbacks.insert(command, callback);
+    callbacks.insert(command, reinterpret_cast<CPacketRouter::Callback>(callback));
 }
 
 void CClient::connectToHost(const QHostAddress &server, ushort port)
@@ -226,10 +227,9 @@ QVariant CClient::waitForReply(int timeout)
 
 /* Callbacks */
 
-void CClient::SetUserListCommand(QObject *receiver, const QVariant &data)
+void CClient::SetUserListCommand(CClient *client, const QVariant &data)
 {
     QVariantList userList(data.toList());
-    CClient *client = qobject_cast<CClient *>(receiver);
 
     if (!client->p_ptr->users.isEmpty()) {
         foreach (CClientUser *user, client->p_ptr->users) {
@@ -244,16 +244,14 @@ void CClient::SetUserListCommand(QObject *receiver, const QVariant &data)
         client->addUser(user);
 }
 
-void CClient::AddUserCommand(QObject *receiver, const QVariant &data)
+void CClient::AddUserCommand(CClient *client, const QVariant &data)
 {
-    CClient *client = qobject_cast<CClient *>(receiver);
     CClientUser *user = client->addUser(data);
     emit client->userAdded(user);
 }
 
-void CClient::RemoveUserCommand(QObject *receiver, const QVariant &data)
+void CClient::RemoveUserCommand(CClient *client, const QVariant &data)
 {
-    CClient *client = qobject_cast<CClient *>(receiver);
     uint userId = data.toUInt();
     CClientUser *user = client->findUser(userId);
     if (user != NULL) {
@@ -263,26 +261,23 @@ void CClient::RemoveUserCommand(QObject *receiver, const QVariant &data)
     }
 }
 
-void CClient::LoginCommand(QObject *receiver, const QVariant &data)
+void CClient::LoginCommand(CClient *client, const QVariant &data)
 {
-    CClient *client = qobject_cast<CClient *>(receiver);
     client->p_ptr->self = client->addUser(data);
     emit client->loggedIn();
 }
 
-void CClient::SetRoomListCommand(QObject *receiver, const QVariant &data)
+void CClient::SetRoomListCommand(CClient *client, const QVariant &data)
 {
-    CClient *client = qobject_cast<CClient *>(receiver);
     emit client->roomListUpdated(data);
 }
 
-void CClient::SpeakCommand(QObject *receiver, const QVariant &data)
+void CClient::SpeakCommand(CClient *client, const QVariant &data)
 {
     QVariantList arguments = data.toList();
     if (arguments.size() < 2)
         return;
 
-    CClient *client = qobject_cast<CClient *>(receiver);
     const QVariant who = arguments.at(0);
     QString message = arguments.at(1).toString();
     if (who.isNull()) {
@@ -294,10 +289,8 @@ void CClient::SpeakCommand(QObject *receiver, const QVariant &data)
     }
 }
 
-void CClient::EnterRoomCommand(QObject *receiver, const QVariant &data)
+void CClient::EnterRoomCommand(CClient *client, const QVariant &data)
 {
-    CClient *client = qobject_cast<CClient *>(receiver);
-
     foreach (CClientUser *robot, client->p_ptr->robots)
         robot->deleteLater();
     client->p_ptr->robots.clear();
@@ -305,7 +298,7 @@ void CClient::EnterRoomCommand(QObject *receiver, const QVariant &data)
     emit client->roomEntered(data);
 }
 
-void CClient::UpdateRoomPropertyCommand(QObject *receiver, const QVariant &data)
+void CClient::UpdateRoomPropertyCommand(CClient *client, const QVariant &data)
 {
     QVariantList dataList = data.toList();
     if (dataList.length() != 2)
@@ -314,26 +307,21 @@ void CClient::UpdateRoomPropertyCommand(QObject *receiver, const QVariant &data)
     QString name = dataList.at(0).toString();
     QVariant value = dataList.at(1);
 
-    CClient *client = qobject_cast<CClient *>(receiver);
     emit client->roomPropertyChanged(name, value);
 }
 
-void CClient::NetworkDelayCommand(QObject *receiver, const QVariant &data)
+void CClient::NetworkDelayCommand(CClient *client, const QVariant &data)
 {
-    CClient *client = qobject_cast<CClient *>(receiver);
     client->notifyServer(S_COMMAND_NETWORK_DELAY, data);
 }
 
-void CClient::StartGameCommand(QObject *receiver, const QVariant &)
+void CClient::StartGameCommand(CClient *client, const QVariant &)
 {
-    CClient *client = qobject_cast<CClient *>(receiver);
     emit client->gameStarted();
 }
 
-void CClient::AddRobotCommand(QObject *receiver, const QVariant &data)
+void CClient::AddRobotCommand(CClient *client, const QVariant &data)
 {
-    CClient *client = qobject_cast<CClient *>(receiver);
-
     QVariantList arguments = data.toList();
     if (arguments.length() < 3)
         return;

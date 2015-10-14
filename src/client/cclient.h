@@ -70,8 +70,9 @@ public:
     QVariant waitForReply();
     QVariant waitForReply(int timeout);
 
-    static void AddInteraction(int command, void (*callback)(QObject *, const QVariant &));
-    static void AddCallback(int command, void (*callback)(QObject *, const QVariant &));
+    typedef void (*Callback)(CClient *client, const QVariant &);
+    static void AddInteraction(int command, Callback callback);
+    static void AddCallback(int command, Callback callback);
 
 signals:
     void connected();
@@ -90,17 +91,17 @@ protected:
 
     CClientUser *findRobot(uint id);
 
-    static void SetUserListCommand(QObject *receiver, const QVariant &data);
-    static void AddUserCommand(QObject *receiver, const QVariant &data);
-    static void RemoveUserCommand(QObject *receiver, const QVariant &data);
-    static void LoginCommand(QObject *receiver, const QVariant &data);
-    static void SetRoomListCommand(QObject *receiver, const QVariant &data);
-    static void SpeakCommand(QObject *receiver, const QVariant &data);
-    static void EnterRoomCommand(QObject *receiver, const QVariant &data);
-    static void UpdateRoomPropertyCommand(QObject *receiver, const QVariant &data);
-    static void NetworkDelayCommand(QObject *receiver, const QVariant &data);
-    static void StartGameCommand(QObject *receiver, const QVariant &);
-    static void AddRobotCommand(QObject *receiver, const QVariant &data);
+    static void SetUserListCommand(CClient *client, const QVariant &data);
+    static void AddUserCommand(CClient *client, const QVariant &data);
+    static void RemoveUserCommand(CClient *client, const QVariant &data);
+    static void LoginCommand(CClient *client, const QVariant &data);
+    static void SetRoomListCommand(CClient *client, const QVariant &data);
+    static void SpeakCommand(CClient *client, const QVariant &data);
+    static void EnterRoomCommand(CClient *client, const QVariant &data);
+    static void UpdateRoomPropertyCommand(CClient *client, const QVariant &data);
+    static void NetworkDelayCommand(CClient *client, const QVariant &data);
+    static void StartGameCommand(CClient *client, const QVariant &);
+    static void AddRobotCommand(CClient *client, const QVariant &data);
 
 private:
     C_DECLARE_INITIALIZER(CClient)

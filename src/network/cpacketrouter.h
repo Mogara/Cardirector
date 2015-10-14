@@ -37,9 +37,9 @@ class MCD_EXPORT CPacketRouter : public QObject
     Q_OBJECT
 
 public:
-    typedef void (*Callback)(QObject *receiver, const QVariant &data);
+    typedef void (*Callback)(void *receiver, const QVariant &data);
 
-    CPacketRouter(QObject *receiver, CTcpSocket *socket, CAbstractPacketParser *parser);
+    CPacketRouter(void *receiver, CTcpSocket *socket, CAbstractPacketParser *parser);
     ~CPacketRouter();
 
     CTcpSocket *socket();

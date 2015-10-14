@@ -30,7 +30,7 @@ public:
     const QHash<int, CPacketRouter::Callback> *interactions; //For requests
     const QHash<int, CPacketRouter::Callback> *callbacks;    //For notifications
 
-    QObject *receiver;
+    void *receiver;
     CTcpSocket *socket;
     CAbstractPacketParser *parser;
 
@@ -48,9 +48,8 @@ public:
     QSemaphore *extraReplyReadySemaphore;
 };
 
-CPacketRouter::CPacketRouter(QObject *receiver, CTcpSocket *socket, CAbstractPacketParser *parser)
-    : QObject(receiver)
-    , p_ptr(new CPacketRouterPrivate)
+CPacketRouter::CPacketRouter(void *receiver, CTcpSocket *socket, CAbstractPacketParser *parser)
+    : p_ptr(new CPacketRouterPrivate)
 {
     p_ptr->interactions = NULL;
     p_ptr->callbacks = NULL;

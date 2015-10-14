@@ -60,26 +60,27 @@ public:
     QVariant waitForReply();
     QVariant waitForReply(int timeout);
 
-    static void AddInteraction(int command, void (*callback)(QObject *, const QVariant &));
-    static void AddCallback(int command, void (*callback)(QObject *, const QVariant &));
+    typedef void (*Callback)(CServerUser *user, const QVariant &);
+    static void AddInteraction(int command, Callback callback);
+    static void AddCallback(int command, Callback callback);
 
-    bool controlledByClient() const { return true; }
+    bool controlledByClient() const;
 
 signals:
     void disconnected();
 
 protected:
-    static void CheckVersionCommand(QObject *receiver, const QVariant &data);
-    static void SignupCommand(QObject *receiver, const QVariant &data);
-    static void LoginCommand(QObject *receiver, const QVariant &data);
-    static void LogoutCommand(QObject *receiver, const QVariant &);
-    static void SpeakCommand(QObject *receiver, const QVariant &data);
-    static void CreateRoomCommand(QObject *receiver, const QVariant &data);
-    static void EnterRoomCommand(QObject *receiver, const QVariant &data);
-    static void NetworkDelayCommand(QObject *receiver, const QVariant &data);
-    static void SetRoomListCommand(QObject *receiver, const QVariant &);
-    static void StartGameCommand(QObject *receiver, const QVariant &);
-    static void AddRobotCommand(QObject *receiver, const QVariant &);
+    static void CheckVersionCommand(CServerUser *user, const QVariant &data);
+    static void SignupCommand(CServerUser *user, const QVariant &data);
+    static void LoginCommand(CServerUser *user, const QVariant &data);
+    static void LogoutCommand(CServerUser *user, const QVariant &);
+    static void SpeakCommand(CServerUser *user, const QVariant &data);
+    static void CreateRoomCommand(CServerUser *user, const QVariant &data);
+    static void EnterRoomCommand(CServerUser *user, const QVariant &data);
+    static void NetworkDelayCommand(CServerUser *user, const QVariant &data);
+    static void SetRoomListCommand(CServerUser *user, const QVariant &);
+    static void StartGameCommand(CServerUser *user, const QVariant &);
+    static void AddRobotCommand(CServerUser *user, const QVariant &);
 
     void handleUnknownPacket(const QByteArray &packet);
 
