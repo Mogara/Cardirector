@@ -52,14 +52,21 @@ static const int StandardDPI = 96;
 
 QPixmap CImageProvider::requestPixmap(const QString &id, QSize *size, const QSize &requestedSize)
 {
-    QVariant path;
+    QVariant pathVar;
     QMetaObject::invokeMethod(this, "imagePath", Qt::BlockingQueuedConnection,
-                              Q_RETURN_ARG(QVariant, path), Q_ARG(QVariant, id),
+                              Q_RETURN_ARG(QVariant, pathVar), Q_ARG(QVariant, id),
                               Q_ARG(QVariant, requestedSize));
+    QUrl url = pathVar.toUrl();
 
     QPixmap pixmap;
-    if (!path.toString().isEmpty()) {
-        pixmap.load(path.toString());
+    if (!url.isEmpty()) {
+        if (url.scheme() == "qrc") {
+            pixmap.load(":/" + url.path());
+        } else if (url.scheme() == "http") {
+            //@to-do: Load and store as a local file
+        } else {
+            pixmap.load(url.toString());
+        }
 
         const creal scaleFactor = StandardDPI / qApp->primaryScreen()->logicalDotsPerInch();
 
