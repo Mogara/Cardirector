@@ -88,11 +88,13 @@ HEADERS += \
     $$PWD/src/ui/ctranslator.h \
     $$PWD/src/cpch.h
 
-QML_FILES += Gui/Dialog.qml \
-             Gui/MetroButton.qml \
-             Gui/Splash.qml \
-             Gui/TileButton.qml \
-             Gui/ToolTipArea.qml
+QML_FILES += \
+    Gui/Dialog.qml \
+    Gui/FitInView.qml \
+    Gui/MetroButton.qml \
+    Gui/Splash.qml \
+    Gui/TileButton.qml \
+    Gui/ToolTipArea.qml
 
 include($$PWD/Gui/Private/private.pri)
 

@@ -4,4 +4,4 @@ MetroButton 1.0 MetroButton.qml
 Splash 1.0 Splash.qml
 TileButton 1.0 TileButton.qml
 ToolTipArea 1.0 ToolTipArea.qml
-
+FitInView 1.0 FitInView.qml
