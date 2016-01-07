@@ -27,7 +27,7 @@ ipch/
 [Dd]ebug/
 [Rr]elease/
 [Rr]elease SLL/
-
+/src/cgui.qrc
 
 *.opensdf
 *sdf

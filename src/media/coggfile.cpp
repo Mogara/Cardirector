@@ -19,6 +19,9 @@
 
 #include "coggfile.h"
 
+#ifndef Q_OS_WIN
+#define OV_EXCLUDE_STATIC_CALLBACKS
+#endif
 #include <vorbis/vorbisfile.h>
 
 class COggFilePrivate
