@@ -74,7 +74,7 @@ void CSound::setSource(const QString &source)
     //@to-do: if-else is not propriate to extend more formats
     if (source.endsWith(".ogg")) {
         COggFile *ogg = new COggFile(source, this);
-        if (ogg->open(QFile::ReadOnly)) {
+        if (ogg->open(QIODevice::ReadOnly)) {
             format = ogg->format();
             file = ogg;
         } else {
