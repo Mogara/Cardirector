@@ -17,6 +17,9 @@
     Mogara
 *********************************************************************/
 
+#ifndef CSOUND_H
+#define CSOUND_H
+
 #include "cglobal.h"
 
 #include <QQuickItem>
@@ -62,3 +65,5 @@ private:
     C_DISABLE_COPY(CSound)
     CSoundPrivate *p_ptr;
 };
+
+#endif
