@@ -19,7 +19,7 @@
 
 #include "coggfile.h"
 
-#ifndef Q_OS_WIN
+#if !defined(Q_OS_WIN) || !defined(Q_CC_MSVC)
 #define OV_EXCLUDE_STATIC_CALLBACKS
 #endif
 #include <vorbis/vorbisfile.h>
