@@ -12,7 +12,7 @@ CONFIG(release, debug|release) {
     SOURCES += \
         common/convert_UTF.c \
         common/md5.cc \
-        common/string_conversion.cc \
+        common/string_conversion.cc
 
     win32 {
         DEFINES += USE_BREAKPAD
