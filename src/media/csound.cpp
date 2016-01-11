@@ -67,13 +67,19 @@ QString CSound::source() const
 void CSound::setSource(const QString &source)
 {
     p_ptr->source = source;
+}
+
+void CSound::play()
+{
+    if (p_ptr->source.isEmpty())
+        return;
 
     QIODevice *file = NULL;
     QAudioFormat format;
 
     //@to-do: if-else is not propriate to extend more formats
-    if (source.endsWith(".ogg")) {
-        COggFile *ogg = new COggFile(source, this);
+    if (p_ptr->source.endsWith(".ogg")) {
+        COggFile *ogg = new COggFile(p_ptr->source, this);
         if (ogg->open(QIODevice::ReadOnly)) {
             format = ogg->format();
             file = ogg;
@@ -98,12 +104,8 @@ void CSound::setSource(const QString &source)
     p_ptr->output = new QAudioOutput(format, this);
     p_ptr->output->setVolume(p_ptr->volume);
     connect(p_ptr->output, &QAudioOutput::stateChanged, this, &CSound::onOutputStateChanged);
-}
 
-void CSound::play()
-{
-    if (p_ptr->output && p_ptr->buffer)
-        p_ptr->output->start(p_ptr->buffer);
+    p_ptr->output->start(p_ptr->buffer);
 }
 
 void CSound::stop()
