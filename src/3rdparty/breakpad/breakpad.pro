@@ -15,6 +15,7 @@ CONFIG(release, debug|release) {
         common/string_conversion.cc \
 
     win32 {
+        DEFINES += USE_BREAKPAD
         SOURCES += \
             client/windows/crash_generation/client_info.cc \
             client/windows/crash_generation/crash_generation_client.cc \
@@ -28,6 +29,7 @@ CONFIG(release, debug|release) {
     }
 
     osx {
+        DEFINES += USE_BREAKPAD
         QMAKE_LFLAGS += -framework CoreFoundation -framework Foundation
 
         SOURCES += \
@@ -68,6 +70,7 @@ CONFIG(release, debug|release) {
     }
 
     linux{
+        DEFINES += USE_BREAKPAD
         SOURCES += \
             client/linux/crash_generation/crash_generation_client.cc \
             client/linux/crash_generation/crash_generation_server.cc \

@@ -5,24 +5,14 @@ DESTDIR = $$PWD/../lib
 QT += quick multimedia
 android:QT += androidextras
 
-# Use Precompiled headers (PCH)
-PRECOMPILED_HEADER = cpch.h
-
-TARGET = $$qtLibraryTarget($$TARGET)
-
-CONFIG(staticlib) {
-    DEFINES += MCD_STATIC
-}
-else {
-    DEFINES += MCD_BUILD
-}
+CONFIG(staticlib): DEFINES += MCD_STATIC
+else: DEFINES += MCD_BUILD
 
 CONFIG += precompile_header
 # Use Precompiled headers (PCH)
 PRECOMPILED_HEADER = cpch.h
 
 # Google Breakpad
-DEFINES += USE_BREAKPAD
 INCLUDEPATH += 3rdparty/breakpad
 win32: INCLUDEPATH += 3rdparty/breakpad/client/windows
 linux: INCLUDEPATH += 3rdparty/breakpad/client/linux
