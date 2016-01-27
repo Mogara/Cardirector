@@ -111,6 +111,7 @@ void CSoundEffect::play()
     connect(p_ptr->output, &QAudioOutput::stateChanged, this, &CSoundEffect::onOutputStateChanged);
 
     p_ptr->output->start(p_ptr->buffer);
+    p_ptr->loopsRemaining = p_ptr->loops;
 }
 
 void CSoundEffect::stop()
@@ -136,10 +137,8 @@ int CSoundEffect::loopsRemaining() const
 
 void CSoundEffect::setLoops(int number)
 {
-    if (number < p_ptr->loopsRemaining) {
-        p_ptr->loopsRemaining = number;
-        emit loopsRemainingChanged();
-    }
+    p_ptr->loopsRemaining = number;
+    emit loopsRemainingChanged();
 
     p_ptr->loops = number;
     emit loopsChanged();

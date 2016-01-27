@@ -67,18 +67,29 @@ CSound::~CSound()
 
 QString CSound::fileName() const
 {
-    return p_ptr->effect->source();
+    return p_ptr->effect ? p_ptr->effect->source() : QString();
 }
 
 void CSound::setFileName(const QString &fileName)
 {
+    int loops = 1;
+    qreal volume = 1.0;
+
     if (p_ptr->effect) {
+        if (p_ptr->effect->source() == fileName)
+            return;
+        loops = p_ptr->effect->loops();
+        volume = p_ptr->effect->volume();
+
         this->disconnect(p_ptr->effect);
         p_ptr->effect->disconnect(this);
+        p_ptr->effect->stop();
         p_ptr->effect->deleteLater();
     }
 
     p_ptr->effect = new CSoundEffect(fileName);
+    p_ptr->effect->setVolume(volume);
+    p_ptr->effect->setLoops(loops);
     connect(p_ptr->effect, &CSoundEffect::started, this, &CSound::started);
     connect(p_ptr->effect, &CSoundEffect::stopped, this, &CSound::stopped);
     connect(p_ptr->effect, &CSoundEffect::loopsChanged, this, &CSound::loopsChanged);
@@ -119,7 +130,8 @@ qreal CSound::volume() const
 
 void CSound::setVolume(qreal volume)
 {
-    p_ptr->effect->setVolume(volume);
+    if (p_ptr->effect)
+        p_ptr->effect->setVolume(volume);
 }
 
 void CSound::play()
