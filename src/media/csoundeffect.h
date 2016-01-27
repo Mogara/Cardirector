@@ -17,64 +17,70 @@
     Mogara
 *********************************************************************/
 
-#ifndef CSOUND_H
-#define CSOUND_H
+#ifndef CSOUNDEFFECT_H
+#define CSOUNDEFFECT_H
 
 #include "cglobal.h"
 
-#include <QObject>
+#include <QQuickItem>
+#include <QAudio>
 
 MCD_BEGIN_NAMESPACE
 
-class CSoundPrivate;
-class MCD_EXPORT CSound : public QObject
+class CSoundEffectPrivate;
+class MCD_EXPORT CSoundEffect : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(QString fileName READ fileName WRITE setFileName NOTIFY fileNameChanged)
+    Q_PROPERTY(QString source READ source WRITE setSource NOTIFY sourceChanged)
+    Q_PROPERTY(bool isPlaying READ isPlaying NOTIFY isPlayingChanged)
     Q_PROPERTY(int loops READ loops WRITE setLoops NOTIFY loopsChanged)
     Q_PROPERTY(int loopsRemaining READ loopsRemaining NOTIFY loopsRemainingChanged)
-    Q_PROPERTY(bool isPlaying READ isPlaying NOTIFY isPlayingChanged)
     Q_PROPERTY(qreal volume READ volume WRITE setVolume NOTIFY volumeChanged)
 
 public:
-    CSound(QObject *parent = Q_NULLPTR);
-    CSound(const QString &fileName, QObject *parent = Q_NULLPTR);
-    ~CSound();
+    enum Loop
+    {
+        Infinite = -1
+    };
 
-    QString fileName() const;
-    void setFileName(const QString &fileName);
+    CSoundEffect(QObject *parent = 0);
+    CSoundEffect(const QString &source, QObject *parent = 0);
+    ~CSoundEffect();
+
+    QString source() const;
+    void setSource(const QString &source);
+
+    void play();
+    void stop();
+
+    bool isPlaying() const;
 
     int loops() const;
     int loopsRemaining() const;
     void setLoops(int number);
 
-    bool isPlaying() const;
-
     qreal volume() const;
     void setVolume(qreal volume);
-
-    Q_INVOKABLE void play();
-    Q_INVOKABLE void stop();
-
-    Q_INVOKABLE static void Play(const QString &fileName);
 
 signals:
     void started();
     void stopped();
 
-    void fileNameChanged();
+    void sourceChanged();
+    void isPlayingChanged();
     void loopsChanged();
     void loopsRemainingChanged();
-    void isPlayingChanged();
     void volumeChanged();
 
 private:
-    C_DISABLE_COPY(CSound)
-    C_DECLARE_PRIVATE(CSound)
-    CSoundPrivate *p_ptr;
+    void onOutputStateChanged(QAudio::State state);
+
+    C_DECLARE_PRIVATE(CSoundEffect)
+    C_DISABLE_COPY(CSoundEffect)
+    CSoundEffectPrivate *p_ptr;
 };
 
 MCD_END_NAMESPACE
 
-#endif // CSOUND_H
+#endif

@@ -18,26 +18,30 @@
 *********************************************************************/
 
 #include "csound.h"
-#include "coggfile.h"
+#include "csoundeffect.h"
 
-#include <QAudioOutput>
-#include <QBuffer>
+#include <QThread>
+#include <QTimer>
+
+MCD_BEGIN_NAMESPACE
 
 class CSoundPrivate
 {
 public:
-    QBuffer *buffer;
-    QAudioOutput *output;
-    QString source;
-    bool loop;
-    qreal volume;
+    CSoundEffect *effect;
+    QThread *thread;
 
     CSoundPrivate()
-        : buffer(NULL)
-        , output(NULL)
-        , loop(false)
-        , volume(50)
+        : effect(Q_NULLPTR)
+        , thread(new QThread)
     {
+        QObject::connect(thread, &QThread::finished, thread, &QThread::deleteLater);
+        thread->start();
+    }
+
+    ~CSoundPrivate()
+    {
+        thread->quit();
     }
 };
 
@@ -47,109 +51,94 @@ CSound::CSound(QObject *parent)
 {
 }
 
-CSound::CSound(const QString &source, QObject *parent)
+CSound::CSound(const QString &fileName, QObject *parent)
     : QObject(parent)
     , p_ptr(new CSoundPrivate)
 {
-    setSource(source);
+    setFileName(fileName);
 }
 
 CSound::~CSound()
 {
+    if (p_ptr->effect)
+        p_ptr->effect->deleteLater();
     delete p_ptr;
 }
 
-QString CSound::source() const
+QString CSound::fileName() const
 {
-    return p_ptr->source;
+    return p_ptr->effect->source();
 }
 
-void CSound::setSource(const QString &source)
+void CSound::setFileName(const QString &fileName)
 {
-    p_ptr->source = source;
-}
-
-void CSound::play()
-{
-    if (p_ptr->source.isEmpty())
-        return;
-
-    QIODevice *file = NULL;
-    QAudioFormat format;
-
-    //@to-do: if-else is not propriate to extend more formats
-    if (p_ptr->source.endsWith(".ogg")) {
-        COggFile *ogg = new COggFile(p_ptr->source, this);
-        if (ogg->open(QIODevice::ReadOnly)) {
-            format = ogg->format();
-            file = ogg;
-        } else {
-            delete ogg;
-        }
+    if (p_ptr->effect) {
+        this->disconnect(p_ptr->effect);
+        p_ptr->effect->disconnect(this);
+        p_ptr->effect->deleteLater();
     }
 
-    if (file == NULL)
-        return;
+    p_ptr->effect = new CSoundEffect(fileName);
+    connect(p_ptr->effect, &CSoundEffect::started, this, &CSound::started);
+    connect(p_ptr->effect, &CSoundEffect::stopped, this, &CSound::stopped);
+    connect(p_ptr->effect, &CSoundEffect::loopsChanged, this, &CSound::loopsChanged);
+    connect(p_ptr->effect, &CSoundEffect::loopsRemainingChanged, this, &CSound::loopsRemainingChanged);
+    connect(p_ptr->effect, &CSoundEffect::isPlayingChanged, this, &CSound::isPlayingChanged);
+    connect(p_ptr->effect, &CSoundEffect::volumeChanged, this, &CSound::volumeChanged);
 
-    if (p_ptr->output)
-        p_ptr->output->deleteLater();
-    if (p_ptr->buffer)
-        p_ptr->buffer->deleteLater();
+    p_ptr->effect->moveToThread(p_ptr->thread);
 
-    p_ptr->buffer = new QBuffer(this);
-    p_ptr->buffer->setData(file->readAll());
-    delete file;
-    p_ptr->buffer->open(QBuffer::ReadOnly);
-
-    p_ptr->output = new QAudioOutput(format, this);
-    p_ptr->output->setVolume(p_ptr->volume);
-    connect(p_ptr->output, &QAudioOutput::stateChanged, this, &CSound::onOutputStateChanged);
-
-    p_ptr->output->start(p_ptr->buffer);
+    emit fileNameChanged();
 }
 
-void CSound::stop()
+int CSound::loops() const
 {
-    if (p_ptr->output)
-        p_ptr->output->stop();
+    return p_ptr->effect ? p_ptr->effect->loops() : 0;
+}
+
+int CSound::loopsRemaining() const
+{
+    return p_ptr->effect ? p_ptr->effect->loopsRemaining() : 0;
+}
+
+void CSound::setLoops(int number)
+{
+    if (p_ptr->effect)
+        p_ptr->effect->setLoops(number);
 }
 
 bool CSound::isPlaying() const
 {
-    return p_ptr->output && p_ptr->output->state() == QAudio::ActiveState;
-}
-
-bool CSound::isLoop() const
-{
-    return p_ptr->loop;
-}
-
-void CSound::setLoop(bool loop)
-{
-    p_ptr->loop = loop;
+    return p_ptr->effect ? p_ptr->effect->isPlaying() : false;
 }
 
 qreal CSound::volume() const
 {
-    return p_ptr->volume;
+    return p_ptr->effect ? p_ptr->effect->volume() : 0.0;
 }
 
 void CSound::setVolume(qreal volume)
 {
-    p_ptr->volume = volume;
-    if (p_ptr->output)
-        p_ptr->output->setVolume(volume);
+    p_ptr->effect->setVolume(volume);
 }
 
-void CSound::onOutputStateChanged(QAudio::State state)
+void CSound::play()
 {
-    if (state == QAudio::ActiveState) {
-        emit started();
-    } else if (state == QAudio::IdleState || state == QAudio::StoppedState) {
-        emit stopped();
-        if (p_ptr->loop && p_ptr->output && p_ptr->buffer) {
-            p_ptr->buffer->reset();
-            p_ptr->output->start(p_ptr->buffer);
-        }
-    }
+    if (p_ptr->effect)
+        QTimer::singleShot(0, p_ptr->effect, &CSoundEffect::play);
 }
+
+void CSound::stop()
+{
+    if (p_ptr->effect)
+        p_ptr->effect->stop();
+}
+
+void CSound::Play(const QString &fileName)
+{
+    CSound *sound = new CSound(fileName);
+    connect(sound, &CSound::stopped, sound, &CSound::deleteLater);
+    sound->play();
+}
+
+MCD_END_NAMESPACE

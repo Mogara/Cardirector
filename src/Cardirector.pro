@@ -54,6 +54,7 @@ SOURCES += \
     gamelogic/cabstractplayer.cpp \
     media/coggfile.cpp \
     media/csound.cpp \
+    media/csoundeffect.cpp \
     network/cjsonpacketparser.cpp \
     network/cnetwork.cpp \
     network/cpacket.cpp \
@@ -92,6 +93,7 @@ HEADERS += \
     gamelogic/cabstractplayer.h \
     media/coggfile.h \
     media/csound.h \
+    media/csoundeffect.h \
     network/cabstractpacketparser.h \
     network/cjsonpacketparser.h \
     network/cnetwork.h \
