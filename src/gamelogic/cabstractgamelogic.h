@@ -46,6 +46,7 @@ public:
 
     CRoom *room() const;
 
+    int playerNum() const;
     QMap<uint, CAbstractPlayer *> abstractPlayers() const;
     CAbstractPlayer *findAbstractPlayer(uint id) const;
     CAbstractPlayer *findAbstractPlayer(CServerAgent *agent) const;

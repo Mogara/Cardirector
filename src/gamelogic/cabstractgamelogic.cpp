@@ -52,6 +52,11 @@ CRoom *CAbstractGameLogic::room() const
     return p_ptr->room;
 }
 
+int CAbstractGameLogic::playerNum() const
+{
+    return p_ptr->players.size();
+}
+
 QMap<uint, CAbstractPlayer *> CAbstractGameLogic::abstractPlayers() const
 {
     return p_ptr->players;
