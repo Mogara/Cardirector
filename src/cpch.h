@@ -21,10 +21,10 @@
 #define CPCH_H
 
 // Add C includes here
+#include <QtCore/qglobal.h>
 
 #ifdef __cplusplus
  // Add C++ includes here
-#include <QtCore/qglobal.h>
 #include <QtQml>
 
 #include <QCoreApplication>
