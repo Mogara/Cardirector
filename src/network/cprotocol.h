@@ -22,6 +22,10 @@
 
 #include "cglobal.h"
 
+#if 0
+class MCD_EXPORT CProtocol
+#endif // for header file auto-generation
+
 #include <QString>
 #include <QMap>
 

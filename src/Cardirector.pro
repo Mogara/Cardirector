@@ -168,6 +168,12 @@ defineTest(copy) {
             copy($$file, ../include/)
         }
     }
+
+    contains(QMAKE_HOST.os, "Windows") {
+        system("cmd /c cscript /nologo ..\\include\\AutoGenerateHeader.vbs")
+    }
+
+
 }
 
 DISTFILES = ../Gui/qmldir

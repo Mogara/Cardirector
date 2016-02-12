@@ -22,6 +22,10 @@
 
 #include "cglobal.h"
 
+#if 0
+class MCD_EXPORT CNetwork
+#endif // for header file auto-generation
+
 MCD_BEGIN_NAMESPACE
 
 //The function currently works on Windows only. And it needs administrator privilege.

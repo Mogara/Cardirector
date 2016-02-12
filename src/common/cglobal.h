@@ -23,6 +23,10 @@
 #include <QtCore/qglobal.h>
 #include <QCoreApplication>
 
+#if 0
+class MCD_EXPORT CardirectorGlobal
+#endif // for header file auto-generation
+
 #ifndef MCD_STATIC
 #ifdef MCD_BUILD
 #define MCD_EXPORT Q_DECL_EXPORT
