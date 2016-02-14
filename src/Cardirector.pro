@@ -67,6 +67,7 @@ SOURCES += \
     resource/cresourcemanager.cpp \
     resource/cimageprovider.cpp \
     server/croom.cpp \
+    server/croomsettings.cpp \
     server/cserver.cpp \
     server/cserveragent.cpp \
     server/cserverrobot.cpp \
@@ -107,6 +108,7 @@ HEADERS += \
     resource/cimageprovider.h \
     resource/cresourcemanager.h \
     server/croom.h \
+    server/croomsettings.h \
     server/cserver.h \
     server/cserveragent.h \
     server/cserverrobot.h \
@@ -181,12 +183,6 @@ defineTest(copy) {
             !equals(class_name, ): copy($$file, ../include/$$class_name)
         }
     }
-
-    contains(QMAKE_HOST.os, "Windows") {
-        system("cmd /c cscript /nologo ..\\include\\AutoGenerateHeader.vbs")
-    }
-
-
 }
 
 DISTFILES = ../Gui/qmldir
