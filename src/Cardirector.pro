@@ -165,7 +165,20 @@ defineTest(copy) {
 !build_pass {
     for(file, HEADERS) {
         !equals(file, "cpch.h") {
+            content = $$cat($$file)
+            prev_word1 =
+            prev_word2 =
+            class_name =
+            for (word, content) {
+                equals(prev_word1, "class"): equals(prev_word2, "MCD_EXPORT") {
+                    class_name += $$word
+                }
+                prev_word1 = $$prev_word2
+                prev_word2 = $$word
+            }
             copy($$file, ../include/)
+            class_name = $$member(class_name, 0)
+            !equals(class_name, ): copy($$file, ../include/$$class_name)
         }
     }
 
