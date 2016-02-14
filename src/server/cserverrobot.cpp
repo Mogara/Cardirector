@@ -20,14 +20,22 @@
 #include "croom.h"
 #include "cserver.h"
 #include "cserverrobot.h"
+#include "cai.h"
 
 #include <QSemaphore>
 
-//class CServerRobotPrivate;
+class CServerRobotPrivate
+{
+public:
+    CAi *ai;
+};
 
 CServerRobot::CServerRobot(CRoom *room)
-    : CServerAgent(room->server())
+    : CServerAgent(room->server()), p_ptr(new CServerRobotPrivate)
 {
+    C_P(CServerRobot);
+    p->ai = new CAi(this);
+
     static uint robotId = 0;
     robotId++;
     setId(robotId);
@@ -38,53 +46,59 @@ CServerRobot::CServerRobot(CRoom *room)
 
 CServerRobot::~CServerRobot()
 {
-
+    C_P(CServerRobot);
+    delete p;
 }
 
-//@to-do: implement all interactive functions below
-void CServerRobot::request(int command, const QVariant &data, int timeout)
+bool CServerRobot::initAi(const QString &aiStartScriptFile)
 {
-    C_UNUSED(command);
-    C_UNUSED(data);
-    C_UNUSED(timeout);
+    C_P(CServerRobot);
+    return p->ai->initAi(aiStartScriptFile);
+}
+
+void CServerRobot::request(int command, const QVariant &data, int)
+{
+    C_P(CServerRobot);
+    p->ai->request(command, data);
 }
 
 void CServerRobot::reply(int command, const QVariant &data)
 {
-    C_UNUSED(command);
-    C_UNUSED(data);
+    C_P(CServerRobot);
+    p->ai->reply(command, data);
 }
 
 void CServerRobot::notify(int command, const QVariant &data)
 {
-    C_UNUSED(command);
-    C_UNUSED(data);
+    C_P(CServerRobot);
+    p->ai->notify(command, data);
 }
 
-void CServerRobot::executeRequest(int timeout)
+void CServerRobot::executeRequest(int)
 {
-    C_UNUSED(timeout);
+    C_P(CServerRobot);
+    p->ai->request(requestCommand(), requestData());
 }
 
 void CServerRobot::cancelRequest()
 {
-
 }
 
 void CServerRobot::setReplyReadySemaphore(QSemaphore *semaphore)
 {
-    //@to-do: implement this
-    semaphore->release(1);
+    C_P(CServerRobot);
+    p->ai->setReplyReadySemaphore(semaphore);
 }
 
 QVariant CServerRobot::waitForReply()
 {
-    return QVariant();
+    C_P(CServerRobot);
+    return p->ai->waitForReply();
 }
 
 QVariant CServerRobot::waitForReply(int timeout)
 {
-    C_UNUSED(timeout);
-    return QVariant();
+    C_P(CServerRobot);
+    return p->ai->waitForReply(timeout);
 }
 

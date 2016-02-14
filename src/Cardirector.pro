@@ -28,6 +28,7 @@ INCLUDEPATH += 3rdparty/vorbis/include
 
 # Cardirector
 INCLUDEPATH += \
+    ai \
     common \
     client \
     gamelogic \
@@ -39,7 +40,6 @@ INCLUDEPATH += \
     3rdparty
 
 SOURCES += \
-    ai/cabstractai.cpp \
     client/cclient.cpp \
     client/cclientsettings.cpp \
     client/cclientuser.cpp \
@@ -74,10 +74,11 @@ SOURCES += \
     ui/cabstractui.cpp \
     ui/cmainwindow.cpp \
     ui/cqmlengine.cpp \
-    ui/ctranslator.cpp
+    ui/ctranslator.cpp \
+    ai/cai.cpp \
+    ai/caiengine.cpp
 
 HEADERS += \
-    ai/cabstractai.h \
     client/cclient.h \
     client/cclientsettings.h \
     client/cclientuser.h \
@@ -115,7 +116,9 @@ HEADERS += \
     ui/cmainwindow.h \
     ui/cqmlengine.h \
     ui/ctranslator.h \
-    cpch.h
+    cpch.h \
+    ai/cai.h \
+    ai/caiengine.h
 
 QML_FILES += \
     ../Gui/Dialog.qml \

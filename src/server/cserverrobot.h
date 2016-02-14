@@ -33,6 +33,8 @@ public:
     explicit CServerRobot(CRoom *room);
     ~CServerRobot();
 
+    bool initAi(const QString &aiStartScriptFile);
+
     void request(int command, const QVariant &data = QVariant(), int timeout = -1);
     void reply(int command, const QVariant &data = QVariant());
     void notify(int command, const QVariant &data = QVariant());
