@@ -17,7 +17,6 @@
     Mogara
 *********************************************************************/
 
-#include "cpch.h"
 #include "cmainwindow.h"
 #include "cqmlengine.h"
 #include "cimageprovider.h"
