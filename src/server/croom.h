@@ -102,7 +102,7 @@ public:
     void broadcastProperty(const char *name) const;
     void unicastConfigTo(CServerAgent *agent) const;
     void broadcastConfig() const;
-    void broadcastConfig(const char *name) const;
+    void broadcastConfig(const QString &name) const;
 
 signals:
     void abandoned();

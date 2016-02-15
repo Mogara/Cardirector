@@ -305,9 +305,7 @@ void CRoom::broadcastSystemMessage(const QString &message)
 
 void CRoom::broadcastRequest()
 {
-    //@to-do: Add request timeout into the configuration of the room
-    int timeout = 15;//seconds
-    broadcastRequest(agents(), timeout);
+    broadcastRequest(agents(), p_ptr->settings->timeout);
 }
 
 void CRoom::broadcastRequest(int timeout)
@@ -317,9 +315,7 @@ void CRoom::broadcastRequest(int timeout)
 
 void CRoom::broadcastRequest(const QList<CServerAgent *> &targets)
 {
-    //@to-do: Add request timeout into the configuration of the room
-    int timeout = 15;//seconds
-    broadcastRequest(targets, timeout);
+    broadcastRequest(targets, p_ptr->settings->timeout);
 }
 
 void CRoom::broadcastRequest(const QList<CServerAgent *> &targets, int timeout)
@@ -419,7 +415,7 @@ void CRoom::broadcastConfig() const
     broadcastNotification(S_COMMAND_CONFIGURE_ROOM, settings()->toVariant());
 }
 
-void CRoom::broadcastConfig(const char *name) const
+void CRoom::broadcastConfig(const QString &name) const
 {
     QVariantMap data;
     data[name] = settings()->value(name);

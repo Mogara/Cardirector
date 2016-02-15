@@ -30,6 +30,7 @@ class MCD_EXPORT CRoomSettings
 
     Q_PROPERTY(QString name MEMBER name)
     Q_PROPERTY(int capacity MEMBER capacity)
+    Q_PROPERTY(int timeout MEMBER timeout)
 
     virtual const QMetaObject *metaObject() const;
 
@@ -43,6 +44,7 @@ public:
 
     QString name;
     int capacity;
+    int timeout;  //seconds
 };
 
 MCD_END_NAMESPACE

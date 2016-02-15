@@ -25,6 +25,7 @@ MCD_BEGIN_NAMESPACE
 
 CRoomSettings::CRoomSettings()
     : capacity(0)
+    , timeout(15)
 {
 }
 
