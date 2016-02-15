@@ -47,9 +47,9 @@ public:
 
 signals:
     // used to notify the AI engine
-    void requestToAiEngine(int command, const QVariant &data);
-    void replyToAiEngine(int command, const QVariant &data);
-    void notifyToAiEngine(int command, const QVariant &data);
+    void requestToAiEngine(int command, QVariant data);
+    void replyToAiEngine(int command, QVariant data);
+    void notifyToAiEngine(int command, QVariant data);
     void initAiToAiEngine(QString aiStartScriptFile);
 
 public slots:

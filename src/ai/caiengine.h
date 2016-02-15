@@ -34,9 +34,9 @@ public:
     ~CAiEngine();
 
 public slots:
-    void request(int command, const QVariant &data);
-    void reply(int command, const QVariant &data);
-    void notify(int command, const QVariant &data);
+    void request(int command, QVariant data);
+    void reply(int command, QVariant data);
+    void notify(int command, QVariant data);
 
     void init(QString startScriptFile);
 

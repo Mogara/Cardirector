@@ -44,7 +44,7 @@ CAiEngine::~CAiEngine()
     delete p;
 }
 
-void CAiEngine::request(int command, const QVariant &data)
+void CAiEngine::request(int command, QVariant data)
 {
     C_P(CAiEngine);
     if (p->available.load() == 0) {
@@ -60,7 +60,7 @@ void CAiEngine::request(int command, const QVariant &data)
     }
 }
 
-void CAiEngine::reply(int command, const QVariant &data)
+void CAiEngine::reply(int command, QVariant data)
 {
     C_P(CAiEngine);
     if (p->available.load() == 0)
@@ -72,7 +72,7 @@ void CAiEngine::reply(int command, const QVariant &data)
         replyFunction.call(QJSValueList() << commandValue << dataValue);
 }
 
-void CAiEngine::notify(int command, const QVariant &data)
+void CAiEngine::notify(int command, QVariant data)
 {
     C_P(CAiEngine);
     if (p->available.load() == 0)
