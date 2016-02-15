@@ -95,7 +95,6 @@ QVariant CRoom::briefIntroduction() const
 
 void CRoom::setSettings(CRoomSettings *settings)
 {
-    *settings = *(p_ptr->settings);
     delete p_ptr->settings;
     p_ptr->settings = settings;
 }
