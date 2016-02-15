@@ -28,25 +28,25 @@ CRoomSettings::CRoomSettings()
 {
 }
 
-const QMetaObject &CRoomSettings::metaObject() const
+const QMetaObject *CRoomSettings::metaObject() const
 {
-    return staticMetaObject;
+    return &staticMetaObject;
 }
 
 void CRoomSettings::setValue(const QString &key, const QVariant &value)
 {
-    const QMetaObject &meta = metaObject();
-    int index = meta.indexOfProperty(key.toLatin1());
-    QMetaProperty property = meta.property(index);
+    const QMetaObject *meta = metaObject();
+    int index = meta->indexOfProperty(key.toLatin1());
+    QMetaProperty property = meta->property(index);
     if (property.isWritable())
         property.writeOnGadget(this, value);
 }
 
 QVariant CRoomSettings::value(const QString &key)
 {
-    const QMetaObject &meta = metaObject();
-    int index = meta.indexOfProperty(key.toLatin1());
-    QMetaProperty property = meta.property(index);
+    const QMetaObject *meta = metaObject();
+    int index = meta->indexOfProperty(key.toLatin1());
+    QMetaProperty property = meta->property(index);
     if (property.isReadable())
         return property.readOnGadget(this);
     return QVariant();
@@ -54,11 +54,11 @@ QVariant CRoomSettings::value(const QString &key)
 
 QVariant CRoomSettings::toVariant() const
 {
-    const QMetaObject &meta = metaObject();
+    const QMetaObject *meta = metaObject();
     QVariantMap data;
-    int max = meta.propertyCount();
+    int max = meta->propertyCount();
     for (int i = 0; i < max; i++) {
-        QMetaProperty property = meta.property(i);
+        QMetaProperty property = meta->property(i);
         if (property.isReadable())
             data[property.name()] = property.readOnGadget(this);
     }

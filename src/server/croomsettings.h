@@ -20,7 +20,7 @@
 #ifndef CROOMSETTINGS_H
 #define CROOMSETTINGS_H
 
-#include <cglobal.h>
+#include "cglobal.h"
 
 MCD_BEGIN_NAMESPACE
 
@@ -31,7 +31,7 @@ class MCD_EXPORT CRoomSettings
     Q_PROPERTY(QString name MEMBER name)
     Q_PROPERTY(int capacity MEMBER capacity)
 
-    virtual const QMetaObject &metaObject() const;
+    virtual const QMetaObject *metaObject() const;
 
 public:
     CRoomSettings();
