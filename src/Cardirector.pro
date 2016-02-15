@@ -170,17 +170,17 @@ defineTest(copy) {
             content = $$cat($$file)
             prev_word1 =
             prev_word2 =
-            class_name =
+            class_names =
             for (word, content) {
                 equals(prev_word1, "class"): equals(prev_word2, "MCD_EXPORT") {
-                    class_name += $$word
+                    class_names += $$word
                 }
                 prev_word1 = $$prev_word2
                 prev_word2 = $$word
             }
             copy($$file, ../include/)
-            class_name = $$member(class_name, 0)
-            !equals(class_name, ): copy($$file, ../include/$$class_name)
+            content = "$${LITERAL_HASH}include \"$$basename(file)\""
+            for (class_name, class_names): write_file(../include/$$class_name, content)
         }
     }
 }
