@@ -70,17 +70,7 @@ signals:
     void disconnected();
 
 protected:
-    static void CheckVersionCommand(CServerUser *user, const QVariant &data);
-    static void SignupCommand(CServerUser *user, const QVariant &data);
-    static void LoginCommand(CServerUser *user, const QVariant &data);
-    static void LogoutCommand(CServerUser *user, const QVariant &);
-    static void SpeakCommand(CServerUser *user, const QVariant &data);
-    static void CreateRoomCommand(CServerUser *user, const QVariant &data);
-    static void EnterRoomCommand(CServerUser *user, const QVariant &data);
     static void NetworkDelayCommand(CServerUser *user, const QVariant &data);
-    static void SetRoomListCommand(CServerUser *user, const QVariant &);
-    static void StartGameCommand(CServerUser *user, const QVariant &);
-    static void AddRobotCommand(CServerUser *user, const QVariant &);
 
     void handleUnknownPacket(const QByteArray &packet);
 

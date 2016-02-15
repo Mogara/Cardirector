@@ -170,6 +170,7 @@ void CServer::createRoom(CServerUser *owner, const QString &name, uint capacity)
     room->setCapacity(capacity);
     room->setOwner(owner);
     room->addUser(owner);
+    room->broadcastProperty("ownerId");
     p_ptr->rooms.insert(room->id(), room);
     emit roomCreated(room);
 }
@@ -193,7 +194,7 @@ void CServer::updateRoomList(CServerUser *user)
 {
     QVariantList roomList;
     foreach (CRoom *room, p_ptr->rooms)
-        roomList << room->config();
+        roomList << room->briefIntroduction();
     user->notify(S_COMMAND_SET_ROOM_LIST, roomList);
 }
 

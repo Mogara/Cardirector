@@ -114,6 +114,18 @@ void CClient::exitRoom()
     p_ptr->router->notify(S_COMMAND_ENTER_ROOM);
 }
 
+void CClient::configureRoom(const QVariantMap &items)
+{
+    p_ptr->router->notify(S_COMMAND_CONFIGURE_ROOM, items);
+}
+
+void CClient::configureRoom(const QString &key, const QVariant &value)
+{
+    QVariantMap items;
+    items[key] = value;
+    configureRoom(items);
+}
+
 void CClient::speakToServer(const QString &message)
 {
     p_ptr->self->speak(message);
@@ -298,16 +310,16 @@ void CClient::EnterRoomCommand(CClient *client, const QVariant &data)
     emit client->roomEntered(data);
 }
 
-void CClient::UpdateRoomPropertyCommand(CClient *client, const QVariant &data)
+void CClient::ConfigureRoomCommand(CClient *client, const QVariant &data)
 {
-    QVariantList dataList = data.toList();
-    if (dataList.length() != 2)
+    QVariantMap properties = data.toMap();
+    if (properties.isEmpty())
         return;
 
-    QString name = dataList.at(0).toString();
-    QVariant value = dataList.at(1);
-
-    emit client->roomPropertyChanged(name, value);
+    for (QMapIterator<QString, QVariant> iter(properties); iter.hasNext(); ) {
+        iter.next();
+        emit client->roomConfigChanged(iter.key(), iter.value());
+    }
 }
 
 void CClient::NetworkDelayCommand(CClient *client, const QVariant &data)
@@ -347,7 +359,7 @@ void CClient::Init()
     AddCallback(S_COMMAND_LOGIN, &LoginCommand);
     AddCallback(S_COMMAND_SET_ROOM_LIST, &SetRoomListCommand);
     AddCallback(S_COMMAND_ENTER_ROOM, &EnterRoomCommand);
-    AddCallback(S_COMMAND_UPDATE_ROOM_PROPERTY, &UpdateRoomPropertyCommand);
+    AddCallback(S_COMMAND_CONFIGURE_ROOM, &ConfigureRoomCommand);
     AddCallback(S_COMMAND_NETWORK_DELAY, &NetworkDelayCommand);
     AddCallback(S_COMMAND_START_GAME, &StartGameCommand);
     AddCallback(S_COMMAND_ADD_ROBOT, &AddRobotCommand);

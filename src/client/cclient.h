@@ -47,6 +47,8 @@ public:
     void createRoom();
     void enterRoom(uint id);
     void exitRoom();
+    void configureRoom(const QVariantMap &items);
+    void configureRoom(const QString &key, const QVariant &value);
     void speakToServer(const QString &message);
 
     void addRobot();
@@ -82,7 +84,7 @@ signals:
     void userRemoved(const CClientUser *user);
     void roomListUpdated(const QVariant &list);
     void roomEntered(const QVariant &config);
-    void roomPropertyChanged(const QString &name, const QVariant &value);
+    void roomConfigChanged(const QString &key, const QVariant &value);
     void systemMessage(const QString &message);
 
 protected:
@@ -98,7 +100,7 @@ protected:
     static void SetRoomListCommand(CClient *client, const QVariant &data);
     static void SpeakCommand(CClient *client, const QVariant &data);
     static void EnterRoomCommand(CClient *client, const QVariant &data);
-    static void UpdateRoomPropertyCommand(CClient *client, const QVariant &data);
+    static void ConfigureRoomCommand(CClient *client, const QVariant &data);
     static void NetworkDelayCommand(CClient *client, const QVariant &data);
     static void StartGameCommand(CClient *client, const QVariant &);
     static void AddRobotCommand(CClient *client, const QVariant &data);

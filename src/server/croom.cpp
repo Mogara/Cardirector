@@ -21,6 +21,7 @@
 #include "cprotocol.h"
 #include "cserverrobot.h"
 #include "croom.h"
+#include "croomsettings.h"
 #include "cserver.h"
 #include "cserveruser.h"
 
@@ -29,19 +30,19 @@
 #include <QThread>
 #include <QTime>
 
+MCD_BEGIN_NAMESPACE
 
 class CRoomPrivate
 {
 public:
     QPointer<CServer> server;
     uint id;
-    QString name;
     CAbstractGameLogic *gameLogic;
     QMap<uint, CServerUser *> users;
     QMap<uint, CServerRobot *> robots;
-    int capacity;
     CServerUser *owner;
     bool isAbandoned;
+    CRoomSettings *settings;
 
     QSemaphore racingRequestSemaphore;
     QList<CServerAgent *> racingRequestCandidates;
@@ -61,8 +62,8 @@ CRoom::CRoom(CServer *server)
     p_ptr->gameLogic = NULL;
     p_ptr->owner = NULL;
     p_ptr->isAbandoned = false;
-    p_ptr->capacity = 0;
     p_ptr->robotNameCode = 'A';
+    p_ptr->settings = new CRoomSettings;
 
     p_ptr->thread = new QThread;
     connect(p_ptr->thread, &QThread::finished, p_ptr->thread, &QThread::deleteLater);
@@ -72,6 +73,7 @@ CRoom::CRoom(CServer *server)
 
 CRoom::~CRoom()
 {
+    delete p_ptr->settings;
     delete p_ptr;
 }
 
@@ -80,7 +82,7 @@ uint CRoom::id() const
     return p_ptr->id;
 }
 
-QVariant CRoom::config() const
+QVariant CRoom::briefIntroduction() const
 {
     QVariantMap info;
     info["id"] = (!p_ptr->server.isNull() && p_ptr->server->lobby() != this ? p_ptr->id : 0);
@@ -89,6 +91,18 @@ QVariant CRoom::config() const
     info["capacity"] = capacity();
     info["ownerId"] = ownerId();
     return info;
+}
+
+void CRoom::setSettings(CRoomSettings *settings)
+{
+    *settings = *(p_ptr->settings);
+    delete p_ptr->settings;
+    p_ptr->settings = settings;
+}
+
+CRoomSettings *CRoom::settings() const
+{
+    return p_ptr->settings;
 }
 
 CServer *CRoom::server() const
@@ -113,27 +127,27 @@ uint CRoom::ownerId() const
 
 QString CRoom::name() const
 {
-    return p_ptr->name;
+    return p_ptr->settings->name;
 }
 
 void CRoom::setName(const QString &name)
 {
-    p_ptr->name = name;
+    p_ptr->settings->name = name;
 }
 
 int CRoom::capacity() const
 {
-    return p_ptr->capacity;
+    return p_ptr->settings->capacity;
 }
 
 void CRoom::setCapacity(int capacity)
 {
-    p_ptr->capacity = capacity;
+    p_ptr->settings->capacity = capacity;
 }
 
 bool CRoom::isFull() const
 {
-    return p_ptr->capacity > 0 && p_ptr->users.size() + p_ptr->robots.size() >= p_ptr->capacity;
+    return capacity() > 0 && p_ptr->users.size() + p_ptr->robots.size() >= capacity();
 }
 
 bool CRoom::isAbandoned() const
@@ -191,7 +205,8 @@ void CRoom::addUser(CServerUser *user)
     connect(user, &CServerUser::speak, this, &CRoom::onUserSpeaking);
     connect(user, &CServerUser::disconnected, this, &CRoom::onUserDisconnected);
 
-    user->notify(S_COMMAND_ENTER_ROOM, config());
+    user->notify(S_COMMAND_ENTER_ROOM, briefIntroduction());
+    unicastConfigTo(user);
     broadcastNotification(S_COMMAND_ADD_USER, user->briefIntroduction(), user);
     emit userAdded(user);
 }
@@ -205,7 +220,7 @@ void CRoom::removeUser(CServerUser *user)
         if (user == p_ptr->owner) {
             if (!p_ptr->users.isEmpty()) {
                 p_ptr->owner = p_ptr->users.first();
-                notifyProperty("ownerId");
+                broadcastProperty("ownerId");
             } else {
                 emit abandoned();
                 p_ptr->isAbandoned = true;
@@ -381,12 +396,35 @@ void CRoom::broadcastNotification(int command, const QVariant &data, CServerAgen
     }
 }
 
-void CRoom::notifyProperty(const char *name) const
+void CRoom::unicastPropertyTo(const char *name, CServerAgent *agent) const
 {
-    QVariantList data;
-    data << name;
-    data << property(name);
-    broadcastNotification(S_COMMAND_UPDATE_ROOM_PROPERTY, data);
+    QVariantMap data;
+    data[name] = property(name);
+    agent->notify(S_COMMAND_CONFIGURE_ROOM, data);
+}
+
+void CRoom::broadcastProperty(const char *name) const
+{
+    QVariantMap data;
+    data[name] = property(name);
+    broadcastNotification(S_COMMAND_CONFIGURE_ROOM, data);
+}
+
+void CRoom::unicastConfigTo(CServerAgent *agent) const
+{
+    agent->notify(S_COMMAND_CONFIGURE_ROOM, settings()->toVariant());
+}
+
+void CRoom::broadcastConfig() const
+{
+    broadcastNotification(S_COMMAND_CONFIGURE_ROOM, settings()->toVariant());
+}
+
+void CRoom::broadcastConfig(const char *name) const
+{
+    QVariantMap data;
+    data[name] = settings()->value(name);
+    broadcastNotification(S_COMMAND_CONFIGURE_ROOM, data);
 }
 
 void CRoom::onUserSpeaking(const QString &message)
@@ -403,3 +441,5 @@ void CRoom::onUserDisconnected()
     CServerUser *user = qobject_cast<CServerUser *>(sender());
     removeUser(user);
 }
+
+MCD_END_NAMESPACE

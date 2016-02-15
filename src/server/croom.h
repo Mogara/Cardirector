@@ -31,6 +31,7 @@ class CServer;
 class CServerAgent;
 class CServerRobot;
 class CServerUser;
+class CRoomSettings;
 
 class CRoomPrivate;
 class MCD_EXPORT CRoom : public QObject
@@ -47,7 +48,10 @@ public:
     ~CRoom();
 
     uint id() const;
-    QVariant config() const;
+    QVariant briefIntroduction() const;
+
+    void setSettings(CRoomSettings *settings);
+    CRoomSettings *settings() const;
 
     CServer *server() const;
 
@@ -94,7 +98,11 @@ public:
     void broadcastNotification(const QList<CServerAgent *> &targets, int command, const QVariant &data = QVariant()) const;
     void broadcastNotification(int command, const QVariant &data = QVariant(), CServerAgent *except = NULL) const;
 
-    void notifyProperty(const char *name) const;
+    void unicastPropertyTo(const char *name, CServerAgent *agent) const;
+    void broadcastProperty(const char *name) const;
+    void unicastConfigTo(CServerAgent *agent) const;
+    void broadcastConfig() const;
+    void broadcastConfig(const char *name) const;
 
 signals:
     void abandoned();

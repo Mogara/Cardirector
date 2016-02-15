@@ -21,6 +21,7 @@
 #include "cpacketrouter.h"
 #include "cprotocol.h"
 #include "croom.h"
+#include "croomsettings.h"
 #include "cserver.h"
 #include "cserveruser.h"
 #include "ctcpsocket.h"
@@ -154,129 +155,6 @@ QVariant CServerUser::waitForReply(int timeout)
     return p_ptr->router->waitForReply(timeout);
 }
 
-bool CServerUser::controlledByClient() const
-{
-    return true;
-}
-
-void CServerUser::AddInteraction(int command, Callback callback)
-{
-    interactions.insert(command, reinterpret_cast<CPacketRouter::Callback>(callback));
-}
-
-void CServerUser::AddCallback(int command, Callback callback)
-{
-    callbacks.insert(command, reinterpret_cast<CPacketRouter::Callback>(callback));
-}
-
-/* Callbacks */
-
-void CServerUser::CheckVersionCommand(CServerUser *user, const QVariant &data)
-{
-    C_UNUSED(user);
-    C_UNUSED(data);
-}
-
-void CServerUser::SignupCommand(CServerUser *user, const QVariant &data)
-{
-    QVariantList arguments(data.toList());
-    if (arguments.length() < 4)
-        return;
-
-    QString account = arguments.at(0).toString();
-    QString password = arguments.at(1).toString();
-    QString screenName = arguments.at(2).toString();
-    QString avatar = arguments.at(3).toString();
-
-    user->signup(account, password, screenName, avatar);
-}
-
-//currently unused
-void CServerUser::LoginCommand(CServerUser *user, const QVariant &data)
-{
-    C_UNUSED(user);
-    C_UNUSED(data);
-
-    /*QVariantList dataList(data.toList());
-    if (dataList.size() >= 2) {
-        QString account = dataList.at(0).toString();
-        QString password = dataList.at(1).toString();
-
-        //@to-do: implement this after database is ready
-        CServerUser *user = qobject_cast<CServerUser *>(receiver);
-        user->login(account, password);
-    }*/
-}
-
-void CServerUser::LogoutCommand(CServerUser *user, const QVariant &)
-{
-    user->logout();
-}
-
-void CServerUser::SpeakCommand(CServerUser *user, const QVariant &data)
-{
-    QString message = data.toString();
-    if (!message.isEmpty())
-        user->speak(message);
-}
-
-void CServerUser::CreateRoomCommand(CServerUser *user, const QVariant &data)
-{
-    CServer *server = user->server();
-
-    QVariantMap config = data.toMap();
-    QString name = config.value("name").toString();
-    uint capacity = config.value("capacity", 0).toUInt();
-
-    server->createRoom(user, name, capacity);
-}
-
-void CServerUser::EnterRoomCommand(CServerUser *user, const QVariant &data)
-{
-    CServer *server = user->server();
-
-    if (data.isNull()) {
-        CRoom *lobby = server->lobby();
-        lobby->addUser(user);
-    } else {
-        uint roomId = data.toUInt();
-        CRoom *room = server->findRoom(roomId);
-        if (room)
-            room->addUser(user);
-    }
-}
-
-void CServerUser::NetworkDelayCommand(CServerUser *user, const QVariant &data)
-{
-    CServerUserPrivate *p_ptr = user->p_ptr;
-    if (p_ptr->networkDelayTestId != 0 && p_ptr->networkDelayTestId == data.toInt()) {
-        user->setNetworkDelay(p_ptr->networkDelayStartTime.secsTo(QDateTime::currentDateTime()));
-        p_ptr->networkDelayTestId = 0;
-    }
-}
-
-void CServerUser::SetRoomListCommand(CServerUser *user, const QVariant &)
-{
-    CServer *server = user->server();
-    server->updateRoomList(user);
-}
-
-void CServerUser::StartGameCommand(CServerUser *user, const QVariant &)
-{
-    CRoom *room = user->room();
-    if (room->owner() == user)
-        room->startGame();
-}
-
-void CServerUser::AddRobotCommand(CServerUser *user, const QVariant &)
-{
-    CRoom *room = user->room();
-    if (room->owner() == user && !room->isFull()) {
-        CServer *server = user->server();
-        server->createRobot(room);
-    }
-}
-
 void CServerUser::handleUnknownPacket(const QByteArray &packet)
 {
     //Handle requests from a browser
@@ -305,6 +183,149 @@ void CServerUser::handleUnknownPacket(const QByteArray &packet)
     }
 }
 
+bool CServerUser::controlledByClient() const
+{
+    return true;
+}
+
+void CServerUser::AddInteraction(int command, Callback callback)
+{
+    interactions.insert(command, reinterpret_cast<CPacketRouter::Callback>(callback));
+}
+
+void CServerUser::AddCallback(int command, Callback callback)
+{
+    callbacks.insert(command, reinterpret_cast<CPacketRouter::Callback>(callback));
+}
+
+/* Callbacks */
+
+void CServerUser::NetworkDelayCommand(CServerUser *user, const QVariant &data)
+{
+    CServerUserPrivate *p_ptr = user->p_ptr;
+    if (p_ptr->networkDelayTestId != 0 && p_ptr->networkDelayTestId == data.toInt()) {
+        user->setNetworkDelay(p_ptr->networkDelayStartTime.secsTo(QDateTime::currentDateTime()));
+        p_ptr->networkDelayTestId = 0;
+    }
+}
+
+namespace {
+
+void CheckVersionCommand(CServerUser *user, const QVariant &data)
+{
+    C_UNUSED(user);
+    C_UNUSED(data);
+}
+
+void SignupCommand(CServerUser *user, const QVariant &data)
+{
+    QVariantList arguments(data.toList());
+    if (arguments.length() < 4)
+        return;
+
+    QString account = arguments.at(0).toString();
+    QString password = arguments.at(1).toString();
+    QString screenName = arguments.at(2).toString();
+    QString avatar = arguments.at(3).toString();
+
+    user->signup(account, password, screenName, avatar);
+}
+
+//currently unused
+void LoginCommand(CServerUser *user, const QVariant &data)
+{
+    C_UNUSED(user);
+    C_UNUSED(data);
+
+    /*QVariantList dataList(data.toList());
+    if (dataList.size() >= 2) {
+        QString account = dataList.at(0).toString();
+        QString password = dataList.at(1).toString();
+
+        //@to-do: implement this after database is ready
+        CServerUser *user = qobject_cast<CServerUser *>(receiver);
+        user->login(account, password);
+    }*/
+}
+
+void LogoutCommand(CServerUser *user, const QVariant &)
+{
+    user->logout();
+}
+
+void SpeakCommand(CServerUser *user, const QVariant &data)
+{
+    QString message = data.toString();
+    if (!message.isEmpty())
+        user->speak(message);
+}
+
+void CreateRoomCommand(CServerUser *user, const QVariant &data)
+{
+    CServer *server = user->server();
+
+    QVariantMap config = data.toMap();
+    QString name = config.value("name").toString();
+    uint capacity = config.value("capacity", 0).toUInt();
+
+    server->createRoom(user, name, capacity);
+}
+
+void EnterRoomCommand(CServerUser *user, const QVariant &data)
+{
+    CServer *server = user->server();
+
+    if (data.isNull()) {
+        CRoom *lobby = server->lobby();
+        lobby->addUser(user);
+    } else {
+        uint roomId = data.toUInt();
+        CRoom *room = server->findRoom(roomId);
+        if (room)
+            room->addUser(user);
+    }
+}
+
+void SetRoomListCommand(CServerUser *user, const QVariant &)
+{
+    CServer *server = user->server();
+    server->updateRoomList(user);
+}
+
+void StartGameCommand(CServerUser *user, const QVariant &)
+{
+    CRoom *room = user->room();
+    if (room->owner() == user)
+        room->startGame();
+}
+
+void AddRobotCommand(CServerUser *user, const QVariant &)
+{
+    CRoom *room = user->room();
+    if (room->owner() == user && !room->isFull()) {
+        CServer *server = user->server();
+        server->createRobot(room);
+    }
+}
+
+void ConfigureRoomCommand(CServerUser *user, const QVariant &data)
+{
+    CRoom *room = user->room();
+    CRoomSettings *config = room->settings();
+    if (config == NULL)
+        return;
+
+    const QVariantMap arg = data.toMap();
+    for (QMapIterator<QString, QVariant> iter(arg); iter.hasNext(); ) {
+        iter.next();
+        QString key = iter.key();
+        config->setValue(key, iter.value());
+        room->broadcastConfig(key.toLatin1());
+    }
+}
+
+} //namespace
+
 void CServerUser::Init()
 {
     AddCallback(S_COMMAND_CHECK_VERSION, &CheckVersionCommand);
@@ -318,5 +339,6 @@ void CServerUser::Init()
     AddCallback(S_COMMAND_SET_ROOM_LIST, &SetRoomListCommand);
     AddCallback(S_COMMAND_START_GAME, &StartGameCommand);
     AddCallback(S_COMMAND_ADD_ROBOT, &AddRobotCommand);
+    AddCallback(S_COMMAND_CONFIGURE_ROOM, &ConfigureRoomCommand);
 }
 C_INITIALIZE_CLASS(CServerUser)
