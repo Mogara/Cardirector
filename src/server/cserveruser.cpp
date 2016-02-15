@@ -312,7 +312,7 @@ void ConfigureRoomCommand(CServerUser *user, const QVariant &data)
 {
     CRoom *room = user->room();
     CRoomSettings *config = room->settings();
-    if (config == NULL)
+    if (config == NULL || user != room->owner())
         return;
 
     const QVariantMap arg = data.toMap();
@@ -320,7 +320,7 @@ void ConfigureRoomCommand(CServerUser *user, const QVariant &data)
         iter.next();
         QString key = iter.key();
         config->setValue(key, iter.value());
-        room->broadcastConfig(key.toLatin1());
+        room->broadcastConfig(key);
     }
 }
 

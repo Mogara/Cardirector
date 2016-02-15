@@ -53,6 +53,9 @@ public:
     void setSettings(CRoomSettings *settings);
     CRoomSettings *settings() const;
 
+    template<typename T>
+    const T *settings() const { return dynamic_cast<T *>(settings()); }
+
     CServer *server() const;
 
     void setOwner(CServerUser *owner);
@@ -102,7 +105,7 @@ public:
     void broadcastProperty(const char *name) const;
     void unicastConfigTo(CServerAgent *agent) const;
     void broadcastConfig() const;
-    void broadcastConfig(const char *name) const;
+    void broadcastConfig(const QString &name) const;
 
 signals:
     void abandoned();
