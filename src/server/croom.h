@@ -53,6 +53,9 @@ public:
     void setSettings(CRoomSettings *settings);
     CRoomSettings *settings() const;
 
+    template<typename T>
+    const T *settings() const { return dynamic_cast<T *>(settings()); }
+
     CServer *server() const;
 
     void setOwner(CServerUser *owner);
