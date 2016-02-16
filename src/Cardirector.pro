@@ -167,7 +167,7 @@ defineTest(copy) {
     return(true)
 }
 
-!build_pass {
+defineTest(generateIncludeDir) {
     for(file, HEADERS) {
         !equals(file, "cpch.h") {
             content = $$cat($$file)
@@ -187,6 +187,9 @@ defineTest(copy) {
         }
     }
 }
+
+#todo: we should make this run in make period, but not qmake period
+!bulid_pass: generateIncludeDir()
 
 DISTFILES = ../Gui/qmldir
 

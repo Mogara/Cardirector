@@ -30,6 +30,8 @@ public:
 
     int requestCommand;
     QVariant requestData;
+
+    bool ready;
 };
 
 CServerAgent::CServerAgent(CServer *server)
@@ -39,6 +41,7 @@ CServerAgent::CServerAgent(CServer *server)
 
     p_ptr->server = server;
     p_ptr->room = NULL;
+    p_ptr->ready = false;
 }
 
 CServerAgent::~CServerAgent()
@@ -68,6 +71,16 @@ QVariant CServerAgent::briefIntroduction() const
     arguments << screenName();
     arguments << avatar();
     return arguments;
+}
+
+bool CServerAgent::ready() const
+{
+    return p_ptr->ready;
+}
+
+void CServerAgent::setReady(bool ready)
+{
+    p_ptr->ready = ready;
 }
 
 void CServerAgent::prepareRequest(int command, const QVariant &data)

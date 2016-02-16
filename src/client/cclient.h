@@ -104,6 +104,7 @@ protected:
     static void NetworkDelayCommand(CClient *client, const QVariant &data);
     static void StartGameCommand(CClient *client, const QVariant &);
     static void AddRobotCommand(CClient *client, const QVariant &data);
+    static void ToggleReadyCommand(CClient *client, const QVariant &data);
 
 private:
     C_DECLARE_INITIALIZER(CClient)

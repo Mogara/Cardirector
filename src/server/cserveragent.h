@@ -46,6 +46,9 @@ public:
 
     QVariant briefIntroduction() const;
 
+    bool ready() const;
+    void setReady(bool ready);
+
     virtual void request(int command, const QVariant &data = QVariant(), int timeout = -1) = 0;
     virtual void reply(int command, const QVariant &data = QVariant()) = 0;
     virtual void notify(int command, const QVariant &data = QVariant()) = 0;

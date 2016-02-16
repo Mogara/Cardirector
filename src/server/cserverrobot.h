@@ -48,8 +48,8 @@ public:
 
     bool controlledByClient() const { return false; }
 
-signals:
-    void aiInitFinish(bool result);
+public slots:
+    void onAiInitFinish(bool result);
 
 private:
     C_DISABLE_COPY(CServerRobot)

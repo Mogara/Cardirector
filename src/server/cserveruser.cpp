@@ -327,6 +327,15 @@ void ConfigureRoomCommand(CServerUser *user, const QVariant &data)
     }
 }
 
+void ToggleReadyCommand(CServerUser *user, const QVariant &data)
+{
+    CRoom *room = user->room();
+    if (room->owner() != user) {
+        user->setReady(data.toBool());
+        room->toggleReady(user, data.toBool());
+    }
+}
+
 } //namespace
 
 void CServerUser::Init()
@@ -343,5 +352,6 @@ void CServerUser::Init()
     AddCallback(S_COMMAND_START_GAME, &StartGameCommand);
     AddCallback(S_COMMAND_ADD_ROBOT, &AddRobotCommand);
     AddCallback(S_COMMAND_CONFIGURE_ROOM, &ConfigureRoomCommand);
+    AddCallback(S_COMMAND_TOGGLE_READY, &ToggleReadyCommand);
 }
 C_INITIALIZE_CLASS(CServerUser)

@@ -34,6 +34,7 @@ public:
 
 signals:
     void speak(const QString &message);
+    void ready(bool ready);
 };
 
 MCD_END_NAMESPACE

@@ -35,7 +35,7 @@ CServerRobot::CServerRobot(CRoom *room)
 {
     C_P(CServerRobot);
     p->ai = new CAi(this);
-    connect(p->ai, &CAi::initFinish, this, &CServerRobot::aiInitFinish);
+    connect(p->ai, &CAi::initFinish, this, &CServerRobot::onAiInitFinish);
 
     static uint robotId = 0;
     robotId++;
@@ -101,5 +101,14 @@ QVariant CServerRobot::waitForReply(int timeout)
 {
     C_P(CServerRobot);
     return p->ai->waitForReply(timeout);
+}
+
+void CServerRobot::onAiInitFinish(bool result)
+{
+    if (result) {
+        setReady(true);
+        room()->toggleReady(this, true);
+    } else
+        room()->userSpeaking(this, "AI initialization failed, the game won't start.");
 }
 

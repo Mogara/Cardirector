@@ -321,6 +321,7 @@ void CClient::ConfigureRoomCommand(CClient *client, const QVariant &data)
 
     for (QMapIterator<QString, QVariant> iter(properties); iter.hasNext(); ) {
         iter.next();
+        // todo_Fs: the library should judge some of the room config like "ownerId", etc.
         emit client->roomConfigChanged(iter.key(), iter.value());
     }
 }
@@ -341,7 +342,7 @@ void CClient::AddRobotCommand(CClient *client, const QVariant &data)
     if (arguments.length() < 3)
         return;
 
-    // to-do: implement the robot working in the client side
+    // to-do: implement the robot working in the server side
     uint robotId = arguments.at(0).toUInt();
     if (robotId > 0) {
         CClientUser *robot = new CClientUser(robotId, client);
@@ -351,6 +352,21 @@ void CClient::AddRobotCommand(CClient *client, const QVariant &data)
         client->p_ptr->robots.insert(robotId, robot);
         emit client->userAdded(robot);
     }
+}
+
+void CClient::ToggleReadyCommand(CClient *client, const QVariant &data)
+{
+    QVariantMap arguments = data.toMap();
+    CClientUser *user = NULL;
+    if (arguments.contains("userId")) {
+        user = client->findUser(arguments["userId"].toUInt());
+    } else if (arguments.contains("robotId")) {
+        user = client->findRobot(arguments["robotId"].toUInt());
+    }
+
+    bool ready = arguments.value("ready", false).toBool();
+
+    emit user->ready(ready);
 }
 
 void CClient::Init()
@@ -366,5 +382,6 @@ void CClient::Init()
     AddCallback(S_COMMAND_NETWORK_DELAY, &NetworkDelayCommand);
     AddCallback(S_COMMAND_START_GAME, &StartGameCommand);
     AddCallback(S_COMMAND_ADD_ROBOT, &AddRobotCommand);
+    AddCallback(S_COMMAND_TOGGLE_READY, &ToggleReadyCommand);
 }
 C_INITIALIZE_CLASS(CClient)

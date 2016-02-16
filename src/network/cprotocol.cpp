@@ -47,6 +47,7 @@ public:
         C_REGISTER_COMMAND(START_GAME);
         C_REGISTER_COMMAND(ADD_ROBOT);
         C_REGISTER_COMMAND(REMOVE_ROBOT);
+        C_REGISTER_COMMAND(TOGGLE_READY);
     }
 };
 static CCommandAdder adder;

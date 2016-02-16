@@ -50,7 +50,6 @@ public:
 
     char robotNameCode;
     QThread *thread;
-    QList<CServerRobot *> notInitializedRobot;
 };
 
 CRoom::CRoom(CServer *server)
@@ -239,8 +238,6 @@ void CRoom::addRobot(CServerRobot *robot)
     robot->setRoom(this);
 
     broadcastNotification(S_COMMAND_ADD_ROBOT, robot->briefIntroduction());
-    p_ptr->notInitializedRobot << robot;
-    connect(robot, &CServerRobot::aiInitFinish, this, &CRoom::aiInitFinish);
     emit robotAdded(robot);
 }
 
@@ -249,7 +246,6 @@ void CRoom::removeRobot(CServerRobot *robot)
     if (p_ptr->robots.remove(robot->id())) {
         this->disconnect(robot);
         robot->disconnect(this);
-        p_ptr->notInitializedRobot.removeOne(robot);
 
         broadcastNotification(S_COMMAND_REMOVE_ROBOT, robot->id());
         emit robotRemoved(robot);
@@ -299,7 +295,7 @@ QList<CServerAgent *> CRoom::agents() const
 
 void CRoom::startGame()
 {
-    if (p_ptr->gameLogic && !p_ptr->gameLogic->isRunning() && p_ptr->notInitializedRobot.isEmpty()) {
+    if (p_ptr->gameLogic && !p_ptr->gameLogic->isRunning()) {
         broadcastNotification(S_COMMAND_START_GAME);
         emit aboutToStart();
     }
@@ -431,18 +427,6 @@ void CRoom::broadcastConfig(const QString &name) const
     broadcastNotification(S_COMMAND_CONFIGURE_ROOM, data);
 }
 
-void CRoom::aiInitFinish(bool result)
-{
-    CServerRobot *robot = qobject_cast<CServerRobot *>(sender());
-    if (robot == NULL)
-        return;
-
-    if (result)
-        p_ptr->notInitializedRobot.removeOne(robot);
-    else
-        userSpeaking(robot, "AI initialization failed, the game won't start.");
-}
-
 void CRoom::userSpeaking(CServerAgent *agent, const QString &message)
 {
     QVariantMap arguments;
@@ -452,6 +436,17 @@ void CRoom::userSpeaking(CServerAgent *agent, const QString &message)
         arguments["robotId"] = agent->id();
     arguments["message"] = message;
     broadcastNotification(S_COMMAND_SPEAK, arguments);
+}
+
+void CRoom::toggleReady(CServerAgent *agent, bool ready)
+{
+    QVariantMap arguments;
+    if (agent->controlledByClient())
+        arguments["userId"] = agent->id();
+    else
+        arguments["robotId"] = agent->id();
+    arguments["ready"] = ready;
+    broadcastNotification(S_COMMAND_TOGGLE_READY, arguments);
 }
 
 void CRoom::onUserDisconnected()
