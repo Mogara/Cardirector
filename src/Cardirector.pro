@@ -193,7 +193,7 @@ defineTest(copy) {
 
 for (file, HEADERS) {
     !equals(file, "cpch.h") {
-        QMAKE_POST_LINK += $$QMAKE_COPY $$_PRO_FILE_PWD_/$$file $$_PRO_FILE_PWD_/../include/ &
+        QMAKE_POST_LINK += $$QMAKE_COPY $$system_path($$_PRO_FILE_PWD_/$$file) $$system_path($$_PRO_FILE_PWD_/../include/) &
     }
 }
 
