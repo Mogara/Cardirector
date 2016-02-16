@@ -29,6 +29,11 @@ CRoomSettings::CRoomSettings()
 {
 }
 
+CRoomSettings::~CRoomSettings()
+{
+
+}
+
 const QMetaObject *CRoomSettings::metaObject() const
 {
     return &staticMetaObject;

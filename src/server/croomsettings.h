@@ -36,6 +36,7 @@ class MCD_EXPORT CRoomSettings
 
 public:
     CRoomSettings();
+    virtual ~CRoomSettings();
 
     void setValue(const QString &key, const QVariant &value);
     QVariant value(const QString &key);

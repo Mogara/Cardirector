@@ -43,7 +43,7 @@ public:
                  << ("name: " + error.property("name").toString())
                  << ("message: " + error.property("message").toString())
                  << ("fileName: " + error.property("fileName").toString())
-                 << ("lineNumber: " + error.property("lineNumber").toInt())
+                 << ("lineNumber: " + QString::number(error.property("lineNumber").toInt()))
                  << ("stack: " + error.property("stack").toString());
     }
 };
