@@ -241,6 +241,7 @@ void CRoom::addRobot(CServerRobot *robot)
 
     broadcastNotification(S_COMMAND_ADD_ROBOT, robot->briefIntroduction());
     p_ptr->notInitializedRobot << robot;
+    connect(robot, &CServerRobot::aiInitFinish, this, &CRoom::aiInitFinish);
     emit robotAdded(robot);
 }
 
