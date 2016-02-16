@@ -286,16 +286,20 @@ void CClient::SetRoomListCommand(CClient *client, const QVariant &data)
 
 void CClient::SpeakCommand(CClient *client, const QVariant &data)
 {
-    QVariantList arguments = data.toList();
-    if (arguments.size() < 2)
+    QVariantMap arguments = data.toMap();
+    if (!arguments.contains("message"))
         return;
+    QString message = arguments["message"].toString();
 
-    const QVariant who = arguments.at(0);
-    QString message = arguments.at(1).toString();
-    if (who.isNull()) {
+    if (arguments.size() == 1) {
         emit client->systemMessage(message);
     } else {
-        CClientUser *user = client->findUser(who.toUInt());
+        CClientUser *user = NULL;
+        if (arguments.contains("userId")) {
+            user = client->findUser(arguments["userId"].toUInt());
+        } else if (arguments.contains("robotId")) {
+            user = client->findRobot(arguments["robotId"].toUInt());
+        }
         if (user != NULL)
             emit user->speak(message);
     }
