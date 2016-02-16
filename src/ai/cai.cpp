@@ -30,6 +30,8 @@ public:
     QThread *thread;
     CAiEngine *aiEngine;
 
+    bool aiEngineAvaliable;
+
     bool isRequesting;
     QVariant replyData;
     QSemaphore replyReadySemaphore;
@@ -44,20 +46,10 @@ CAi::CAi(QObject *parent)
 
     p->thread = new QThread(this);
     p->thread->start();
-    p->aiEngine = new CAiEngine;
-    p->aiEngine->moveToThread(p->thread);
-
+    p->aiEngine = NULL;
+    p->aiEngineAvaliable = false;
     p->isRequesting = false;
     p->extraReplyReadySemaphore = NULL;
-
-    connect(this, &CAi::notifyToAiEngine, p->aiEngine, &CAiEngine::notify);
-    connect(this, &CAi::replyToAiEngine, p->aiEngine, &CAiEngine::reply);
-    connect(this, &CAi::requestToAiEngine, p->aiEngine, &CAiEngine::request);
-
-    connect(this, &CAi::initAiToAiEngine, p->aiEngine, &CAiEngine::init, Qt::BlockingQueuedConnection);
-
-    connect(p->aiEngine, &CAiEngine::replyReady, this, &CAi::engineReplyReady);
-
 }
 
 CAi::~CAi()
@@ -76,9 +68,11 @@ CAi::~CAi()
     if (!p->thread->wait(2000))
         qDebug() << QString("CAi::~CAi: QThread didn't finish termination in 2 seconds, force deleting");
 
-    p->aiEngine->moveToThread(thread());
-    p->aiEngine->collectGarbage();
-    delete p->aiEngine;
+    if (p->aiEngine != NULL) {
+        p->aiEngine->moveToThread(thread());
+        p->aiEngine->collectGarbage();
+        delete p->aiEngine;
+    }
 
     delete p;
 }
@@ -105,11 +99,21 @@ void CAi::notify(int command, const QVariant &data)
     emit notifyToAiEngine(command, data);
 }
 
-bool CAi::initAi(const QString &aiStartScriptFile)
+void CAi::initAi(const QString &aiStartScriptFile)
 {
-    emit initAiToAiEngine(aiStartScriptFile);
     C_P(CAi);
-    return p->aiEngine->avaliable();
+    if (p->aiEngine != NULL)
+        return;
+
+    p->aiEngine = new CAiEngine;
+    p->aiEngine->moveToThread(p->thread);
+
+    connect(this, &CAi::initAiToAiEngine, p->aiEngine, &CAiEngine::init);
+    connect(p->aiEngine, &CAiEngine::initFinish, this, &CAi::engineInitFinish);
+
+    emit initAiToAiEngine(aiStartScriptFile);
+
+    return;
 }
 
 void CAi::setReplyReadySemaphore(QSemaphore *semaphore)
@@ -142,5 +146,22 @@ void CAi::engineReplyReady(QVariant replyData)
     }
 }
 
+void CAi::engineInitFinish(bool result)
+{
+    C_P(CAi);
+    if (result) {
+        connect(this, &CAi::notifyToAiEngine, p->aiEngine, &CAiEngine::notify);
+        connect(this, &CAi::replyToAiEngine, p->aiEngine, &CAiEngine::reply);
+        connect(this, &CAi::requestToAiEngine, p->aiEngine, &CAiEngine::request);
+        connect(p->aiEngine, &CAiEngine::replyReady, this, &CAi::engineReplyReady);
+        p->aiEngineAvaliable = true;
+    } else {
+        p->aiEngine->moveToThread(thread());
+        p->aiEngine->collectGarbage();
+        delete p->aiEngine;
+        p->aiEngine = NULL;
+    }
 
+    emit initFinish(result);
+}
 

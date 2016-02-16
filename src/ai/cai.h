@@ -39,21 +39,27 @@ public:
     void reply(int command, const QVariant &data);
     void notify(int command, const QVariant &data);
 
-    bool initAi(const QString &aiStartScriptFile);
+    void initAi(const QString &aiStartScriptFile);
 
     void setReplyReadySemaphore(QSemaphore *semaphore);
 
     QVariant waitForReply(int timeout = -1);
 
 signals:
-    // used to notify the AI engine
+    // THESE 4 SIGNALS AND 2 SLOTS ARE used internally to notify the AI engine. DO NOT USED IN YOUR OWN PROGRAM!!!
+    // todo_Fs: should make a seprate header file to maintain these signals and slots used internally. like "cai_cardirectorprivate.h"
     void requestToAiEngine(int command, QVariant data);
     void replyToAiEngine(int command, QVariant data);
     void notifyToAiEngine(int command, QVariant data);
     void initAiToAiEngine(QString aiStartScriptFile);
 
 public slots:
+    void engineInitFinish(bool result);
     void engineReplyReady(QVariant replyData);
+
+signals:
+    // used for library users to notify the AI system initialization is finished
+    void initFinish(bool result);
 
 private:
     C_DECLARE_PRIVATE(CAi);

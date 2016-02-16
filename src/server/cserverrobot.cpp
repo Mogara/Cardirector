@@ -35,6 +35,7 @@ CServerRobot::CServerRobot(CRoom *room)
 {
     C_P(CServerRobot);
     p->ai = new CAi(this);
+    connect(p->ai, &CAi::initFinish, this, &CServerRobot::aiInitFinish);
 
     static uint robotId = 0;
     robotId++;
@@ -50,10 +51,10 @@ CServerRobot::~CServerRobot()
     delete p;
 }
 
-bool CServerRobot::initAi(const QString &aiStartScriptFile)
+void CServerRobot::initAi(const QString &aiStartScriptFile)
 {
     C_P(CServerRobot);
-    return p->ai->initAi(aiStartScriptFile);
+    p->ai->initAi(aiStartScriptFile);
 }
 
 void CServerRobot::request(int command, const QVariant &data, int)

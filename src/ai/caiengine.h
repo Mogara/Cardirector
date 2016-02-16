@@ -44,6 +44,7 @@ public slots:
 
 signals:
     void replyReady(QVariant replyData);
+    void initFinish(bool result);
 
 private:
     C_DECLARE_PRIVATE(CAiEngine);
