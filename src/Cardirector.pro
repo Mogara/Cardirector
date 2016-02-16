@@ -167,29 +167,40 @@ defineTest(copy) {
     return(true)
 }
 
-defineTest(generateIncludeDir) {
-    for(file, HEADERS) {
-        !equals(file, "cpch.h") {
-            content = $$cat($$file)
-            prev_word1 =
-            prev_word2 =
-            class_names =
-            for (word, content) {
-                equals(prev_word1, "class"): equals(prev_word2, "MCD_EXPORT") {
-                    class_names += $$word
-                }
-                prev_word1 = $$prev_word2
-                prev_word2 = $$word
-            }
-            copy($$file, ../include/)
-            content = "$${LITERAL_HASH}include \"$$basename(file)\""
-            for (class_name, class_names): write_file(../include/$$class_name, content)
-        }
+#defineTest(generateIncludeDir) {
+#    for(file, HEADERS) {
+#        !equals(file, "cpch.h") {
+#            content = $$cat($$file)
+#            prev_word1 =
+#            prev_word2 =
+#            class_names =
+#            for (word, content) {
+#                equals(prev_word1, "class"): equals(prev_word2, "MCD_EXPORT") {
+#                    class_names += $$word
+#                }
+#                prev_word1 = $$prev_word2
+#                prev_word2 = $$word
+#            }
+#            copy($$file, ../include/)
+#            content = "$${LITERAL_HASH}include \"$$basename(file)\""
+#            for (class_name, class_names): write_file(../include/$$class_name, content)
+#        }
+#    }
+#}
+
+##todo: we should make this run in make period, but not qmake period
+#!bulid_pass: generateIncludeDir()
+
+for (file, HEADERS) {
+    !equals(file, "cpch.h") {
+        QMAKE_POST_LINK += $$QMAKE_COPY $$_PRO_FILE_PWD_/$$file $$_PRO_FILE_PWD_/../include/ &
     }
 }
 
-#todo: we should make this run in make period, but not qmake period
-!bulid_pass: generateIncludeDir()
+contains(QMAKE_HOST.os, "Windows") : QMAKE_POST_LINK += cmd /c cscript /nologo $$_PRO_FILE_PWD_/../include/AutoGenerateHeader.vbs
+else : QMAKE_POST_LINK += sh $$_PRO_FILE_PWD_/../include/AutoGenerateHeader.sh
+
+
 
 DISTFILES = ../Gui/qmldir
 
