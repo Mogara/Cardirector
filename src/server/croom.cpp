@@ -238,6 +238,8 @@ void CRoom::addRobot(CServerRobot *robot)
     p_ptr->robots.insert(robot->id(), robot);
     robot->setRoom(this);
 
+    connect(robot, &CServerRobot::speak, this, &CRoom::onRobotSpeaking);
+
     broadcastNotification(S_COMMAND_ADD_ROBOT, robot->briefIntroduction());
     emit robotAdded(robot);
 }
@@ -245,6 +247,9 @@ void CRoom::addRobot(CServerRobot *robot)
 void CRoom::removeRobot(CServerRobot *robot)
 {
     if (p_ptr->robots.remove(robot->id())) {
+        this->disconnect(robot);
+        robot->disconnect(this);
+
         broadcastNotification(S_COMMAND_REMOVE_ROBOT, robot->id());
         emit robotRemoved(robot);
     }
@@ -298,8 +303,8 @@ void CRoom::startGame()
 
 void CRoom::broadcastSystemMessage(const QString &message)
 {
-    QVariantList data;
-    data << QVariant() << message;
+    QVariantMap data;
+    data["message"] = message;
     broadcastNotification(S_COMMAND_SPEAK, data);
 }
 
@@ -425,10 +430,19 @@ void CRoom::broadcastConfig(const QString &name) const
 void CRoom::onUserSpeaking(const QString &message)
 {
     CServerUser *user = qobject_cast<CServerUser *>(sender());
-    QVariantList arguments;
-    arguments << user->id();
-    arguments << message;
+    QVariantMap arguments;
+    arguments["userId"] = user->id();
+    arguments["message"] = message;
     broadcastNotification(S_COMMAND_SPEAK, arguments, user);
+}
+
+void CRoom::onRobotSpeaking(const QString &message)
+{
+    CServerRobot *robot = qobject_cast<CServerRobot *>(sender());
+    QVariantMap arguments;
+    arguments["robotId"] = robot->id();
+    arguments["message"] = message;
+    broadcastNotification(S_COMMAND_SPEAK, arguments, robot);
 }
 
 void CRoom::onUserDisconnected()
