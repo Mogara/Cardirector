@@ -31,6 +31,9 @@ class MCD_EXPORT CClientUser : public CAbstractUser
 public:
     CClientUser(uint id, QObject *parent = 0);
     ~CClientUser();
+
+signals:
+    void speak(const QString &message);
 };
 
 MCD_END_NAMESPACE

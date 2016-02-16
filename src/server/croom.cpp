@@ -202,7 +202,6 @@ void CRoom::addUser(CServerUser *user)
     //Add the user
     p_ptr->users.insert(user->id(), user);
     user->setRoom(this);
-    connect(user, &CServerUser::speak, this, &CRoom::onUserSpeaking);
     connect(user, &CServerUser::disconnected, this, &CRoom::onUserDisconnected);
 
     user->notify(S_COMMAND_ENTER_ROOM, briefIntroduction());
@@ -238,8 +237,6 @@ void CRoom::addRobot(CServerRobot *robot)
 {
     p_ptr->robots.insert(robot->id(), robot);
     robot->setRoom(this);
-
-    connect(robot, &CServerRobot::speak, this, &CRoom::onRobotSpeaking);
 
     broadcastNotification(S_COMMAND_ADD_ROBOT, robot->briefIntroduction());
     p_ptr->notInitializedRobot << robot;
@@ -442,30 +439,19 @@ void CRoom::aiInitFinish(bool result)
 
     if (result)
         p_ptr->notInitializedRobot.removeOne(robot);
-    else {
-        QVariantList arguments;
-        arguments << robot->id(); // @todo: Takashiro: the ID should be saved in the CAbstractUser class, not the derived classes
-        arguments << "AI initialization failed, the game won't start.";
-        broadcastNotification(S_COMMAND_SPEAK, arguments, robot);
-    }
+    else
+        userSpeaking(robot, "AI initialization failed, the game won't start.");
 }
 
-void CRoom::onUserSpeaking(const QString &message)
+void CRoom::userSpeaking(CServerAgent *agent, const QString &message)
 {
-    CServerUser *user = qobject_cast<CServerUser *>(sender());
     QVariantMap arguments;
-    arguments["userId"] = user->id();
+    if (agent->controlledByClient())
+        arguments["userId"] = agent->id();
+    else
+        arguments["robotId"] = agent->id();
     arguments["message"] = message;
-    broadcastNotification(S_COMMAND_SPEAK, arguments, user);
-}
-
-void CRoom::onRobotSpeaking(const QString &message)
-{
-    CServerRobot *robot = qobject_cast<CServerRobot *>(sender());
-    QVariantMap arguments;
-    arguments["robotId"] = robot->id();
-    arguments["message"] = message;
-    broadcastNotification(S_COMMAND_SPEAK, arguments, robot);
+    broadcastNotification(S_COMMAND_SPEAK, arguments);
 }
 
 void CRoom::onUserDisconnected()

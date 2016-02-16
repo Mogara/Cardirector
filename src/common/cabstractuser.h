@@ -69,8 +69,6 @@ protected:
     void setId(uint id);
 
 signals:
-    void speak(const QString &message);
-
     void screenNameChanged();
     void avatarChanged();
     void stateChanged();

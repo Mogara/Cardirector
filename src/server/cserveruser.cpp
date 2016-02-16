@@ -256,8 +256,11 @@ void LogoutCommand(CServerUser *user, const QVariant &)
 void SpeakCommand(CServerUser *user, const QVariant &data)
 {
     QString message = data.toString();
-    if (!message.isEmpty())
-        user->speak(message);
+    if (!message.isEmpty()) {
+        CRoom *room = user->room();
+        if (room != NULL)
+            room->userSpeaking(user, message);
+    }
 }
 
 void CreateRoomCommand(CServerUser *user, const QVariant &data)
