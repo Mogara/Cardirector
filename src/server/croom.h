@@ -107,6 +107,8 @@ public:
     void broadcastConfig() const;
     void broadcastConfig(const QString &name) const;
 
+    void userSpeaking(CServerAgent *agent, const QString &message);
+
 signals:
     void abandoned();
 
@@ -119,11 +121,12 @@ signals:
     void robotAdded(CServerRobot *robot);
     void robotRemoved(CServerRobot *robot);
 
+private slots:
+    void aiInitFinish(bool result);
+
 protected:
 
     //Slots for CServerUser. Do not call them directly.
-    void onUserSpeaking(const QString &message);
-    void onRobotSpeaking(const QString &message);
     void onUserDisconnected();
     void onAgentReplyReady();
 

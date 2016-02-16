@@ -1,5 +1,5 @@
 /********************************************************************
-    Copyright (c) 2013-2015 - Mogara
+    Copyright (c) 2013-2016 - Mogara
 
     This file is part of Cardirector.
 
@@ -17,25 +17,40 @@
     Mogara
 *********************************************************************/
 
-#ifndef CCLIENTUSER_H
-#define CCLIENTUSER_H
+#ifndef CAIENGINE_H
+#define CAIENGINE_H
 
-#include "cabstractuser.h"
+#include "cglobal.h"
+#include <QJSEngine>
 
 MCD_BEGIN_NAMESPACE
-
-class MCD_EXPORT CClientUser : public CAbstractUser
+class CAiEnginePrivate;
+class MCD_EXPORT CAiEngine : public QJSEngine
 {
     Q_OBJECT
 
 public:
-    CClientUser(uint id, QObject *parent = 0);
-    ~CClientUser();
+    CAiEngine();
+    ~CAiEngine();
+
+public slots:
+    void request(int command, QVariant data);
+    void reply(int command, QVariant data);
+    void notify(int command, QVariant data);
+
+    void init(QString startScriptFile);
+
+    bool avaliable() const;
 
 signals:
-    void speak(const QString &message);
+    void replyReady(QVariant replyData);
+    void initFinish(bool result);
+
+private:
+    C_DECLARE_PRIVATE(CAiEngine);
+    CAiEnginePrivate *p_ptr;
 };
 
 MCD_END_NAMESPACE
 
-#endif // CCLIENTUSER_H
+#endif // CAIENGINE_H

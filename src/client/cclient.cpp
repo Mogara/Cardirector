@@ -128,7 +128,6 @@ void CClient::configureRoom(const QString &key, const QVariant &value)
 
 void CClient::speakToServer(const QString &message)
 {
-    p_ptr->self->speak(message);
     return p_ptr->router->notify(S_COMMAND_SPEAK, message);
 }
 

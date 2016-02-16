@@ -50,6 +50,7 @@ public:
 
     char robotNameCode;
     QThread *thread;
+    QList<CServerRobot *> notInitializedRobot;
 };
 
 CRoom::CRoom(CServer *server)
@@ -201,7 +202,6 @@ void CRoom::addUser(CServerUser *user)
     //Add the user
     p_ptr->users.insert(user->id(), user);
     user->setRoom(this);
-    connect(user, &CServerUser::speak, this, &CRoom::onUserSpeaking);
     connect(user, &CServerUser::disconnected, this, &CRoom::onUserDisconnected);
 
     user->notify(S_COMMAND_ENTER_ROOM, briefIntroduction());
@@ -238,9 +238,9 @@ void CRoom::addRobot(CServerRobot *robot)
     p_ptr->robots.insert(robot->id(), robot);
     robot->setRoom(this);
 
-    connect(robot, &CServerRobot::speak, this, &CRoom::onRobotSpeaking);
-
     broadcastNotification(S_COMMAND_ADD_ROBOT, robot->briefIntroduction());
+    p_ptr->notInitializedRobot << robot;
+    connect(robot, &CServerRobot::aiInitFinish, this, &CRoom::aiInitFinish);
     emit robotAdded(robot);
 }
 
@@ -249,6 +249,7 @@ void CRoom::removeRobot(CServerRobot *robot)
     if (p_ptr->robots.remove(robot->id())) {
         this->disconnect(robot);
         robot->disconnect(this);
+        p_ptr->notInitializedRobot.removeOne(robot);
 
         broadcastNotification(S_COMMAND_REMOVE_ROBOT, robot->id());
         emit robotRemoved(robot);
@@ -259,6 +260,9 @@ QString CRoom::newRobotName() const
 {
     char code = p_ptr->robotNameCode;
     p_ptr->robotNameCode = p_ptr->robotNameCode + 1;
+
+    if (p_ptr->robotNameCode == 'Z' + 1)
+        p_ptr->robotNameCode = 'A';
 
     return tr("Robot %1").arg(code);
 }
@@ -295,7 +299,7 @@ QList<CServerAgent *> CRoom::agents() const
 
 void CRoom::startGame()
 {
-    if (p_ptr->gameLogic && !p_ptr->gameLogic->isRunning()) {
+    if (p_ptr->gameLogic && !p_ptr->gameLogic->isRunning() && p_ptr->notInitializedRobot.isEmpty()) {
         broadcastNotification(S_COMMAND_START_GAME);
         emit aboutToStart();
     }
@@ -347,7 +351,7 @@ CServerAgent *CRoom::broadcastRacingRequest(const QList<CServerAgent *> &targets
     foreach (CServerAgent *user, targets)
         user->executeRequest(timeout);
 
-    p_ptr->racingRequestSemaphore.acquire();
+    p_ptr->racingRequestSemaphore.tryAcquire(1, timeout * 1000);
     return p_ptr->racingRequestWinner;
 }
 
@@ -427,22 +431,27 @@ void CRoom::broadcastConfig(const QString &name) const
     broadcastNotification(S_COMMAND_CONFIGURE_ROOM, data);
 }
 
-void CRoom::onUserSpeaking(const QString &message)
-{
-    CServerUser *user = qobject_cast<CServerUser *>(sender());
-    QVariantMap arguments;
-    arguments["userId"] = user->id();
-    arguments["message"] = message;
-    broadcastNotification(S_COMMAND_SPEAK, arguments, user);
-}
-
-void CRoom::onRobotSpeaking(const QString &message)
+void CRoom::aiInitFinish(bool result)
 {
     CServerRobot *robot = qobject_cast<CServerRobot *>(sender());
+    if (robot == NULL)
+        return;
+
+    if (result)
+        p_ptr->notInitializedRobot.removeOne(robot);
+    else
+        userSpeaking(robot, "AI initialization failed, the game won't start.");
+}
+
+void CRoom::userSpeaking(CServerAgent *agent, const QString &message)
+{
     QVariantMap arguments;
-    arguments["robotId"] = robot->id();
+    if (agent->controlledByClient())
+        arguments["userId"] = agent->id();
+    else
+        arguments["robotId"] = agent->id();
     arguments["message"] = message;
-    broadcastNotification(S_COMMAND_SPEAK, arguments, robot);
+    broadcastNotification(S_COMMAND_SPEAK, arguments);
 }
 
 void CRoom::onUserDisconnected()

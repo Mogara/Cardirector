@@ -33,6 +33,8 @@ public:
     explicit CServerRobot(CRoom *room);
     ~CServerRobot();
 
+    void initAi(const QString &aiStartScriptFile);
+
     void request(int command, const QVariant &data = QVariant(), int timeout = -1);
     void reply(int command, const QVariant &data = QVariant());
     void notify(int command, const QVariant &data = QVariant());
@@ -45,6 +47,9 @@ public:
     QVariant waitForReply(int timeout);
 
     bool controlledByClient() const { return false; }
+
+signals:
+    void aiInitFinish(bool result);
 
 private:
     C_DISABLE_COPY(CServerRobot)

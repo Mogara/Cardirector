@@ -17,8 +17,6 @@
     Mogara
 *********************************************************************/
 
-
-#include "cpch.h"
 #include "cresourcemanager.h"
 
 #include <QCoreApplication>

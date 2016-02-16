@@ -17,7 +17,6 @@
     Mogara
 *********************************************************************/
 
-#include "cpch.h"
 #include "cabstractui.h"
 
 CAbstractUi::CAbstractUi()
