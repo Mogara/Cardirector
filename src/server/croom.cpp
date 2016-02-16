@@ -50,6 +50,7 @@ public:
 
     char robotNameCode;
     QThread *thread;
+    QList<CServerRobot *> notInitializedRobot;
 };
 
 CRoom::CRoom(CServer *server)
@@ -239,12 +240,14 @@ void CRoom::addRobot(CServerRobot *robot)
     robot->setRoom(this);
 
     broadcastNotification(S_COMMAND_ADD_ROBOT, robot->briefIntroduction());
+    p_ptr->notInitializedRobot << robot;
     emit robotAdded(robot);
 }
 
 void CRoom::removeRobot(CServerRobot *robot)
 {
     if (p_ptr->robots.remove(robot->id())) {
+        p_ptr->notInitializedRobot.removeOne(robot);
         broadcastNotification(S_COMMAND_REMOVE_ROBOT, robot->id());
         emit robotRemoved(robot);
     }
@@ -254,6 +257,9 @@ QString CRoom::newRobotName() const
 {
     char code = p_ptr->robotNameCode;
     p_ptr->robotNameCode = p_ptr->robotNameCode + 1;
+
+    if (p_ptr->robotNameCode == 'Z' + 1)
+        p_ptr->robotNameCode = 'A';
 
     return tr("Robot %1").arg(code);
 }
@@ -290,7 +296,7 @@ QList<CServerAgent *> CRoom::agents() const
 
 void CRoom::startGame()
 {
-    if (p_ptr->gameLogic && !p_ptr->gameLogic->isRunning()) {
+    if (p_ptr->gameLogic && !p_ptr->gameLogic->isRunning() && p_ptr->notInitializedRobot.isEmpty()) {
         broadcastNotification(S_COMMAND_START_GAME);
         emit aboutToStart();
     }
@@ -342,7 +348,7 @@ CServerAgent *CRoom::broadcastRacingRequest(const QList<CServerAgent *> &targets
     foreach (CServerAgent *user, targets)
         user->executeRequest(timeout);
 
-    p_ptr->racingRequestSemaphore.acquire();
+    p_ptr->racingRequestSemaphore.tryAcquire(1, timeout * 1000);
     return p_ptr->racingRequestWinner;
 }
 
@@ -420,6 +426,22 @@ void CRoom::broadcastConfig(const QString &name) const
     QVariantMap data;
     data[name] = settings()->value(name);
     broadcastNotification(S_COMMAND_CONFIGURE_ROOM, data);
+}
+
+void CRoom::aiInitFinish(bool result)
+{
+    CServerRobot *robot = qobject_cast<CServerRobot *>(sender());
+    if (robot == NULL)
+        return;
+
+    if (result)
+        p_ptr->notInitializedRobot.removeOne(robot);
+    else {
+        QVariantList arguments;
+        arguments << robot->id(); // @todo: Takashiro: the ID should be saved in the CAbstractUser class, not the derived classes
+        arguments << "AI initialization failed, the game won't start.";
+        broadcastNotification(S_COMMAND_SPEAK, arguments, robot);
+    }
 }
 
 void CRoom::onUserSpeaking(const QString &message)

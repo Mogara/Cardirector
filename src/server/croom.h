@@ -119,6 +119,9 @@ signals:
     void robotAdded(CServerRobot *robot);
     void robotRemoved(CServerRobot *robot);
 
+private slots:
+    void aiInitFinish(bool result);
+
 protected:
 
     //Slots for CServerUser. Do not call them directly.
