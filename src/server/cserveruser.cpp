@@ -298,8 +298,15 @@ void SetRoomListCommand(CServerUser *user, const QVariant &)
 void StartGameCommand(CServerUser *user, const QVariant &)
 {
     CRoom *room = user->room();
-    if (room->owner() == user)
+    if (room->owner() == user) {
+        foreach (CServerAgent *agent, room->agents()) {
+            if (!agent->ready() && agent != user) {
+                room->broadcastSystemMessage("At least one player is not ready, the game can't be started");
+                return;
+            }
+        }
         room->startGame();
+    }
 }
 
 void AddRobotCommand(CServerUser *user, const QVariant &)
