@@ -50,6 +50,20 @@ public:
 
     char robotNameCode;
     QThread *thread;
+
+    CRoomPrivate()
+        : gameLogic(NULL)
+        , owner(NULL)
+        , isAbandoned(false)
+        , settings(new CRoomSettings)
+        , robotNameCode('A')
+    {
+    }
+
+    ~CRoomPrivate()
+    {
+        delete settings;
+    }
 };
 
 CRoom::CRoom(CServer *server)
@@ -59,11 +73,6 @@ CRoom::CRoom(CServer *server)
     p_ptr->id = roomId;
     roomId++;
     p_ptr->server = server;
-    p_ptr->gameLogic = NULL;
-    p_ptr->owner = NULL;
-    p_ptr->isAbandoned = false;
-    p_ptr->robotNameCode = 'A';
-    p_ptr->settings = new CRoomSettings;
 
     p_ptr->thread = new QThread;
     connect(p_ptr->thread, &QThread::finished, p_ptr->thread, &QThread::deleteLater);
@@ -73,7 +82,6 @@ CRoom::CRoom(CServer *server)
 
 CRoom::~CRoom()
 {
-    delete p_ptr->settings;
     delete p_ptr;
 }
 
