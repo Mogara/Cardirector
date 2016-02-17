@@ -23,11 +23,13 @@
 #include "cai.h"
 
 #include <QSemaphore>
+#include <QTimer>
 
 class CServerRobotPrivate
 {
 public:
     CAi *ai;
+    QTimer *aiInitTimer;
 };
 
 CServerRobot::CServerRobot(CRoom *room)
@@ -54,6 +56,11 @@ CServerRobot::~CServerRobot()
 void CServerRobot::initAi(const QString &aiStartScriptFile)
 {
     C_P(CServerRobot);
+    room()->userSpeaking(this, "Start init AI");
+    p->aiInitTimer = new QTimer;
+    p->aiInitTimer->setSingleShot(true);
+    p->aiInitTimer->setInterval(20000);
+    connect(p->aiInitTimer, &QTimer::timeout, this, &CServerRobot::onAiInitTimeout);
     p->ai->initAi(aiStartScriptFile);
 }
 
@@ -105,10 +112,18 @@ QVariant CServerRobot::waitForReply(int timeout)
 
 void CServerRobot::onAiInitFinish(bool result)
 {
+    C_P(CServerRobot);
+    p->aiInitTimer->stop();
+
     if (result) {
         setReady(true);
         room()->toggleReady(this, true);
     } else
         room()->userSpeaking(this, "AI initialization failed, the game won't start.");
+}
+
+void CServerRobot::onAiInitTimeout()
+{
+    room()->userSpeaking(this, "AI initialization may cost a lot of time, please wait.");
 }
 

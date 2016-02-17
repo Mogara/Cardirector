@@ -50,6 +50,7 @@ public:
 
 public slots:
     void onAiInitFinish(bool result);
+    void onAiInitTimeout();
 
 private:
     C_DISABLE_COPY(CServerRobot)
