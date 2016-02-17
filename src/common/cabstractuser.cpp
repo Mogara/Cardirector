@@ -27,14 +27,20 @@ public:
     QString avatar;
     CAbstractUser::State state;
     qint64 networkDelay;
+    bool ready;
+
+    CAbstractUserPrivate()
+        : id(0)
+        , state(CAbstractUser::Invalid)
+        , ready(false)
+    {
+    }
 };
 
 CAbstractUser::CAbstractUser(QObject *parent)
     : QObject(parent)
     , p_ptr(new CAbstractUserPrivate)
 {
-    p_ptr->state = Invalid;
-    p_ptr->id = 0;
 }
 
 CAbstractUser::~CAbstractUser()
@@ -120,4 +126,15 @@ void CAbstractUser::setNetworkDelay(qint64 delay)
 {
     p_ptr->networkDelay = delay;
     emit networkDelayChanged();
+}
+
+bool CAbstractUser::isReady() const
+{
+    return p_ptr->ready;
+}
+
+void CAbstractUser::setReady(bool ready)
+{
+    p_ptr->ready = ready;
+    emit readyChanged();
 }

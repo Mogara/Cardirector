@@ -39,6 +39,8 @@ public:
     CServerUser(CTcpSocket *socket, CServer *server = 0);
     ~CServerUser();
 
+    uint uid() const;
+
     void setSocket(CTcpSocket *socket);
 
     void signup(const QString &username, const QString &password, const QString &screenName, const QString &avatar);
@@ -72,6 +74,7 @@ signals:
 protected:
     static void NetworkDelayCommand(CServerUser *user, const QVariant &data);
 
+    void setUid(uint uid);
     void handleUnknownPacket(const QByteArray &packet);
 
 private:

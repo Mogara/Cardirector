@@ -29,7 +29,6 @@ class CClientPrivate
 public:
     CPacketRouter *router;
     QMap<uint, CClientUser *> users;
-    QMap<uint, CClientUser *> robots;
     CClientUser *self;
     CAbstractPacketParser *parser;
 };
@@ -131,6 +130,12 @@ void CClient::speakToServer(const QString &message)
     return p_ptr->router->notify(S_COMMAND_SPEAK, message);
 }
 
+void CClient::toggleReady()
+{
+    if (p_ptr->self)
+        p_ptr->router->notify(S_COMMAND_TOGGLE_READY, !p_ptr->self->isReady());
+}
+
 void CClient::addRobot()
 {
     p_ptr->router->notify(S_COMMAND_ADD_ROBOT);
@@ -164,19 +169,6 @@ CClientUser *CClient::self() const
     return p_ptr->self;
 }
 
-QList<const CClientUser *> CClient::robots() const
-{
-    QList<const CClientUser *> robotList;
-    foreach (const CClientUser *robot, p_ptr->robots)
-        robotList << robot;
-    return robotList;
-}
-
-const CClientUser *CClient::findRobot(uint id) const
-{
-    return p_ptr->robots.value(id);
-}
-
 void CClient::fetchRoomList()
 {
     notifyServer(S_COMMAND_SET_ROOM_LIST);
@@ -189,21 +181,12 @@ CClientUser *CClient::addUser(const QVariant &data)
         return NULL;
 
     uint userId = arguments.at(0).toUInt();
-    if (userId > 0) {
-        CClientUser *user = new CClientUser(userId, this);
-        user->setScreenName(arguments.at(1).toString());
-        user->setAvatar(arguments.at(2).toString());
-
+    CClientUser *user = new CClientUser(userId, this);
+    user->setScreenName(arguments.at(1).toString());
+    user->setAvatar(arguments.at(2).toString());
+    if (userId > 0)
         p_ptr->users.insert(userId, user);
-        return user;
-    }
-
-    return NULL;
-}
-
-CClientUser *CClient::findRobot(uint id)
-{
-    return p_ptr->robots.value(id);
+    return user;
 }
 
 void CClient::requestServer(int command, const QVariant &data, int timeout)
@@ -293,24 +276,29 @@ void CClient::SpeakCommand(CClient *client, const QVariant &data)
     if (arguments.size() == 1) {
         emit client->systemMessage(message);
     } else {
-        CClientUser *user = NULL;
-        if (arguments.contains("userId")) {
-            user = client->findUser(arguments["userId"].toUInt());
-        } else if (arguments.contains("robotId")) {
-            user = client->findRobot(arguments["robotId"].toUInt());
+        if (arguments.contains("agentId")) {
+            CClientUser *user = client->findUser(arguments["agentId"].toUInt());
+            if (user != NULL)
+                emit user->speak(message);
         }
-        if (user != NULL)
-            emit user->speak(message);
     }
 }
 
 void CClient::EnterRoomCommand(CClient *client, const QVariant &data)
 {
-    foreach (CClientUser *robot, client->p_ptr->robots)
-        robot->deleteLater();
-    client->p_ptr->robots.clear();
+    CClientUser *self = client->self();
+    if (self == NULL) {
+        qWarning("The user hasn't logged in.");
+        return;
+    }
 
-    emit client->roomEntered(data);
+    const QVariantMap arg = data.toMap();
+    if (arg.contains("agentId") && arg.contains("room")) {
+        uint agentId = arg["agentId"].toUInt();
+        self->setId(agentId);
+        client->p_ptr->users.insert(self->id(), self);
+        emit client->roomEntered(arg["room"]);
+    }
 }
 
 void CClient::ConfigureRoomCommand(CClient *client, const QVariant &data)
@@ -343,30 +331,34 @@ void CClient::AddRobotCommand(CClient *client, const QVariant &data)
         return;
 
     // to-do: implement the robot working in the server side
-    uint robotId = arguments.at(0).toUInt();
-    if (robotId > 0) {
-        CClientUser *robot = new CClientUser(robotId, client);
+    uint agentId = arguments.at(0).toUInt();
+    if (agentId > 0) {
+        CClientUser *robot = new CClientUser(agentId, client);
         robot->setScreenName(arguments.at(1).toString());
         robot->setAvatar(arguments.at(2).toString());
 
-        client->p_ptr->robots.insert(robotId, robot);
+        client->p_ptr->users.insert(agentId, robot);
         emit client->userAdded(robot);
     }
 }
 
-void CClient::ToggleReadyCommand(CClient *client, const QVariant &data)
+void CClient::UpdateUserPropertyCommand(CClient *client, const QVariant &data)
 {
-    QVariantMap arguments = data.toMap();
+    QVariantList arguments = data.toList();
+    if (arguments.length() < 2)
+        return;
+
+    QString name = arguments.at(0).toString();
+    const QVariant value = arguments.at(1);
+
     CClientUser *user = NULL;
-    if (arguments.contains("userId")) {
-        user = client->findUser(arguments["userId"].toUInt());
-    } else if (arguments.contains("robotId")) {
-        user = client->findRobot(arguments["robotId"].toUInt());
-    }
+    if (arguments.length() > 2)
+        user = client->findUser(arguments.at(0).toUInt());
+    else
+        user = client->self();
 
-    bool ready = arguments.value("ready", false).toBool();
-
-    emit user->ready(ready);
+    if (user != NULL)
+        user->setProperty(name.toLatin1(), value);
 }
 
 void CClient::Init()
@@ -382,6 +374,6 @@ void CClient::Init()
     AddCallback(S_COMMAND_NETWORK_DELAY, &NetworkDelayCommand);
     AddCallback(S_COMMAND_START_GAME, &StartGameCommand);
     AddCallback(S_COMMAND_ADD_ROBOT, &AddRobotCommand);
-    AddCallback(S_COMMAND_TOGGLE_READY, &ToggleReadyCommand);
+    AddCallback(S_COMMAND_UPDATE_USER_PROPERTY, &UpdateUserPropertyCommand);
 }
 C_INITIALIZE_CLASS(CClient)

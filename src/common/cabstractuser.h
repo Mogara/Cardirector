@@ -37,6 +37,7 @@ class MCD_EXPORT CAbstractUser : public QObject
     Q_PROPERTY(QString state READ stateString WRITE setStateString NOTIFY stateChanged)
     Q_PROPERTY(QString avatar READ avatar WRITE setAvatar NOTIFY avatarChanged)
     Q_PROPERTY(qint64 networkDelay READ networkDelay WRITE setNetworkDelay NOTIFY networkDelayChanged)
+    Q_PROPERTY(bool ready READ isReady WRITE setReady NOTIFY readyChanged)
 
 public:
     enum State{
@@ -65,6 +66,9 @@ public:
     qint64 networkDelay() const;
     void setNetworkDelay(qint64 delay);
 
+    bool isReady() const;
+    void setReady(bool ready);
+
 protected:
     void setId(uint id);
 
@@ -73,6 +77,7 @@ signals:
     void avatarChanged();
     void stateChanged();
     void networkDelayChanged();
+    void readyChanged();
 
 private:
     C_DISABLE_COPY(CAbstractUser)

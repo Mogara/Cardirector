@@ -36,6 +36,8 @@ class MCD_EXPORT CServerAgent : public CAbstractUser
 {
     Q_OBJECT
 
+    friend class CRoom;
+
 public:
     explicit CServerAgent(CServer *server = 0);
     ~CServerAgent();
@@ -45,9 +47,6 @@ public:
     void setRoom(CRoom *room);
 
     QVariant briefIntroduction() const;
-
-    bool ready() const;
-    void setReady(bool ready);
 
     virtual void request(int command, const QVariant &data = QVariant(), int timeout = -1) = 0;
     virtual void reply(int command, const QVariant &data = QVariant()) = 0;
@@ -64,6 +63,8 @@ public:
 
     CServerUser *toServerUser();
     CServerRobot *toRobot();
+
+    void broadcastProperty(const char *name);
 
 signals:
     void replyReady();

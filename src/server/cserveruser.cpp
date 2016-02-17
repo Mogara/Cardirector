@@ -37,8 +37,15 @@ class CServerUserPrivate
 public:
     CPacketRouter *router;
 
+    uint uid;
     int networkDelayTestId;
     QDateTime networkDelayStartTime;
+
+    CServerUserPrivate()
+        : uid(0)
+        , networkDelayTestId(0)
+    {
+    }
 };
 
 CServerUser::CServerUser(CTcpSocket *socket, CServer *server)
@@ -62,6 +69,16 @@ CServerUser::~CServerUser()
     delete p_ptr;
 }
 
+uint CServerUser::uid() const
+{
+    return p_ptr->uid;
+}
+
+void CServerUser::setUid(uint uid)
+{
+    p_ptr->uid = uid;
+}
+
 void CServerUser::setSocket(CTcpSocket *socket)
 {
     p_ptr->router->setSocket(socket);
@@ -73,7 +90,7 @@ void CServerUser::signup(const QString &username, const QString &password, const
     //@to-do: encrypt the password
     static uint userId = 0;
     userId++;
-    setId(userId);
+    setUid(userId);
 
     setScreenName(screenName);
     setAvatar(avatar);
@@ -300,7 +317,7 @@ void StartGameCommand(CServerUser *user, const QVariant &)
     CRoom *room = user->room();
     if (room->owner() == user) {
         foreach (CServerAgent *agent, room->agents()) {
-            if (!agent->ready() && agent != user) {
+            if (!agent->isReady() && agent != user) {
                 room->broadcastSystemMessage("At least one player is not ready, the game can't be started");
                 return;
             }
@@ -321,6 +338,9 @@ void AddRobotCommand(CServerUser *user, const QVariant &)
 void ConfigureRoomCommand(CServerUser *user, const QVariant &data)
 {
     CRoom *room = user->room();
+    if (room == NULL)
+        return;
+
     CRoomSettings *config = room->settings();
     if (config == NULL || user != room->owner())
         return;
@@ -339,7 +359,7 @@ void ToggleReadyCommand(CServerUser *user, const QVariant &data)
     CRoom *room = user->room();
     if (room->owner() != user) {
         user->setReady(data.toBool());
-        room->toggleReady(user, data.toBool());
+        user->broadcastProperty("ready");
     }
 }
 

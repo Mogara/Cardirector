@@ -38,8 +38,8 @@ public:
     QPointer<CServer> server;
     uint id;
     CAbstractGameLogic *gameLogic;
-    QMap<uint, CServerUser *> users;
-    QMap<uint, CServerRobot *> robots;
+    QMap<uint, CServerAgent *> agents;
+    uint nextAgentId;
     CServerUser *owner;
     bool isAbandoned;
     CRoomSettings *settings;
@@ -53,6 +53,7 @@ public:
 
     CRoomPrivate()
         : gameLogic(NULL)
+        , nextAgentId(0)
         , owner(NULL)
         , isAbandoned(false)
         , settings(new CRoomSettings)
@@ -95,7 +96,7 @@ QVariant CRoom::briefIntroduction() const
     QVariantMap info;
     info["id"] = (!p_ptr->server.isNull() && p_ptr->server->lobby() != this ? p_ptr->id : 0);
     info["name"] = name();
-    info["userNum"] = p_ptr->users.size() + p_ptr->robots.size();
+    info["userNum"] = p_ptr->agents.size();
     info["capacity"] = capacity();
     info["ownerId"] = ownerId();
     return info;
@@ -154,7 +155,7 @@ void CRoom::setCapacity(int capacity)
 
 bool CRoom::isFull() const
 {
-    return capacity() > 0 && p_ptr->users.size() + p_ptr->robots.size() >= capacity();
+    return capacity() > 0 && p_ptr->agents.size() >= capacity();
 }
 
 bool CRoom::isAbandoned() const
@@ -207,27 +208,40 @@ void CRoom::addUser(CServerUser *user)
     user->notify(S_COMMAND_SET_USER_LIST, userList);
 
     //Add the user
-    p_ptr->users.insert(user->id(), user);
+    user->setId(nextAgentId());
+    p_ptr->agents.insert(user->id(), user);
     user->setRoom(this);
     connect(user, &CServerUser::disconnected, this, &CRoom::onUserDisconnected);
 
-    user->notify(S_COMMAND_ENTER_ROOM, briefIntroduction());
+    QVariantMap data;
+    data["agentId"] = user->id();
+    data["room"] = briefIntroduction();
+    user->notify(S_COMMAND_ENTER_ROOM, data);
     unicastConfigTo(user);
+
     broadcastNotification(S_COMMAND_ADD_USER, user->briefIntroduction(), user);
     emit userAdded(user);
 }
 
 void CRoom::removeUser(CServerUser *user)
 {
-    if (p_ptr->users.remove(user->id())) {
+    if (p_ptr->agents.remove(user->id())) {
         user->disconnect(this);
         this->disconnect(user);
 
         if (user == p_ptr->owner) {
-            if (!p_ptr->users.isEmpty()) {
-                p_ptr->owner = p_ptr->users.first();
+            p_ptr->owner = NULL;
+            if (!p_ptr->agents.isEmpty()) {
+                foreach (CServerAgent *agent, p_ptr->agents) {
+                    if (agent->controlledByClient()) {
+                        p_ptr->owner = agent->toServerUser();
+                        break;
+                    }
+                }
                 broadcastProperty("ownerId");
-            } else {
+            }
+
+            if (p_ptr->owner == NULL) {
                 emit abandoned();
                 p_ptr->isAbandoned = true;
                 p_ptr->thread->quit();
@@ -242,7 +256,8 @@ void CRoom::removeUser(CServerUser *user)
 
 void CRoom::addRobot(CServerRobot *robot)
 {
-    p_ptr->robots.insert(robot->id(), robot);
+    robot->setId(nextAgentId());
+    p_ptr->agents.insert(robot->id(), robot);
     robot->setRoom(this);
 
     broadcastNotification(S_COMMAND_ADD_ROBOT, robot->briefIntroduction());
@@ -251,7 +266,7 @@ void CRoom::addRobot(CServerRobot *robot)
 
 void CRoom::removeRobot(CServerRobot *robot)
 {
-    if (p_ptr->robots.remove(robot->id())) {
+    if (p_ptr->agents.remove(robot->id())) {
         this->disconnect(robot);
         robot->disconnect(this);
 
@@ -273,32 +288,37 @@ QString CRoom::newRobotName() const
 
 CServerUser *CRoom::findUser(uint id) const
 {
-    return p_ptr->users.value(id);
+    return qobject_cast<CServerUser *>(p_ptr->agents.value(id));
 }
 
 QMap<uint, CServerUser *> CRoom::users() const
 {
-    return p_ptr->users;
+    QMap<uint, CServerUser *> users;
+    foreach (CServerAgent *agent, p_ptr->agents) {
+        if (agent->controlledByClient())
+            users.insert(agent->id(), agent->toServerUser());
+    }
+    return users;
 }
 
 CServerRobot *CRoom::findRobot(uint id) const
 {
-    return p_ptr->robots.value(id);
+    return qobject_cast<CServerRobot *>(p_ptr->agents.value(id));
 }
 
 QMap<uint, CServerRobot *> CRoom::robots() const
 {
-    return p_ptr->robots;
+    QMap<uint, CServerRobot *> robots;
+    foreach (CServerAgent *agent, p_ptr->agents) {
+        if (agent->controlledByClient())
+            robots.insert(agent->id(), agent->toRobot());
+    }
+    return robots;
 }
 
 QList<CServerAgent *> CRoom::agents() const
 {
-    QList<CServerAgent *> agents;
-    foreach (CServerUser *user, p_ptr->users)
-        agents << user;
-    foreach (CServerRobot *robot, p_ptr->robots)
-        agents << robot;
-    return agents;
+    return p_ptr->agents.values();
 }
 
 void CRoom::startGame()
@@ -376,15 +396,17 @@ void CRoom::onAgentReplyReady()
 
 void CRoom::onGameOver()
 {
-    QMapIterator<uint, CServerRobot *> iter(p_ptr->robots);
+    QMapIterator<uint, CServerAgent *> iter(p_ptr->agents);
     while (iter.hasNext()) {
         iter.next();
         uint id = iter.key();
-        CServerRobot *robot = iter.value();
-        removeRobot(robot);
-        if (!p_ptr->server.isNull())
-            p_ptr->server->killRobot(id);
-        robot->deleteLater();
+        CServerRobot *robot = iter.value()->toRobot();
+        if (robot) {
+            removeRobot(robot);
+            if (!p_ptr->server.isNull())
+                p_ptr->server->killRobot(id);
+            robot->deleteLater();
+        }
     }
     p_ptr->robotNameCode = 'A';
 }
@@ -438,23 +460,15 @@ void CRoom::broadcastConfig(const QString &name) const
 void CRoom::userSpeaking(CServerAgent *agent, const QString &message)
 {
     QVariantMap arguments;
-    if (agent->controlledByClient())
-        arguments["userId"] = agent->id();
-    else
-        arguments["robotId"] = agent->id();
+    arguments["agentId"] = agent->id();
     arguments["message"] = message;
     broadcastNotification(S_COMMAND_SPEAK, arguments);
 }
 
-void CRoom::toggleReady(CServerAgent *agent, bool ready)
+uint CRoom::nextAgentId()
 {
-    QVariantMap arguments;
-    if (agent->controlledByClient())
-        arguments["userId"] = agent->id();
-    else
-        arguments["robotId"] = agent->id();
-    arguments["ready"] = ready;
-    broadcastNotification(S_COMMAND_TOGGLE_READY, arguments);
+    p_ptr->nextAgentId++;
+    return p_ptr->nextAgentId;
 }
 
 void CRoom::onUserDisconnected()

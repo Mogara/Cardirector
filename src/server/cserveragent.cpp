@@ -17,10 +17,12 @@
     Mogara
 *********************************************************************/
 
+#include "cprotocol.h"
 #include "cserveragent.h"
 #include "cserverrobot.h"
 #include "cserver.h"
 #include "cserveruser.h"
+#include "croom.h"
 
 class CServerAgentPrivate
 {
@@ -73,16 +75,6 @@ QVariant CServerAgent::briefIntroduction() const
     return arguments;
 }
 
-bool CServerAgent::ready() const
-{
-    return p_ptr->ready;
-}
-
-void CServerAgent::setReady(bool ready)
-{
-    p_ptr->ready = ready;
-}
-
 void CServerAgent::prepareRequest(int command, const QVariant &data)
 {
     p_ptr->requestCommand = command;
@@ -97,6 +89,22 @@ CServerUser *CServerAgent::toServerUser()
 CServerRobot *CServerAgent::toRobot()
 {
     return qobject_cast<CServerRobot *>(this);
+}
+
+void CServerAgent::broadcastProperty(const char *name)
+{
+    if (p_ptr->room) {
+        QVariantList data;
+        data << name;
+        data << property(name);
+        data << id();
+        p_ptr->room->broadcastNotification(S_COMMAND_UPDATE_USER_PROPERTY, data);
+    } else {
+        QVariantList data;
+        data << name;
+        data << property(name);
+        notify(S_COMMAND_UPDATE_USER_PROPERTY, data);
+    }
 }
 
 int CServerAgent::requestCommand() const

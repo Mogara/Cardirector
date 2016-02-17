@@ -39,9 +39,6 @@ CServerRobot::CServerRobot(CRoom *room)
     p->ai = new CAi(this);
     connect(p->ai, &CAi::initFinish, this, &CServerRobot::onAiInitFinish);
 
-    static uint robotId = 0;
-    robotId++;
-    setId(robotId);
     setScreenName(room->newRobotName());
 
     room->addRobot(this);
@@ -117,7 +114,7 @@ void CServerRobot::onAiInitFinish(bool result)
 
     if (result) {
         setReady(true);
-        room()->toggleReady(this, true);
+        broadcastProperty("ready");
     } else
         room()->userSpeaking(this, "AI initialization failed, the game won't start.");
 }

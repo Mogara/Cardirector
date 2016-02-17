@@ -50,6 +50,7 @@ public:
     void configureRoom(const QVariantMap &items);
     void configureRoom(const QString &key, const QVariant &value);
     void speakToServer(const QString &message);
+    void toggleReady();
 
     void addRobot();
     void startGame();
@@ -57,9 +58,6 @@ public:
     const CClientUser *findUser(uint id) const;
     QList<const CClientUser *> users() const;
     CClientUser *self() const;
-
-    QList<const CClientUser *> robots() const;
-    const CClientUser *findRobot(uint id) const;
 
     void fetchRoomList();
 
@@ -91,8 +89,6 @@ protected:
     CClientUser *findUser(uint id);
     CClientUser *addUser(const QVariant &data);
 
-    CClientUser *findRobot(uint id);
-
     static void SetUserListCommand(CClient *client, const QVariant &data);
     static void AddUserCommand(CClient *client, const QVariant &data);
     static void RemoveUserCommand(CClient *client, const QVariant &data);
@@ -104,7 +100,7 @@ protected:
     static void NetworkDelayCommand(CClient *client, const QVariant &data);
     static void StartGameCommand(CClient *client, const QVariant &);
     static void AddRobotCommand(CClient *client, const QVariant &data);
-    static void ToggleReadyCommand(CClient *client, const QVariant &data);
+    static void UpdateUserPropertyCommand(CClient *client, const QVariant &data);
 
 private:
     C_DECLARE_INITIALIZER(CClient)

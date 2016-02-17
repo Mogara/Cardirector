@@ -28,13 +28,14 @@ class MCD_EXPORT CClientUser : public CAbstractUser
 {
     Q_OBJECT
 
+    friend class CClient;
+
 public:
     CClientUser(uint id, QObject *parent = 0);
     ~CClientUser();
 
 signals:
     void speak(const QString &message);
-    void ready(bool ready);
 };
 
 MCD_END_NAMESPACE
