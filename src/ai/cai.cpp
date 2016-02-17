@@ -69,7 +69,6 @@ CAi::~CAi()
         qDebug() << QString("CAi::~CAi: QThread didn't finish termination in 2 seconds, force deleting");
 
     if (p->aiEngine != NULL) {
-        p->aiEngine->moveToThread(thread());
         p->aiEngine->collectGarbage();
         delete p->aiEngine;
     }
@@ -156,7 +155,6 @@ void CAi::engineInitFinish(bool result)
         connect(p->aiEngine, &CAiEngine::replyReady, this, &CAi::engineReplyReady);
         p->aiEngineAvaliable = true;
     } else {
-        p->aiEngine->moveToThread(thread());
         p->aiEngine->collectGarbage();
         delete p->aiEngine;
         p->aiEngine = NULL;
