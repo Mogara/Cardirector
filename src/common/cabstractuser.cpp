@@ -32,6 +32,7 @@ public:
     CAbstractUserPrivate()
         : id(0)
         , state(CAbstractUser::Invalid)
+        , networkDelay(10000)
         , ready(false)
     {
     }

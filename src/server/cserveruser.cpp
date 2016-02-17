@@ -222,6 +222,7 @@ void CServerUser::NetworkDelayCommand(CServerUser *user, const QVariant &data)
     CServerUserPrivate *p_ptr = user->p_ptr;
     if (p_ptr->networkDelayTestId != 0 && p_ptr->networkDelayTestId == data.toInt()) {
         user->setNetworkDelay(p_ptr->networkDelayStartTime.secsTo(QDateTime::currentDateTime()));
+        user->broadcastProperty("networkDelay");
         p_ptr->networkDelayTestId = 0;
     }
 }
