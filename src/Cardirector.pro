@@ -125,6 +125,7 @@ HEADERS += \
 QML_FILES += \
     ../Gui/Dialog.qml \
     ../Gui/FitInView.qml \
+    ../Gui/LogEdit.qml \
     ../Gui/MetroButton.qml \
     ../Gui/Splash.qml \
     ../Gui/TileButton.qml \

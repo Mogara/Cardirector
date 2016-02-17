@@ -33,6 +33,7 @@ static const struct {
     } qmldir [] = {
         { "Dialog", 1, 0, true },
         { "FitInView", 1, 0, true },
+        { "LogEdit", 1, 0, true },
         { "MetroButton", 1, 0, true },
         { "Splash", 1, 0, true },
         { "TileButton", 1, 0, true },
