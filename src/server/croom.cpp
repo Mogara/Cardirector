@@ -233,8 +233,8 @@ void CRoom::removeUser(CServerUser *user)
             p_ptr->owner = NULL;
             if (!p_ptr->agents.isEmpty()) {
                 foreach (CServerAgent *agent, p_ptr->agents) {
-                    if (agent->controlledByClient()) {
-                        p_ptr->owner = agent->toServerUser();
+                    if (agent->isHuman()) {
+                        p_ptr->owner = agent->toUser();
                         break;
                     }
                 }
@@ -295,8 +295,8 @@ QMap<uint, CServerUser *> CRoom::users() const
 {
     QMap<uint, CServerUser *> users;
     foreach (CServerAgent *agent, p_ptr->agents) {
-        if (agent->controlledByClient())
-            users.insert(agent->id(), agent->toServerUser());
+        if (agent->isHuman())
+            users.insert(agent->id(), agent->toUser());
     }
     return users;
 }
@@ -310,7 +310,7 @@ QMap<uint, CServerRobot *> CRoom::robots() const
 {
     QMap<uint, CServerRobot *> robots;
     foreach (CServerAgent *agent, p_ptr->agents) {
-        if (agent->controlledByClient())
+        if (agent->isHuman())
             robots.insert(agent->id(), agent->toRobot());
     }
     return robots;

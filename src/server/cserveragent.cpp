@@ -81,7 +81,7 @@ void CServerAgent::prepareRequest(int command, const QVariant &data)
     p_ptr->requestData = data;
 }
 
-CServerUser *CServerAgent::toServerUser()
+CServerUser *CServerAgent::toUser()
 {
     return qobject_cast<CServerUser *>(this);
 }

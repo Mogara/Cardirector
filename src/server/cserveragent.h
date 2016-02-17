@@ -59,9 +59,9 @@ public:
 
     virtual QVariant waitForReply() = 0;
     virtual QVariant waitForReply(int timeout) = 0;
-    virtual bool controlledByClient() const = 0;
+    virtual bool isHuman() const = 0;
 
-    CServerUser *toServerUser();
+    CServerUser *toUser();
     CServerRobot *toRobot();
 
     void broadcastProperty(const char *name);

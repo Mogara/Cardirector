@@ -66,7 +66,7 @@ public:
     static void AddInteraction(int command, Callback callback);
     static void AddCallback(int command, Callback callback);
 
-    bool controlledByClient() const;
+    bool isHuman() const;
 
 signals:
     void disconnected();

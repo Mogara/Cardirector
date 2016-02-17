@@ -46,7 +46,7 @@ public:
     QVariant waitForReply();
     QVariant waitForReply(int timeout);
 
-    bool controlledByClient() const { return false; }
+    bool isHuman() const { return false; }
 
 public slots:
     void onAiInitFinish(bool result);

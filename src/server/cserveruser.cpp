@@ -200,7 +200,7 @@ void CServerUser::handleUnknownPacket(const QByteArray &packet)
     }
 }
 
-bool CServerUser::controlledByClient() const
+bool CServerUser::isHuman() const
 {
     return true;
 }
