@@ -67,8 +67,7 @@ protected:
     virtual void run() = 0;
 
     //Parent must be the game logic
-    virtual CAbstractPlayer *createPlayer(CServerUser *user) = 0;
-    virtual CAbstractPlayer *createPlayer(CServerRobot *user) = 0;
+    virtual CAbstractPlayer *createPlayer(CServerAgent *agent) = 0;
 
 private:
     C_DISABLE_COPY(CAbstractGameLogic)

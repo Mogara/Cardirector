@@ -106,22 +106,13 @@ void CAbstractGameLogic::start()
 {
     int playerId = 0;
 
-    foreach (CServerUser *user, p_ptr->room->users()) {
-        CAbstractPlayer *player = createPlayer(user);
+    foreach (CServerAgent *agent, p_ptr->room->agents()) {
+        CAbstractPlayer *player = createPlayer(agent);
         player->setId(++playerId);
 
         p_ptr->players.insert(player->id(), player);
-        p_ptr->player2agent.insert(player, user);
-        p_ptr->agent2player.insert(user, player);
-    }
-
-    foreach (CServerRobot *robot, p_ptr->room->robots()) {
-        CAbstractPlayer *player = createPlayer(robot);
-        player->setId(++playerId);
-
-        p_ptr->players.insert(player->id(), player);
-        p_ptr->player2agent.insert(player, robot);
-        p_ptr->agent2player.insert(robot, player);
+        p_ptr->player2agent.insert(player, agent);
+        p_ptr->agent2player.insert(agent, player);
     }
 
     p_ptr->isRunning = true;
