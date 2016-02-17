@@ -297,7 +297,7 @@ void CRoom::startGame()
 {
     if (p_ptr->gameLogic && !p_ptr->gameLogic->isRunning()) {
         foreach (CServerAgent *agent, agents()) {
-            if (!agent->ready()) {
+            if (owner() != agent && !agent->ready()) {
                 broadcastSystemMessage("At least one player is not ready, the game can't be started");
                 return;
             }
