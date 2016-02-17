@@ -47,10 +47,12 @@ public:
     void setRoom(CRoom *room);
 
     QVariant briefIntroduction() const;
+    void speak(const QString &message);
 
     virtual void request(int command, const QVariant &data = QVariant(), int timeout = -1) = 0;
     virtual void reply(int command, const QVariant &data = QVariant()) = 0;
     virtual void notify(int command, const QVariant &data = QVariant()) = 0;
+    void broadcastNotification(int command, const QVariant &data = QVariant());
 
     void prepareRequest(int command, const QVariant &data = QVariant());
     virtual void setReplyReadySemaphore(QSemaphore *semaphore) = 0;

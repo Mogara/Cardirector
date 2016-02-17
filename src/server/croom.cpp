@@ -457,14 +457,6 @@ void CRoom::broadcastConfig(const QString &name) const
     broadcastNotification(S_COMMAND_CONFIGURE_ROOM, data);
 }
 
-void CRoom::userSpeaking(CServerAgent *agent, const QString &message)
-{
-    QVariantMap arguments;
-    arguments["agentId"] = agent->id();
-    arguments["message"] = message;
-    broadcastNotification(S_COMMAND_SPEAK, arguments);
-}
-
 uint CRoom::nextAgentId()
 {
     p_ptr->nextAgentId++;

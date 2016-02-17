@@ -107,8 +107,6 @@ public:
     void broadcastConfig() const;
     void broadcastConfig(const QString &name) const;
 
-    void userSpeaking(CServerAgent *agent, const QString &message);
-
 signals:
     void abandoned();
 

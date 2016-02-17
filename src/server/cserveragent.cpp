@@ -75,6 +75,22 @@ QVariant CServerAgent::briefIntroduction() const
     return arguments;
 }
 
+void CServerAgent::speak(const QString &message)
+{
+    QVariantMap arguments;
+    arguments["agentId"] = id();
+    arguments["message"] = message;
+    broadcastNotification(S_COMMAND_SPEAK, arguments);
+}
+
+void CServerAgent::broadcastNotification(int command, const QVariant &data)
+{
+    if (p_ptr->room)
+        p_ptr->room->broadcastNotification(command, data);
+    else
+        notify(command, data);
+}
+
 void CServerAgent::prepareRequest(int command, const QVariant &data)
 {
     p_ptr->requestCommand = command;
@@ -93,18 +109,11 @@ CServerRobot *CServerAgent::toRobot()
 
 void CServerAgent::broadcastProperty(const char *name)
 {
-    if (p_ptr->room) {
-        QVariantList data;
-        data << name;
-        data << property(name);
-        data << id();
-        p_ptr->room->broadcastNotification(S_COMMAND_UPDATE_USER_PROPERTY, data);
-    } else {
-        QVariantList data;
-        data << name;
-        data << property(name);
-        notify(S_COMMAND_UPDATE_USER_PROPERTY, data);
-    }
+    QVariantList data;
+    data << name;
+    data << property(name);
+    data << id();
+    broadcastNotification(S_COMMAND_UPDATE_USER_PROPERTY, data);
 }
 
 int CServerAgent::requestCommand() const

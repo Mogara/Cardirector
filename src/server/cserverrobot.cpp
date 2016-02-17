@@ -53,7 +53,7 @@ CServerRobot::~CServerRobot()
 void CServerRobot::initAi(const QString &aiStartScriptFile)
 {
     C_P(CServerRobot);
-    room()->userSpeaking(this, "Start init AI");
+    speak("Start init AI");
     p->aiInitTimer = new QTimer;
     p->aiInitTimer->setSingleShot(true);
     p->aiInitTimer->setInterval(20000);
@@ -116,11 +116,11 @@ void CServerRobot::onAiInitFinish(bool result)
         setReady(true);
         broadcastProperty("ready");
     } else
-        room()->userSpeaking(this, "AI initialization failed, the game won't start.");
+        speak("AI initialization failed, the game won't start.");
 }
 
 void CServerRobot::onAiInitTimeout()
 {
-    room()->userSpeaking(this, "AI initialization may cost a lot of time, please wait.");
+    speak("AI initialization may cost a lot of time, please wait.");
 }
 
