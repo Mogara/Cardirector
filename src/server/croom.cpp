@@ -310,7 +310,7 @@ QMap<uint, CServerRobot *> CRoom::robots() const
 {
     QMap<uint, CServerRobot *> robots;
     foreach (CServerAgent *agent, p_ptr->agents) {
-        if (agent->isHuman())
+        if (!agent->isHuman())
             robots.insert(agent->id(), agent->toRobot());
     }
     return robots;
