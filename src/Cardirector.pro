@@ -129,7 +129,8 @@ QML_FILES += \
     ../Gui/MetroButton.qml \
     ../Gui/Splash.qml \
     ../Gui/TileButton.qml \
-    ../Gui/ToolTipArea.qml
+    ../Gui/ToolTipArea.qml \
+    ../Gui/qmldir
 
 include(../Gui/Private/private.pri)
 
