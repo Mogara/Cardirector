@@ -21,6 +21,7 @@
 #define CAI_H
 
 #include "cglobal.h"
+#include "cprotocol.h"
 
 class QSemaphore;
 
@@ -56,10 +57,13 @@ signals:
 public slots:
     void engineInitFinish(bool result);
     void engineReplyReady(QVariant replyData);
+    void engineNotifyToRobot(int command, QVariant data);
 
 signals:
-    // used for library users to notify the AI system initialization is finished
+    // used in library to notify the AI system initialization is finished
     void initFinish(bool result);
+    // used in library to transit the AI notification
+    void notifyToRobot(CCommandType command, const QVariant &data);
 
 private:
     C_DECLARE_PRIVATE(CAi);

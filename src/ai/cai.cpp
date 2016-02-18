@@ -145,6 +145,11 @@ void CAi::engineReplyReady(QVariant replyData)
     }
 }
 
+void CAi::engineNotifyToRobot(int command, QVariant data)
+{
+    emit notifyToRobot(static_cast<CCommandType>(command), data);
+}
+
 void CAi::engineInitFinish(bool result)
 {
     C_P(CAi);
@@ -153,6 +158,7 @@ void CAi::engineInitFinish(bool result)
         connect(this, &CAi::replyToAiEngine, p->aiEngine, &CAiEngine::reply);
         connect(this, &CAi::requestToAiEngine, p->aiEngine, &CAiEngine::request);
         connect(p->aiEngine, &CAiEngine::replyReady, this, &CAi::engineReplyReady);
+        connect(p->aiEngine, &CAiEngine::notifyToRobot, this, &CAi::engineNotifyToRobot);
         p->aiEngineAvaliable = true;
     } else {
         p->aiEngine->collectGarbage();

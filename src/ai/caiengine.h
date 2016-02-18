@@ -44,11 +44,26 @@ public slots:
 
 signals:
     void replyReady(QVariant replyData);
+    void notifyToRobot(int command, QVariant data);
     void initFinish(bool result);
 
 private:
     C_DECLARE_PRIVATE(CAiEngine);
     CAiEnginePrivate *p_ptr;
+};
+
+class CAiEngineFunctions : public QObject
+{
+    Q_OBJECT
+
+public:
+    CAiEngineFunctions(CAiEngine *aiEngine);
+
+public slots:
+    Q_INVOKABLE void notifyToRobot(const QJSValue &command, const QJSValue &data);
+
+private:
+    CAiEngine *m_aiEngine;
 };
 
 MCD_END_NAMESPACE

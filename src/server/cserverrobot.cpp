@@ -38,6 +38,7 @@ CServerRobot::CServerRobot(CRoom *room)
     C_P(CServerRobot);
     p->ai = new CAi(this);
     connect(p->ai, &CAi::initFinish, this, &CServerRobot::onAiInitFinish);
+    connect(p->ai, &CAi::notifyToRobot, this, &CServerRobot::onAiNotifyToRobot);
 
     setScreenName(room->newRobotName());
 
@@ -122,5 +123,11 @@ void CServerRobot::onAiInitFinish(bool result)
 void CServerRobot::onAiInitTimeout()
 {
     speak("AI initialization may cost a lot of time, please wait.");
+}
+
+void CServerRobot::onAiNotifyToRobot(CCommandType type, const QVariant &data)
+{
+    if (type == S_COMMAND_SPEAK)
+        speak(data.toString());
 }
 

@@ -21,6 +21,7 @@
 #define CSERVERROBOT_H
 
 #include "cserveragent.h"
+#include "cprotocol.h"
 
 MCD_BEGIN_NAMESPACE
 
@@ -51,6 +52,7 @@ public:
 public slots:
     void onAiInitFinish(bool result);
     void onAiInitTimeout();
+    void onAiNotifyToRobot(CCommandType type, const QVariant &data);
 
 private:
     C_DISABLE_COPY(CServerRobot)

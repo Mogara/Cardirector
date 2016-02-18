@@ -147,6 +147,9 @@ void CAiEngine::init(QString startScriptFile)
             return;
         }
 
+        QJSValue functions = newQObject(new CAiEngineFunctions(this));
+        globalObject().setProperty("aiEngineFunctions", functions);
+
         QJSValue initFunction = globalObject().property("init");
         if (initFunction.isCallable()) {
             QJSValue callResult = initFunction.call();
@@ -184,4 +187,15 @@ bool CAiEngine::avaliable() const
 {
     C_P(const CAiEngine);
     return p->available.load() != 0;
+}
+
+CAiEngineFunctions::CAiEngineFunctions(CAiEngine *aiEngine)
+    : m_aiEngine(aiEngine), QObject(aiEngine)
+{
+
+}
+
+void CAiEngineFunctions::notifyToRobot(const QJSValue &command, const QJSValue &data)
+{
+    emit m_aiEngine->notifyToRobot(command.toInt(), data.toVariant());
 }
