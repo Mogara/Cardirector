@@ -68,17 +68,19 @@ QPixmap CImageProvider::requestPixmap(const QString &id, QSize *size, const QSiz
             pixmap.load(url.toString());
         }
 
-        const creal scaleFactor = StandardDPI / qApp->primaryScreen()->logicalDotsPerInch();
+        qreal localDPI = qApp->primaryScreen()->logicalDotsPerInch();
+        if (StandardDPI != (int) localDPI) {
+            const creal scaleFactor = StandardDPI / localDPI;
+            if (!pixmap.isNull() && size != NULL)
+                *size = pixmap.size() / scaleFactor;
 
-        if (!pixmap.isNull() && size != NULL)
-            *size = pixmap.size() / scaleFactor;
-
-        if (requestedSize.isValid()) {
-            pixmap = pixmap.scaled(requestedSize, Qt::IgnoreAspectRatio,
-                          Qt::SmoothTransformation);
-        } else {
-            pixmap = pixmap.scaled(*size, Qt::IgnoreAspectRatio,
-                          Qt::SmoothTransformation);
+            if (requestedSize.isValid()) {
+                pixmap = pixmap.scaled(requestedSize, Qt::IgnoreAspectRatio,
+                              Qt::SmoothTransformation);
+            } else {
+                pixmap = pixmap.scaled(*size, Qt::IgnoreAspectRatio,
+                              Qt::SmoothTransformation);
+            }
         }
     }
 
