@@ -1,5 +1,5 @@
 TEMPLATE = lib
-CONFIG += precompile_header staticlib
+CONFIG += staticlib
 DESTDIR = $$PWD/../lib
 
 QT += quick multimedia
