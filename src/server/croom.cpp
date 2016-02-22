@@ -52,9 +52,9 @@ public:
     QThread *thread;
 
     CRoomPrivate()
-        : gameLogic(NULL)
+        : gameLogic(Q_NULLPTR)
         , nextAgentId(0)
-        , owner(NULL)
+        , owner(Q_NULLPTR)
         , isAbandoned(false)
         , settings(new CRoomSettings)
         , robotNameCode('A')
@@ -130,7 +130,7 @@ CServerUser *CRoom::owner() const
 
 uint CRoom::ownerId() const
 {
-    return p_ptr->owner != NULL ? p_ptr->owner->id() : 0;
+    return p_ptr->owner != Q_NULLPTR ? p_ptr->owner->id() : 0;
 }
 
 QString CRoom::name() const
@@ -165,7 +165,7 @@ bool CRoom::isAbandoned() const
 
 void CRoom::setGameLogic(CAbstractGameLogic *gameLogic)
 {
-    if (p_ptr->gameLogic != NULL) {
+    if (p_ptr->gameLogic != Q_NULLPTR) {
         if (p_ptr->gameLogic->isRunning())
             return;
         gameLogic->deleteLater();
@@ -230,7 +230,7 @@ void CRoom::removeUser(CServerUser *user)
         this->disconnect(user);
 
         if (user == p_ptr->owner) {
-            p_ptr->owner = NULL;
+            p_ptr->owner = Q_NULLPTR;
             if (!p_ptr->agents.isEmpty()) {
                 foreach (CServerAgent *agent, p_ptr->agents) {
                     if (agent->isHuman()) {
@@ -241,7 +241,7 @@ void CRoom::removeUser(CServerUser *user)
                 broadcastProperty("ownerId");
             }
 
-            if (p_ptr->owner == NULL) {
+            if (p_ptr->owner == Q_NULLPTR) {
                 emit abandoned();
                 p_ptr->isAbandoned = true;
                 p_ptr->thread->quit();

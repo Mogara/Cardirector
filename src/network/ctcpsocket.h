@@ -35,7 +35,7 @@ class MCD_EXPORT CTcpSocket : public QTcpSocket
     Q_OBJECT
 
 public:
-    explicit CTcpSocket(QObject *parent = 0);
+    explicit CTcpSocket(QObject *parent = Q_NULLPTR);
     ~CTcpSocket();
 
     void writePacket(const QByteArray &data);

@@ -36,8 +36,8 @@ public:
     qreal volume;
 
     CSoundEffectPrivate()
-        : buffer(NULL)
-        , output(NULL)
+        : buffer(Q_NULLPTR)
+        , output(Q_NULLPTR)
         , loops(1)
         , loopsRemaining(1)
         , volume(1.0)
@@ -79,7 +79,7 @@ void CSoundEffect::play()
     if (p_ptr->source.isEmpty())
         return;
 
-    QIODevice *file = NULL;
+    QIODevice *file = Q_NULLPTR;
     QAudioFormat format;
 
     //@to-do: if-else is not propriate to extend more formats
@@ -93,7 +93,7 @@ void CSoundEffect::play()
         }
     }
 
-    if (file == NULL)
+    if (file == Q_NULLPTR)
         return;
 
     if (p_ptr->output)

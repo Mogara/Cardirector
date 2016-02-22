@@ -9,7 +9,7 @@ class CTranslatorPrivate;
 class MCD_EXPORT CTranslator : public QTranslator
 {
 public:
-    CTranslator(QObject *parent = 0);
+    CTranslator(QObject *parent = Q_NULLPTR);
     ~CTranslator();
 
     bool load(const QString &language, const QString &rootDirectory);

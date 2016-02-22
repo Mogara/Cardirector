@@ -39,7 +39,7 @@ class MCD_EXPORT CServerAgent : public CAbstractUser
     friend class CRoom;
 
 public:
-    explicit CServerAgent(CServer *server = 0);
+    explicit CServerAgent(CServer *server = Q_NULLPTR);
     ~CServerAgent();
 
     CServer *server() const;

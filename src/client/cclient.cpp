@@ -40,7 +40,7 @@ CClient::CClient(QObject *parent)
     : QObject(parent)
     , p_ptr(new CClientPrivate)
 {
-    p_ptr->self = NULL;
+    p_ptr->self = Q_NULLPTR;
 
     p_ptr->parser = new CJsonPacketParser;
     CTcpSocket *socket = new CTcpSocket;
@@ -178,7 +178,7 @@ CClientUser *CClient::addUser(const QVariant &data)
 {
     QVariantList arguments = data.toList();
     if (arguments.length() < 3)
-        return NULL;
+        return Q_NULLPTR;
 
     uint userId = arguments.at(0).toUInt();
     CClientUser *user = new CClientUser(userId, this);
@@ -248,7 +248,7 @@ void CClient::RemoveUserCommand(CClient *client, const QVariant &data)
 {
     uint userId = data.toUInt();
     CClientUser *user = client->findUser(userId);
-    if (user != NULL) {
+    if (user != Q_NULLPTR) {
         emit client->userRemoved(user);
         client->p_ptr->users.remove(userId);
         user->deleteLater();
@@ -278,7 +278,7 @@ void CClient::SpeakCommand(CClient *client, const QVariant &data)
     } else {
         if (arguments.contains("agentId")) {
             CClientUser *user = client->findUser(arguments["agentId"].toUInt());
-            if (user != NULL)
+            if (user != Q_NULLPTR)
                 emit user->speak(message);
         }
     }
@@ -287,7 +287,7 @@ void CClient::SpeakCommand(CClient *client, const QVariant &data)
 void CClient::EnterRoomCommand(CClient *client, const QVariant &data)
 {
     CClientUser *self = client->self();
-    if (self == NULL) {
+    if (self == Q_NULLPTR) {
         qWarning("The user hasn't logged in.");
         return;
     }
@@ -351,13 +351,13 @@ void CClient::UpdateUserPropertyCommand(CClient *client, const QVariant &data)
     QString name = arguments.at(0).toString();
     const QVariant value = arguments.at(1);
 
-    CClientUser *user = NULL;
+    CClientUser *user = Q_NULLPTR;
     if (arguments.length() > 2)
         user = client->findUser(arguments.at(0).toUInt());
     else
         user = client->self();
 
-    if (user != NULL)
+    if (user != Q_NULLPTR)
         user->setProperty(name.toLatin1(), value);
 }
 

@@ -33,7 +33,7 @@ class MCD_EXPORT CClient : public QObject
     Q_OBJECT
 
 public:
-    CClient(QObject *parent = 0);
+    CClient(QObject *parent = Q_NULLPTR);
     ~CClient();
 
     void setPacketParser(CAbstractPacketParser *parser);

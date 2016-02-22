@@ -336,11 +336,11 @@ void AddRobotCommand(CServerUser *user, const QVariant &)
 void ConfigureRoomCommand(CServerUser *user, const QVariant &data)
 {
     CRoom *room = user->room();
-    if (room == NULL)
+    if (room == Q_NULLPTR)
         return;
 
     CRoomSettings *config = room->settings();
-    if (config == NULL || user != room->owner())
+    if (config == Q_NULLPTR || user != room->owner())
         return;
 
     const QVariantMap arg = data.toMap();

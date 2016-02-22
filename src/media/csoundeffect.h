@@ -44,8 +44,8 @@ public:
         Infinite = -1
     };
 
-    CSoundEffect(QObject *parent = 0);
-    CSoundEffect(const QString &source, QObject *parent = 0);
+    CSoundEffect(QObject *parent = Q_NULLPTR);
+    CSoundEffect(const QString &source, QObject *parent = Q_NULLPTR);
     ~CSoundEffect();
 
     QString source() const;

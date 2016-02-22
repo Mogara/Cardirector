@@ -32,7 +32,7 @@ class MCD_EXPORT CAbstractPlayer : public QObject
     friend class CAbstractGameLogic;
 
 public:
-    CAbstractPlayer(QObject *parent = 0);
+    CAbstractPlayer(QObject *parent = Q_NULLPTR);
     ~CAbstractPlayer();
 
     uint id() const;

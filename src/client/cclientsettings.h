@@ -35,11 +35,11 @@ class MCD_EXPORT CClientSettings : public QSettings
     Q_PROPERTY(QString locale READ locale WRITE setLocale NOTIFY localeChanged)
 
 public:
-    CClientSettings(const QString &organization, const QString &application = QString(), QObject *parent = 0);
-    CClientSettings(Scope scope, const QString &organization, const QString & application = QString(), QObject *parent = 0);
-    CClientSettings(Format format, Scope scope, const QString &organization, const QString &application = QString(), QObject *parent = 0);
-    CClientSettings(const QString &fileName, Format format, QObject *parent = 0);
-    CClientSettings(QObject *parent = 0);
+    CClientSettings(const QString &organization, const QString &application = QString(), QObject *parent = Q_NULLPTR);
+    CClientSettings(Scope scope, const QString &organization, const QString & application = QString(), QObject *parent = Q_NULLPTR);
+    CClientSettings(Format format, Scope scope, const QString &organization, const QString &application = QString(), QObject *parent = Q_NULLPTR);
+    CClientSettings(const QString &fileName, Format format, QObject *parent = Q_NULLPTR);
+    CClientSettings(QObject *parent = Q_NULLPTR);
     virtual ~CClientSettings();
 
     QString locale() const;

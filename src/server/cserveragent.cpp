@@ -42,7 +42,7 @@ CServerAgent::CServerAgent(CServer *server)
     p_ptr = new CServerAgentPrivate;
 
     p_ptr->server = server;
-    p_ptr->room = NULL;
+    p_ptr->room = Q_NULLPTR;
     p_ptr->ready = false;
 }
 

@@ -71,7 +71,7 @@ QPixmap CImageProvider::requestPixmap(const QString &id, QSize *size, const QSiz
         qreal localDPI = qApp->primaryScreen()->logicalDotsPerInch();
         if (StandardDPI != (int) localDPI) {
             const creal scaleFactor = StandardDPI / localDPI;
-            if (!pixmap.isNull() && size != NULL)
+            if (!pixmap.isNull() && size != Q_NULLPTR)
                 *size = pixmap.size() / scaleFactor;
 
             if (requestedSize.isValid()) {
@@ -98,7 +98,7 @@ void CImageProvider::setProviderId(const QString &providerId)
         p_ptr->providerId = providerId;
 
         CMainWindow *window = CMainWindow::mainInstance();
-        if (window != NULL)
+        if (window != Q_NULLPTR)
             window->addImageProvider(providerId, this);
 
         emit providerIdChanged();

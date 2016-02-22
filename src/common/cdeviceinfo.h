@@ -32,7 +32,7 @@ class MCD_EXPORT CDeviceInfo : public QObject
 {
     Q_OBJECT
 public:
-    explicit CDeviceInfo(QObject *parent = 0);
+    explicit CDeviceInfo(QObject *parent = Q_NULLPTR);
     ~CDeviceInfo();
 
     Q_INVOKABLE int gu(const QVariant &point)

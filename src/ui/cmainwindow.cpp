@@ -45,7 +45,7 @@ public:
     static CMainWindow *instance;
 };
 
-CMainWindow *CMainWindowPrivate::instance = NULL;
+CMainWindow *CMainWindowPrivate::instance = Q_NULLPTR;
 
 CMainWindow::CMainWindow(QWindow *parent)
     : QQuickView(new CQmlEngine, parent),
@@ -53,7 +53,7 @@ CMainWindow::CMainWindow(QWindow *parent)
 {
     setResizeMode(SizeRootObjectToView);
 
-    if (p_ptr->instance == NULL)
+    if (p_ptr->instance == Q_NULLPTR)
         p_ptr->instance = this;
 
     restoreAsClosed();
@@ -69,7 +69,7 @@ CMainWindow *CMainWindow::mainInstance()
 
 void CMainWindow::registerMainInstance(CMainWindow *instance)
 {
-    Q_ASSERT(instance != NULL);
+    Q_ASSERT(instance != Q_NULLPTR);
 
     CMainWindowPrivate::instance = instance;
 }

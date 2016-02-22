@@ -40,7 +40,7 @@ public:
     CPacket(const CPacket &source);
     ~CPacket();
 
-    bool isValid() const { return d != NULL; }
+    bool isValid() const { return d != Q_NULLPTR; }
 
     int command() const;
     void setCommand(int command);

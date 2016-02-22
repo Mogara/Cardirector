@@ -47,7 +47,7 @@ public:
         Offline
     };
 
-    explicit CAbstractUser(QObject *parent = 0);
+    explicit CAbstractUser(QObject *parent = Q_NULLPTR);
     ~CAbstractUser();
 
     uint id() const;

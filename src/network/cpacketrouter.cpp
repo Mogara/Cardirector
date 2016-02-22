@@ -51,14 +51,14 @@ public:
 CPacketRouter::CPacketRouter(void *receiver, CTcpSocket *socket, CAbstractPacketParser *parser)
     : p_ptr(new CPacketRouterPrivate)
 {
-    p_ptr->interactions = NULL;
-    p_ptr->callbacks = NULL;
+    p_ptr->interactions = Q_NULLPTR;
+    p_ptr->callbacks = Q_NULLPTR;
     p_ptr->receiver = receiver;
     p_ptr->parser = parser;
-    p_ptr->socket = NULL;
+    p_ptr->socket = Q_NULLPTR;
     p_ptr->expectedReplyId = -1;
     p_ptr->replyTimeout = 0;
-    p_ptr->extraReplyReadySemaphore = NULL;
+    p_ptr->extraReplyReadySemaphore = Q_NULLPTR;
     setSocket(socket);
 }
 
@@ -70,14 +70,14 @@ CPacketRouter::~CPacketRouter()
 
 void CPacketRouter::setSocket(CTcpSocket *socket)
 {
-    if (p_ptr->socket != NULL) {
+    if (p_ptr->socket != Q_NULLPTR) {
         p_ptr->socket->disconnect(this);
         disconnect(p_ptr->socket);
         p_ptr->socket->deleteLater();
     }
 
     p_ptr->socket = socket;
-    if (p_ptr->socket != NULL) {
+    if (p_ptr->socket != Q_NULLPTR) {
         connect(this, &CPacketRouter::messageReady, p_ptr->socket, &CTcpSocket::writePacket);
         connect(p_ptr->socket, &CTcpSocket::newPacket, this, &CPacketRouter::handlePacket);
         connect(p_ptr->socket, &CTcpSocket::disconnected, this, &CPacketRouter::abortRequest);
@@ -165,7 +165,7 @@ void CPacketRouter::cancelRequest()
     p_ptr->replyMutex.lock();
     p_ptr->expectedReplyId = -1;
     p_ptr->replyTimeout = 0;
-    p_ptr->extraReplyReadySemaphore = NULL;
+    p_ptr->extraReplyReadySemaphore = Q_NULLPTR;
     p_ptr->replyMutex.unlock();
 
     if (p_ptr->replyReadySemaphore.available() > 0)
@@ -193,14 +193,14 @@ void CPacketRouter::abortRequest()
         if (p_ptr->extraReplyReadySemaphore)
             p_ptr->extraReplyReadySemaphore->release();
         p_ptr->expectedReplyId = -1;
-        p_ptr->extraReplyReadySemaphore = NULL;
+        p_ptr->extraReplyReadySemaphore = Q_NULLPTR;
     }
     p_ptr->replyMutex.unlock();
 }
 
 void CPacketRouter::handlePacket(const QByteArray &rawPacket)
 {
-    if (p_ptr->receiver == NULL)
+    if (p_ptr->receiver == Q_NULLPTR)
         return;
 
     CPacket packet = p_ptr->parser->parse(rawPacket);
@@ -210,17 +210,17 @@ void CPacketRouter::handlePacket(const QByteArray &rawPacket)
     }
 
     if (packet.type() == CPacket::TYPE_NOTIFICATION) {
-        if (p_ptr->callbacks == NULL)
+        if (p_ptr->callbacks == Q_NULLPTR)
             return;
         Callback func = p_ptr->callbacks->value(packet.command());
         if (func)
             (*func)(p_ptr->receiver, packet.data());
 
     } else if (packet.type() == CPacket::TYPE_REQUEST) {
-        if (p_ptr->interactions == NULL)
+        if (p_ptr->interactions == Q_NULLPTR)
             return;
         Callback func = p_ptr->interactions->value(packet.command());
-        if (func == NULL)
+        if (func == Q_NULLPTR)
             return;
 
         QVariantList dataList(packet.data().toList());
@@ -247,13 +247,13 @@ void CPacketRouter::handlePacket(const QByteArray &rawPacket)
         p_ptr->reply = dataList.at(1);
         if (p_ptr->callbacks) {
             Callback func = p_ptr->callbacks->value(packet.command());
-            if (func != NULL)
+            if (func != Q_NULLPTR)
                 (*func)(p_ptr->receiver, p_ptr->reply);
         }
         p_ptr->replyReadySemaphore.release();
         if (p_ptr->extraReplyReadySemaphore) {
             p_ptr->extraReplyReadySemaphore->release();
-            p_ptr->extraReplyReadySemaphore = NULL;
+            p_ptr->extraReplyReadySemaphore = Q_NULLPTR;
         }
         locker.unlock();
         emit replyReady();

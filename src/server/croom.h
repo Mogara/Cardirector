@@ -99,7 +99,7 @@ public:
     void broadcastRequest(const QList<CServerAgent *> &targets, int timeout);
     CServerAgent *broadcastRacingRequest(const QList<CServerAgent *> &targets, int timeout);
     void broadcastNotification(const QList<CServerAgent *> &targets, int command, const QVariant &data = QVariant()) const;
-    void broadcastNotification(int command, const QVariant &data = QVariant(), CServerAgent *except = NULL) const;
+    void broadcastNotification(int command, const QVariant &data = QVariant(), CServerAgent *except = Q_NULLPTR) const;
 
     void unicastPropertyTo(const char *name, CServerAgent *agent) const;
     void broadcastProperty(const char *name) const;

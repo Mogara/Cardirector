@@ -62,7 +62,7 @@ CServer::~CServer()
         if (user->room() != p_ptr->lobby) {
             CAbstractGameLogic *logic = user->room()->gameLogic();
             if (logic && logic->isRunning()) {
-                user->setParent(NULL);
+                user->setParent(Q_NULLPTR);
                 connect(logic, &CAbstractGameLogic::destroyed, user, &CServerUser::deleteLater);
             }
         }
@@ -128,7 +128,7 @@ void CServer::createRobot(CRoom *room)
 void CServer::killRobot(uint id)
 {
     CServerRobot *robot = p_ptr->robots.value(id);
-    if (robot != NULL)
+    if (robot != Q_NULLPTR)
         p_ptr->robots.remove(id);
 }
 
@@ -243,7 +243,7 @@ void CServer::onUserDisconnected()
     } else {
         CAbstractGameLogic *logic = user->room()->gameLogic();
         if (logic && logic->isRunning()) {
-            user->setParent(NULL);
+            user->setParent(Q_NULLPTR);
             connect(logic, &CAbstractGameLogic::destroyed, user, &CServerUser::deleteLater);
         } else {
             user->deleteLater();

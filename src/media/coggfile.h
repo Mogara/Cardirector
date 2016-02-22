@@ -39,8 +39,8 @@ public:
         CorruptedHeaderError
     };
 
-    COggFile(QObject *parent = 0);
-    COggFile(const QString &filePath, QObject *parent = 0);
+    COggFile(QObject *parent = Q_NULLPTR);
+    COggFile(const QString &filePath, QObject *parent = Q_NULLPTR);
     ~COggFile();
 
     bool open(OpenMode mode);

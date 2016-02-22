@@ -31,7 +31,7 @@ class MCD_EXPORT CClientUser : public CAbstractUser
     friend class CClient;
 
 public:
-    CClientUser(uint id, QObject *parent = 0);
+    CClientUser(uint id, QObject *parent = Q_NULLPTR);
     ~CClientUser();
 
 signals:

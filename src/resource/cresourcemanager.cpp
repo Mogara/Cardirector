@@ -46,7 +46,7 @@ namespace
 {
     void cResourceManagerDestroyInstance()
     {
-        if (CResourceManager::getInstance() != NULL)
+        if (CResourceManager::getInstance() != Q_NULLPTR)
             delete CResourceManager::getInstance();
     }
 }
@@ -56,7 +56,7 @@ CResourceManager *CResourceManager::getInstance()
     if (self.isNull()) {
         self = new CResourceManager;
 
-        if (qApp != NULL)
+        if (qApp != Q_NULLPTR)
             connect(qApp, &QCoreApplication::aboutToQuit, self.data(), &CResourceManager::deleteLater);
         else
             atexit(&cResourceManagerDestroyInstance);

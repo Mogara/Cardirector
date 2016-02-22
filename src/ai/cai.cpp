@@ -46,10 +46,10 @@ CAi::CAi(QObject *parent)
 
     p->thread = new QThread(this);
     p->thread->start();
-    p->aiEngine = NULL;
+    p->aiEngine = Q_NULLPTR;
     p->aiEngineAvaliable = false;
     p->isRequesting = false;
-    p->extraReplyReadySemaphore = NULL;
+    p->extraReplyReadySemaphore = Q_NULLPTR;
 }
 
 CAi::~CAi()
@@ -58,7 +58,7 @@ CAi::~CAi()
 
     // make sure the semaphores are released
     p->replyReadySemaphore.release();
-    if (p->extraReplyReadySemaphore != NULL)
+    if (p->extraReplyReadySemaphore != Q_NULLPTR)
         p->extraReplyReadySemaphore->release();
 
     p->thread->exit();
@@ -68,7 +68,7 @@ CAi::~CAi()
     if (!p->thread->wait(2000))
         qDebug() << QString("CAi::~CAi: QThread didn't finish termination in 2 seconds, force deleting");
 
-    if (p->aiEngine != NULL) {
+    if (p->aiEngine != Q_NULLPTR) {
         p->aiEngine->collectGarbage();
         delete p->aiEngine;
     }
@@ -101,7 +101,7 @@ void CAi::notify(int command, const QVariant &data)
 void CAi::initAi(const QString &aiStartScriptFile)
 {
     C_P(CAi);
-    if (p->aiEngine != NULL)
+    if (p->aiEngine != Q_NULLPTR)
         return;
 
     p->aiEngine = new CAiEngine;
@@ -139,9 +139,9 @@ void CAi::engineReplyReady(QVariant replyData)
     p->replyData = replyData;
 
     p->replyReadySemaphore.release();
-    if (p->extraReplyReadySemaphore != NULL) {
+    if (p->extraReplyReadySemaphore != Q_NULLPTR) {
         p->extraReplyReadySemaphore->release();
-        p->extraReplyReadySemaphore = NULL;
+        p->extraReplyReadySemaphore = Q_NULLPTR;
     }
 }
 
@@ -163,7 +163,7 @@ void CAi::engineInitFinish(bool result)
     } else {
         p->aiEngine->collectGarbage();
         delete p->aiEngine;
-        p->aiEngine = NULL;
+        p->aiEngine = Q_NULLPTR;
     }
 
     emit initFinish(result);

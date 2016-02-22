@@ -32,7 +32,7 @@ class CImageProvider;
 class MCD_EXPORT CMainWindow : public QQuickView
 {
 public:
-    explicit CMainWindow(QWindow *parent = 0);
+    explicit CMainWindow(QWindow *parent = Q_NULLPTR);
 
     static CMainWindow *mainInstance();
     static void registerMainInstance(CMainWindow *instance);

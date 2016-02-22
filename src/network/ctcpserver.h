@@ -33,7 +33,7 @@ class MCD_EXPORT CTcpServer : public QTcpServer
     Q_OBJECT
 
 public:
-    CTcpServer(QObject *parent = 0);
+    CTcpServer(QObject *parent = Q_NULLPTR);
 
 signals:
     void newSocket(CTcpSocket *socket);
@@ -43,7 +43,7 @@ protected:
 
 private:
     void newConnection() {}
-    QTcpSocket *nextPendingConnection() {return NULL;}
+    QTcpSocket *nextPendingConnection() {return Q_NULLPTR;}
 };
 
 MCD_END_NAMESPACE

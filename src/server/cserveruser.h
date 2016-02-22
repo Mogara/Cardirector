@@ -36,7 +36,7 @@ class MCD_EXPORT CServerUser : public CServerAgent
     Q_OBJECT
 
 public:
-    CServerUser(CTcpSocket *socket, CServer *server = 0);
+    CServerUser(CTcpSocket *socket, CServer *server = Q_NULLPTR);
     ~CServerUser();
 
     uint uid() const;

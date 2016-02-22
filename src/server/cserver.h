@@ -40,7 +40,7 @@ class MCD_EXPORT CServer : public QObject
     Q_OBJECT
 
 public:
-    CServer(QObject *parent = 0);
+    CServer(QObject *parent = Q_NULLPTR);
     ~CServer();
 
     bool listen(const QHostAddress &address = QHostAddress::Any, ushort port = 0);
@@ -71,7 +71,7 @@ public:
     void setPacketParser(CAbstractPacketParser *parser);
     CAbstractPacketParser *packetParser() const;
 
-    void broadcastNotification(int command, const QVariant &data = QVariant(), CServerUser *except = NULL);
+    void broadcastNotification(int command, const QVariant &data = QVariant(), CServerUser *except = Q_NULLPTR);
 
 signals:
     void roomCreated(CRoom *room);

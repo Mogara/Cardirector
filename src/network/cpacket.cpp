@@ -45,7 +45,7 @@ public:
 };
 
 CPacket::CPacket()
-    : d(NULL)
+    : d(Q_NULLPTR)
 {
 }
 
@@ -58,7 +58,7 @@ CPacket::CPacket(int command, Type type)
 
 CPacket::~CPacket()
 {
-    if (d != NULL) {
+    if (d != Q_NULLPTR) {
         if (d->ref.load() == 1)
             delete d;
         else
@@ -69,7 +69,7 @@ CPacket::~CPacket()
 CPacket::CPacket(const CPacket &source)
     : d(source.d)
 {
-    if (d != NULL)
+    if (d != Q_NULLPTR)
         d->ref.ref();
 }
 

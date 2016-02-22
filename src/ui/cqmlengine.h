@@ -31,7 +31,7 @@ class CQmlEnginePrivate;
 class MCD_EXPORT CQmlEngine : public QQmlEngine
 {
 public:
-    CQmlEngine(QObject *p = 0);
+    CQmlEngine(QObject *p = Q_NULLPTR);
     ~CQmlEngine();
 
 private:
