@@ -21,11 +21,11 @@
 #define CAIENGINE_H
 
 #include "cglobal.h"
-#include <QJSEngine>
+#include "cjsengine.h"
 
 MCD_BEGIN_NAMESPACE
 class CAiEnginePrivate;
-class MCD_EXPORT CAiEngine : public QJSEngine
+class MCD_EXPORT CAiEngine : public CJSEngine
 {
     Q_OBJECT
 

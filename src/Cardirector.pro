@@ -77,7 +77,8 @@ SOURCES += \
     ui/cqmlengine.cpp \
     ui/ctranslator.cpp \
     ai/cai.cpp \
-    ai/caiengine.cpp
+    ai/caiengine.cpp \
+    common/cjsengine.cpp
 
 HEADERS += \
     client/cclient.h \
@@ -120,7 +121,8 @@ HEADERS += \
     ui/ctranslator.h \
     cpch.h \
     ai/cai.h \
-    ai/caiengine.h
+    ai/caiengine.h \
+    common/cjsengine.h
 
 QML_FILES += \
     ../Gui/Dialog.qml \
