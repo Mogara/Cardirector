@@ -51,6 +51,8 @@ public:
 CAiEngine::CAiEngine()
     : p_ptr(new CAiEnginePrivate)
 {
+    QJSValue functions = newQObject(new CAiEngineFunctions(this));
+    globalObject().setProperty("Ai", functions);
 }
 
 CAiEngine::~CAiEngine()
@@ -146,9 +148,6 @@ void CAiEngine::init(QString startScriptFile)
             emit initFinish(false);
             return;
         }
-
-        QJSValue functions = newQObject(new CAiEngineFunctions(this));
-        globalObject().setProperty("aiEngineFunctions", functions);
 
         QJSValue initFunction = globalObject().property("init");
         if (initFunction.isCallable()) {
