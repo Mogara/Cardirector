@@ -1,4 +1,5 @@
-// Copyright 2008 Google, Inc.  All Rights reserved
+// Copyright (c) 2016, Google Inc.
+// All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -26,26 +27,17 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#ifndef GOOGLE_BREAKPAD_COMMON_STDIO_H
+#define GOOGLE_BREAKPAD_COMMON_STDIO_H
 
-// This file contains some typedefs for basic types
+#include <stdio.h>
+
+#if defined(_MSC_VER) && MSC_VER < 1900
+#include <basetsd.h>
+
+#define snprintf _snprintf
+typedef SSIZE_T ssize_t;
+#endif
 
 
-#ifndef _COMMON_DWARF_TYPES_H__
-#define _COMMON_DWARF_TYPES_H__
-
-#include <stdint.h>
-
-typedef signed char         int8;
-typedef short               int16;
-typedef int                 int32;
-typedef long long           int64;
-
-typedef unsigned char      uint8;
-typedef unsigned short     uint16;
-typedef unsigned int       uint32;
-typedef unsigned long long uint64;
-
-typedef intptr_t           intptr;
-typedef uintptr_t          uintptr;
-
-#endif // _COMMON_DWARF_TYPES_H__
+#endif  // GOOGLE_BREAKPAD_COMMON_STDIO_H
