@@ -52,7 +52,7 @@ CAiEngine::CAiEngine()
     : p_ptr(new CAiEnginePrivate)
 {
     QJSValue functions = newQObject(new CAiEngineFunctions(this));
-    globalObject().setProperty("Ai", functions);
+    globalObject().setProperty("CAi", functions);
 }
 
 CAiEngine::~CAiEngine()
