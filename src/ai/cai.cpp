@@ -109,6 +109,8 @@ void CAi::initAi(const QString &aiStartScriptFile)
 
     connect(this, &CAi::initAiToAiEngine, p->aiEngine, &CAiEngine::init);
     connect(p->aiEngine, &CAiEngine::initFinish, this, &CAi::engineInitFinish);
+    connect(p->aiEngine, &CAiEngine::replyReady, this, &CAi::engineReplyReady);
+    connect(p->aiEngine, &CAiEngine::notifyToRobot, this, &CAi::engineNotifyToRobot);
 
     emit initAiToAiEngine(aiStartScriptFile);
 
@@ -157,8 +159,6 @@ void CAi::engineInitFinish(bool result)
         connect(this, &CAi::notifyToAiEngine, p->aiEngine, &CAiEngine::notify);
         connect(this, &CAi::replyToAiEngine, p->aiEngine, &CAiEngine::reply);
         connect(this, &CAi::requestToAiEngine, p->aiEngine, &CAiEngine::request);
-        connect(p->aiEngine, &CAiEngine::replyReady, this, &CAi::engineReplyReady);
-        connect(p->aiEngine, &CAiEngine::notifyToRobot, this, &CAi::engineNotifyToRobot);
         p->aiEngineAvaliable = true;
     } else {
         p->aiEngine->collectGarbage();
