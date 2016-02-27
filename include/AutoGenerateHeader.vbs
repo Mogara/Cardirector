@@ -19,10 +19,10 @@ For Each file In folder.Files
 				path = folder.Path
 				If Right(path, 1) <> "\" Then path = path & "\"
 				path = path & generatedFileName
-				Set generatedFile = fso.CreateTextFile(path, True, True)
+				Set generatedFile = fso.CreateTextFile(path, True, False)
 				generatedLine = "#include """ & fso.GetFileName(file.Path) & """"
-				generatedFile.writeline(generatedLine)
-				generatedFile.close
+				generatedFile.WriteLine generatedLine
+				generatedFile.Close
 			End If
 		Loop
 		fs.close

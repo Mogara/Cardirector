@@ -1,9 +1,8 @@
 TEMPLATE = subdirs
 CONFIG += ordered
 
-SUBDIRS = breakpad ogg vorbis Cardirector
+SUBDIRS = breakpad oggvorbis Cardirector
 
 breakpad.subdir = src/3rdparty/breakpad
-ogg.subdir = src/3rdparty/ogg
-vorbis.subdir = src/3rdparty/vorbis
+oggvorbis.subdir = src/3rdparty/oggvorbis
 Cardirector.file = src/Cardirector.pro

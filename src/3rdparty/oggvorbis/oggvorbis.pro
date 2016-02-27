@@ -24,8 +24,9 @@ SOURCES += \
     lib/synthesis.c \
     lib/vorbisenc.c \
     lib/window.c \
-    lib/vorbisfile.c
+    lib/vorbisfile.c \
+    bitwise.c \
+    framing.c
 
 INCLUDEPATH += include
 INCLUDEPATH += lib
-INCLUDEPATH += ../ogg/include

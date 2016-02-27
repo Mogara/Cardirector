@@ -23,8 +23,7 @@ osx: INCLUDEPATH += \
         3rdparty/breakpad/common/mac
 
 # Ogg and Vorbis Decoder
-INCLUDEPATH += 3rdparty/ogg/include
-INCLUDEPATH += 3rdparty/vorbis/include
+INCLUDEPATH += 3rdparty/oggvorbis/include
 
 # Cardirector
 INCLUDEPATH += \
