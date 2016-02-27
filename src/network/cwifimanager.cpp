@@ -28,7 +28,7 @@
 static QAndroidJniObject activity = QtAndroid::androidActivity();
 static QAndroidJniObject manager = activity.callObjectMethod("getSystemService", "(Ljava/lang/String;)Ljava/lang/Object;", QAndroidJniObject::fromString("wifi").object<jstring>());
 
-#elif defined(Q_OS_WIN)
+#elif defined(Q_OS_WIN)  && !defined(Q_OS_WINRT)
 
 #include <QProcess>
 #include <QTextStream>
@@ -81,7 +81,7 @@ bool CWifiManager::enableHotspot()
     allowedProtocols.callMethod<void>("set", "(I)V", 1);
 
     return manager.callMethod<jboolean>("setWifiApEnabled", "(Landroid/net/wifi/WifiConfiguration;Z)Z", config.object(), true);
-#elif defined(Q_OS_WIN)
+#elif defined(Q_OS_WIN) && !defined(Q_OS_WINRT)
     QStringList commands;
     commands << "netsh wlan stop hostednetwork";
     commands << QString("netsh wlan set hostednetwork mode=allow ssid=%1%2 key=%3").arg(m_ssidPrefix).arg(m_deviceName).arg(m_key);
@@ -100,7 +100,7 @@ bool CWifiManager::disableHotspot()
 {
 #ifdef Q_OS_ANDROID
     return manager.callMethod<jboolean>("setWifiApEnabled", "(Landroid/net/wifi/WifiConfiguration;Z)Z", NULL, false);
-#elif defined(Q_OS_WIN)
+#elif defined(Q_OS_WIN) && !defined(Q_OS_WINRT)
     ShellExecuteW(0, L"runas", L"netsh", L"wlan stop hostednetwork", 0, SW_HIDE);
     return true;
 #else
@@ -144,7 +144,7 @@ QStringList CWifiManager::detectServer()
             hotspots << ssid;
         }
     }
-#elif defined(Q_OS_WIN)
+#elif defined(Q_OS_WIN) && !defined(Q_OS_WINRT)
     QProcess netsh;
     netsh.start("netsh wlan show networks");
     if (netsh.waitForFinished()) {
