@@ -1,0 +1,466 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>moc;h;cpp</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="ai">
+      <UniqueIdentifier>{cc466881-fc6f-4fdc-a48b-36edce0c0918}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Generated Files\Debug">
+      <UniqueIdentifier>{1e04f496-7792-4822-83b7-733c0b1f353e}</UniqueIdentifier>
+      <Extensions>cpp;moc</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="Generated Files\Release">
+      <UniqueIdentifier>{6d11a786-9314-4872-8c47-2a8ced273850}</UniqueIdentifier>
+      <Extensions>cpp;moc</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="client">
+      <UniqueIdentifier>{d9e8e635-a9fc-4723-a899-2d29d84e2741}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="common">
+      <UniqueIdentifier>{ad0d597b-4de4-4ab5-8fde-235a1dec60e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="controller">
+      <UniqueIdentifier>{2bc86438-78b0-4677-b15d-3a8492a0ac28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gamelogic">
+      <UniqueIdentifier>{1dc0dfa1-4282-486a-b9c6-2e25d41eb5e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="media">
+      <UniqueIdentifier>{63b9e04c-9c88-45a1-b486-85489c823167}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="network">
+      <UniqueIdentifier>{91a2f540-ef1c-407f-b591-e4f7cd1e62b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="osc">
+      <UniqueIdentifier>{acb3bb85-d7fe-4da6-95ce-68680581f7ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resource">
+      <UniqueIdentifier>{e1944669-1345-4414-bf19-8ecd4963f685}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="server">
+      <UniqueIdentifier>{c6520d71-5d42-4a3e-bd5f-c58dea47d6e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ui">
+      <UniqueIdentifier>{02ba66fd-8531-42e4-9815-915b42993b35}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\cpch.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_cai.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_cai.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\ai\caiengine.cpp">
+      <Filter>ai</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_caiengine.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_caiengine.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\ai\cai.cpp">
+      <Filter>ai</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_cclientuser.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_cclientuser.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\client\cuserdata.cpp">
+      <Filter>client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\client\cclient.cpp">
+      <Filter>client</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_cclient.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_cclient.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\client\cclientsettings.cpp">
+      <Filter>client</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_cclientsettings.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_cclientsettings.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\client\cclientuser.cpp">
+      <Filter>client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\cexceptionhandler.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\cjsengine.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_cjsengine.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_cjsengine.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\cabstractuser.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_cabstractuser.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_cabstractuser.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\cdeviceinfo.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_cdeviceinfo.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_cdeviceinfo.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\controller\cabstractcontroller.cpp">
+      <Filter>controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\controller\cabstractuicontroller.cpp">
+      <Filter>controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\controller\cabstractaicontroller.cpp">
+      <Filter>controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\gamelogic\cabstractplayer.cpp">
+      <Filter>gamelogic</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_cabstractplayer.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_cabstractplayer.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\gamelogic\cabstractgamelogic.cpp">
+      <Filter>gamelogic</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_cabstractgamelogic.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_cabstractgamelogic.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_csound.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_csound.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\media\csoundeffect.cpp">
+      <Filter>media</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_csoundeffect.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_csoundeffect.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\media\coggfile.cpp">
+      <Filter>media</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\media\csound.cpp">
+      <Filter>media</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\network\cprotocol.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\network\ctcpserver.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ctcpserver.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ctcpserver.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\network\ctcpsocket.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ctcpsocket.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ctcpsocket.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\network\cwifimanager.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\network\cjsonpacketparser.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\network\cnetwork.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\network\cpacket.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\network\cpacketrouter.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_cpacketrouter.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_cpacketrouter.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osc\cosc.cpp">
+      <Filter>osc</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_cimageprovider.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_cimageprovider.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\resource\cresourcemanager.cpp">
+      <Filter>resource</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_cresourcemanager.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_cresourcemanager.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\resource\cimageprovider.cpp">
+      <Filter>resource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\croom.cpp">
+      <Filter>server</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_croom.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_croom.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\croomsettings.cpp">
+      <Filter>server</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_croomsettings.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_croomsettings.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\cserver.cpp">
+      <Filter>server</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_cserver.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_cserver.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\cserveragent.cpp">
+      <Filter>server</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_cserveragent.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_cserveragent.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\cserverrobot.cpp">
+      <Filter>server</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_cserverrobot.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_cserverrobot.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\cserveruser.cpp">
+      <Filter>server</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_cserveruser.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_cserveruser.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\ui\cqmlengine.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\ui\ctranslator.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\ui\cabstractui.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\ui\cmainwindow.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\qrc_cgui.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\qrc_cfont.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\qrc_cimage.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\cpch.h" />
+    <ClInclude Include="..\..\src\client\cuserdata.h">
+      <Filter>client</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\cexceptionhandler.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\cglobal.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\controller\cabstractcontroller.h">
+      <Filter>controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\controller\cabstractuicontroller.h">
+      <Filter>controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\controller\cabstractaicontroller.h">
+      <Filter>controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\media\coggfile.h">
+      <Filter>media</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\network\cprotocol.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\network\cwifimanager.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\network\cabstractpacketparser.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\network\cjsonpacketparser.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\network\cnetwork.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\network\cpacket.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\osc\cosc.h">
+      <Filter>osc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\ui\cmainwindow.h">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\ui\cqmlengine.h">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\ui\ctranslator.h">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\ui\cabstractui.h">
+      <Filter>ui</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\src\ai\cai.h">
+      <Filter>ai</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\ai\caiengine.h">
+      <Filter>ai</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\client\cclientuser.h">
+      <Filter>client</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\client\cclient.h">
+      <Filter>client</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\client\cclientsettings.h">
+      <Filter>client</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\common\cjsengine.h">
+      <Filter>common</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\common\cabstractuser.h">
+      <Filter>common</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\common\cdeviceinfo.h">
+      <Filter>common</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\gamelogic\cabstractplayer.h">
+      <Filter>gamelogic</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\gamelogic\cabstractgamelogic.h">
+      <Filter>gamelogic</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\media\csound.h">
+      <Filter>media</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\media\csoundeffect.h">
+      <Filter>media</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\network\ctcpserver.h">
+      <Filter>network</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\network\ctcpsocket.h">
+      <Filter>network</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\network\cpacketrouter.h">
+      <Filter>network</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\resource\cimageprovider.h">
+      <Filter>resource</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\resource\cresourcemanager.h">
+      <Filter>resource</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\server\croom.h">
+      <Filter>server</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\server\croomsettings.h">
+      <Filter>server</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\server\cserver.h">
+      <Filter>server</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\server\cserveragent.h">
+      <Filter>server</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\server\cserverrobot.h">
+      <Filter>server</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\server\cserveruser.h">
+      <Filter>server</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\cgui.qrc">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\cfont.qrc">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\cimage.qrc">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

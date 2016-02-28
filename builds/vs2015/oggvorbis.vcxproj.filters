@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\src\3rdparty\oggvorbis\bitwise.c" />
+    <ClCompile Include="..\..\src\3rdparty\oggvorbis\framing.c" />
+    <ClCompile Include="..\..\src\3rdparty\oggvorbis\lib\window.c">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\3rdparty\oggvorbis\lib\analysis.c">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\3rdparty\oggvorbis\lib\bitrate.c">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\3rdparty\oggvorbis\lib\block.c">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\3rdparty\oggvorbis\lib\codebook.c">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\3rdparty\oggvorbis\lib\envelope.c">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\3rdparty\oggvorbis\lib\floor0.c">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\3rdparty\oggvorbis\lib\floor1.c">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\3rdparty\oggvorbis\lib\info.c">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\3rdparty\oggvorbis\lib\lookup.c">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\3rdparty\oggvorbis\lib\lpc.c">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\3rdparty\oggvorbis\lib\lsp.c">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\3rdparty\oggvorbis\lib\mapping0.c">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\3rdparty\oggvorbis\lib\mdct.c">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\3rdparty\oggvorbis\lib\psy.c">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\3rdparty\oggvorbis\lib\registry.c">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\3rdparty\oggvorbis\lib\res0.c">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\3rdparty\oggvorbis\lib\sharedbook.c">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\3rdparty\oggvorbis\lib\smallft.c">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\3rdparty\oggvorbis\lib\synthesis.c">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\3rdparty\oggvorbis\lib\vorbisenc.c">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\3rdparty\oggvorbis\lib\vorbisfile.c">
+      <Filter>lib</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="lib">
+      <UniqueIdentifier>{57fad279-47e7-4b42-a07f-bdf65611c0e4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

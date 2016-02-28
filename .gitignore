@@ -40,3 +40,4 @@ gui.qrc
 .DS_Store
 
 *.orig
+*.opendb

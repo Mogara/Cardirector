@@ -20,6 +20,9 @@
 #include "cexceptionhandler.h"
 
 #ifdef USE_BREAKPAD
+#ifdef _MSC_VER
+#pragma warning (disable: 4091)
+#endif
 #include <handler/exception_handler.h>
 #endif
 

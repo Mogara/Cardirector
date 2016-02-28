@@ -1,3 +1,5 @@
+wscript.echo "Generating Headers..."
+
 Set WshShell = CreateObject("Wscript.Shell")
 
 Set fso = CreateObject("Scripting.FileSystemObject")
@@ -19,6 +21,7 @@ For Each file In folder.Files
 				path = folder.Path
 				If Right(path, 1) <> "\" Then path = path & "\"
 				path = path & generatedFileName
+				wscript.echo "Generating Header for " & generatedFileName
 				Set generatedFile = fso.CreateTextFile(path, True, False)
 				generatedLine = "#include """ & fso.GetFileName(file.Path) & """"
 				generatedFile.WriteLine generatedLine
@@ -28,3 +31,5 @@ For Each file In folder.Files
 		fs.close
 	End If
 Next
+
+wscript.echo "Header Generation Complete"

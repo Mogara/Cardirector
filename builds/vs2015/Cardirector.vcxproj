@@ -1,0 +1,964 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\ai\cai.cpp" />
+    <ClCompile Include="..\..\src\ai\caiengine.cpp" />
+    <ClCompile Include="..\..\src\client\cclient.cpp" />
+    <ClCompile Include="..\..\src\client\cclientsettings.cpp" />
+    <ClCompile Include="..\..\src\client\cclientuser.cpp" />
+    <ClCompile Include="..\..\src\client\cuserdata.cpp" />
+    <ClCompile Include="..\..\src\common\cabstractuser.cpp" />
+    <ClCompile Include="..\..\src\common\cdeviceinfo.cpp" />
+    <ClCompile Include="..\..\src\common\cexceptionhandler.cpp" />
+    <ClCompile Include="..\..\src\common\cjsengine.cpp" />
+    <ClCompile Include="..\..\src\controller\cabstractaicontroller.cpp" />
+    <ClCompile Include="..\..\src\controller\cabstractcontroller.cpp" />
+    <ClCompile Include="..\..\src\controller\cabstractuicontroller.cpp" />
+    <ClCompile Include="..\..\src\cpch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src\gamelogic\cabstractgamelogic.cpp" />
+    <ClCompile Include="..\..\src\gamelogic\cabstractplayer.cpp" />
+    <ClCompile Include="..\..\src\media\coggfile.cpp" />
+    <ClCompile Include="..\..\src\media\csound.cpp" />
+    <ClCompile Include="..\..\src\media\csoundeffect.cpp" />
+    <ClCompile Include="..\..\src\network\cjsonpacketparser.cpp" />
+    <ClCompile Include="..\..\src\network\cnetwork.cpp" />
+    <ClCompile Include="..\..\src\network\cpacket.cpp" />
+    <ClCompile Include="..\..\src\network\cpacketrouter.cpp" />
+    <ClCompile Include="..\..\src\network\cprotocol.cpp" />
+    <ClCompile Include="..\..\src\network\ctcpserver.cpp" />
+    <ClCompile Include="..\..\src\network\ctcpsocket.cpp" />
+    <ClCompile Include="..\..\src\network\cwifimanager.cpp" />
+    <ClCompile Include="..\..\src\osc\cosc.cpp" />
+    <ClCompile Include="..\..\src\resource\cimageprovider.cpp" />
+    <ClCompile Include="..\..\src\resource\cresourcemanager.cpp" />
+    <ClCompile Include="..\..\src\server\croom.cpp" />
+    <ClCompile Include="..\..\src\server\croomsettings.cpp" />
+    <ClCompile Include="..\..\src\server\cserver.cpp" />
+    <ClCompile Include="..\..\src\server\cserveragent.cpp" />
+    <ClCompile Include="..\..\src\server\cserverrobot.cpp" />
+    <ClCompile Include="..\..\src\server\cserveruser.cpp" />
+    <ClCompile Include="..\..\src\ui\cabstractui.cpp" />
+    <ClCompile Include="..\..\src\ui\cmainwindow.cpp" />
+    <ClCompile Include="..\..\src\ui\cqmlengine.cpp" />
+    <ClCompile Include="..\..\src\ui\ctranslator.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_cabstractgamelogic.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_cabstractplayer.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_cabstractuser.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_cai.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_caiengine.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_cclient.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_cclientsettings.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_cclientuser.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_cdeviceinfo.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_cimageprovider.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_cjsengine.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_cpacketrouter.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_cresourcemanager.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_croom.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_croomsettings.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_cserver.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_cserveragent.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_cserverrobot.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_cserveruser.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_csound.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_csoundeffect.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ctcpserver.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ctcpsocket.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\qrc_cfont.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\qrc_cgui.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\qrc_cimage.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_cabstractgamelogic.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_cabstractplayer.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_cabstractuser.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_cai.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_caiengine.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_cclient.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_cclientsettings.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_cclientuser.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_cdeviceinfo.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_cimageprovider.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_cjsengine.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_cpacketrouter.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_cresourcemanager.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_croom.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_croomsettings.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_cserver.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_cserveragent.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_cserverrobot.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_cserveruser.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_csound.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_csoundeffect.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ctcpserver.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ctcpsocket.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\controller\cabstractaicontroller.h" />
+    <ClInclude Include="..\..\src\controller\cabstractcontroller.h" />
+    <ClInclude Include="..\..\src\controller\cabstractuicontroller.h" />
+    <ClInclude Include="..\..\src\media\coggfile.h" />
+    <ClInclude Include="..\..\src\network\cabstractpacketparser.h" />
+    <ClInclude Include="..\..\src\network\cjsonpacketparser.h" />
+    <ClInclude Include="..\..\src\network\cnetwork.h" />
+    <ClInclude Include="..\..\src\network\cpacket.h" />
+    <ClInclude Include="..\..\src\osc\cosc.h" />
+    <ClInclude Include="..\..\src\ui\cabstractui.h" />
+    <ClInclude Include="..\..\src\ui\cmainwindow.h" />
+    <ClInclude Include="..\..\src\ui\cqmlengine.h" />
+    <ClInclude Include="..\..\src\ui\ctranslator.h" />
+    <CustomBuild Include="..\..\src\server\cserveruser.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing cserveruser.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/server/cserveruser.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing cserveruser.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/server/cserveruser.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing cserveruser.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/server/cserveruser.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing cserveruser.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/server/cserveruser.h"</Command>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\server\cserverrobot.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing cserverrobot.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/server/cserverrobot.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing cserverrobot.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/server/cserverrobot.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing cserverrobot.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/server/cserverrobot.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing cserverrobot.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/server/cserverrobot.h"</Command>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\server\cserveragent.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing cserveragent.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/server/cserveragent.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing cserveragent.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/server/cserveragent.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing cserveragent.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/server/cserveragent.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing cserveragent.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/server/cserveragent.h"</Command>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\server\cserver.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing cserver.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/server/cserver.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing cserver.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/server/cserver.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing cserver.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/server/cserver.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing cserver.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/server/cserver.h"</Command>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\server\croomsettings.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing croomsettings.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/server/croomsettings.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing croomsettings.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/server/croomsettings.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing croomsettings.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/server/croomsettings.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing croomsettings.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/server/croomsettings.h"</Command>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\server\croom.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing croom.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/server/croom.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing croom.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/server/croom.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing croom.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/server/croom.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing croom.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/server/croom.h"</Command>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\resource\cresourcemanager.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing cresourcemanager.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/resource/cresourcemanager.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing cresourcemanager.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/resource/cresourcemanager.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing cresourcemanager.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/resource/cresourcemanager.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing cresourcemanager.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/resource/cresourcemanager.h"</Command>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\resource\cimageprovider.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing cimageprovider.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/resource/cimageprovider.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing cimageprovider.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/resource/cimageprovider.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing cimageprovider.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/resource/cimageprovider.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing cimageprovider.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/resource/cimageprovider.h"</Command>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\network\cpacketrouter.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing cpacketrouter.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/network/cpacketrouter.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing cpacketrouter.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/network/cpacketrouter.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing cpacketrouter.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/network/cpacketrouter.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing cpacketrouter.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/network/cpacketrouter.h"</Command>
+    </CustomBuild>
+    <ClInclude Include="..\..\src\network\cprotocol.h" />
+    <ClInclude Include="..\..\src\network\cwifimanager.h" />
+    <CustomBuild Include="..\..\src\network\ctcpsocket.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing ctcpsocket.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/network/ctcpsocket.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing ctcpsocket.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/network/ctcpsocket.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing ctcpsocket.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/network/ctcpsocket.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing ctcpsocket.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/network/ctcpsocket.h"</Command>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\network\ctcpserver.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing ctcpserver.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/network/ctcpserver.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing ctcpserver.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/network/ctcpserver.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing ctcpserver.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/network/ctcpserver.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing ctcpserver.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/network/ctcpserver.h"</Command>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\media\csoundeffect.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing csoundeffect.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/media/csoundeffect.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing csoundeffect.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/media/csoundeffect.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing csoundeffect.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/media/csoundeffect.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing csoundeffect.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/media/csoundeffect.h"</Command>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\media\csound.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing csound.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/media/csound.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing csound.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/media/csound.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing csound.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/media/csound.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing csound.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/media/csound.h"</Command>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\gamelogic\cabstractgamelogic.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing cabstractgamelogic.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/gamelogic/cabstractgamelogic.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing cabstractgamelogic.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/gamelogic/cabstractgamelogic.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing cabstractgamelogic.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/gamelogic/cabstractgamelogic.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing cabstractgamelogic.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/gamelogic/cabstractgamelogic.h"</Command>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\gamelogic\cabstractplayer.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing cabstractplayer.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/gamelogic/cabstractplayer.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing cabstractplayer.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/gamelogic/cabstractplayer.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing cabstractplayer.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/gamelogic/cabstractplayer.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing cabstractplayer.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/gamelogic/cabstractplayer.h"</Command>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\common\cdeviceinfo.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing cdeviceinfo.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/common/cdeviceinfo.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing cdeviceinfo.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/common/cdeviceinfo.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing cdeviceinfo.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/common/cdeviceinfo.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing cdeviceinfo.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/common/cdeviceinfo.h"</Command>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\common\cabstractuser.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing cabstractuser.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/common/cabstractuser.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing cabstractuser.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/common/cabstractuser.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing cabstractuser.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/common/cabstractuser.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing cabstractuser.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/common/cabstractuser.h"</Command>
+    </CustomBuild>
+    <ClInclude Include="..\..\src\common\cexceptionhandler.h" />
+    <ClInclude Include="..\..\src\common\cglobal.h" />
+    <CustomBuild Include="..\..\src\common\cjsengine.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing cjsengine.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/common/cjsengine.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing cjsengine.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/common/cjsengine.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing cjsengine.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/common/cjsengine.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing cjsengine.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/common/cjsengine.h"</Command>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\client\cclientsettings.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing cclientsettings.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/client/cclientsettings.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing cclientsettings.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/client/cclientsettings.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing cclientsettings.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/client/cclientsettings.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing cclientsettings.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/client/cclientsettings.h"</Command>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\client\cclient.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing cclient.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/client/cclient.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing cclient.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/client/cclient.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing cclient.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/client/cclient.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing cclient.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/client/cclient.h"</Command>
+    </CustomBuild>
+    <ClInclude Include="..\..\src\client\cuserdata.h" />
+    <CustomBuild Include="..\..\src\client\cclientuser.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing cclientuser.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/client/cclientuser.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing cclientuser.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/client/cclientuser.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing cclientuser.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/client/cclientuser.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing cclientuser.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/client/cclientuser.h"</Command>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\ai\caiengine.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing caiengine.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/ai/caiengine.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing caiengine.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/ai/caiengine.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing caiengine.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/ai/caiengine.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing caiengine.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/ai/caiengine.h"</Command>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\ai\cai.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing cai.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/ai/cai.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing cai.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/ai/cai.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing cai.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/ai/cai.h"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing cai.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DUSE_BREAKPAD -DMCD_STATIC -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_QUICK_LIB -DCARDIRECTOR_LIB -DQT_QML_LIB -DQT_NETWORK_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtQuick" "-I$(QTDIR)\include\QtQml" "-I.\..\..\src\3rdparty\breakpad" "-I.\..\..\src\3rdparty\breakpad\client\windows" "-I.\..\..\src\3rdparty\oggvorbis\include" "-I.\..\..\src" "-I.\..\..\src\ai" "-I.\..\..\src\common" "-I.\..\..\src\client" "-I.\..\..\src\gamelogic" "-I.\..\..\src\ui" "-I.\..\..\src\resource" "-I.\..\..\src\server" "-I.\..\..\src\media" "-I.\..\..\src\network" "-I.\..\..\src\3rdparty" "-I$(QTDIR)\include\QtNetwork" "-fcpch.h" "-f../../../../src/ai/cai.h"</Command>
+    </CustomBuild>
+    <ClInclude Include="..\..\src\cpch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\cfont.qrc">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(FullPath);..\..\font\Braxton Free.otf;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Rcc%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\qrc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\rcc.exe" -name "%(Filename)" -no-compress "%(FullPath)" -o .\GeneratedFiles\qrc_%(Filename).cpp</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(FullPath);..\..\font\Braxton Free.otf;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Rcc%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\qrc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\rcc.exe" -name "%(Filename)" -no-compress "%(FullPath)" -o .\GeneratedFiles\qrc_%(Filename).cpp</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(FullPath);..\..\font\Braxton Free.otf;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Rcc%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\qrc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\rcc.exe" -name "%(Filename)" -no-compress "%(FullPath)" -o .\GeneratedFiles\qrc_%(Filename).cpp</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(FullPath);..\..\font\Braxton Free.otf;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Rcc%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\qrc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\rcc.exe" -name "%(Filename)" -no-compress "%(FullPath)" -o .\GeneratedFiles\qrc_%(Filename).cpp</Command>
+    </CustomBuild>
+    <CustomBuild Include="..\..\cimage.qrc">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(FullPath);..\..\image\splash0.png;..\..\image\splash1.png;..\..\image\snowflake.png;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Rcc%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\qrc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\rcc.exe" -name "%(Filename)" -no-compress "%(FullPath)" -o .\GeneratedFiles\qrc_%(Filename).cpp</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(FullPath);..\..\image\splash0.png;..\..\image\splash1.png;..\..\image\snowflake.png;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Rcc%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\qrc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\rcc.exe" -name "%(Filename)" -no-compress "%(FullPath)" -o .\GeneratedFiles\qrc_%(Filename).cpp</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(FullPath);..\..\image\splash0.png;..\..\image\splash1.png;..\..\image\snowflake.png;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Rcc%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\qrc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\rcc.exe" -name "%(Filename)" -no-compress "%(FullPath)" -o .\GeneratedFiles\qrc_%(Filename).cpp</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(FullPath);..\..\image\splash0.png;..\..\image\splash1.png;..\..\image\snowflake.png;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Rcc%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\qrc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\rcc.exe" -name "%(Filename)" -no-compress "%(FullPath)" -o .\GeneratedFiles\qrc_%(Filename).cpp</Command>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\cgui.qrc">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(FullPath);..\..\Gui\Dialog.qml;..\..\Gui\FitInView.qml;..\..\Gui\LogEdit.qml;..\..\Gui\MetroButton.qml;..\..\Gui\qmldir;..\..\Gui\Splash.qml;..\..\Gui\TileButton.qml;..\..\Gui\ToolTipArea.qml;..\..\Gui\Private\ToolTip.qml;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Rcc%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\qrc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\rcc.exe" -name "%(Filename)" -no-compress "%(FullPath)" -o .\GeneratedFiles\qrc_%(Filename).cpp</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(FullPath);..\..\Gui\Dialog.qml;..\..\Gui\FitInView.qml;..\..\Gui\LogEdit.qml;..\..\Gui\MetroButton.qml;..\..\Gui\qmldir;..\..\Gui\Splash.qml;..\..\Gui\TileButton.qml;..\..\Gui\ToolTipArea.qml;..\..\Gui\Private\ToolTip.qml;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Rcc%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\qrc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\rcc.exe" -name "%(Filename)" -no-compress "%(FullPath)" -o .\GeneratedFiles\qrc_%(Filename).cpp</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(FullPath);..\..\Gui\Dialog.qml;..\..\Gui\FitInView.qml;..\..\Gui\LogEdit.qml;..\..\Gui\MetroButton.qml;..\..\Gui\qmldir;..\..\Gui\Splash.qml;..\..\Gui\TileButton.qml;..\..\Gui\ToolTipArea.qml;..\..\Gui\Private\ToolTip.qml;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Rcc%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\qrc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\rcc.exe" -name "%(Filename)" -no-compress "%(FullPath)" -o .\GeneratedFiles\qrc_%(Filename).cpp</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(FullPath);..\..\Gui\Dialog.qml;..\..\Gui\FitInView.qml;..\..\Gui\LogEdit.qml;..\..\Gui\MetroButton.qml;..\..\Gui\qmldir;..\..\Gui\Splash.qml;..\..\Gui\TileButton.qml;..\..\Gui\ToolTipArea.qml;..\..\Gui\Private\ToolTip.qml;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Rcc%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\qrc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\rcc.exe" -name "%(Filename)" -no-compress "%(FullPath)" -o .\GeneratedFiles\qrc_%(Filename).cpp</Command>
+    </CustomBuild>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{B12702AD-ABFB-343A-A199-8E24837244A3}</ProjectGuid>
+    <Keyword>Qt4VSv1.0</Keyword>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>14.0.24720.0</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>..\..\lib</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>..\..\lib</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>..\..\lib</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>..\..\lib</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>UNICODE;WIN32;QT_DLL;USE_BREAKPAD;MCD_STATIC;QT_CORE_LIB;QT_GUI_LIB;QT_MULTIMEDIA_LIB;QT_QUICK_LIB;CARDIRECTOR_LIB;QT_QML_LIB;QT_NETWORK_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtNetwork;..\..\src\3rdparty\breakpad;..\..\src\3rdparty\breakpad\client\windows;..\..\src\3rdparty\oggvorbis\include;..\..\src;..\..\src\ai;..\..\src\common;..\..\src\client;..\..\src\gamelogic;..\..\src\ui;..\..\src\resource;..\..\src\server;..\..\src\media;..\..\src\network;..\..\src\3rdparty;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Disabled</Optimization>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles>cpch.h</ForcedIncludeFiles>
+      <PrecompiledHeaderFile>cpch.h</PrecompiledHeaderFile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <OutputFile>$(OutDir)\$(ProjectName).lib</OutputFile>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Multimediad.lib;Qt5Quickd.lib;Qt5Qmld.lib;Qt5Networkd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PreBuildEvent>
+      <Command>cmd /c cscript /nologo $(SolutionDir)..\..\src\GenerateCGuiQrc.vbs
+</Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>cmd /c cscript /nologo $(SolutionDir)..\..\include\AutoGenerateHeader.vbs
+</Command>
+    </PostBuildEvent>
+    <PreLinkEvent>
+      <Command>cmd /c cscript /nologo $(SolutionDir)..\..\include\CopyHeader.vbs</Command>
+    </PreLinkEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>UNICODE;WIN32;QT_DLL;USE_BREAKPAD;MCD_STATIC;QT_CORE_LIB;QT_GUI_LIB;QT_MULTIMEDIA_LIB;QT_QUICK_LIB;CARDIRECTOR_LIB;QT_QML_LIB;QT_NETWORK_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtNetwork;..\..\src\3rdparty\breakpad;..\..\src\3rdparty\breakpad\client\windows;..\..\src\3rdparty\oggvorbis\include;..\..\src;..\..\src\ai;..\..\src\common;..\..\src\client;..\..\src\gamelogic;..\..\src\ui;..\..\src\resource;..\..\src\server;..\..\src\media;..\..\src\network;..\..\src\3rdparty;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Disabled</Optimization>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles>cpch.h</ForcedIncludeFiles>
+      <PrecompiledHeaderFile>cpch.h</PrecompiledHeaderFile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <OutputFile>$(OutDir)\$(ProjectName).lib</OutputFile>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Multimediad.lib;Qt5Quickd.lib;Qt5Qmld.lib;Qt5Networkd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PreBuildEvent>
+      <Command>cmd /c cscript /nologo $(SolutionDir)..\..\src\GenerateCGuiQrc.vbs
+</Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>cmd /c cscript /nologo $(SolutionDir)..\..\include\AutoGenerateHeader.vbs
+</Command>
+    </PostBuildEvent>
+    <PreLinkEvent>
+      <Command>cmd /c cscript /nologo $(SolutionDir)..\..\include\CopyHeader.vbs</Command>
+    </PreLinkEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>UNICODE;WIN32;QT_DLL;USE_BREAKPAD;MCD_STATIC;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_MULTIMEDIA_LIB;QT_QUICK_LIB;CARDIRECTOR_LIB;QT_QML_LIB;QT_NETWORK_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtNetwork;..\..\src\3rdparty\breakpad;..\..\src\3rdparty\breakpad\client\windows;..\..\src\3rdparty\oggvorbis\include;..\..\src;..\..\src\ai;..\..\src\common;..\..\src\client;..\..\src\gamelogic;..\..\src\ui;..\..\src\resource;..\..\src\server;..\..\src\media;..\..\src\network;..\..\src\3rdparty;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat />
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles>cpch.h</ForcedIncludeFiles>
+      <PrecompiledHeaderFile>cpch.h</PrecompiledHeaderFile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <OutputFile>$(OutDir)\$(ProjectName).lib</OutputFile>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <AdditionalDependencies>qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Multimedia.lib;Qt5Quick.lib;Qt5Qml.lib;Qt5Network.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PreBuildEvent>
+      <Command>cmd /c cscript /nologo $(SolutionDir)..\..\src\GenerateCGuiQrc.vbs
+</Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>cmd /c cscript /nologo $(SolutionDir)..\..\include\AutoGenerateHeader.vbs
+</Command>
+    </PostBuildEvent>
+    <PreLinkEvent>
+      <Command>cmd /c cscript /nologo $(SolutionDir)..\..\include\CopyHeader.vbs</Command>
+    </PreLinkEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>UNICODE;WIN32;QT_DLL;USE_BREAKPAD;MCD_STATIC;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_MULTIMEDIA_LIB;QT_QUICK_LIB;CARDIRECTOR_LIB;QT_QML_LIB;QT_NETWORK_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtQuick;$(QTDIR)\include\QtQml;$(QTDIR)\include\QtNetwork;..\..\src\3rdparty\breakpad;..\..\src\3rdparty\breakpad\client\windows;..\..\src\3rdparty\oggvorbis\include;..\..\src;..\..\src\ai;..\..\src\common;..\..\src\client;..\..\src\gamelogic;..\..\src\ui;..\..\src\resource;..\..\src\server;..\..\src\media;..\..\src\network;..\..\src\3rdparty;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat />
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles>cpch.h</ForcedIncludeFiles>
+      <PrecompiledHeaderFile>cpch.h</PrecompiledHeaderFile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <OutputFile>$(OutDir)\$(ProjectName).lib</OutputFile>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <AdditionalDependencies>qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Multimedia.lib;Qt5Quick.lib;Qt5Qml.lib;Qt5Network.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PreBuildEvent>
+      <Command>cmd /c cscript /nologo $(SolutionDir)..\..\src\GenerateCGuiQrc.vbs
+</Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>cmd /c cscript /nologo $(SolutionDir)..\..\include\AutoGenerateHeader.vbs
+</Command>
+    </PostBuildEvent>
+    <PreLinkEvent>
+      <Command>cmd /c cscript /nologo $(SolutionDir)..\..\include\CopyHeader.vbs</Command>
+    </PreLinkEvent>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties MocDir=".\GeneratedFiles\$(ConfigurationName)" UicDir=".\GeneratedFiles" RccDir=".\GeneratedFiles" lupdateOptions="" lupdateOnBuild="0" lreleaseOptions="" Qt5Version_x0020_x64="$(DefaultQtVersion)" MocOptions="" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

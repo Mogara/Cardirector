@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\src\3rdparty\breakpad\common\md5.cc" />
+    <ClCompile Include="..\..\src\3rdparty\breakpad\common\string_conversion.cc" />
+    <ClCompile Include="..\..\src\3rdparty\breakpad\common\convert_UTF.c" />
+    <ClCompile Include="..\..\src\3rdparty\breakpad\client\windows\crash_generation\crash_generation_client.cc" />
+    <ClCompile Include="..\..\src\3rdparty\breakpad\client\windows\crash_generation\crash_generation_server.cc" />
+    <ClCompile Include="..\..\src\3rdparty\breakpad\client\windows\crash_generation\minidump_generator.cc" />
+    <ClCompile Include="..\..\src\3rdparty\breakpad\client\windows\crash_generation\client_info.cc" />
+    <ClCompile Include="..\..\src\3rdparty\breakpad\client\windows\handler\exception_handler.cc" />
+    <ClCompile Include="..\..\src\3rdparty\breakpad\common\windows\guid_string.cc" />
+  </ItemGroup>
+</Project>
