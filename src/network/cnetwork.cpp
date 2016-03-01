@@ -26,7 +26,7 @@ void cRegisterUrlScheme(const QString &introduction)
 {
 #ifdef Q_OS_WIN
     QString scheme = qApp->applicationName();
-    scheme.remove(QRegExp("[^A-Za-z]"));
+    scheme.remove(QRegularExpression("[^A-Za-z]"));
 
     QString appPath = QCoreApplication::applicationFilePath();
     appPath.replace('/', '\\');

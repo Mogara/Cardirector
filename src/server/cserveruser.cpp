@@ -186,7 +186,7 @@ void CServerUser::handleUnknownPacket(const QByteArray &packet)
         }
 
         QString scheme = qApp->applicationName();
-        scheme.remove(QRegExp("[^A-Za-z]"));
+        scheme.remove(QRegularExpression("[^A-Za-z]"));
         QString location = QString("Location: %1://%2:%3/\r\n");
         location = location.arg(scheme).arg(socket->localAddress().toString()).arg(socket->localPort());
 
