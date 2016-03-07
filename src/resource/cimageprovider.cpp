@@ -48,7 +48,10 @@ CImageProvider::~CImageProvider()
     delete p_ptr;
 }
 
-static const int StandardDPI = 96;
+namespace
+{
+    const int StandardDPI = 96;
+}
 
 QPixmap CImageProvider::requestPixmap(const QString &id, QSize *size, const QSize &requestedSize)
 {

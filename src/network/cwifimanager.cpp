@@ -25,8 +25,10 @@
 #include <QAndroidJniObject>
 #include <QAndroidJniEnvironment>
 
-static QAndroidJniObject activity = QtAndroid::androidActivity();
-static QAndroidJniObject manager = activity.callObjectMethod("getSystemService", "(Ljava/lang/String;)Ljava/lang/Object;", QAndroidJniObject::fromString("wifi").object<jstring>());
+namespace {
+    QAndroidJniObject activity = QtAndroid::androidActivity();
+    QAndroidJniObject manager = activity.callObjectMethod("getSystemService", "(Ljava/lang/String;)Ljava/lang/Object;", QAndroidJniObject::fromString("wifi").object<jstring>());
+}
 
 #elif defined(Q_OS_WIN)  && !defined(Q_OS_WINRT)
 

@@ -28,39 +28,40 @@
 
 #include <QFile>
 
-static CExceptionHandler::MinidumpCallback CDumpCallback = NULL;
+namespace
+{
+    CExceptionHandler::MinidumpCallback CDumpCallback = NULL;
 
 #ifdef USE_BREAKPAD
 #if defined(Q_OS_LINUX)
-static bool GoogleBreakpadCallback(const google_breakpad::MinidumpDescriptor &md,void *, bool succeeded)
-{
-    if (succeeded && CDumpCallback)
-        (*CDumpCallback)(md.path());
-    return succeeded;
-}
+    bool GoogleBreakpadCallback(const google_breakpad::MinidumpDescriptor &md,void *, bool succeeded)
+    {
+        if (succeeded && CDumpCallback)
+            (*CDumpCallback)(md.path());
+        return succeeded;
+    }
 #elif defined (Q_OS_OSX)
-static bool GoogleBreakpadCallback(const char *,
-                                   const char *minidump_id,
-                                   void *, bool succeeded)
-{
-    if (succeeded && CDumpCallback) {
-        QString fileName = QString::fromLatin1(minidump_id) + ".dmp";
-        (*CDumpCallback)(fileName);
+    bool GoogleBreakpadCallback(const char *, const char *minidump_id, void *, bool succeeded)
+    {
+        if (succeeded && CDumpCallback) {
+            QString fileName = QString::fromLatin1(minidump_id) + ".dmp";
+            (*CDumpCallback)(fileName);
+        }
+        return succeeded;
     }
-    return succeeded;
-}
 #elif defined(Q_OS_WIN)
-static bool GoogleBreakpadCallback(const wchar_t *, const wchar_t *id, void *, EXCEPTION_POINTERS *, MDRawAssertionInfo *, bool succeeded)
-{
-    if (succeeded && CDumpCallback) {
-        QString fileName = QString::fromWCharArray(id);
-        fileName.append(".dmp");
-        (*CDumpCallback)(fileName);
+    bool GoogleBreakpadCallback(const wchar_t *, const wchar_t *id, void *, EXCEPTION_POINTERS *, MDRawAssertionInfo *, bool succeeded)
+    {
+        if (succeeded && CDumpCallback) {
+            QString fileName = QString::fromWCharArray(id);
+            fileName.append(".dmp");
+            (*CDumpCallback)(fileName);
+        }
+        return succeeded;
     }
-    return succeeded;
-}
 #endif
 #endif //USE_BREAKPAD
+}
 
 CExceptionHandler::CExceptionHandler(const QString &directory, MinidumpCallback callback)
 {

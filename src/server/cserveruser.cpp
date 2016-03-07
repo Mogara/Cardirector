@@ -29,8 +29,11 @@
 #include <QCoreApplication>
 #include <QDateTime>
 
-static QHash<int, CPacketRouter::Callback> interactions;
-static QHash<int, CPacketRouter::Callback> callbacks;
+namespace
+{
+    QHash<int, CPacketRouter::Callback> interactions;
+    QHash<int, CPacketRouter::Callback> callbacks;
+}
 
 class CServerUserPrivate
 {

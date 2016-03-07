@@ -33,8 +33,11 @@ public:
     CAbstractPacketParser *parser;
 };
 
-static QHash<int, CPacketRouter::Callback> interactions;
-static QHash<int, CPacketRouter::Callback> callbacks;
+namespace
+{
+    QHash<int, CPacketRouter::Callback> interactions;
+    QHash<int, CPacketRouter::Callback> callbacks;
+}
 
 CClient::CClient(QObject *parent)
     : QObject(parent)

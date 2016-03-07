@@ -19,7 +19,10 @@
 
 #include "cprotocol.h"
 
-static QMap<int, QString> CCommandString;
+namespace
+{
+    QMap<int, QString> CCommandString;
+}
 
 void cRegisterCommand(int command, const QString &name)
 {
@@ -50,4 +53,5 @@ public:
         C_REGISTER_COMMAND(TOGGLE_READY);
     }
 };
-static CCommandAdder adder;
+
+static CCommandAdder adder; // Fs: should use Q_COREAPP_STARTUP_FUNCTION?

@@ -26,20 +26,26 @@
 #include <QtQml>
 #include <QFile>
 
-static const struct {
-    const char *type;
+namespace
+{
+    struct QmlDirStruct
+    {
+        const char *type;
         int major, minor;
         bool isPublic;
-    } qmldir [] = {
-        { "Dialog", 1, 0, true },
-        { "FitInView", 1, 0, true },
-        { "LogEdit", 1, 0, true },
-        { "MetroButton", 1, 0, true },
-        { "Splash", 1, 0, true },
-        { "TileButton", 1, 0, true },
-        { "ToolTipArea", 1, 0, true },
-        { "ToolTip", 1, 0, false },
-};
+    };
+
+    const QmlDirStruct qmldir[] = {
+        {"Dialog", 1, 0, true},
+        {"FitInView", 1, 0, true},
+        {"LogEdit", 1, 0, true},
+        {"MetroButton", 1, 0, true},
+        {"Splash", 1, 0, true},
+        {"TileButton", 1, 0, true},
+        {"ToolTipArea", 1, 0, true},
+        {"ToolTip", 1, 0, false},
+    };
+}
 
 class CQmlEnginePrivate
 {
@@ -70,10 +76,13 @@ public:
     }
 };
 
-static QObject *cDeviceInfoProvider(QQmlEngine *, QJSEngine *)
+namespace
 {
-    CDeviceInfo *info = new CDeviceInfo;
-    return info;
+    QObject *cDeviceInfoProvider(QQmlEngine *, QJSEngine *)
+    {
+        CDeviceInfo *info = new CDeviceInfo;
+        return info;
+    }
 }
 
 CQmlEngine::CQmlEngine(QObject *p)
