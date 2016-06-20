@@ -102,10 +102,10 @@ Q_COREAPP_STARTUP_FUNCTION(__##classname##Init)
 #  define MCD_FULLSCREEN_ONLY
 #endif
 
-#define C_REGISTER_QMLTYPE(uri, versionMajor, versionMinor, qmlName) static void __cRegisterQmlType()\
+#define C_REGISTER_QMLTYPE(uri, versionMajor, versionMinor, qmlName) static void __cRegisterQmlType__ ## qmlName()\
 {\
     qmlRegisterType<qmlName>(uri, versionMajor, versionMinor, #qmlName);\
 }\
-Q_COREAPP_STARTUP_FUNCTION(__cRegisterQmlType)
+Q_COREAPP_STARTUP_FUNCTION(__cRegisterQmlType__ ## qmlName)
 
 #endif // CGLOBAL_H
