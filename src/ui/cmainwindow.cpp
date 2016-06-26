@@ -21,8 +21,11 @@
 #include "cqmlengine.h"
 #include "cimageprovider.h"
 
+#include <QDir>
 #include <QGuiApplication>
+#include <QQmlContext>
 #include <QQuickItem>
+#include <QSettings>
 #include <QScreen>
 
 class CMainWindowPrivate

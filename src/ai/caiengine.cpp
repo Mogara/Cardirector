@@ -189,7 +189,8 @@ bool CAiEngine::avaliable() const
 }
 
 CAiEngineFunctions::CAiEngineFunctions(CAiEngine *aiEngine)
-    : m_aiEngine(aiEngine), QObject(aiEngine)
+    : QObject(aiEngine)
+    , m_aiEngine(aiEngine)
 {
 
 }

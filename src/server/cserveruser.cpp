@@ -28,6 +28,7 @@
 
 #include <QCoreApplication>
 #include <QDateTime>
+#include <QRegularExpression>
 
 namespace
 {

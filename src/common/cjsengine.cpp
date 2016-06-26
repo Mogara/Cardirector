@@ -23,7 +23,8 @@ CJSEngine::~CJSEngine()
 }
 
 CJSEngineFunctions::CJSEngineFunctions(CJSEngine *engine)
-    : m_engine(engine), QObject(engine)
+    : QObject(engine)
+    , m_engine(engine)
 {
 
 }

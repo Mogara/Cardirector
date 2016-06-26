@@ -20,8 +20,9 @@
 #include "cai.h"
 #include "caiengine.h"
 
-#include <QThread>
 #include <QDebug>
+#include <QThread>
+#include <QSemaphore>
 
 class CAiPrivate
 {

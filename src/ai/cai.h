@@ -23,6 +23,8 @@
 #include "cglobal.h"
 #include "cprotocol.h"
 
+#include <QVariant>
+
 class QSemaphore;
 
 MCD_BEGIN_NAMESPACE
