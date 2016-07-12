@@ -31,97 +31,34 @@ INCLUDEPATH += \
     common \
     client \
     gamelogic \
-    ui \
-    resource \
-    server \
     media \
     network \
+    resource \
+    server \
+    ui \
     3rdparty
 
 SOURCES += \
-    client/cclient.cpp \
-    client/cclientsettings.cpp \
-    client/cclientuser.cpp \
-    client/cuserdata.cpp \
-    common/cabstractuser.cpp \
-    common/cdeviceinfo.cpp \
-    common/cexceptionhandler.cpp \
-    controller/cabstractaicontroller.cpp \
-    controller/cabstractcontroller.cpp \
-    controller/cabstractuicontroller.cpp \
-    gamelogic/cabstractgamelogic.cpp \
-    gamelogic/cabstractplayer.cpp \
-    media/coggfile.cpp \
-    media/csound.cpp \
-    media/csoundeffect.cpp \
-    network/cjsonpacketparser.cpp \
-    network/cnetwork.cpp \
-    network/cpacket.cpp \
-    network/cpacketrouter.cpp \
-    network/cprotocol.cpp \
-    network/ctcpserver.cpp \
-    network/ctcpsocket.cpp \
-    network/cwifimanager.cpp \
-    osc/cosc.cpp \
-    resource/cresourcemanager.cpp \
-    resource/cimageprovider.cpp \
-    server/croom.cpp \
-    server/croomsettings.cpp \
-    server/cserver.cpp \
-    server/cserveragent.cpp \
-    server/cserverrobot.cpp \
-    server/cserveruser.cpp \
-    ui/cabstractui.cpp \
-    ui/cmainwindow.cpp \
-    ui/cqmlengine.cpp \
-    ui/ctranslator.cpp \
-    ai/cai.cpp \
-    ai/caiengine.cpp \
-    common/cjsengine.cpp
+    $$files(ai/*.cpp) \
+    $$files(common/*.cpp) \
+    $$files(client/*.cpp) \
+    $$files(gamelogic/*.cpp) \
+    $$files(media/*.cpp) \
+    $$files(network/*.cpp) \
+    $$files(resource/*.cpp) \
+    $$files(server/*.cpp) \
+    $$files(ui/*.cpp)
 
 HEADERS += \
-    client/cclient.h \
-    client/cclientsettings.h \
-    client/cclientuser.h \
-    client/cuserdata.h \
-    common/cabstractuser.h \
-    common/cdeviceinfo.h \
-    common/cglobal.h \
-    common/cexceptionhandler.h \
-    controller/cabstractaicontroller.h \
-    controller/cabstractcontroller.h \
-    controller/cabstractuicontroller.h \
-    gamelogic/cabstractgamelogic.h \
-    gamelogic/cabstractplayer.h \
-    media/coggfile.h \
-    media/csound.h \
-    media/csoundeffect.h \
-    network/cabstractpacketparser.h \
-    network/cjsonpacketparser.h \
-    network/cnetwork.h \
-    network/cpacket.h \
-    network/cpacketrouter.h \
-    network/cprotocol.h \
-    network/ctcpserver.h \
-    network/ctcpsocket.h \
-    network/cwifimanager.h \
-    osc/cosc.h \
-    resource/cimageprovider.h \
-    resource/cresourcemanager.h \
-    server/croom.h \
-    server/croomsettings.h \
-    server/cserver.h \
-    server/cserveragent.h \
-    server/cserverrobot.h \
-    server/cserveruser.h \
-    ui/cabstractui.h \
-    ui/cmainwindow.h \
-    ui/cqmlengine.h \
-    ui/ctranslator.h \
-    cpch.h \
-    ai/cai.h \
-    ai/caiengine.h \
-    common/cjsengine.h
+    $$files(ai/*.h) \
+    $$files(common/*.h) \
+    $$files(client/*.h) \
+    $$files(gamelogic/*.h) \
+    $$files(media/*.h) \
+    $$files(network/*.h) \
+    $$files(resource/*.h) \
+    $$files(server/*.h) \
+    $$files(ui/*.h)
 
 QML_FILES += \
     ../Gui/Dialog.qml \
