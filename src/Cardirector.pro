@@ -140,7 +140,7 @@ for (file, HEADERS) {
 contains(QMAKE_HOST.os, "Windows") : QMAKE_POST_LINK += cmd /c cscript /nologo $$_PRO_FILE_PWD_/../include/AutoGenerateHeader.vbs
 else : QMAKE_POST_LINK += sh $$_PRO_FILE_PWD_/../include/AutoGenerateHeader.sh
 
-
+LIBS += -L$$PWD/../lib -lbreakpad -loggvorbis
 
 DISTFILES = ../Gui/qmldir
 
