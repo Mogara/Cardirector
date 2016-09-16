@@ -31,7 +31,7 @@ public:
 
     void load(QDir dir)
     {
-        QStringList fileNames = dir.entryList(QStringList() << "*.json", QDir::Files);
+        QStringList fileNames = dir.entryList(QStringList() << QStringLiteral("*.json"), QDir::Files);
         foreach (const QString &fileName, fileNames)
             load(dir.filePath(fileName));
 
@@ -82,6 +82,6 @@ bool CTranslator::load(const QString &language, const QString &rootDirectory)
 
 QString CTranslator::translate(const char *, const char *sourceText, const char *, int) const
 {
-    return p_ptr->translations.value(sourceText);
+    return p_ptr->translations.value(QString::fromUtf8(sourceText));
 }
 

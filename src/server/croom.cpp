@@ -94,11 +94,11 @@ uint CRoom::id() const
 QVariant CRoom::briefIntroduction() const
 {
     QVariantMap info;
-    info["id"] = (!p_ptr->server.isNull() && p_ptr->server->lobby() != this ? p_ptr->id : 0);
-    info["name"] = name();
-    info["userNum"] = p_ptr->agents.size();
-    info["capacity"] = capacity();
-    info["ownerId"] = ownerId();
+    info[QStringLiteral("id")] = (!p_ptr->server.isNull() && p_ptr->server->lobby() != this ? p_ptr->id : 0);
+    info[QStringLiteral("name")] = name();
+    info[QStringLiteral("userNum")] = p_ptr->agents.size();
+    info[QStringLiteral("capacity")] = capacity();
+    info[QStringLiteral("ownerId")] = ownerId();
     return info;
 }
 
@@ -214,8 +214,8 @@ void CRoom::addUser(CServerUser *user)
     connect(user, &CServerUser::disconnected, this, &CRoom::onUserDisconnected);
 
     QVariantMap data;
-    data["agentId"] = user->id();
-    data["room"] = briefIntroduction();
+    data[QStringLiteral("agentId")] = user->id();
+    data[QStringLiteral("room")] = briefIntroduction();
     user->notify(S_COMMAND_ENTER_ROOM, data);
     unicastConfigTo(user);
 
@@ -332,7 +332,7 @@ void CRoom::startGame()
 void CRoom::broadcastSystemMessage(const QString &message)
 {
     QVariantMap data;
-    data["message"] = message;
+    data[QStringLiteral("message")] = message;
     broadcastNotification(S_COMMAND_SPEAK, data);
 }
 
@@ -429,14 +429,14 @@ void CRoom::broadcastNotification(int command, const QVariant &data, CServerAgen
 void CRoom::unicastPropertyTo(const char *name, CServerAgent *agent) const
 {
     QVariantMap data;
-    data[name] = property(name);
+    data[QString::fromUtf8(name)] = property(name);
     agent->notify(S_COMMAND_CONFIGURE_ROOM, data);
 }
 
 void CRoom::broadcastProperty(const char *name) const
 {
     QVariantMap data;
-    data[name] = property(name);
+    data[QString::fromUtf8(name)] = property(name);
     broadcastNotification(S_COMMAND_CONFIGURE_ROOM, data);
 }
 

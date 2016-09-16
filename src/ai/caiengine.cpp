@@ -37,14 +37,14 @@ public:
         if (!error.isError())
             return;
 
-        qDebug() << "AI Engine Error!!"
+        qDebug() << QStringLiteral("AI Engine Error!!")
                  << error.toString()
                  << QString()
-                 << ("name: " + error.property("name").toString())
-                 << ("message: " + error.property("message").toString())
-                 << ("fileName: " + error.property("fileName").toString())
-                 << ("lineNumber: " + QString::number(error.property("lineNumber").toInt()))
-                 << ("stack: " + error.property("stack").toString());
+                 << (QStringLiteral("name: ") + error.property(QStringLiteral("name")).toString())
+                 << (QStringLiteral("message: ") + error.property(QStringLiteral("message")).toString())
+                 << (QStringLiteral("fileName: ") + error.property(QStringLiteral("fileName")).toString())
+                 << (QStringLiteral("lineNumber: ") + QString::number(error.property(QStringLiteral("lineNumber")).toInt()))
+                 << (QStringLiteral("stack: ") + error.property(QStringLiteral("stack")).toString());
     }
 };
 
@@ -52,7 +52,7 @@ CAiEngine::CAiEngine()
     : p_ptr(new CAiEnginePrivate)
 {
     QJSValue functions = newQObject(new CAiEngineFunctions(this));
-    globalObject().setProperty("CAi", functions);
+    globalObject().setProperty(QStringLiteral("CAi"), functions);
 }
 
 CAiEngine::~CAiEngine()
@@ -65,24 +65,24 @@ void CAiEngine::request(int command, QVariant data)
 {
     C_P(CAiEngine);
     if (p->available.load() == 0) {
-        qDebug() << "AI engine not initialized when requesting";
+        qDebug() << QStringLiteral("AI engine not initialized when requesting");
         emit replyReady(QVariant());
         return;
     }
     QJSValue commandValue(command);
     QJSValue dataValue = toScriptValue(data);
-    QJSValue requestFunction = globalObject().property("request");
+    QJSValue requestFunction = globalObject().property(QStringLiteral("request"));
     if (requestFunction.isCallable()) {
         QJSValue r = requestFunction.call(QJSValueList() << commandValue << dataValue);
         if (r.isError()) {
-            qDebug() << "AI error when requesting";
+            qDebug() << QStringLiteral("AI error when requesting");
             p->aiEngineError(r);
             emit replyReady(QVariant());
             return;
         }
         emit replyReady(r.toVariant());
     } else {
-        qDebug() << "the function for requesting doesn't exist or is broken";
+        qDebug() << QStringLiteral("the function for requesting doesn't exist or is broken");
         emit replyReady(QVariant());
     }
 }
@@ -91,69 +91,69 @@ void CAiEngine::reply(int command, QVariant data)
 {
     C_P(CAiEngine);
     if (p->available.load() == 0) {
-        qDebug() << "AI engine not initialized when replying";
+        qDebug() << QStringLiteral("AI engine not initialized when replying");
         return;
     }
     QJSValue commandValue(command);
     QJSValue dataValue = toScriptValue(data);
-    QJSValue replyFunction = globalObject().property("reply");
+    QJSValue replyFunction = globalObject().property(QStringLiteral("reply"));
     if (replyFunction.isCallable()) {
         QJSValue r = replyFunction.call(QJSValueList() << commandValue << dataValue);
         if (r.isError()) {
-            qDebug() << "AI error when replying";
+            qDebug() << QStringLiteral("AI error when replying");
             p->aiEngineError(r);
         }
     } else
-        qDebug() << "the function for replying doesn't exist or is broken";
+        qDebug() << QStringLiteral("the function for replying doesn't exist or is broken");
 }
 
 void CAiEngine::notify(int command, QVariant data)
 {
     C_P(CAiEngine);
     if (p->available.load() == 0) {
-        qDebug() << "AI engine not initialized when notifying";
+        qDebug() << QStringLiteral("AI engine not initialized when notifying");
         return;
     }
     QJSValue commandValue(command);
     QJSValue dataValue = toScriptValue(data);
-    QJSValue notifyFunction = globalObject().property("notify");
+    QJSValue notifyFunction = globalObject().property(QStringLiteral("notify"));
     if (notifyFunction.isCallable()) {
         QJSValue r = notifyFunction.call(QJSValueList() << commandValue << dataValue);
         if (r.isError()) {
-            qDebug() << "AI error when notifying";
+            qDebug() << QStringLiteral("AI error when notifying");
             p->aiEngineError(r);
         }
     } else
-        qDebug() << "the function for noitfying doesn't exist or is broken";
+        qDebug() << QStringLiteral("the function for noitfying doesn't exist or is broken");
 }
 
 void CAiEngine::init(QString startScriptFile)
 {
     C_P(CAiEngine);
     if (p->available.load() != 0) {
-        qDebug() << "AI engine is initialized when initializing";
+        qDebug() << QStringLiteral("AI engine is initialized when initializing");
         emit initFinish(false);
         return;
     }
 
     QFile file(startScriptFile);
     if (file.open(QFile::ReadOnly)) {
-        QString s = file.readAll();
+        QString s = QString::fromUtf8(file.readAll());
         file.close();
 
         QJSValue r = evaluate(s, startScriptFile);
         if (r.isError()) {
-            qDebug() << "AI engine initialization failed in reading the script file.";
+            qDebug() << QStringLiteral("AI engine initialization failed in reading the script file.");
             p->aiEngineError(r);
             emit initFinish(false);
             return;
         }
 
-        QJSValue initFunction = globalObject().property("init");
+        QJSValue initFunction = globalObject().property(QStringLiteral("init"));
         if (initFunction.isCallable()) {
             QJSValue callResult = initFunction.call();
             if (callResult.isError()) {
-                qDebug() << "AI engine initialization failed in executing the initialization function";
+                qDebug() << QStringLiteral("AI engine initialization failed in executing the initialization function");
                 p->aiEngineError(callResult);
                 emit initFinish(false);
                 return;
@@ -163,22 +163,22 @@ void CAiEngine::init(QString startScriptFile)
                 emit initFinish(true);
                 return;
             } else {
-                qDebug() << "AI script initialization function returned false or returned an invalid value";
+                qDebug() << QStringLiteral("AI script initialization function returned false or returned an invalid value");
                 emit initFinish(false);
                 return;
             }
         } else {
-            qDebug() << "AI script has no initialization function or the initialization function is broken";
+            qDebug() << QStringLiteral("AI script has no initialization function or the initialization function is broken");
             emit initFinish(false);
             return;
         }
     } else {
-        qDebug() << ("AI engine initialization failed because open " + startScriptFile + " failed");
+        qDebug() << (QStringLiteral("AI engine initialization failed because open ") + startScriptFile + QStringLiteral(" failed"));
         emit initFinish(false);
         return;
     }
 
-    qDebug() << "unhandled error in AI engine initialization";
+    qDebug() << QStringLiteral("unhandled error in AI engine initialization");
     emit initFinish(false);
 }
 

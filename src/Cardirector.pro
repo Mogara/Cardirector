@@ -1,6 +1,7 @@
 TEMPLATE = lib
 CONFIG += staticlib
 DESTDIR = $$PWD/../lib
+DEFINES += QT_NO_CAST_FROM_ASCII
 
 QT += quick multimedia
 android:QT += androidextras

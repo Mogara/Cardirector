@@ -63,9 +63,9 @@ QPixmap CImageProvider::requestPixmap(const QString &id, QSize *size, const QSiz
 
     QPixmap pixmap;
     if (!url.isEmpty()) {
-        if (url.scheme() == "qrc") {
-            pixmap.load(":/" + url.path());
-        } else if (url.scheme() == "http") {
+        if (url.scheme() == QStringLiteral("qrc")) {
+            pixmap.load(QStringLiteral(":/") + url.path());
+        } else if (url.scheme() == QStringLiteral("http")) {
             //@to-do: Load and store as a local file
         } else {
             pixmap.load(url.toString());

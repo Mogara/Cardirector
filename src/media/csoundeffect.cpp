@@ -83,7 +83,7 @@ void CSoundEffect::play()
     QAudioFormat format;
 
     //@to-do: if-else is not propriate to extend more formats
-    if (p_ptr->source.endsWith(".ogg")) {
+    if (p_ptr->source.endsWith(QStringLiteral(".ogg"))) {
         COggFile *ogg = new COggFile(p_ptr->source, this);
         if (ogg->open(QIODevice::ReadOnly)) {
             format = ogg->format();

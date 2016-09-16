@@ -62,7 +62,7 @@ CMainWindow::CMainWindow(QWindow *parent)
     restoreAsClosed();
 
     QQmlContext *context = rootContext();
-    context->setContextProperty("DPI", qApp->primaryScreen()->logicalDotsPerInch());
+    context->setContextProperty(QStringLiteral("DPI"), qApp->primaryScreen()->logicalDotsPerInch());
 }
 
 CMainWindow *CMainWindow::mainInstance()
@@ -87,13 +87,13 @@ bool CMainWindow::event(QEvent *e)
 {
     if (e->type() == QEvent::Close) {
         QSettings *config = p_ptr->settings;
-        config->beginGroup("MainWindow");
+        config->beginGroup(QStringLiteral("MainWindow"));
         const Qt::WindowState state = windowState();
         if (!(state & (Qt::WindowMinimized | Qt::WindowMaximized | Qt::WindowFullScreen))) {
-            config->setValue("size", size());
-            config->setValue("pos", position());
+            config->setValue(QStringLiteral("size"), size());
+            config->setValue(QStringLiteral("pos"), position());
         }
-        config->setValue("state", (int)state);
+        config->setValue(QStringLiteral("state"), (int)state);
         config->endGroup();
 
         foreach(const QString &id, p_ptr->imageProviders)
@@ -105,14 +105,14 @@ bool CMainWindow::event(QEvent *e)
 void CMainWindow::restoreAsClosed()
 {
     QSettings *config = p_ptr->settings;
-    config->beginGroup("MainWindow");
+    config->beginGroup(QStringLiteral("MainWindow"));
 
 #ifndef MCD_FULLSCREEN_ONLY
-    if (config->contains("pos"))
-        setPosition(config->value("pos").toPoint());
-    if (config->contains("state"))
-        setWindowState(Qt::WindowState(config->value("state").toInt()));
-    const QVariant size = config->value("size", QSize(1024, 768));
+    if (config->contains(QStringLiteral("pos")))
+        setPosition(config->value(QStringLiteral("pos")).toPoint());
+    if (config->contains(QStringLiteral("state")))
+        setWindowState(Qt::WindowState(config->value(QStringLiteral("state")).toInt()));
+    const QVariant size = config->value(QStringLiteral("size"), QSize(1024, 768));
         resize(size.toSize());
 #endif
 
@@ -140,6 +140,6 @@ void CMainWindow::setSource(const QUrl &source)
 {
     QQuickView::setSource(source);
     QQmlContext *context = rootContext();
-    context->setContextProperty("Root", QVariant::fromValue(rootObject()));
-    context->setContextProperty("LocalDirPath", QDir::currentPath());
+    context->setContextProperty(QStringLiteral("Root"), QVariant::fromValue(rootObject()));
+    context->setContextProperty(QStringLiteral("LocalDirPath"), QDir::currentPath());
 }

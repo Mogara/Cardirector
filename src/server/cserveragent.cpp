@@ -78,8 +78,8 @@ QVariant CServerAgent::briefIntroduction() const
 void CServerAgent::speak(const QString &message)
 {
     QVariantMap arguments;
-    arguments["agentId"] = id();
-    arguments["message"] = message;
+    arguments[QStringLiteral("agentId")] = id();
+    arguments[QStringLiteral("message")] = message;
     broadcastNotification(S_COMMAND_SPEAK, arguments);
 }
 
@@ -110,7 +110,7 @@ CServerRobot *CServerAgent::toRobot()
 void CServerAgent::broadcastProperty(const char *name)
 {
     QVariantList data;
-    data << name;
+    data << QString::fromUtf8(name);
     data << property(name);
     data << id();
     broadcastNotification(S_COMMAND_UPDATE_USER_PROPERTY, data);

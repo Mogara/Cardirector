@@ -52,8 +52,8 @@ void seek(QTextStream &stream, char target){
 
 CWifiManager::CWifiManager(const QString &deviceName)
     : m_deviceName(deviceName)
-    , m_ssidPrefix("Cardirector-")
-    , m_key("org.mogara.cardirector")
+    , m_ssidPrefix(QStringLiteral("Cardirector-"))
+    , m_key(QStringLiteral("org.mogara.cardirector"))
 {
 }
 
@@ -85,11 +85,11 @@ bool CWifiManager::enableHotspot()
     return manager.callMethod<jboolean>("setWifiApEnabled", "(Landroid/net/wifi/WifiConfiguration;Z)Z", config.object(), true);
 #elif defined(Q_OS_WIN) && !defined(Q_OS_WINRT)
     QStringList commands;
-    commands << "netsh wlan stop hostednetwork";
-    commands << QString("netsh wlan set hostednetwork mode=allow ssid=%1%2 key=%3").arg(m_ssidPrefix).arg(m_deviceName).arg(m_key);
-    commands << "netsh wlan start hostednetwork";
+    commands << QStringLiteral("netsh wlan stop hostednetwork");
+    commands << QStringLiteral("netsh wlan set hostednetwork mode=allow ssid=%1%2 key=%3").arg(m_ssidPrefix).arg(m_deviceName).arg(m_key);
+    commands << QStringLiteral("netsh wlan start hostednetwork");
 
-    QString argument = QString("/c \"%1\"").arg(commands.join(" && "));
+    QString argument = QStringLiteral("/c \"%1\"").arg(commands.join(QStringLiteral(" && ")));
     ShellExecuteW(0, L"runas", L"cmd", argument.toStdWString().data(), 0, SW_HIDE);
 
     return true;
@@ -148,13 +148,13 @@ QStringList CWifiManager::detectServer()
     }
 #elif defined(Q_OS_WIN) && !defined(Q_OS_WINRT)
     QProcess netsh;
-    netsh.start("netsh wlan show networks");
+    netsh.start(QStringLiteral("netsh wlan show networks"));
     if (netsh.waitForFinished()) {
         QTextStream stream(&netsh);
         QString ssid;
         while (!stream.atEnd()) {
             stream >> ssid;
-            if (ssid == "SSID") {
+            if (ssid == QStringLiteral("SSID")) {
                 seek(stream, ':');
                 stream >> ssid;
 

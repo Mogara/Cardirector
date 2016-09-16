@@ -79,7 +79,7 @@ void COggFile::close()
 QAudioFormat COggFile::format() const
 {
     QAudioFormat format;
-    format.setCodec("audio/pcm");
+    format.setCodec(QStringLiteral("audio/pcm"));
     format.setByteOrder(QAudioFormat::LittleEndian);
     format.setChannelCount(p_ptr->file.vi->channels);
     format.setSampleRate(p_ptr->file.vi->rate);

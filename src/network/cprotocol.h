@@ -61,6 +61,6 @@ void MCD_EXPORT cRegisterCommand(int command, const QString &name);
 
 MCD_END_NAMESPACE
 
-#define C_REGISTER_COMMAND(command) cRegisterCommand(S_COMMAND_##command, #command)
+#define C_REGISTER_COMMAND(command) cRegisterCommand(S_COMMAND_##command, QStringLiteral(#command))
 
 #endif // CPROTOCOL_H

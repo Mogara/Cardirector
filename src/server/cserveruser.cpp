@@ -190,8 +190,8 @@ void CServerUser::handleUnknownPacket(const QByteArray &packet)
         }
 
         QString scheme = qApp->applicationName();
-        scheme.remove(QRegularExpression("[^A-Za-z]"));
-        QString location = QString("Location: %1://%2:%3/\r\n");
+        scheme.remove(QRegularExpression(QStringLiteral("[^A-Za-z]")));
+        QString location = QStringLiteral("Location: %1://%2:%3/\r\n");
         location = location.arg(scheme).arg(socket->localAddress().toString()).arg(socket->localPort());
 
         socket->write("HTTP/1.1 302 Moved Temporarily\r\n");
@@ -287,8 +287,8 @@ void CreateRoomCommand(CServerUser *user, const QVariant &data)
     CServer *server = user->server();
 
     QVariantMap config = data.toMap();
-    QString name = config.value("name").toString();
-    uint capacity = config.value("capacity", 0).toUInt();
+    QString name = config.value(QStringLiteral("name")).toString();
+    uint capacity = config.value(QStringLiteral("capacity"), 0).toUInt();
 
     server->createRoom(user, name, capacity);
 }
@@ -320,7 +320,7 @@ void StartGameCommand(CServerUser *user, const QVariant &)
     if (room->owner() == user) {
         foreach (CServerAgent *agent, room->agents()) {
             if (!agent->isReady() && agent != user) {
-                room->broadcastSystemMessage("At least one player is not ready, the game can't be started");
+                room->broadcastSystemMessage(QStringLiteral("At least one player is not ready, the game can't be started"));
                 return;
             }
         }

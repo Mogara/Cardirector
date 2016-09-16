@@ -67,7 +67,7 @@ CAi::~CAi()
         p->thread->terminate();
 
     if (!p->thread->wait(2000))
-        qDebug() << QString("CAi::~CAi: QThread didn't finish termination in 2 seconds, force deleting");
+        qDebug() << QStringLiteral("CAi::~CAi: QThread didn't finish termination in 2 seconds, force deleting");
 
     if (p->aiEngine != Q_NULLPTR) {
         p->aiEngine->collectGarbage();

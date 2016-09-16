@@ -62,14 +62,14 @@ public:
     QString fileLocation() const
     {
         if (isLoadedFromResource())
-            return "qrc:/Cardirector/Gui";
+            return QStringLiteral("qrc:/Cardirector/Gui");
         return b_ptr->baseUrl().toString();
     }
 
     bool isLoadedFromResource() const
     {
         // If one file is missing, it will load all the files from the resource
-        QFile file(b_ptr->baseUrl().toLocalFile() + "/MetroButton.qml");
+        QFile file(b_ptr->baseUrl().toLocalFile() + QStringLiteral("/MetroButton.qml"));
         if (!file.exists())
             return true;
         return false;
@@ -93,7 +93,7 @@ CQmlEngine::CQmlEngine(QObject *p)
     const QString filesLocation = p_ptr->fileLocation();
     for (int i = 0; i < int(sizeof(qmldir)/sizeof(qmldir[0])); i++) {
         const char *uri = qmldir[i].isPublic ? "Cardirector.Gui" : "Cardirector.Gui.Private";
-        qmlRegisterType(QUrl(filesLocation + "/" + qmldir[i].type + ".qml"),
+        qmlRegisterType(QUrl(filesLocation + QStringLiteral("/") + QString::fromUtf8(qmldir[i].type) + QStringLiteral(".qml")),
                         uri, qmldir[i].major, qmldir[i].minor, qmldir[i].type);
     }
 

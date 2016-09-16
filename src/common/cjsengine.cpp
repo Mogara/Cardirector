@@ -14,7 +14,7 @@ CJSEngine::CJSEngine(QObject *parent)
     C_P(CJSEngine);
     p->funcs = new CJSEngineFunctions(this);
 
-    globalObject().setProperty("Cardirector", newQObject(p->funcs));
+    globalObject().setProperty(QStringLiteral("Cardirector"), newQObject(p->funcs));
 }
 
 CJSEngine::~CJSEngine()
@@ -35,7 +35,7 @@ QJSValue CJSEngineFunctions::evaluateAnotherJsScript(const QString &fileName)
     if (!file.open(QIODevice::ReadOnly))
         return QJSValue();
 
-    QString script = file.readAll();
+    QString script = QString::fromUtf8(file.readAll());
     file.close();
 
     return m_engine->evaluate(script, fileName);

@@ -90,13 +90,13 @@ QString CAbstractUser::stateString() const
 {
     switch (p_ptr->state) {
     case Online:
-        return "online";
+        return QStringLiteral("online");
     case Trust:
-        return "trust";
+        return QStringLiteral("trust");
     case Offline:
-        return "offline";
+        return QStringLiteral("offline");
     default:
-        return "invalid";
+        return QStringLiteral("invalid");
     }
 }
 
@@ -108,11 +108,11 @@ void CAbstractUser::setState(State state)
 
 void CAbstractUser::setStateString(const QString &state)
 {
-    if (state == "online")
+    if (state == QStringLiteral("online"))
         setState(Online);
-    else if (state == "trust")
+    else if (state == QStringLiteral("trust"))
         setState(Trust);
-    else if (state == "offline")
+    else if (state == QStringLiteral("offline"))
         setState(Offline);
     else
         setState(Invalid);

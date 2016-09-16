@@ -66,7 +66,7 @@ QVariant CRoomSettings::toVariant() const
     for (int i = 0; i < max; i++) {
         QMetaProperty property = meta->property(i);
         if (property.isReadable())
-            data[property.name()] = property.readOnGadget(this);
+            data[QString::fromUtf8(property.name())] = property.readOnGadget(this);
     }
     return data;
 }

@@ -272,15 +272,15 @@ void CClient::SetRoomListCommand(CClient *client, const QVariant &data)
 void CClient::SpeakCommand(CClient *client, const QVariant &data)
 {
     QVariantMap arguments = data.toMap();
-    if (!arguments.contains("message"))
+    if (!arguments.contains(QStringLiteral("message")))
         return;
-    QString message = arguments["message"].toString();
+    QString message = arguments[QStringLiteral("message")].toString();
 
     if (arguments.size() == 1) {
         emit client->systemMessage(message);
     } else {
-        if (arguments.contains("agentId")) {
-            CClientUser *user = client->findUser(arguments["agentId"].toUInt());
+        if (arguments.contains(QStringLiteral("agentId"))) {
+            CClientUser *user = client->findUser(arguments[QStringLiteral("agentId")].toUInt());
             if (user != Q_NULLPTR)
                 emit user->speak(message);
         }
@@ -296,11 +296,11 @@ void CClient::EnterRoomCommand(CClient *client, const QVariant &data)
     }
 
     const QVariantMap arg = data.toMap();
-    if (arg.contains("agentId") && arg.contains("room")) {
-        uint agentId = arg["agentId"].toUInt();
+    if (arg.contains(QStringLiteral("agentId")) && arg.contains(QStringLiteral("room"))) {
+        uint agentId = arg[QStringLiteral("agentId")].toUInt();
         self->setId(agentId);
         client->p_ptr->users.insert(self->id(), self);
-        emit client->roomEntered(arg["room"]);
+        emit client->roomEntered(arg[QStringLiteral("room")]);
     }
 }
 
